@@ -3,6 +3,7 @@ using Abp.Zero.EntityFrameworkCore;
 using U_StudyingCommunity_Dream.Authorization.Roles;
 using U_StudyingCommunity_Dream.Authorization.Users;
 using U_StudyingCommunity_Dream.MultiTenancy;
+using U_StudyingCommunity_Dream.Authorization.UserDetails;
 
 namespace U_StudyingCommunity_Dream.EntityFrameworkCore
 {
@@ -14,5 +15,7 @@ namespace U_StudyingCommunity_Dream.EntityFrameworkCore
             : base(options)
         {
         }
+
+        public virtual DbSet<UserDetail> UserDetails { get; set; }
     }
 }

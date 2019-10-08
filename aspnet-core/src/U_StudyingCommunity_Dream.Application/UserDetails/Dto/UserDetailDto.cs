@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using U_StudyingCommunity_Dream.Enums;
 
 namespace U_StudyingCommunity_Dream.UserDetails.Dto
 {
@@ -32,6 +33,18 @@ namespace U_StudyingCommunity_Dream.UserDetails.Dto
         /// <summary>
         /// 头像地址
         /// </summary>
-        public string headPortraitUrl { get; set; }
+        public string HeadPortraitUrl { get; set; }
+        
+        public virtual GenderType? Gender { get; set; }
+
+        public virtual DateTime? Birthday { get; set; }
+        
+        public virtual string Site { get; set; }
+        
+        public virtual string Occupation { get; set; }
+        
+        public virtual string PhoneNumber { get; set; }
+        
+        public virtual string Email { get; set; }
     }
 }

@@ -1,7 +1,10 @@
+using System;
 using System.Threading.Tasks;
 using Abp.Configuration;
+using Abp.Domain.Repositories;
 using Abp.Zero.Configuration;
 using U_StudyingCommunity_Dream.Authorization.Accounts.Dto;
+using U_StudyingCommunity_Dream.UserDetails;
 using U_StudyingCommunity_Dream.Authorization.Users;
 
 namespace U_StudyingCommunity_Dream.Authorization.Accounts
@@ -13,10 +16,14 @@ namespace U_StudyingCommunity_Dream.Authorization.Accounts
 
         private readonly UserRegistrationManager _userRegistrationManager;
 
+        private readonly IRepository<UserDetail, Guid> _userDetailRepository;
+
         public AccountAppService(
-            UserRegistrationManager userRegistrationManager)
+            UserRegistrationManager userRegistrationManager
+            , IRepository<UserDetail, Guid> userDetailRepository)
         {
             _userRegistrationManager = userRegistrationManager;
+            _userDetailRepository = userDetailRepository;
         }
 
         public async Task<IsTenantAvailableOutput> IsTenantAvailable(IsTenantAvailableInput input)

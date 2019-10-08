@@ -5,10 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Abp.AspNetCore.Mvc.Controllers;
 using Abp.Authorization;
+using Abp.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using U_StudyingCommunity_Dream.Dtos;
+using U_StudyingCommunity_Dream.Utility.FileHelper;
 
 namespace U_StudyingCommunity_Dream.Web.Host.Controllers
 {
@@ -17,14 +20,16 @@ namespace U_StudyingCommunity_Dream.Web.Host.Controllers
     public class FileController : AbpController
     {
         private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly string fileRootDirectory;
 
-        public FileController(IHostingEnvironment hostingEnvironment)
+        public FileController(IHostingEnvironment hostingEnvironment, IConfiguration config)
         {
+            fileRootDirectory = config["StaticFilePath"];
             _hostingEnvironment = hostingEnvironment;
         }
 
         [RequestFormLimits(MultipartBodyLengthLimit = 209715200)]
-        [HttpPost]
+        [HttpPost("upload")]
         [AbpAllowAnonymous]
         public async Task<JsonResult> UploadFilesAsync(IFormFile[] file)
         {
@@ -67,6 +72,30 @@ namespace U_StudyingCommunity_Dream.Web.Host.Controllers
             apiResult.Data = new { name = fileName, size = fileSize, ext = fileExt, url = returnUrl };
             return Json(apiResult);
 
+        }
+
+        /// <summary>
+        /// 通过url下载文件
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        [HttpGet("download")]
+        [AbpAllowAnonymous]
+        public IActionResult DownloadFileAsync(string url)
+        {
+            string dir = fileRootDirectory;
+            if (!Path.IsPathRooted(fileRootDirectory))
+            {
+                dir = _hostingEnvironment.WebRootPath;
+            }
+            var fileUrl = dir + url;
+            var extension = Path.GetExtension(fileUrl);
+            var buffer = Utility.FileHelper.FileHelper.GetFileData(fileUrl);
+            if (buffer == null)
+            {
+                return null;
+            }
+            return File(buffer, FileContentType.GetMimeType(extension));
         }
     }
 }

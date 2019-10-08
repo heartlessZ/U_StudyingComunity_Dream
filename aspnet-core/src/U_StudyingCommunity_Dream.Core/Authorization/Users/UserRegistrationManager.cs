@@ -11,6 +11,8 @@ using Abp.Runtime.Session;
 using Abp.UI;
 using U_StudyingCommunity_Dream.Authorization.Roles;
 using U_StudyingCommunity_Dream.MultiTenancy;
+using U_StudyingCommunity_Dream.UserDetails;
+using Abp.Domain.Repositories;
 
 namespace U_StudyingCommunity_Dream.Authorization.Users
 {
@@ -23,11 +25,14 @@ namespace U_StudyingCommunity_Dream.Authorization.Users
         private readonly RoleManager _roleManager;
         private readonly IPasswordHasher<User> _passwordHasher;
 
+        private readonly IRepository<UserDetail, Guid> _userDetailRepository;
+
         public UserRegistrationManager(
             TenantManager tenantManager,
             UserManager userManager,
             RoleManager roleManager,
-            IPasswordHasher<User> passwordHasher)
+            IPasswordHasher<User> passwordHasher,
+            IRepository<UserDetail, Guid> userDetailRepository)
         {
             _tenantManager = tenantManager;
             _userManager = userManager;
@@ -35,6 +40,8 @@ namespace U_StudyingCommunity_Dream.Authorization.Users
             _passwordHasher = passwordHasher;
 
             AbpSession = NullAbpSession.Instance;
+
+            _userDetailRepository = userDetailRepository;
         }
 
         public async Task<User> RegisterAsync(string name, string surname, string emailAddress, string userName, string plainPassword, bool isEmailConfirmed)
@@ -43,6 +50,7 @@ namespace U_StudyingCommunity_Dream.Authorization.Users
 
             var tenant = await GetActiveTenantAsync();
 
+            var guid = Guid.NewGuid();
             var user = new User
             {
                 TenantId = tenant.Id,
@@ -52,7 +60,8 @@ namespace U_StudyingCommunity_Dream.Authorization.Users
                 IsActive = true,
                 UserName = userName,
                 IsEmailConfirmed = isEmailConfirmed,
-                Roles = new List<UserRole>()
+                Roles = new List<UserRole>(),
+                UserDetailId = guid
             };
 
             user.SetNormalizedNames();
@@ -67,6 +76,15 @@ namespace U_StudyingCommunity_Dream.Authorization.Users
             CheckErrors(await _userManager.CreateAsync(user, plainPassword));
             await CurrentUnitOfWork.SaveChangesAsync();
 
+            var userDetail = new UserDetail()
+            {
+                Id = guid,
+                UserId = user.Id,
+                Email = user.EmailAddress,
+                Surname = surname
+            };
+
+            _userDetailRepository.Insert(userDetail);
             return user;
         }
 

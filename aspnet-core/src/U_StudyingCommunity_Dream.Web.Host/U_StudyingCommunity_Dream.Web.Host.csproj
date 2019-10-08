@@ -25,6 +25,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\U_StudyingCommunity_Dream.Utility\U_StudyingCommunity_Dream.Utility.csproj" />
     <ProjectReference Include="..\U_StudyingCommunity_Dream.Web.Core\U_StudyingCommunity_Dream.Web.Core.csproj" />
   </ItemGroup>
   <ItemGroup>

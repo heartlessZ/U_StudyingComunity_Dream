@@ -20,4 +20,20 @@ namespace U_StudyingCommunity_Dream.Enums
         发布=2,
         已删除=3
     }
+
+    /// <summary>
+    /// 性别
+    /// </summary>
+    public enum GenderType
+    {
+        女 = 0,
+        男 = 1
+    }
+
+    public enum BookResourceStatus
+    {
+        拒绝=-1,
+        待审核=0,
+        审核通过=1
+    }
 }

@@ -8,7 +8,7 @@ using Abp.AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using U_StudyingCommunity_Dream.Authorization.UserDetails;
+using U_StudyingCommunity_Dream.UserDetails;
 
 namespace U_StudyingCommunity_Dream.UserDetails.Dto
 {

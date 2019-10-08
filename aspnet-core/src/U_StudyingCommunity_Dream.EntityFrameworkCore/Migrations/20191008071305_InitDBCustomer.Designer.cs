@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using U_StudyingCommunity_Dream.EntityFrameworkCore;
 
 namespace U_StudyingCommunity_Dream.Migrations
 {
     [DbContext(typeof(U_StudyingCommunity_DreamDbContext))]
-    partial class U_StudyingCommunity_DreamDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191008071305_InitDBCustomer")]
+    partial class InitDBCustomer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -933,20 +935,6 @@ namespace U_StudyingCommunity_Dream.Migrations
                         .IsRequired()
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<long?>("DeleterUserId");
-
-                    b.Property<DateTime?>("DeletionTime");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime");
-
-                    b.Property<long?>("LastModifierUserId");
-
                     b.Property<long>("Parent");
 
                     b.Property<Guid>("UserDetailId");
@@ -1145,8 +1133,6 @@ namespace U_StudyingCommunity_Dream.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<int>("Status");
-
                     b.HasKey("Id");
 
                     b.ToTable("books");
@@ -1173,25 +1159,9 @@ namespace U_StudyingCommunity_Dream.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<long?>("DeleterUserId");
-
-                    b.Property<DateTime?>("DeletionTime");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime");
-
-                    b.Property<long?>("LastModifierUserId");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100);
-
-                    b.Property<int>("Status");
 
                     b.Property<string>("Url")
                         .IsRequired()

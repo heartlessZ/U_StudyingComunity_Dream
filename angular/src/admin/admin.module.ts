@@ -8,22 +8,11 @@ import { ModalModule } from 'ngx-bootstrap';
 
 import { AbpModule } from '@abp/abp.module';
 
-import { AccountRoutingModule } from './account-routing.module';
-
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 
 import { SharedModule } from '@shared/shared.module';
 
-import { AccountComponent } from './account.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { AccountLanguagesComponent } from './layout/account-languages.component';
-
-import { LoginService } from './login/login.service';
-
-// tenants
-import { TenantChangeComponent } from './tenant/tenant-change.component';
-import { TenantChangeDialogComponent } from './tenant/tenant-change-dialog.component';
+import { AccountComponent } from './admin.component';
 
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
@@ -36,26 +25,16 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
         AbpModule,
         SharedModule,
         ServiceProxyModule,
-        AccountRoutingModule,
         ModalModule.forRoot(),
         ReactiveFormsModule,
         NgZorroAntdModule
     ],
     declarations: [
         AccountComponent,
-        LoginComponent,
-        RegisterComponent,
-        AccountLanguagesComponent,
-        // tenant
-        TenantChangeComponent,
-        TenantChangeDialogComponent,
     ],
     providers: [
-        LoginService
     ],
     entryComponents: [
-        // tenant
-        TenantChangeDialogComponent
     ]
 })
 export class AccountModule {

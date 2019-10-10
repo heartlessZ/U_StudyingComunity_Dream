@@ -1845,6 +1845,8 @@ export interface IRegisterInput {
 
 export class RegisterOutput implements IRegisterOutput {
     canLogin: boolean | undefined;
+    code:number;
+    msg:string;
 
     constructor(data?: IRegisterOutput) {
         if (data) {
@@ -1858,6 +1860,8 @@ export class RegisterOutput implements IRegisterOutput {
     init(data?: any) {
         if (data) {
             this.canLogin = data["canLogin"];
+            this.code = data["code"];
+            this.msg = data["msg"];
         }
     }
 
@@ -1871,6 +1875,8 @@ export class RegisterOutput implements IRegisterOutput {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["canLogin"] = this.canLogin;
+        data["code"] = this.code;
+        data["msg"] = this.msg;
         return data; 
     }
 
@@ -1884,6 +1890,8 @@ export class RegisterOutput implements IRegisterOutput {
 
 export interface IRegisterOutput {
     canLogin: boolean | undefined;
+    code:number;
+    msg:string;
 }
 
 export class ChangeUiThemeInput implements IChangeUiThemeInput {

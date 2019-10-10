@@ -16,9 +16,7 @@ import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module
 import { SharedModule } from '@shared/shared.module';
 
 import { HomeComponent } from '@app/home/home.component';
-import { AboutComponent } from '@app/about/about.component';
 import { TopBarComponent } from '@app/layout/topbar.component';
-import { TopBarLanguageSwitchComponent } from '@app/layout/topbar-languageswitch.component';
 import { SideBarUserAreaComponent } from '@app/layout/sidebar-user-area.component';
 import { SideBarNavComponent } from '@app/layout/sidebar-nav.component';
 import { SideBarFooterComponent } from '@app/layout/sidebar-footer.component';
@@ -37,14 +35,13 @@ import { CreateUserDialogComponent } from '@app/users/create-user/create-user-di
 import { EditUserDialogComponent } from '@app/users/edit-user/edit-user-dialog.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { ResetPasswordDialogComponent } from './users/reset-password/reset-password.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    AboutComponent,
     TopBarComponent,
-    TopBarLanguageSwitchComponent,
     SideBarUserAreaComponent,
     SideBarNavComponent,
     SideBarFooterComponent,
@@ -62,7 +59,8 @@ import { ResetPasswordDialogComponent } from './users/reset-password/reset-passw
     CreateUserDialogComponent,
     EditUserDialogComponent,
     ChangePasswordComponent,
-    ResetPasswordDialogComponent
+    ResetPasswordDialogComponent,
+    AdminComponent
   ],
   imports: [
     CommonModule,

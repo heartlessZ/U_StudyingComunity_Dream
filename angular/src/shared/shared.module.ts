@@ -54,6 +54,11 @@ import {
 import { BlockDirective } from './directives/block.directive';
 import { BusyDirective } from './directives/busy.directive';
 import { EqualValidator } from './directives/equal-validator.directive';
+
+import { NgZorroAntdModule } from 'ng-zorro-antd';
+import {ReactiveFormsModule, FormsModule } from "@angular/forms";
+
+
 @NgModule({
     imports: [
         CommonModule,
@@ -95,6 +100,9 @@ import { EqualValidator } from './directives/equal-validator.directive';
         MatToolbarModule,
         MatTooltipModule,
         MatTreeModule,
+        NgZorroAntdModule.forRoot(),
+        ReactiveFormsModule,
+        FormsModule
     ],
     declarations: [
         AbpPaginationControlsComponent,

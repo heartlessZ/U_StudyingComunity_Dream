@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector ,OnInit} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
@@ -26,17 +26,25 @@ import { LoginService } from '../login/login.service';
         max-width: 600px;
       }
 
-      .phone-select {
-        width: 70px;
-      }
-
       .register-are {
         margin-bottom: 8px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+      
+      .registerbtn{
+        float: right;
+      }
+
+      .login-form-button {
+        width: 100%;
       }
     `
   ]
 })
-export class RegisterComponent extends AppComponentBase {
+export class RegisterComponent extends AppComponentBase implements OnInit {
   model: RegisterInput = new RegisterInput();
   saving = false;
   validateForm: FormGroup;
@@ -52,11 +60,14 @@ export class RegisterComponent extends AppComponentBase {
   }
 
   back(): void {
-    this._router.navigate(['/login']);
+    this._router.navigate(['/account/login']);
   }
 
   save(): void {
     this.saving = true;
+    this.model.name = this.model.userName;
+    this.model.surname = this.model.userName;
+    this.submitForm()
     this._accountService
       .register(this.model)
       .pipe(
@@ -65,19 +76,26 @@ export class RegisterComponent extends AppComponentBase {
         })
       )
       .subscribe((result: RegisterOutput) => {
-        if (!result.canLogin) {
-          this.notify.success(this.l('SuccessfullyRegistered'));
-          this._router.navigate(['/login']);
+        if (result.code == 200) {
+          //this.notify.success('注册成功');
+          this.message.success('注册成功');
+          this._router.navigate(['/account/login']);
           return;
+        }
+        else{
+          //this.notify.error(result.msg);
+          this.message.error(result.msg);
         }
 
         // Autheticate
-        this.saving = true;
-        this._loginService.authenticateModel.userNameOrEmailAddress = this.model.userName;
-        this._loginService.authenticateModel.password = this.model.password;
-        this._loginService.authenticate(() => {
-          this.saving = false;
-        });
+        // this.saving = true;
+        // this._loginService.authenticateModel.userNameOrEmailAddress = this.model.userName;
+        // this._loginService.authenticateModel.password = this.model.password;
+        // this._loginService.authenticate(() => {
+        //   this.saving = false;
+        // });
+
+        this.saving = false;
       });
   }
 
@@ -111,12 +129,7 @@ export class RegisterComponent extends AppComponentBase {
       email: [null, [Validators.email, Validators.required]],
       password: [null, [Validators.required]],
       checkPassword: [null, [Validators.required, this.confirmationValidator]],
-      nickname: [null, [Validators.required]],
-      phoneNumberPrefix: ['+86'],
-      phoneNumber: [null, [Validators.required]],
-      website: [null, [Validators.required]],
-      captcha: [null, [Validators.required]],
-      agree: [false]
+      loginname: [null, [Validators.required]],
     });
   }
 }

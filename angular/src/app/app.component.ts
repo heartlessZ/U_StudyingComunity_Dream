@@ -4,7 +4,10 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { SignalRAspNetCoreHelper } from '@shared/helpers/SignalRAspNetCoreHelper';
 
 @Component({
-    templateUrl: './app.component.html'
+    templateUrl: './app.component.html',
+    styleUrls: [
+        '../../node_modules/ng-zorro-antd/ng-zorro-antd.less'
+    ],
 })
 export class AppComponent extends AppComponentBase implements OnInit, AfterViewInit {
 

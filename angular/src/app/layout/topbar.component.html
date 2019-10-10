@@ -1,27 +1,28 @@
-﻿<!-- Search Bar -->
-<div class="search-bar">
-    <div class="search-icon">
-        <i class="material-icons">search</i>
-    </div>
-    <input matInput type="text" placeholder="START TYPING...">
-    <div class="close-search">
-        <i class="material-icons">close</i>
-    </div>
-</div> <!-- #END# Search Bar -->
-
-<nav class="navbar">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
-            <a href="javascript:void(0);" class="bars"></a>
-            <a routerLink="/app/home" class="navbar-brand"><i class="fa fa-cubes"></i> U_StudyingCommunity_Dream</a>
-        </div>
-        <div class="collapse navbar-collapse" id="navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
-                <topbar-languageswitch></topbar-languageswitch>
-                <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
-            </ul>
-        </div>
-    </div>
+﻿<nav class="navbar">
+  <div class="nav_w3ls">
+    <nav>
+      <label for="drop" class="toggle">Menu</label>
+      <input type="checkbox" id="drop" />
+      <ul class="menu">
+        <li><a routerLink="/app/home" class="active">Home</a></li>
+        <li class="mx-lg-4 mx-md-3 my-md-0 my-2"><a href="about.html">About Us</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li class="mx-lg-4 mx-md-3 my-md-0 my-2">
+          <!-- First Tier Drop Down -->
+          <label for="drop-2" class="toggle toogle-2">Dropdown <span class="fa fa-angle-down" aria-hidden="true"></span>
+          </label>
+          <a href="#">Dropdown <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+          <input type="checkbox" id="drop-2" />
+          <ul>
+            <li><a href="#services" class="drop-text">Services</a></li>
+            <li><a href="#blog" class="drop-text">Blog</a></li>
+            <li><a href="single.html" class="drop-text">Blog Details</a></li>
+            <li><a href="#why" class="drop-text">What We do</a></li>
+            <li><a href="#team" class="drop-text">Our Doctors</a></li>
+          </ul>
+        </li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </nav>
+  </div>
 </nav>

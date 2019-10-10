@@ -1,4 +1,4 @@
-﻿<div class="card" [@routerTransition]>
+﻿<!-- <div class="card" [@routerTransition]>
   <div class="body">
     <form
       novalidate
@@ -74,4 +74,37 @@
       </div>
     </form>
   </div>
+</div> -->
+
+
+
+<div class="card" [@routerTransition]>
+  <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="login()">
+    <nz-form-item>
+      <nz-form-control nzErrorTip="请输入邮箱!">
+        <nz-input-group nzPrefixIcon="user">
+          <input type="text" nz-input formControlName="userName" [(ngModel)]="
+          loginService.authenticateModel.userNameOrEmailAddress" placeholder="用户名或邮箱" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control nzErrorTip="请输入密码!">
+        <nz-input-group nzPrefixIcon="lock">
+          <input type="password" nz-input formControlName="password" [(ngModel)]="loginService.authenticateModel.password" placeholder="密码" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <label nz-checkbox [(ngModel)]="loginService.rememberMe" formControlName="remember">
+          <span>记住我</span>
+        </label>
+        <a class="login-form-forgot" class="login-form-forgot">忘记密码？</a>
+        <button nz-button class="login-form-button" [nzType]="'primary'">登录</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <button nz-button class="registerbtn" (click)="register()" [nzSize]="large" nzType="link">立即注册>></button>
+  <br />
 </div>

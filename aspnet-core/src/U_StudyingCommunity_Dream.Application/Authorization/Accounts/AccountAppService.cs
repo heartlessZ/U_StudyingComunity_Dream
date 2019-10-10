@@ -6,6 +6,7 @@ using Abp.Zero.Configuration;
 using U_StudyingCommunity_Dream.Authorization.Accounts.Dto;
 using U_StudyingCommunity_Dream.UserDetails;
 using U_StudyingCommunity_Dream.Authorization.Users;
+using System.Linq;
 
 namespace U_StudyingCommunity_Dream.Authorization.Accounts
 {
@@ -17,13 +18,16 @@ namespace U_StudyingCommunity_Dream.Authorization.Accounts
         private readonly UserRegistrationManager _userRegistrationManager;
 
         private readonly IRepository<UserDetail, Guid> _userDetailRepository;
+        private readonly IRepository<User, long> _userRepository;
 
         public AccountAppService(
             UserRegistrationManager userRegistrationManager
-            , IRepository<UserDetail, Guid> userDetailRepository)
+            , IRepository<UserDetail, Guid> userDetailRepository
+            , IRepository<User, long> userRepository)
         {
             _userRegistrationManager = userRegistrationManager;
             _userDetailRepository = userDetailRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<IsTenantAvailableOutput> IsTenantAvailable(IsTenantAvailableInput input)
@@ -44,6 +48,20 @@ namespace U_StudyingCommunity_Dream.Authorization.Accounts
 
         public async Task<RegisterOutput> Register(RegisterInput input)
         {
+            if (await ExistEmailValid(input.EmailAddress))
+                return new RegisterOutput()
+                {
+                    Code = 999,
+                    CanLogin = false,
+                    Msg = "该邮箱已经被注册."
+                };
+            if (await ExistUserNameValid(input.Name))
+                return new RegisterOutput()
+                {
+                    Code =666,
+                    CanLogin = false,
+                    Msg = "该用户名已经被使用."
+                };
             var user = await _userRegistrationManager.RegisterAsync(
                 input.Name,
                 input.Surname,
@@ -52,13 +70,34 @@ namespace U_StudyingCommunity_Dream.Authorization.Accounts
                 input.Password,
                 true // Assumed email address is always confirmed. Change this if you want to implement email confirmation.
             );
+            
+            var userDetail = new UserDetail()
+            {
+                Id = user.UserDetailId,
+                UserId = user.Id,
+                Email = user.EmailAddress,
+                Surname = user.Surname
+            };
+
+            _userDetailRepository.Insert(userDetail);
 
             var isEmailConfirmationRequiredForLogin = await SettingManager.GetSettingValueAsync<bool>(AbpZeroSettingNames.UserManagement.IsEmailConfirmationRequiredForLogin);
 
             return new RegisterOutput
             {
+                Code = 200,
                 CanLogin = user.IsActive && (user.IsEmailConfirmed || !isEmailConfirmationRequiredForLogin)
             };
+        }
+
+        private async Task<bool> ExistEmailValid(string email)
+        {
+            return await _userRepository.FirstOrDefaultAsync(u => u.EmailAddress == email) == null;
+        }
+
+        private async Task<bool> ExistUserNameValid(string name)
+        {
+            return await _userRepository.FirstOrDefaultAsync(u => u.Name == name) == null;
         }
     }
 }

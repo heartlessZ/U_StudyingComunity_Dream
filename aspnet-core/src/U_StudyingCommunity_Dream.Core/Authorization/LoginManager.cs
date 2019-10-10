@@ -10,6 +10,7 @@ using Abp.Zero.Configuration;
 using U_StudyingCommunity_Dream.Authorization.Roles;
 using U_StudyingCommunity_Dream.Authorization.Users;
 using U_StudyingCommunity_Dream.MultiTenancy;
+using System.Threading.Tasks;
 
 namespace U_StudyingCommunity_Dream.Authorization
 {
@@ -40,6 +41,12 @@ namespace U_StudyingCommunity_Dream.Authorization
                   roleManager, 
                   claimsPrincipalFactory)
         {
+        }
+
+        public override Task<AbpLoginResult<Tenant, User>> LoginAsync(string userNameOrEmailAddress, string plainPassword, string tenancyName = null, bool shouldLockout = true)
+        {
+            //userNameOrEmailAddress.
+            return base.LoginAsync(userNameOrEmailAddress, plainPassword, tenancyName, shouldLockout);
         }
     }
 }

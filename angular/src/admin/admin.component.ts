@@ -1,5 +1,4 @@
 import { Component, ViewContainerRef, OnInit, ViewEncapsulation, Injector } from '@angular/core';
-import { LoginService } from './login/login.service';
 import { AppComponentBase } from '@shared/app-component-base';
 
 @Component({
@@ -19,7 +18,6 @@ export class AccountComponent extends AppComponentBase implements OnInit {
 
     public constructor(
         injector: Injector,
-        private _loginService: LoginService
     ) {
         super(injector);
 

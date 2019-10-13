@@ -6,7 +6,8 @@ import { SignalRAspNetCoreHelper } from '@shared/helpers/SignalRAspNetCoreHelper
 @Component({
     templateUrl: './app.component.html',
     styleUrls: [
-        '../../node_modules/ng-zorro-antd/ng-zorro-antd.less'
+        '../../node_modules/ng-zorro-antd/ng-zorro-antd.less',
+        './app.component.less'
     ],
 })
 export class AppComponent extends AppComponentBase implements OnInit, AfterViewInit {

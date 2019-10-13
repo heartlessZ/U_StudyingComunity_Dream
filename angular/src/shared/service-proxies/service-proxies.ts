@@ -2976,6 +2976,7 @@ export class AuthenticateResultModel implements IAuthenticateResultModel {
     encryptedAccessToken: string | undefined;
     expireInSeconds: number | undefined;
     userId: number | undefined;
+    isAdmin:boolean;
 
     constructor(data?: IAuthenticateResultModel) {
         if (data) {
@@ -2992,6 +2993,7 @@ export class AuthenticateResultModel implements IAuthenticateResultModel {
             this.encryptedAccessToken = data["encryptedAccessToken"];
             this.expireInSeconds = data["expireInSeconds"];
             this.userId = data["userId"];
+            this.isAdmin = data["isAdmin"];
         }
     }
 
@@ -3008,6 +3010,7 @@ export class AuthenticateResultModel implements IAuthenticateResultModel {
         data["encryptedAccessToken"] = this.encryptedAccessToken;
         data["expireInSeconds"] = this.expireInSeconds;
         data["userId"] = this.userId;
+        data["isAdmin"] = this.isAdmin;
         return data; 
     }
 

@@ -12,9 +12,10 @@ import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module
 
 import { SharedModule } from '@shared/shared.module';
 
-import { AccountComponent } from './admin.component';
+import { AdminComponent } from './admin.component';
 
-import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { AdminRoutingModule } from './admin-routing.module';
+import { HomeComponent } from './home/home.component'
 
 @NgModule({
     imports: [
@@ -27,16 +28,17 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
         ServiceProxyModule,
         ModalModule.forRoot(),
         ReactiveFormsModule,
-        NgZorroAntdModule
+        AdminRoutingModule
     ],
     declarations: [
-        AccountComponent,
+        AdminComponent,
+        HomeComponent,
     ],
     providers: [
     ],
     entryComponents: [
     ]
 })
-export class AccountModule {
+export class AdminModule {
 
 }

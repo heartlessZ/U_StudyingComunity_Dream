@@ -100,7 +100,7 @@ export function getCurrentLanguage(): string {
         AbpModule,
         ServiceProxyModule,
         RootRoutingModule,
-        HttpClientModule
+        HttpClientModule,
     ],
     declarations: [
         RootComponent

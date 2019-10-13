@@ -25,8 +25,6 @@ import { LoginService } from './login/login.service';
 import { TenantChangeComponent } from './tenant/tenant-change.component';
 import { TenantChangeDialogComponent } from './tenant/tenant-change-dialog.component';
 
-import { NgZorroAntdModule } from 'ng-zorro-antd';
-
 @NgModule({
     imports: [
         CommonModule,
@@ -38,8 +36,7 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
         ServiceProxyModule,
         AccountRoutingModule,
         ModalModule.forRoot(),
-        ReactiveFormsModule,
-        NgZorroAntdModule
+        ReactiveFormsModule
     ],
     declarations: [
         AccountComponent,

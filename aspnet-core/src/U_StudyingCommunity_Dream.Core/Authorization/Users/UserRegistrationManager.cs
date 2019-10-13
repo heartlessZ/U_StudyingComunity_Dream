@@ -48,7 +48,7 @@ namespace U_StudyingCommunity_Dream.Authorization.Users
             var guid = Guid.NewGuid();
             var user = new User
             {
-                TenantId = 1,
+                TenantId = tenant?.Id,
                 Name = name,
                 Surname = surname,
                 EmailAddress = emailAddress,
@@ -61,12 +61,12 @@ namespace U_StudyingCommunity_Dream.Authorization.Users
 
             user.SetNormalizedNames();
            
-            foreach (var defaultRole in await _roleManager.Roles.Where(r => r.IsDefault).ToListAsync())
+            foreach (var defaultRole in await _roleManager.Roles.Where(r => !r.IsDefault).ToListAsync())
             {
-                user.Roles.Add(new UserRole(tenant.Id, user.Id, defaultRole.Id));
+                user.Roles.Add(new UserRole(tenant?.Id, user.Id, defaultRole.Id));
             }
 
-            await _userManager.InitializeOptionsAsync(tenant.Id);
+            await _userManager.InitializeOptionsAsync(tenant?.Id);
 
             CheckErrors(await _userManager.CreateAsync(user, plainPassword));
             await CurrentUnitOfWork.SaveChangesAsync();

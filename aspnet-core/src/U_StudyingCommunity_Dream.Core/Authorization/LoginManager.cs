@@ -45,7 +45,6 @@ namespace U_StudyingCommunity_Dream.Authorization
 
         public override Task<AbpLoginResult<Tenant, User>> LoginAsync(string userNameOrEmailAddress, string plainPassword, string tenancyName = null, bool shouldLockout = true)
         {
-            //userNameOrEmailAddress.
             return base.LoginAsync(userNameOrEmailAddress, plainPassword, tenancyName, shouldLockout);
         }
     }

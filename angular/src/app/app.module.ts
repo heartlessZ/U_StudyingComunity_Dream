@@ -15,78 +15,36 @@ import { AbpModule } from '@abp/abp.module';
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 import { SharedModule } from '@shared/shared.module';
 
-import { HomeComponent } from '@app/home/home.component';
-import { TopBarComponent } from '@app/layout/topbar.component';
-import { SideBarUserAreaComponent } from '@app/layout/sidebar-user-area.component';
-import { SideBarNavComponent } from '@app/layout/sidebar-nav.component';
-import { SideBarFooterComponent } from '@app/layout/sidebar-footer.component';
-import { RightSideBarComponent } from '@app/layout/right-sidebar.component';
-// tenants
-import { TenantsComponent } from '@app/tenants/tenants.component';
-import { CreateTenantDialogComponent } from './tenants/create-tenant/create-tenant-dialog.component';
-import { EditTenantDialogComponent } from './tenants/edit-tenant/edit-tenant-dialog.component';
-// roles
-import { RolesComponent } from '@app/roles/roles.component';
-import { CreateRoleDialogComponent } from './roles/create-role/create-role-dialog.component';
-import { EditRoleDialogComponent } from './roles/edit-role/edit-role-dialog.component';
-// users
-import { UsersComponent } from '@app/users/users.component';
-import { CreateUserDialogComponent } from '@app/users/create-user/create-user-dialog.component';
-import { EditUserDialogComponent } from '@app/users/edit-user/edit-user-dialog.component';
-import { ChangePasswordComponent } from './users/change-password/change-password.component';
-import { ResetPasswordDialogComponent } from './users/reset-password/reset-password.component';
-import { AdminComponent } from './admin/admin.component';
+import {HomeComponent} from './home/home.component';
+
+import { LibraryComponent } from './library/library.component';
+import { ProjectComponent } from './project/project.component';
+import { CommunityComponent } from './community/community.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    TopBarComponent,
-    SideBarUserAreaComponent,
-    SideBarNavComponent,
-    SideBarFooterComponent,
-    RightSideBarComponent,
-    // tenants
-    TenantsComponent,
-    CreateTenantDialogComponent,
-    EditTenantDialogComponent,
-    // roles
-    RolesComponent,
-    CreateRoleDialogComponent,
-    EditRoleDialogComponent,
-    // users
-    UsersComponent,
-    CreateUserDialogComponent,
-    EditUserDialogComponent,
-    ChangePasswordComponent,
-    ResetPasswordDialogComponent,
-    AdminComponent
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    HttpClientJsonpModule,
-    ModalModule.forRoot(),
-    AbpModule,
-    AppRoutingModule,
-    ServiceProxyModule,
-    SharedModule,
-    NgxPaginationModule
-  ],
-  providers: [],
-  entryComponents: [
-    // tenants
-    CreateTenantDialogComponent,
-    EditTenantDialogComponent,
-    // roles
-    CreateRoleDialogComponent,
-    EditRoleDialogComponent,
-    // users
-    CreateUserDialogComponent,
-    EditUserDialogComponent,
-    ResetPasswordDialogComponent
-  ]
+   declarations: [
+      AppComponent,
+      HomeComponent,
+      LibraryComponent,
+      ProjectComponent,
+      CommunityComponent
+   ],
+   imports: [
+      CommonModule,
+      FormsModule,
+      ReactiveFormsModule,
+      HttpClientModule,
+      HttpClientJsonpModule,
+      ModalModule.forRoot(),
+      AbpModule,
+      AppRoutingModule,
+      ServiceProxyModule,
+      SharedModule,
+      NgxPaginationModule,
+      ReactiveFormsModule
+   ],
+   providers: [],
+   entryComponents: [
+   ]
 })
 export class AppModule {}

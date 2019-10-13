@@ -9,7 +9,7 @@ namespace U_StudyingCommunity_Dream.Authorization.Roles
 
         public static class Tenants
         {
-            public const string Admin = "Admin";
+            public const string Admin = "User";
         }
     }
 }

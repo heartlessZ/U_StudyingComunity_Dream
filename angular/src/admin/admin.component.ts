@@ -2,14 +2,14 @@ import { Component, ViewContainerRef, OnInit, ViewEncapsulation, Injector } from
 import { AppComponentBase } from '@shared/app-component-base';
 
 @Component({
-    templateUrl: './account.component.html',
+    templateUrl: 'admin.component.html',
     styleUrls: [
-        './account.component.less',
+        'admin.component.less',
         '../../node_modules/ng-zorro-antd/ng-zorro-antd.less'
     ],
     encapsulation: ViewEncapsulation.None
 })
-export class AccountComponent extends AppComponentBase implements OnInit {
+export class AdminComponent extends AppComponentBase implements OnInit {
 
     versionText: string;
     currentYear: number;
@@ -25,12 +25,7 @@ export class AccountComponent extends AppComponentBase implements OnInit {
         this.versionText = this.appSession.application.version + ' [' + this.appSession.application.releaseDate.format('YYYYDDMM') + ']';
     }
 
-    showTenantChange(): boolean {
-        //return abp.multiTenancy.isEnabled;
-        return false;
-    }
-
     ngOnInit(): void {
-        $('body').addClass('login-page');
+        
     }
 }

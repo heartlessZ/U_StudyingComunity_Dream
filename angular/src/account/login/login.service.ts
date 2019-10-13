@@ -51,6 +51,7 @@ export class LoginService {
                 authenticateResult.accessToken,
                 authenticateResult.encryptedAccessToken,
                 authenticateResult.expireInSeconds,
+                authenticateResult.isAdmin,
                 this.rememberMe);
 
         } else {
@@ -61,7 +62,7 @@ export class LoginService {
         }
     }
 
-    private login(accessToken: string, encryptedAccessToken: string, expireInSeconds: number, rememberMe?: boolean): void {
+    private login(accessToken: string, encryptedAccessToken: string, expireInSeconds: number, isAdmin:boolean, rememberMe?: boolean): void {
 
         const tokenExpireDate = rememberMe ? (new Date(new Date().getTime() + 1000 * expireInSeconds)) : undefined;
 
@@ -81,7 +82,11 @@ export class LoginService {
         if (initialUrl.indexOf('/login') > 0) {
             initialUrl = AppConsts.appBaseUrl;
         }
+        if(isAdmin)
+            initialUrl = initialUrl + "/admin";
 
+        //console.log(initialUrl);
+        
         location.href = initialUrl;
     }
 

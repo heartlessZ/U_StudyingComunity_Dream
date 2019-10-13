@@ -58,6 +58,8 @@ import { EqualValidator } from './directives/equal-validator.directive';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import {ReactiveFormsModule, FormsModule } from "@angular/forms";
 
+//import { DelonACLModule } from '@delon/acl';
+
 
 @NgModule({
     imports: [
@@ -156,6 +158,7 @@ import {ReactiveFormsModule, FormsModule } from "@angular/forms";
         MatTooltipModule,
         MatTreeModule,
         ScrollingModule,
+        NgZorroAntdModule
     ]
 })
 export class SharedModule {

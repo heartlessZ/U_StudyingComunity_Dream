@@ -92,12 +92,12 @@ namespace U_StudyingCommunity_Dream.Authorization.Accounts
 
         private async Task<bool> ExistEmailValid(string email)
         {
-            return await _userRepository.FirstOrDefaultAsync(u => u.EmailAddress == email) == null;
+            return await _userRepository.FirstOrDefaultAsync(u => u.EmailAddress != email) == null;
         }
 
         private async Task<bool> ExistUserNameValid(string name)
         {
-            return await _userRepository.FirstOrDefaultAsync(u => u.Name == name) == null;
+            return await _userRepository.FirstOrDefaultAsync(u => u.Name != name) == null;
         }
     }
 }

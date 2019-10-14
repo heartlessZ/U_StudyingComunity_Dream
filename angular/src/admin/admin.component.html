@@ -1,44 +1,50 @@
 ﻿<nz-layout>
-        <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
-          <div class="logo"></div>
-          <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-            <li nz-submenu nzTitle="User" nzIcon="user">
-              <ul>
-                <li nz-menu-item>Tom</li>
-                <li nz-menu-item>Bill</li>
-                <li nz-menu-item>Alex</li>
-              </ul>
+  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+    <div class="logo"></div>
+    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+        <li nz-menu-item nzIcon="user">
+          <a routerLink="home">仪表板</a>
+          </li>
+          <li nz-menu-item nzIcon="user">
+              <a routerLink="user">用户管理</a>
             </li>
-            <li nz-submenu nzTitle="Team" nzIcon="team">
-              <ul>
-                <li nz-menu-item>Team 1</li>
-                <li nz-menu-item>Team 2</li>
-              </ul>
-            </li>
-            <li nz-menu-item>
-              <i nz-icon nzType="file"></i>
-              <span>File</span>
-            </li>
-          </ul>
-        </nz-sider>
-        <nz-layout>
-          <nz-header>
-            <i
-              class="trigger"
-              nz-icon
-              [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-              (click)="isCollapsed = !isCollapsed"
-            ></i>
-          </nz-header>
-          <nz-content>
-            <nz-breadcrumb>
-              <nz-breadcrumb-item>User</nz-breadcrumb-item>
-              <nz-breadcrumb-item>Bill</nz-breadcrumb-item>
-            </nz-breadcrumb>
-            <div class="inner-content">
-                    <router-outlet></router-outlet>
-            </div>
-          </nz-content>
-          <nz-footer>Ant Design ©2019 Implement By Angular</nz-footer>
-        </nz-layout>
-      </nz-layout>
+      <li nz-submenu nzTitle="User" nzIcon="user">
+        <ul>
+          <li nz-menu-item>Tom</li>
+          <li nz-menu-item>Bill</li>
+          <li nz-menu-item>Alex</li>
+        </ul>
+      </li>
+      <li nz-submenu nzTitle="Team" nzIcon="team">
+        <ul>
+          <li nz-menu-item>Team 1</li>
+          <li nz-menu-item>Team 2</li>
+        </ul>
+      </li>
+      <li nz-menu-item>
+        <i nz-icon nzType="file"></i>
+        <span>File</span>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <i
+        class="trigger"
+        nz-icon
+        [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+        (click)="isCollapsed = !isCollapsed"
+      ></i>
+    </nz-header>
+    <nz-content>
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>User</nz-breadcrumb-item>
+        <nz-breadcrumb-item>Bill</nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+    <nz-footer>Ant Design ©2019 Implement By Angular</nz-footer>
+  </nz-layout>
+</nz-layout>

@@ -19,12 +19,20 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
     ) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        alert("hello");
-        
-        if (!this._sessionService.user) {
+        //alert(JSON.stringify(this._sessionService.user));
+        //权限分流
+        if (state.url.indexOf('admin') != -1){
+            if (this._sessionService.user.roleIds.indexOf(1) != -1){
+                return true;
+            }
             this._router.navigate(['/account/login']);
             return false;
         }
+        
+        // if (!this._sessionService.user) {
+        //     this._router.navigate(['/app/home']);
+        //     return false;
+        // }
 
         if (!route.data || !route.data['permission']) {
             return true;
@@ -44,7 +52,7 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
 
     selectBestRoute(): string {
         if (!this._sessionService.user) {
-            return '/account/login';
+            return '/app/home';
         }
 
         if (this._permissionChecker.isGranted('Pages.Users')) {

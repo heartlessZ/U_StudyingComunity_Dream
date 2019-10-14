@@ -5,6 +5,7 @@ using Abp.Application.Services.Dto;
 using Abp.Domain.Entities.Auditing;
 using System.ComponentModel.DataAnnotations;
 using U_StudyingCommunity_Dream.Articles;
+using U_StudyingCommunity_Dream.Enums;
 
 namespace U_StudyingCommunity_Dream.Articles.Dtos
 {

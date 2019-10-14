@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using Abp.Domain.Entities.Auditing;
 using U_StudyingCommunity_Dream.Articles;
+using U_StudyingCommunity_Dream.Enums;
 
 namespace  U_StudyingCommunity_Dream.Articles.Dtos
 {

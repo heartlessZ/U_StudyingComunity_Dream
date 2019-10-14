@@ -13,6 +13,7 @@ export class AdminComponent extends AppComponentBase implements OnInit {
 
     versionText: string;
     currentYear: number;
+    isCollapsed = false;
 
     private viewContainerRef: ViewContainerRef;
 

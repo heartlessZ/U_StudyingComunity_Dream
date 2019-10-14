@@ -14,5 +14,7 @@ namespace U_StudyingCommunity_Dream.Sessions.Dto
         public string UserName { get; set; }
 
         public string EmailAddress { get; set; }
+
+        public int[] RoleIds { get; set; }
     }
 }

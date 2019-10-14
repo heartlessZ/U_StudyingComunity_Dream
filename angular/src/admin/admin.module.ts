@@ -15,7 +15,9 @@ import { SharedModule } from '@shared/shared.module';
 import { AdminComponent } from './admin.component';
 
 import { AdminRoutingModule } from './admin-routing.module';
-import { HomeComponent } from './home/home.component'
+import { HomeComponent } from './home/home.component';
+import { UserComponent } from './user/user.component';
+import { UserDetailService, CommonHttpClient } from 'services';
 
 @NgModule({
     imports: [
@@ -33,8 +35,11 @@ import { HomeComponent } from './home/home.component'
     declarations: [
         AdminComponent,
         HomeComponent,
+        UserComponent,
     ],
     providers: [
+        UserDetailService,
+        CommonHttpClient
     ],
     entryComponents: [
     ]

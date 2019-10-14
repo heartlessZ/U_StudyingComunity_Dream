@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { LibraryComponent } from './library/library.component';
 import { ProjectComponent } from './project/project.component';
 import { CommunityComponent } from './community/community.component';
+import { PersonalCenterComponent } from './personal-center/personal-center.component';
 
 @NgModule({
     imports: [
@@ -16,10 +17,11 @@ import { CommunityComponent } from './community/community.component';
                 component: AppComponent,
                 children: [
                     { path: '', redirectTo:'home',  pathMatch:'full' },
-                    { path: 'home', component:HomeComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }},
-                    { path: 'library', component:LibraryComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }},
+                    { path: 'home', component:HomeComponent},
+                    { path: 'library', component:LibraryComponent},
                     { path: 'project', component:ProjectComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }},
-                    { path: 'community', component:CommunityComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }}
+                    { path: 'community', component:CommunityComponent},
+                    { path: 'personal-center', component:PersonalCenterComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }}
                 ]
             }
         ])

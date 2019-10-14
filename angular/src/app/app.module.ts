@@ -20,6 +20,8 @@ import {HomeComponent} from './home/home.component';
 import { LibraryComponent } from './library/library.component';
 import { ProjectComponent } from './project/project.component';
 import { CommunityComponent } from './community/community.component';
+import { PersonalCenterComponent } from './personal-center/personal-center.component';
+import { UserDetailService, CommonHttpClient } from 'services';
 
 @NgModule({
    declarations: [
@@ -27,7 +29,8 @@ import { CommunityComponent } from './community/community.component';
       HomeComponent,
       LibraryComponent,
       ProjectComponent,
-      CommunityComponent
+      CommunityComponent,
+      PersonalCenterComponent
    ],
    imports: [
       CommonModule,
@@ -43,8 +46,10 @@ import { CommunityComponent } from './community/community.component';
       NgxPaginationModule,
       ReactiveFormsModule
    ],
-   providers: [],
-   entryComponents: [
-   ]
+   providers: [
+      UserDetailService,
+      CommonHttpClient
+   ],
+   entryComponents: []
 })
 export class AppModule {}

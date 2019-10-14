@@ -1,7 +1,8 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 //import { HTTP_INTERCEPTORS } from '@angular/common/http';
 //import { AbpHttpInterceptor } from 'abp-ng2-module/dist/src/abpHttpInterceptor';
 import { CommonHttpClient } from './common-httpclient';
+import { UserDetailService } from 'services';
 
 @NgModule({
     providers: [
@@ -12,4 +13,14 @@ import { CommonHttpClient } from './common-httpclient';
         
     ]
 })
-export class ServicesModule { }
+export class ServicesModule { 
+    static forRoot(): ModuleWithProviders {
+        return {
+          ngModule: ServicesModule,
+          providers: [
+            UserDetailService,
+          ],
+        };
+      }
+    
+}

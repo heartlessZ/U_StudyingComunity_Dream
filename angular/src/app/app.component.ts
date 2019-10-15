@@ -5,7 +5,8 @@ import { AppConsts } from '@shared/AppConsts'
 
 import { SignalRAspNetCoreHelper } from '@shared/helpers/SignalRAspNetCoreHelper';
 import { UserDetailService } from 'services';
-import { UserDetailDto } from 'entities';
+import { UserDetailDto, CurrentUserDetailDto } from 'entities';
+import { NzIconService } from 'ng-zorro-antd/icon';
 
 @Component({
     templateUrl: './app.component.html',
@@ -18,7 +19,7 @@ export class AppComponent extends AppComponentBase implements OnInit//, AfterVie
  {
 
     //private viewContainerRef: ViewContainerRef;
-    currentUser : UserDetailDto;
+    currentUser : CurrentUserDetailDto;
     isLogin : boolean = false;
     headurl : string = "";
     host = AppConsts.remoteServiceBaseUrl;
@@ -27,11 +28,17 @@ export class AppComponent extends AppComponentBase implements OnInit//, AfterVie
         injector: Injector,
         private router : Router,
         private userDetailService : UserDetailService,
+        private _iconService: NzIconService
     ) {
         super(injector);
+        // this._iconService.fetchFromIconfont({
+        //     scriptUrl: 'https://at.alicdn.com/t/font_8d5l8fzk5b87iudi.js'
+        //   });
     }
 
     ngOnInit(): void {
+
+        this.getCurrentUser();
 
         SignalRAspNetCoreHelper.initSignalR();
 
@@ -50,13 +57,18 @@ export class AppComponent extends AppComponentBase implements OnInit//, AfterVie
             });
         });
 
-        this.getCurrentUser();
     }
 
     getCurrentUser():void {
         this.userDetailService.getCurrentUserSimpleInfo().subscribe((result)=>{
             console.log(result);
-            
+            if(result.userId != undefined)
+            {
+                this.isLogin=true;
+                this.currentUser = result;
+                if(result.headPortraitUrl != null)
+                    this.headurl = this.host + result.headPortraitUrl;
+            }
         })
     }
 
@@ -85,5 +97,13 @@ export class AppComponent extends AppComponentBase implements OnInit//, AfterVie
 
     exit() : void {
         
+    }
+
+    goPersonalInfo(id:string):void{
+        console.log(id);
+        
+        if (id == undefined)
+            return;
+        this.router.navigate(["/app/personal-center",{id:id}]);
     }
 }

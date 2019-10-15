@@ -23,6 +23,7 @@ namespace U_StudyingCommunity_Dream
             LocalizationSourceName = U_StudyingCommunity_DreamConsts.LocalizationSourceName;
         }
 
+        
         public virtual async Task<User> GetCurrentUserAsync()
         {
             var user = await UserManager.FindByIdAsync(AbpSession.GetUserId().ToString());

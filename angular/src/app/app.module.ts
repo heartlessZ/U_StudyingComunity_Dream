@@ -22,6 +22,8 @@ import { ProjectComponent } from './project/project.component';
 import { CommunityComponent } from './community/community.component';
 import { PersonalCenterComponent } from './personal-center/personal-center.component';
 import { UserDetailService, CommonHttpClient } from 'services';
+import { ChangePasswordComponent } from './personal-center/change-password/change-password.component';
+import { UserDetailEditComponent } from './personal-center/user-detail-edit/user-detail-edit.component';
 
 @NgModule({
    declarations: [
@@ -30,7 +32,9 @@ import { UserDetailService, CommonHttpClient } from 'services';
       LibraryComponent,
       ProjectComponent,
       CommunityComponent,
-      PersonalCenterComponent
+      PersonalCenterComponent,
+      ChangePasswordComponent,
+      UserDetailEditComponent
    ],
    imports: [
       CommonModule,

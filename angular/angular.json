@@ -36,7 +36,7 @@
               }
             ],
             "styles": [
-              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+              "node_modules/ng-zorro-antd/ng-zorro-antd-extra/style/index.css",
               "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/assets/fonts/roboto/roboto.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -45,7 +45,6 @@
               "node_modules/famfamfam-flags/dist/sprite/famfamfam-flags.css",
               "node_modules/toastr/build/toastr.css",
               "node_modules/node-waves/dist/waves.css",
-              "node_modules/ng-zorro-antd/src/ng-zorro-antd.min.css",
               "src/bsb-theme/css/materialize.css",
               "src/bsb-theme/css/style.css",
               "src/bsb-theme/css/themes/all-themes.css",
@@ -181,7 +180,7 @@
               "src/bsb-theme/js/jquery.validate.js"
             ],
             "styles": [
-              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+              "node_modules/ng-zorro-antd/ng-zorro-antd-extra/style/index.css",
               "src/assets/fonts/roboto/roboto.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/simple-line-icons/css/simple-line-icons.css",
@@ -189,7 +188,6 @@
               "node_modules/famfamfam-flags/dist/sprite/famfamfam-flags.css",
               "node_modules/toastr/build/toastr.css",
               "node_modules/node-waves/dist/waves.css",
-              "node_modules/ng-zorro-antd/src/ng-zorro-antd.min.css",
               "src/bsb-theme/css/materialize.css",
               "src/bsb-theme/css/style.css",
               "src/bsb-theme/css/themes/all-themes.css",

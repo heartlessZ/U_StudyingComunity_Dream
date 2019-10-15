@@ -1,31 +1,30 @@
 <nz-layout>
     <nz-header class="header">
         <div class="logo"></div>
-        <ul nz-menu nzTheme="dark" nzMode="horizontal">
+        <ul nz-menu nzTheme="light" nzMode="horizontal">
             <li nz-menu-item><a routerLink="home">首页</a></li>
             <li nz-menu-item><a routerLink="library">图书资源</a></li>
             <li nz-menu-item><a routerLink="project">学习规划</a></li>
             <li nz-menu-item><a routerLink="community">社区</a></li>
-            <!-- <li style="float: right;" *ngIf="isLogin; then head-portrait else log-page"></li>
-             <ng-template #head-portrait>
-                 <a routerLink="personal-center">
-                     <nz-avatar [nzSize]="64" nzIcon="user" nzSrc="headurl"></nz-avatar>
-                    </a>
-                    <button (click)="exit()">
-                        <i nz-icon [nzIconfont]="'icon-tuichu'"></i>
-                    </button>
-                </ng-template>
-             <ng-template #log-page>
-                 <button nz-button (click)="login()" nzType="dashed">登录</button>
-                 <button nz-button (click)="register()" nzType="default">注册</button>
-                </ng-template> -->
+            <li style="float: right;" *ngIf="isLogin; else elseBlock">
+                <a (click)="goPersonalInfo(currentUser.userDetailId)">
+                    <nz-avatar [nzSize]="64" nzIcon="user" ></nz-avatar>
+                </a>
+                <a (click)="exit()">退出</a>
+            </li>
+            <ng-template #elseBlock>
+                <li style="float: right;">
+                    <button nz-button (click)="login()" nzType="dashed">登录</button>
+                    <button nz-button (click)="register()" nzType="default">注册</button>
+                </li>
+            </ng-template>
         </ul>
-        
+
     </nz-header>
     <nz-content>
         <div class="inner-content">
             <router-outlet></router-outlet>
         </div>
     </nz-content>
-    <nz-footer>Ant Design ©2019 Implement By Angular</nz-footer>
+    <nz-footer>优学社区 ©2019 Implement By 拯救问题儿童</nz-footer>
 </nz-layout>

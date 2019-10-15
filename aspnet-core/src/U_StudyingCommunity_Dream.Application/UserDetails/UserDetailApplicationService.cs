@@ -22,6 +22,7 @@ using U_StudyingCommunity_Dream.UserDetails;
 using U_StudyingCommunity_Dream.UserDetails.Dtos;
 using Abp.ObjectMapping;
 using U_StudyingCommunity_Dream.Authorization.Users;
+using Abp.Runtime.Session;
 
 namespace U_StudyingCommunity_Dream.UserDetails
 {
@@ -51,9 +52,18 @@ namespace U_StudyingCommunity_Dream.UserDetails
         /// 获取当前登录用户详情
         /// </summary>
         /// <returns></returns>
+        [AbpAllowAnonymous]
         public async Task<GetCurrentUserDto> GetCurrentUserDetailAsync()
         {
-            var user = await GetCurrentUserAsync();
+            if (AbpSession.UserId == null)
+            {
+                return null;
+            }
+            var user = await UserManager.FindByIdAsync(AbpSession.GetUserId().ToString());
+            if (user == null)
+            {
+                return null;
+            }
             var userDetail = _entityRepository.FirstOrDefaultAsync(user.UserDetailId);
             if (userDetail != null)
             {
@@ -113,7 +123,7 @@ namespace U_StudyingCommunity_Dream.UserDetails
 		{
 			var entity = await _entityRepository.GetAsync(input.Id);
 
-		    return entity.MapTo<UserDetailListDto>();
+		    return ObjectMapper.Map<UserDetailListDto>(entity);
 		}
 
 		/// <summary>

@@ -52,7 +52,7 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
 
     selectBestRoute(): string {
         if (!this._sessionService.user) {
-            return '/app/home';
+            return '/account/login';
         }
 
         if (this._permissionChecker.isGranted('Pages.Users')) {
@@ -60,6 +60,6 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
             return '/app/home';
         }
 
-        return '/app/home';
+        return '';
     }
 }

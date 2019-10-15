@@ -16,10 +16,10 @@ import { PersonalCenterComponent } from './personal-center/personal-center.compo
                 path: '',
                 component: AppComponent,
                 children: [
-                    { path: '', redirectTo:'home',  pathMatch:'full' },
+                    { path: '', redirectTo:'home', pathMatch:'full' },
                     { path: 'home', component:HomeComponent},
                     { path: 'library', component:LibraryComponent},
-                    { path: 'project', component:ProjectComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }},
+                    { path: 'project', component:ProjectComponent},
                     { path: 'community', component:CommunityComponent},
                     { path: 'personal-center', component:PersonalCenterComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }}
                 ]

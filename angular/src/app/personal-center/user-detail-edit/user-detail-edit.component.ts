@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Injector } from '@angular/core';
-import { AppComponentBase } from '@shared/app-component-base';
+import { AppComponentBase } from '@shared/component-base/app-component-base';
 import { UserDetailDto } from 'entities';
 import { UserDetailService } from 'services';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
@@ -26,6 +26,7 @@ export class UserDetailEditComponent extends AppComponentBase implements OnInit 
   avatarUrl: string;
   fileUploadUrl:string;
   fileUrl:string;//图片最终上传所得的地址
+  birthday:Date;
 
   constructor(injector: Injector,
     private fb: FormBuilder,
@@ -76,6 +77,10 @@ export class UserDetailEditComponent extends AppComponentBase implements OnInit 
   ngOnInit() {
     this.fileUploadUrl = this.userDetailService.baseUrl+"/api/File/upload";
     console.log(this.fileUploadUrl);
+  }
+
+  onChange(result: Date): void {
+    this.userDetail.birthday = result;
   }
 
   submitForm(value: any): void {

@@ -1,5 +1,5 @@
 import { Component, ViewContainerRef, Injector, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { AppComponentBase } from '@shared/app-component-base';
+import { AppComponentBase } from '@shared/component-base/app-component-base';
 import { Router } from '@angular/router';
 import { AppConsts } from '@shared/AppConsts'
 

@@ -11,6 +11,7 @@ export class UserDetailDto implements IUserDetailDto {
     phoneNumber: string | undefined;
     email: string | undefined;
     id:string | undefined;
+    creationTime:Date | undefined;
 
     constructor(data?: IUserDetailDto) {
         if (data) {
@@ -35,6 +36,7 @@ export class UserDetailDto implements IUserDetailDto {
             this.occupation = data["occupation"];
             this.phoneNumber = data["phoneNumber"];
             this.email = data["email"];
+            this.creationTime = data["creationTime"];
         }
     }
 
@@ -70,6 +72,7 @@ export class UserDetailDto implements IUserDetailDto {
         data["occupation"] = this.occupation;
         data["phoneNumber"] = this.phoneNumber;
         data["email"] = this.email;
+        data["creationTime"] = this.creationTime;
         return data; 
     }
 
@@ -93,4 +96,5 @@ export interface IUserDetailDto {
     occupation: string | undefined;
     phoneNumber: string | undefined;
     email: string | undefined;
+    creationTime:Date | undefined;
 }

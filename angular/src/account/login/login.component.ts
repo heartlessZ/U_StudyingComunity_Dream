@@ -1,6 +1,6 @@
 import { Component, Injector , OnInit} from '@angular/core';
 import { AbpSessionService } from '@abp/session/abp-session.service';
-import { AppComponentBase } from '@shared/app-component-base';
+import { AppComponentBase } from '@shared/component-base/app-component-base';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
 import { Router } from '@angular/router';
 import { LoginService } from './login.service';

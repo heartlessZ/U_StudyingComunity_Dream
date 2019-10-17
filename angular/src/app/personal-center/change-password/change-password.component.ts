@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Injector } from '@angular/core';
-import { AppComponentBase } from '@shared/app-component-base';
+import { AppComponentBase } from '@shared/component-base/app-component-base';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Observable, Observer } from 'rxjs';
 import { UserDetailService } from 'services';

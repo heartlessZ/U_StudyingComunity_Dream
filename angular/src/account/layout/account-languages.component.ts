@@ -1,5 +1,5 @@
 import { Component, OnInit, Injector } from '@angular/core';
-import { AppComponentBase } from '@shared/app-component-base';
+import { AppComponentBase } from '@shared/component-base/app-component-base';
 
 import * as _ from 'lodash';
 

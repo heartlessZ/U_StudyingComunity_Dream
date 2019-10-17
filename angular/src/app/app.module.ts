@@ -21,7 +21,7 @@ import { LibraryComponent } from './library/library.component';
 import { ProjectComponent } from './project/project.component';
 import { CommunityComponent } from './community/community.component';
 import { PersonalCenterComponent } from './personal-center/personal-center.component';
-import { UserDetailService, CommonHttpClient } from 'services';
+import { UserDetailService, CommonHttpClient, BookService } from 'services';
 import { ChangePasswordComponent } from './personal-center/change-password/change-password.component';
 import { UserDetailEditComponent } from './personal-center/user-detail-edit/user-detail-edit.component';
 
@@ -54,7 +54,8 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
    ],
    providers: [
       UserDetailService,
-      CommonHttpClient
+      CommonHttpClient,
+      BookService
    ],
    entryComponents: []
 })

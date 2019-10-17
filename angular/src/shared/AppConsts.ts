@@ -21,4 +21,18 @@ export class AppConsts {
     static readonly authorization = {
         encryptedAuthTokenName: 'enc_auth_token'
     };
+    /**
+   * 数据表格设置
+   */
+  // tslint:disable-next-line:member-ordering
+  static readonly grid = {
+    /**
+     * 每页显示条目数
+     */
+    defaultPageSize: 10,
+    /**
+     * 每页显示条目数下拉框值
+     */
+    defaultPageSizes: [5, 10, 15, 20, 25, 30, 50, 80, 100],
+  };
 }

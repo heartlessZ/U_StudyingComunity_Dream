@@ -76,7 +76,8 @@ namespace U_StudyingCommunity_Dream.Authorization.Accounts
                 Id = user.UserDetailId,
                 UserId = user.Id,
                 Email = user.EmailAddress,
-                Surname = user.Surname
+                Surname = user.Surname,
+                Name = user.Name
             };
 
             _userDetailRepository.Insert(userDetail);

@@ -54,6 +54,12 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
+        <nz-form-label [nzSpan]="4">生日</nz-form-label>
+        <nz-form-control [nzSpan]="8">
+          <nz-date-picker [(ngModel)]="birthday" (ngModelChange)="onChange($event)"></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
         <nz-form-label [nzSpan]="4">个人描述</nz-form-label>
         <nz-form-control [nzSpan]="16" >
           <textarea rows="4" formControlName="description" nz-input [(ngModel)]="userDetail.description"></textarea>

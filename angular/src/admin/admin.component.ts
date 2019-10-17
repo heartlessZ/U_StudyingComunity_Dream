@@ -1,5 +1,5 @@
 import { Component, ViewContainerRef, OnInit, ViewEncapsulation, Injector } from '@angular/core';
-import { AppComponentBase } from '@shared/app-component-base';
+import { AppComponentBase } from '@shared/component-base/app-component-base';
 
 @Component({
     templateUrl: 'admin.component.html',

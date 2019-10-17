@@ -35,6 +35,11 @@ namespace U_StudyingCommunity_Dream.Books
         [StringLength(200)]
         public virtual string CoverUrl { get; set; }
         
+        [StringLength(200)]
+        public virtual string OtherUrls { get; set; }
+
+        public virtual int CategoryId { get; set; }
+        
         public virtual BookResourceStatus Status { get; set; }
 
         public Book()

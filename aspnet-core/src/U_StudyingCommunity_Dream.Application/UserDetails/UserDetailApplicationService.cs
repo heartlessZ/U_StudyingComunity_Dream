@@ -103,6 +103,7 @@ namespace U_StudyingCommunity_Dream.UserDetails
 			var count = await query.CountAsync();
 
 			var entityList = await query
+                .WhereIf(!string.IsNullOrEmpty(input.Name),u=>u.Name.Contains(input.Name) || u.Surname.Contains(input.Name) || u.Email.Contains(input.Name))
 					.OrderBy(input.Sorting).AsNoTracking()
 					.PageBy(input)
 					.ToListAsync();
@@ -209,6 +210,12 @@ UserDetailEditDto editDto;
 
 			ObjectMapper.Map(input, entity);
 		    await _entityRepository.UpdateAsync(entity);
+            var user = await UserManager.GetUserByIdAsync(input.UserId);
+            if (user.Surname!=input.Surname)
+            {
+                user.Surname = input.Surname;
+                await UserManager.UpdateAsync(user);
+            }
 		}
 
 

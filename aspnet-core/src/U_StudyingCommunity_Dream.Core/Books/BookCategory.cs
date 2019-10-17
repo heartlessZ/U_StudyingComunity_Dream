@@ -5,6 +5,7 @@
 * DESC: <DESCRIPTION>
 * **************************************************************/
 using Abp.Domain.Entities;
+using Abp.Domain.Entities.Auditing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,12 +18,14 @@ namespace U_StudyingCommunity_Dream.Books
     /// 书籍分类
     /// </summary>
     [Table("bookCategories")]
-    public class BookCategory:Entity<int>
+    public class BookCategory:Entity<int>,IHasCreationTime
     {
         [Required]
         [StringLength(20)]
         public virtual string Name { get; set; }
 
         public virtual int Parent { get; set; }
+
+        public DateTime CreationTime { get; set; }
     }
 }

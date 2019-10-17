@@ -1,7 +1,7 @@
 import { Component, Injector } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { finalize } from 'rxjs/operators';
-import { AppComponentBase } from '@shared/app-component-base';
+import { AppComponentBase } from '@shared/component-base/app-component-base';
 import { AccountServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppTenantAvailabilityState } from '@shared/AppEnums';
 import {

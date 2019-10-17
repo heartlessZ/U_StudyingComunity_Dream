@@ -1,3 +1,19 @@
-<p>
-  library works!
-</p>
+<nz-card style="width:90%;margin:auto;" [nzBordered]="false">
+  <form nz-form (ngSubmit)="refreshData()" [nzLayout]="'inline'">
+    <div nz-row [nzGutter]="18">
+        <div nz-col [nzSpan]="30" class="mb-md">
+            <nz-form-item class="d-flex" style="margin-bottom: 0px;">
+                <nz-form-label nzFor="name">模糊查询</nz-form-label>
+                <nz-form-control class="flex-1">
+                    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                        <input type="text" nz-input placeholder="模糊搜索"  [(ngModel)]="search.name"/>
+                      </nz-input-group>
+                      <ng-template #suffixIconButton>
+                        <button nz-button nzType="primary" nzSearch [nzLoading]="isTableLoading"><i nz-icon nzType="search"></i></button>
+                      </ng-template>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+  </form>
+</nz-card>

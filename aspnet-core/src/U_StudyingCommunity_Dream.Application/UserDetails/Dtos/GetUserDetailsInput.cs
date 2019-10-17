@@ -8,6 +8,8 @@ namespace U_StudyingCommunity_Dream.UserDetails.Dtos
     public class GetUserDetailsInput : PagedSortedAndFilteredInputDto, IShouldNormalize
     {
 
+        public string Name { get; set; }
+
         /// <summary>
         /// 正常化排序使用
         /// </summary>

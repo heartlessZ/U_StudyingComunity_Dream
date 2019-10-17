@@ -2,7 +2,7 @@ import { Component, Injector ,OnInit} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { AppComponentBase } from '@shared/app-component-base';
+import { AppComponentBase } from '@shared/component-base/app-component-base';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
 import {
   AccountServiceProxy,

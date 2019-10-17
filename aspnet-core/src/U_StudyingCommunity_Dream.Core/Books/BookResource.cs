@@ -21,6 +21,8 @@ namespace U_StudyingCommunity_Dream.Books
     [Table("bookResource")]
     public class BookResource: FullAuditedEntity<long>
     {
+        public virtual long BookId { get; set; }
+
         [Required]
         [StringLength(200)]
         public virtual string Url { get; set; }
@@ -28,6 +30,16 @@ namespace U_StudyingCommunity_Dream.Books
         [Required]
         [StringLength(100)]
         public virtual string Name { get; set; }
+
+        /// <summary>
+        /// 资源上传人
+        /// </summary>
+        public virtual Guid? Uploader { get; set; }
+
+        /// <summary>
+        /// 审核人
+        /// </summary>
+        public virtual Guid? Auditor { get; set; }
 
         public virtual BookResourceStatus Status { get; set; }
 

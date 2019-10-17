@@ -15,7 +15,7 @@ namespace U_StudyingCommunity_Dream.Enums
     /// </summary>
     public enum ReleaseStatus
     {
-        未发布=0,
+        待审核 = 0,
         草稿=1,
         发布=2,
         已删除=3

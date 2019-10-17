@@ -1,5 +1,5 @@
 import { Component, OnInit , Injector, Input, ViewChild} from '@angular/core';
-import { AppComponentBase } from '@shared/app-component-base';
+import { AppComponentBase } from '@shared/component-base/app-component-base';
 import { ActivatedRoute } from '@angular/router'
 import { UserDetailService } from 'services';
 import { UserDetailDto } from 'entities';

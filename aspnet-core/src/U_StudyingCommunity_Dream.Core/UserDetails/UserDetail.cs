@@ -23,6 +23,10 @@ namespace U_StudyingCommunity_Dream.UserDetails
     {
         public virtual long UserId { get; set; }
 
+        
+        [StringLength(20)]
+        public virtual string Name { get; set; }
+
         [Required]
         [StringLength(20)]
         public virtual string Surname { get; set; }

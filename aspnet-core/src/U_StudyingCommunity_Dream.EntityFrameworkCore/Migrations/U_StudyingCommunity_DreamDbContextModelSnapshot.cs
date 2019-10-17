@@ -1121,6 +1121,8 @@ namespace U_StudyingCommunity_Dream.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<int>("CategoryId");
+
                     b.Property<string>("CoverUrl")
                         .HasMaxLength(200);
 
@@ -1145,6 +1147,9 @@ namespace U_StudyingCommunity_Dream.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<string>("OtherUrls")
+                        .HasMaxLength(200);
+
                     b.Property<int>("Status");
 
                     b.HasKey("Id");
@@ -1156,6 +1161,8 @@ namespace U_StudyingCommunity_Dream.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreationTime");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1172,6 +1179,10 @@ namespace U_StudyingCommunity_Dream.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("Auditor");
+
+                    b.Property<long>("BookId");
 
                     b.Property<DateTime>("CreationTime");
 
@@ -1192,6 +1203,8 @@ namespace U_StudyingCommunity_Dream.Migrations
                         .HasMaxLength(100);
 
                     b.Property<int>("Status");
+
+                    b.Property<Guid?>("Uploader");
 
                     b.Property<string>("Url")
                         .IsRequired()
@@ -1333,6 +1346,9 @@ namespace U_StudyingCommunity_Dream.Migrations
                     b.Property<DateTime?>("LastModificationTime");
 
                     b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(20);
 
                     b.Property<string>("Occupation")
                         .HasMaxLength(50);

@@ -22,7 +22,7 @@ export class UserDetailService {
     }
 
     //获取分页数据
-    getAll(params: any): Observable<PagedResultDto> {
+    getUserListPaged(params: any): Observable<PagedResultDto> {
         let url_ = "/api/services/app/UserDetail/GetPaged";
         return this._commonhttp.get(url_, params).pipe(map(data => {
             const result = new PagedResultDto();

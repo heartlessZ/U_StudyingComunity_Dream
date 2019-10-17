@@ -48,5 +48,19 @@ export class UserDetailService {
         }));
     }
 
+    //修改密码
+    changePassword(pwdDto:any):Observable<boolean>{
+        let url_ = "/api/services/app/User/ChangePassword";
+        return this._commonhttp.post(url_,{pwdDto:pwdDto}).pipe(map(data => {
+            return data;
+        }));
+    }
 
+    editUserDetail(userDetail:UserDetailDto):Observable<boolean>{
+        let url_ = "/api/services/app/UserDetail/CreateOrUpdate";
+        let content=JSON.stringify(userDetail);
+        return this._commonhttp.post(url_,{userDetail:userDetail}).pipe(map(data => {
+            return data;
+        }));
+    }
 }

@@ -8,7 +8,7 @@
             <li nz-menu-item><a routerLink="community">社区</a></li>
             <li style="float: right;" *ngIf="isLogin; else elseBlock">
                 <a (click)="goPersonalInfo(currentUser.userDetailId)">
-                    <nz-avatar [nzSize]="64" nzIcon="user" ></nz-avatar>
+                    <nz-avatar [nzSize]="64" nzIcon="user" [nzSrc]="headUrl"></nz-avatar>
                 </a>
                 <a (click)="exit()">退出</a>
             </li>

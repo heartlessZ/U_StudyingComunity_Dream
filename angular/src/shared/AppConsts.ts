@@ -4,6 +4,10 @@ export class AppConsts {
     static appBaseUrl: string;
     static appBaseHref: string; // returns angular's base-href parameter value if used during the publish
 
+    static getFileUploadUrl():string{
+        return this.appBaseUrl + "/api/File/upload";
+    }
+
     static localeMappings: any = [];
 
     static readonly userManagement = {

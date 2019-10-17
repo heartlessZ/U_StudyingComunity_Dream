@@ -25,6 +25,8 @@ import { UserDetailService, CommonHttpClient } from 'services';
 import { ChangePasswordComponent } from './personal-center/change-password/change-password.component';
 import { UserDetailEditComponent } from './personal-center/user-detail-edit/user-detail-edit.component';
 
+import { NgZorroAntdModule } from 'ng-zorro-antd';
+
 @NgModule({
    declarations: [
       AppComponent,
@@ -48,7 +50,7 @@ import { UserDetailEditComponent } from './personal-center/user-detail-edit/user
       ServiceProxyModule,
       SharedModule,
       NgxPaginationModule,
-      ReactiveFormsModule
+      NgZorroAntdModule
    ],
    providers: [
       UserDetailService,

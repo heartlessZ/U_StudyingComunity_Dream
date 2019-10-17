@@ -33,19 +33,18 @@ namespace U_StudyingCommunity_Dream.UserDetails
     public class UserDetailAppService : U_StudyingCommunity_DreamAppServiceBase, IUserDetailAppService
     {
         private readonly IRepository<UserDetail, Guid> _entityRepository;
-        private readonly IObjectMapper _objectMapper;
-
+        private readonly UserManager _userManager;
 
         /// <summary>
         /// 构造函数 
         ///</summary>
         public UserDetailAppService(
-        IRepository<UserDetail, Guid> entityRepository
-        
+        IRepository<UserDetail, Guid> entityRepository,
+        UserManager userManager
         )
         {
-            _entityRepository = entityRepository; 
-            
+            _entityRepository = entityRepository;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -123,7 +122,10 @@ namespace U_StudyingCommunity_Dream.UserDetails
 		{
 			var entity = await _entityRepository.GetAsync(input.Id);
 
-		    return ObjectMapper.Map<UserDetailListDto>(entity);
+		    var result = ObjectMapper.Map<UserDetailListDto>(entity);
+            var user = await UserManager.GetUserByIdAsync(result.UserId);
+            result.Name = user.Name;
+            return result;
 		}
 
 		/// <summary>
@@ -161,7 +163,7 @@ UserDetailEditDto editDto;
 		/// <param name="input"></param>
 		/// <returns></returns>
 		
-		public async Task CreateOrUpdate(CreateOrUpdateUserDetailInput input)
+		public async Task<bool> CreateOrUpdate(CreateOrUpdateUserDetailInput input)
 		{
 
 			if (input.UserDetail.Id.HasValue)
@@ -170,8 +172,11 @@ UserDetailEditDto editDto;
 			}
 			else
 			{
-				await Create(input.UserDetail);
-			}
+                //await Create(input.UserDetail);
+                throw new UserFriendlyException("未找到该用户。");
+
+            }
+            return true;
 		}
 
 
@@ -200,9 +205,9 @@ UserDetailEditDto editDto;
 			//TODO:更新前的逻辑判断，是否允许更新
 
 			var entity = await _entityRepository.GetAsync(input.Id.Value);
-			input.MapTo(entity);
+			//input.MapTo(entity);
 
-			// ObjectMapper.Map(input, entity);
+			ObjectMapper.Map(input, entity);
 		    await _entityRepository.UpdateAsync(entity);
 		}
 

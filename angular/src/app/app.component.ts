@@ -11,7 +11,6 @@ import { NzIconService } from 'ng-zorro-antd/icon';
 @Component({
     templateUrl: './app.component.html',
     styleUrls: [
-        '../../node_modules/ng-zorro-antd/ng-zorro-antd.less',
         './app.component.less'
     ],
 })
@@ -37,9 +36,7 @@ export class AppComponent extends AppComponentBase implements OnInit//, AfterVie
     }
 
     ngOnInit(): void {
-
         this.getCurrentUser();
-
         SignalRAspNetCoreHelper.initSignalR();
 
         abp.event.on('abp.notifications.received', userNotification => {
@@ -66,8 +63,9 @@ export class AppComponent extends AppComponentBase implements OnInit//, AfterVie
             {
                 this.isLogin=true;
                 this.currentUser = result;
-                if(result.headPortraitUrl != null)
-                    this.headurl = this.host + result.headPortraitUrl;
+                this.headurl = this.host + result.headPortraitUrl;
+                console.log(this.headurl);
+                
             }
         })
     }

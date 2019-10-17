@@ -29,10 +29,10 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
             return false;
         }
         
-        // if (!this._sessionService.user) {
-        //     this._router.navigate(['/app/home']);
-        //     return false;
-        // }
+        if (!this._sessionService.user) {
+            this._router.navigate(['/account/login']);
+            return false;
+        }
 
         if (!route.data || !route.data['permission']) {
             return true;

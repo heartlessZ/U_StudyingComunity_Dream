@@ -1,3 +1,68 @@
-<p>
-  user-detail-edit works!
-</p>
+
+<form nz-form *ngIf="emodalUserVisible" [formGroup]="validateForm" (ngSubmit)="handleOk()">
+  <nz-modal
+        [(nzVisible)]="emodalUserVisible"
+        nzTitle="编辑个人资料"
+        (nzOnCancel)="handleCancel()"
+        (nzOnOk)="handleOk()"
+        [nzOkLoading]="isOkLoading"
+        [nzFooter]="modalFooter"
+      >
+      <nz-form-item>
+        <nz-upload
+      class="avatar-uploader"
+      [nzAction]="fileUploadUrl"
+      nzName="avatar"
+      nzListType="picture-card"
+      [nzShowUploadList]="false"
+      [nzBeforeUpload]="beforeUpload"
+      (nzChange)="handleChange($event)"
+    >
+      <ng-container *ngIf="!avatarUrl">
+        <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+        <div class="ant-upload-text">Upload</div>
+      </ng-container>
+      <img *ngIf="avatarUrl" [src]="avatarUrl" class="avatar" />
+    </nz-upload>
+    
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="4">用户名</nz-form-label>
+        <nz-form-control [nzSpan]="8">
+          {{userDetail.name}}
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="4">邮箱</nz-form-label>
+        <nz-form-control [nzSpan]="8">
+          {{userDetail.email}}
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="4" nzRequired nzFor="surname">昵称</nz-form-label>
+        <nz-form-control [nzSpan]="8" nzErrorTip="昵称不能为空">
+          <input type="text" nz-input formControlName="surname" placeholder="请输入昵称" [(ngModel)]="userDetail.surname"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="4">性别</nz-form-label>
+        <nz-form-control [nzSpan]="8">
+          <nz-radio-group formControlName="gender" [(ngModel)]="userDetail.gender">
+            <label nz-radio nzValue="男">男</label>
+            <label nz-radio nzValue="女">女</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="4">个人描述</nz-form-label>
+        <nz-form-control [nzSpan]="16" >
+          <textarea rows="4" formControlName="description" nz-input [(ngModel)]="userDetail.description"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+
+      <ng-template #modalFooter>
+        <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">保存</button>
+        <button nz-button nzType="default" (click)="handleCancel()">取消</button>
+      </ng-template>
+  </nz-modal>
+  </form>

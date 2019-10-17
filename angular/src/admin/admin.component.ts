@@ -4,8 +4,7 @@ import { AppComponentBase } from '@shared/app-component-base';
 @Component({
     templateUrl: 'admin.component.html',
     styleUrls: [
-        'admin.component.less',
-        '../../node_modules/ng-zorro-antd/ng-zorro-antd.less'
+        'admin.component.less'
     ],
     encapsulation: ViewEncapsulation.None
 })

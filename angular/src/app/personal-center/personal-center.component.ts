@@ -10,8 +10,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
   selector: 'app-personal-center',
   templateUrl: './personal-center.component.html',
   styleUrls: [
-    '../../../node_modules/ng-zorro-antd/ng-zorro-antd.less',
-    './personal-center.component.css']
+    './personal-center.component.css'
+  ],
 })
 export class PersonalCenterComponent extends AppComponentBase implements OnInit {
   @ViewChild('userDetailEditModal',{static:true}) userDetailEditModal: UserDetailEditComponent;
@@ -19,7 +19,7 @@ export class PersonalCenterComponent extends AppComponentBase implements OnInit 
   @Input() userDetailId;
 
   user : UserDetailDto = new UserDetailDto();
-
+  headUrl:string;
   constructor(injector: Injector,
     private actRouter: ActivatedRoute,
     private userDetailService : UserDetailService) {
@@ -32,12 +32,13 @@ export class PersonalCenterComponent extends AppComponentBase implements OnInit 
   }
 
   getUserDetail():void{
-    console.log(this.userDetailId);
+    //console.log(this.userDetailId);
     this.userDetailService.getUserDetailById(this.userDetailId).subscribe((result)=>{
-      console.log(result);
+      //console.log(result);
       if(result.id != undefined)
       {
         this.user = result;
+        this.headUrl = this.userDetailService.baseUrl + result.headPortraitUrl;
       }
     })
   }
@@ -46,8 +47,13 @@ export class PersonalCenterComponent extends AppComponentBase implements OnInit 
     this.changePasswordModal.show();
   }
 
-  refreshData():void{
+  editUserDetail():void{
+    
+    this.userDetailEditModal.showWin(this.userDetailId);
+  }
 
+  refreshData():void{
+    this.getUserDetail();
   }
 
 }

@@ -2,13 +2,15 @@ import { Component, OnInit, EventEmitter, Output, Injector } from '@angular/core
 import { AppComponentBase } from '@shared/app-component-base';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Observable, Observer } from 'rxjs';
+import { UserDetailService } from 'services';
+import { AccountServiceProxy, ChangePasswordDto, UserServiceProxy } from '@shared/service-proxies/service-proxies';
 
 @Component({
   selector: 'app-change-password-model',
   templateUrl: './change-password.component.html',
   styleUrls: [
-    '../../../../node_modules/ng-zorro-antd/ng-zorro-antd.less',
-    './change-password.component.css']
+    './change-password.component.css'
+  ],
 })
 export class ChangePasswordComponent extends AppComponentBase implements OnInit {
   @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
@@ -17,8 +19,13 @@ export class ChangePasswordComponent extends AppComponentBase implements OnInit 
   emodalVisible = false;//模态框是否显示
   isOkLoading = false;
 
+  pwdDto:ChangePasswordDto = new ChangePasswordDto();
+
   constructor(injector: Injector,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    //private userDetailService : UserDetailService,
+    //private accountServiceProxy:AccountServiceProxy,
+    private userServiceProxy:UserServiceProxy) {
     super(injector);
     this.validateForm = this.fb.group({
       oldPwd: ['', [Validators.required]],
@@ -32,18 +39,29 @@ export class ChangePasswordComponent extends AppComponentBase implements OnInit 
    */
   show() {
     this.emodalVisible = true;
+    console.log("修改密码");
+    
   }
 
   handleOk(): void {
     this.isOkLoading = true;
-    setTimeout(() => {
-      this.emodalVisible = false;
-      this.isOkLoading = false;
-    }, 3000);
+    this.submitForm(this.pwdDto);
+    
+    if(!this.validateForm.valid)
+      return;
+    this.userServiceProxy.changePassword(this.pwdDto).subscribe((result)=>{
+      if(result)
+      {
+        this.message.success("修改成功");
+        this.emodalVisible = false;
+        this.isOkLoading = false;
+      }
+    })
   }
 
   handleCancel(): void {
     this.emodalVisible = false;
+    this.validateForm.reset();
   }
 
   ngOnInit() {
@@ -54,7 +72,6 @@ export class ChangePasswordComponent extends AppComponentBase implements OnInit 
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
     }
-    console.log(value);
   }
 
   resetForm(e: MouseEvent): void {
@@ -80,3 +97,4 @@ export class ChangePasswordComponent extends AppComponentBase implements OnInit 
   };
 
 }
+

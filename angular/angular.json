@@ -36,7 +36,7 @@
               }
             ],
             "styles": [
-              "node_modules/ng-zorro-antd/ng-zorro-antd-extra/style/index.css",
+              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/assets/fonts/roboto/roboto.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -180,7 +180,7 @@
               "src/bsb-theme/js/jquery.validate.js"
             ],
             "styles": [
-              "node_modules/ng-zorro-antd/ng-zorro-antd-extra/style/index.css",
+              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "src/assets/fonts/roboto/roboto.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/simple-line-icons/css/simple-line-icons.css",

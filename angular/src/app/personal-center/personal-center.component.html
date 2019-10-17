@@ -1,7 +1,8 @@
-<nz-card class="simpleInfo">
-    <nz-descriptions nzTitle="个人信息" nzLayout="horizontal">
+<nz-card class="simpleInfo" nzTitle="个人信息" [nzExtra]="extraTemplate">
+    <nz-descriptions nzLayout="horizontal">
       
-        <nz-avatar [nzSize]="64" nzIcon="user" nzSrc="user.headPortraitUrl"></nz-avatar>
+      <nz-descriptions-item nzTitle="头像"><nz-avatar [nzSize]="64" nzIcon="user" [nzSrc]="headUrl"></nz-avatar></nz-descriptions-item>
+        
         <nz-descriptions-item nzTitle="用户名">{{user.name}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="昵称">{{user.surname}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="性别">{{user.gender}}</nz-descriptions-item>
@@ -12,5 +13,8 @@
 
       <a (click)="changePassword()">修改密码</a>
   </nz-card>
+  <ng-template #extraTemplate>
+    <a (click)="editUserDetail()">编辑资料</a>
+  </ng-template>
   <app-user-detail-edit-model #userDetailEditModal (modalSave)="refreshData()"></app-user-detail-edit-model>
   <app-change-password-model #changePasswordModal (modalSave)="refreshData()"></app-change-password-model>

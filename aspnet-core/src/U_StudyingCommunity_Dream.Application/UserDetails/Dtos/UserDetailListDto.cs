@@ -20,7 +20,7 @@ namespace U_StudyingCommunity_Dream.UserDetails.Dtos
 		/// </summary>
 		public long UserId { get; set; }
 
-
+        public string Name { get; set; }
 
 		/// <summary>
 		/// Surname

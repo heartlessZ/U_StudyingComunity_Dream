@@ -55,7 +55,7 @@ namespace U_StudyingCommunity_Dream.UserDetails
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task CreateOrUpdate(CreateOrUpdateUserDetailInput input);
+        Task<bool> CreateOrUpdate(CreateOrUpdateUserDetailInput input);
 
 
         /// <summary>

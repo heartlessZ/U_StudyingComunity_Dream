@@ -366,7 +366,8 @@ namespace U_StudyingCommunity_Dream.Migrations
                     IsActive = table.Column<bool>(nullable: false),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: false),
                     NormalizedEmailAddress = table.Column<string>(maxLength: 256, nullable: false),
-                    ConcurrencyStamp = table.Column<string>(maxLength: 128, nullable: true)
+                    ConcurrencyStamp = table.Column<string>(maxLength: 128, nullable: true),
+                    UserDetailId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -389,6 +390,243 @@ namespace U_StudyingCommunity_Dream.Migrations
                         principalTable: "AbpUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "article_ArticleCategories",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ArticleId = table.Column<long>(nullable: false),
+                    ArticleCategoryId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_article_ArticleCategories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "articleCategory",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_articleCategory", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "articles",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorUserId = table.Column<long>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierUserId = table.Column<long>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeleterUserId = table.Column<long>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
+                    Headline = table.Column<string>(maxLength: 100, nullable: false),
+                    Content = table.Column<string>(nullable: false),
+                    Praise = table.Column<long>(nullable: false),
+                    VisitVolume = table.Column<long>(nullable: false),
+                    ReleaseStatus = table.Column<int>(nullable: false),
+                    UserDetailId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_articles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "bookCategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(maxLength: 20, nullable: false),
+                    Parent = table.Column<int>(nullable: false),
+                    CreationTime = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_bookCategories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "bookResource",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorUserId = table.Column<long>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierUserId = table.Column<long>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeleterUserId = table.Column<long>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
+                    BookId = table.Column<long>(nullable: false),
+                    Url = table.Column<string>(maxLength: 200, nullable: false),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Uploader = table.Column<Guid>(nullable: true),
+                    Auditor = table.Column<Guid>(nullable: true),
+                    Status = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_bookResource", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "books",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorUserId = table.Column<long>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierUserId = table.Column<long>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeleterUserId = table.Column<long>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Author = table.Column<string>(maxLength: 50, nullable: false),
+                    Description = table.Column<string>(maxLength: 500, nullable: true),
+                    CoverUrl = table.Column<string>(maxLength: 200, nullable: true),
+                    OtherUrls = table.Column<string>(maxLength: 200, nullable: true),
+                    CategoryId = table.Column<int>(nullable: false),
+                    Status = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_books", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "comments",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorUserId = table.Column<long>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierUserId = table.Column<long>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeleterUserId = table.Column<long>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
+                    Content = table.Column<string>(maxLength: 200, nullable: false),
+                    UserDetailId = table.Column<Guid>(nullable: false),
+                    Parent = table.Column<long>(nullable: false),
+                    ArticleId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_comments", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "fans",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<Guid>(nullable: false),
+                    FansId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_fans", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "projects",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorUserId = table.Column<long>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierUserId = table.Column<long>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeleterUserId = table.Column<long>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
+                    Node = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Progress = table.Column<decimal>(nullable: false),
+                    IsPublic = table.Column<bool>(nullable: false),
+                    ParentNode = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_projects", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "userDetail_Books",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<Guid>(nullable: false),
+                    BookId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_userDetail_Books", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "userDetail_Projects",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<Guid>(nullable: false),
+                    ProjectId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_userDetail_Projects", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "userDetails",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorUserId = table.Column<long>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierUserId = table.Column<long>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeleterUserId = table.Column<long>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
+                    UserId = table.Column<long>(nullable: false),
+                    Name = table.Column<string>(maxLength: 20, nullable: true),
+                    Surname = table.Column<string>(maxLength: 20, nullable: false),
+                    Description = table.Column<string>(maxLength: 100, nullable: true),
+                    HeadPortraitUrl = table.Column<string>(maxLength: 200, nullable: true),
+                    Gender = table.Column<int>(maxLength: 2, nullable: true),
+                    Birthday = table.Column<DateTime>(nullable: true),
+                    Site = table.Column<string>(maxLength: 100, nullable: true),
+                    Occupation = table.Column<string>(maxLength: 50, nullable: true),
+                    PhoneNumber = table.Column<string>(maxLength: 11, nullable: true),
+                    Email = table.Column<string>(maxLength: 100, nullable: true),
+                    IsAdmin = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_userDetails", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -1114,6 +1352,42 @@ namespace U_StudyingCommunity_Dream.Migrations
 
             migrationBuilder.DropTable(
                 name: "AbpUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "article_ArticleCategories");
+
+            migrationBuilder.DropTable(
+                name: "articleCategory");
+
+            migrationBuilder.DropTable(
+                name: "articles");
+
+            migrationBuilder.DropTable(
+                name: "bookCategories");
+
+            migrationBuilder.DropTable(
+                name: "bookResource");
+
+            migrationBuilder.DropTable(
+                name: "books");
+
+            migrationBuilder.DropTable(
+                name: "comments");
+
+            migrationBuilder.DropTable(
+                name: "fans");
+
+            migrationBuilder.DropTable(
+                name: "projects");
+
+            migrationBuilder.DropTable(
+                name: "userDetail_Books");
+
+            migrationBuilder.DropTable(
+                name: "userDetail_Projects");
+
+            migrationBuilder.DropTable(
+                name: "userDetails");
 
             migrationBuilder.DropTable(
                 name: "AbpEntityChanges");

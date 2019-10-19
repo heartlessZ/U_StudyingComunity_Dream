@@ -2,12 +2,13 @@
   <form nz-form (ngSubmit)="refreshData()" [nzLayout]="'inline'">
     <div nz-row [nzGutter]="18">
         <div nz-col [nzSpan]="8" class="mb-md">
-            <nz-form-item class="d-flex" style="margin-bottom: 0px;">
+            <nz-tree [nzData]="nodes" nzShowLine (nzClick)="nzEvent($event)"> </nz-tree>
+            <!-- <nz-form-item class="d-flex" style="margin-bottom: 0px;">
                 <nz-form-label nzFor="name">书籍查询</nz-form-label>
                 <nz-form-control class="flex-1">
                     <input nz-input name="name" [(ngModel)]="search.name" [placeholder]="'请输入书名或作者'">
                 </nz-form-control>
-            </nz-form-item>
+            </nz-form-item> -->
         </div>
         <div nz-col [nzSpan]="8" class="mb-md">
           <nz-form-item class="d-flex" style="margin-bottom: 0px;">

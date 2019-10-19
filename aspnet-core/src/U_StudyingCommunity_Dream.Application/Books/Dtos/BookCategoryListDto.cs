@@ -5,9 +5,12 @@ using Abp.Application.Services.Dto;
 using Abp.Domain.Entities.Auditing;
 using System.ComponentModel.DataAnnotations;
 using U_StudyingCommunity_Dream.Books;
+using Abp.AutoMapper;
 
 namespace U_StudyingCommunity_Dream.Books.Dtos
 {
+
+    [AutoMapFrom(typeof(BookCategory))]
     public class BookCategoryListDto : EntityDto<int>,IHasCreationTime 
     {
 

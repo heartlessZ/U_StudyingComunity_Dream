@@ -72,6 +72,13 @@ namespace U_StudyingCommunity_Dream.Books
         Task BatchDelete(List<int> input);
 
 
+        /// <summary>
+        /// 获取书籍类别树
+        /// </summary>
+        /// <returns></returns>
+        Task<List<BookCategoryTreeNodesDto>> GetNodes();
+
+
 		/// <summary>
         /// 导出BookCategory为excel表
         /// </summary>

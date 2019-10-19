@@ -31,6 +31,7 @@ namespace U_StudyingCommunity_Dream.Articles
 
         public virtual long VisitVolume { get; set; }
 
+        [Required]
         public virtual ReleaseStatus ReleaseStatus { get; set; }
 
         public virtual Guid UserDetailId { get; set; }

@@ -1,0 +1,16 @@
+<form nz-form *ngIf="emodalVisible" [formGroup]="validateForm" (ngSubmit)="handleOk()">
+  <nz-modal [(nzVisible)]="emodalVisible" nzTitle="创建新书籍分类" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+    [nzOkLoading]="isOkLoading" [nzFooter]="modalFooter">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzRequired nzFor="name">类别名称</nz-form-label>
+      <nz-form-control [nzSpan]="8" nzErrorTip="类别名称不能为空">
+        <input type="text" nz-input formControlName="name" placeholder="请输入类别名称" [(ngModel)]="category.title" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <ng-template #modalFooter>
+      <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">保存</button>
+      <button nz-button nzType="default" (click)="handleCancel()">取消</button>
+    </ng-template>
+  </nz-modal>
+</form>

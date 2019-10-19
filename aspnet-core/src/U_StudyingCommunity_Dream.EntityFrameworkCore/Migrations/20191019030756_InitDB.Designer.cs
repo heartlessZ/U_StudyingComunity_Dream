@@ -9,7 +9,7 @@ using U_StudyingCommunity_Dream.EntityFrameworkCore;
 namespace U_StudyingCommunity_Dream.Migrations
 {
     [DbContext(typeof(U_StudyingCommunity_DreamDbContext))]
-    [Migration("20191003112534_InitDB")]
+    [Migration("20191019030756_InitDB")]
     partial class InitDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -857,6 +857,107 @@ namespace U_StudyingCommunity_Dream.Migrations
                     b.ToTable("AbpOrganizationUnitRoles");
                 });
 
+            modelBuilder.Entity("U_StudyingCommunity_Dream.Articles.Article", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Content")
+                        .IsRequired();
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<string>("Headline")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<long>("Praise");
+
+                    b.Property<int>("ReleaseStatus");
+
+                    b.Property<Guid>("UserDetailId");
+
+                    b.Property<long>("VisitVolume");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("articles");
+                });
+
+            modelBuilder.Entity("U_StudyingCommunity_Dream.Articles.ArticleCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("articleCategory");
+                });
+
+            modelBuilder.Entity("U_StudyingCommunity_Dream.Articles.Article_ArticleCategory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ArticleCategoryId");
+
+                    b.Property<long>("ArticleId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("article_ArticleCategories");
+                });
+
+            modelBuilder.Entity("U_StudyingCommunity_Dream.Articles.Comment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long>("ArticleId");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(200);
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<long>("Parent");
+
+                    b.Property<Guid>("UserDetailId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("comments");
+                });
+
             modelBuilder.Entity("U_StudyingCommunity_Dream.Authorization.Roles.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -992,6 +1093,8 @@ namespace U_StudyingCommunity_Dream.Migrations
 
                     b.Property<int?>("TenantId");
 
+                    b.Property<Guid>("UserDetailId");
+
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(256);
@@ -1009,6 +1112,109 @@ namespace U_StudyingCommunity_Dream.Migrations
                     b.HasIndex("TenantId", "NormalizedUserName");
 
                     b.ToTable("AbpUsers");
+                });
+
+            modelBuilder.Entity("U_StudyingCommunity_Dream.Books.Book", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<int>("CategoryId");
+
+                    b.Property<string>("CoverUrl")
+                        .HasMaxLength(200);
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500);
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("OtherUrls")
+                        .HasMaxLength(200);
+
+                    b.Property<int>("Status");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("books");
+                });
+
+            modelBuilder.Entity("U_StudyingCommunity_Dream.Books.BookCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<int>("Parent");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("bookCategories");
+                });
+
+            modelBuilder.Entity("U_StudyingCommunity_Dream.Books.BookResource", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("Auditor");
+
+                    b.Property<long>("BookId");
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<int>("Status");
+
+                    b.Property<Guid?>("Uploader");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(200);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("bookResource");
                 });
 
             modelBuilder.Entity("U_StudyingCommunity_Dream.MultiTenancy.Tenant", b =>
@@ -1058,6 +1264,142 @@ namespace U_StudyingCommunity_Dream.Migrations
                     b.HasIndex("TenancyName");
 
                     b.ToTable("AbpTenants");
+                });
+
+            modelBuilder.Entity("U_StudyingCommunity_Dream.Projects.Project", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<bool>("IsPublic");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<Guid>("Node");
+
+                    b.Property<Guid?>("ParentNode");
+
+                    b.Property<decimal>("Progress");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("projects");
+                });
+
+            modelBuilder.Entity("U_StudyingCommunity_Dream.UserDetails.Fans", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("FansId");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("fans");
+                });
+
+            modelBuilder.Entity("U_StudyingCommunity_Dream.UserDetails.UserDetail", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("Birthday");
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(100);
+
+                    b.Property<int?>("Gender")
+                        .HasMaxLength(2);
+
+                    b.Property<string>("HeadPortraitUrl")
+                        .HasMaxLength(200);
+
+                    b.Property<bool>("IsAdmin");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("Occupation")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(11);
+
+                    b.Property<string>("Site")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<long>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("userDetails");
+                });
+
+            modelBuilder.Entity("U_StudyingCommunity_Dream.UserDetails.UserDetail_Book", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long>("BookId");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("userDetail_Books");
+                });
+
+            modelBuilder.Entity("U_StudyingCommunity_Dream.UserDetails.UserDetail_Project", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long>("ProjectId");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("userDetail_Projects");
                 });
 
             modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>

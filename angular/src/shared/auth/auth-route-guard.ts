@@ -21,6 +21,13 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         //alert(JSON.stringify(this._sessionService.user));
         //权限分流
+
+        if (this._sessionService.user == undefined)
+        {
+            this._router.navigate(['/account/login']);
+            return false;
+        }
+
         if (state.url.indexOf('admin') != -1){
             if (this._sessionService.user.roleIds.indexOf(1) != -1){
                 return true;

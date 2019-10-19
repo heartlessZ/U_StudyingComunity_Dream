@@ -142,14 +142,20 @@ BookCategoryEditDto editDto;
 		
 		protected virtual async Task<BookCategoryEditDto> Create(BookCategoryEditDto input)
 		{
-			//TODO:新增前的逻辑判断，是否允许新增
+            //TODO:新增前的逻辑判断，是否允许新增
 
-            // var entity = ObjectMapper.Map <BookCategory>(input);
-            var entity=input.MapTo<BookCategory>();
-			
+            //var entity = ObjectMapper.Map<BookCategory>(input);
+            //var entity=input.MapTo<BookCategory>();
+            var entity = new BookCategory()
+            {
+                Name = input.Name,
+                Parent = input.Parent
+            };
 
-			entity = await _entityRepository.InsertAsync(entity);
-			return entity.MapTo<BookCategoryEditDto>();
+            entity = await _entityRepository.InsertAsync(entity);
+
+            //ObjectMapper.Map(entity, input);
+            return input;
 		}
 
 		/// <summary>
@@ -161,9 +167,9 @@ BookCategoryEditDto editDto;
 			//TODO:更新前的逻辑判断，是否允许更新
 
 			var entity = await _entityRepository.GetAsync(input.Id.Value);
-			input.MapTo(entity);
+			//input.MapTo(entity);
 
-			// ObjectMapper.Map(input, entity);
+			 ObjectMapper.Map(input, entity);
 		    await _entityRepository.UpdateAsync(entity);
 		}
 
@@ -193,18 +199,52 @@ BookCategoryEditDto editDto;
 			await _entityRepository.DeleteAsync(s => input.Contains(s.Id));
 		}
 
+        [AbpAllowAnonymous]
+        public async Task<List<BookCategoryTreeNodesDto>> GetNodes()
+        {
+            var result = new List<BookCategoryTreeNodesDto>();
+            var categories = _entityRepository.GetAll().Where(c => c.Parent == 0);
+            foreach (var category in categories)
+            {
+                result.Add(new BookCategoryTreeNodesDto()
+                {
+                    Key = category.Id,
+                    Parent = 0,
+                    Title = category.Name,
+                    Children = GetChildNodes(category.Id)
+                });
+            }
+            return result;
+        }
 
-		/// <summary>
-		/// 导出BookCategory为excel表,等待开发。
-		/// </summary>
-		/// <returns></returns>
-		//public async Task<FileDto> GetToExcel()
-		//{
-		//	var users = await UserManager.Users.ToListAsync();
-		//	var userListDtos = ObjectMapper.Map<List<UserListDto>>(users);
-		//	await FillRoleNames(userListDtos);
-		//	return _userListExcelExporter.ExportToFile(userListDtos);
-		//}
+        private List<BookCategoryTreeNodesDto> GetChildNodes(int parent)
+        {
+            var result = new List<BookCategoryTreeNodesDto>();
+            var categories = _entityRepository.GetAll().Where(c => c.Parent == parent);
+            foreach (var category in categories)
+            {
+                result.Add(new BookCategoryTreeNodesDto()
+                {
+                    Key = category.Id,
+                    Title = category.Name,
+                    Parent = parent,
+                    Children = GetChildNodes(category.Id)
+                });
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 导出BookCategory为excel表,等待开发。
+        /// </summary>
+        /// <returns></returns>
+        //public async Task<FileDto> GetToExcel()
+        //{
+        //	var users = await UserManager.Users.ToListAsync();
+        //	var userListDtos = ObjectMapper.Map<List<UserListDto>>(users);
+        //	await FillRoleNames(userListDtos);
+        //	return _userListExcelExporter.ExportToFile(userListDtos);
+        //}
 
     }
 }

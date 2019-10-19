@@ -1,12 +1,16 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using Abp.Application.Services.Dto;
+using Abp.AutoMapper;
 using Abp.Domain.Entities.Auditing;
 using U_StudyingCommunity_Dream.Books;
 
 namespace  U_StudyingCommunity_Dream.Books.Dtos
 {
-    public class BookCategoryEditDto
+
+    [AutoMapTo(typeof(BookCategory))]
+    public class BookCategoryEditDto : EntityDto<int>, IHasCreationTime
     {
 
         /// <summary>

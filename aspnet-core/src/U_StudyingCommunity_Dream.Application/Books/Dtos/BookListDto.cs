@@ -9,6 +9,7 @@ using U_StudyingCommunity_Dream.Enums;
 
 namespace U_StudyingCommunity_Dream.Books.Dtos
 {
+
     public class BookListDto : FullAuditedEntityDto<long> 
     {
 

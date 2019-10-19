@@ -21,13 +21,15 @@ namespace U_StudyingCommunity_Dream.Projects
     public class Project: FullAuditedEntity<long>
     {
         [Required]
+        public virtual Guid Node { get; set; }
+        [Required]
         [StringLength(50)]
         public virtual string Name { get; set; }
 
         public virtual decimal Progress { get; set; }
-
+        
         public virtual bool IsPublic { get; set; }
 
-        public virtual long Parent { get; set; }
+        public virtual Guid? ParentNode { get; set; }
     }
 }

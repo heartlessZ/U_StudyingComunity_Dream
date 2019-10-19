@@ -1289,7 +1289,9 @@ namespace U_StudyingCommunity_Dream.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<long>("Parent");
+                    b.Property<Guid>("Node");
+
+                    b.Property<Guid?>("ParentNode");
 
                     b.Property<decimal>("Progress");
 

@@ -54,7 +54,7 @@ namespace U_StudyingCommunity_Dream.Books
         ///</summary>
         /// <param name="input"></param>
         /// <returns></returns>
-		 
+		 [AbpAllowAnonymous]
         public async Task<PagedResultDto<BookListDto>> GetPaged(GetBooksInput input)
 		{
 

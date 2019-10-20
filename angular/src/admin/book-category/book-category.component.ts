@@ -82,10 +82,14 @@ export class BookCategoryComponent extends AppComponentBase implements OnInit {
   }
 
   getBookCategoryNodes(): void {
-    this.bookService.getBookCategoryListPaged().subscribe((result) => {
+    this.bookService.getBookCategoryList().subscribe((result) => {
       console.log(result);
       this.bookCategoryNodes = result;
     });
+  }
+
+  createRootNode():void{
+    this.createCategoryModal.show();
   }
 
   createChild(): void {

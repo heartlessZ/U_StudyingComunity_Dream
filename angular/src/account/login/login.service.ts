@@ -83,7 +83,7 @@ export class LoginService {
             initialUrl = AppConsts.appBaseUrl;
         }
         if(isAdmin)
-            initialUrl = initialUrl + "/admin";
+            initialUrl = "/admin/home";
 
         //console.log(initialUrl);
         

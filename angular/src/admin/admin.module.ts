@@ -18,10 +18,11 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { UserDetailService, CommonHttpClient, BookService } from 'services';
-import { LibraryComponent } from '@app/library/library.component';
+import { LibraryComponent } from './library/library.component';
 import { BookCategoryComponent } from './book-category/book-category.component';
 import { CreateCategoryComponent } from './book-category/create-category/create-category.component';
 import { BookCategoryDetailComponent } from './book-category/book-category-detail/book-category-detail.component';
+import { BookDetailComponent } from './library/book-detail/book-detail.component';
 
 @NgModule({
     imports: [
@@ -40,10 +41,14 @@ import { BookCategoryDetailComponent } from './book-category/book-category-detai
         AdminComponent,
         HomeComponent,
         UserComponent,
+
         LibraryComponent,
+        BookDetailComponent,
+
         BookCategoryComponent,
         CreateCategoryComponent,
-        BookCategoryDetailComponent
+        BookCategoryDetailComponent,
+
     ],
     providers: [
         UserDetailService,

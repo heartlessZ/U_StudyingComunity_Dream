@@ -20,9 +20,7 @@ using Abp.Linq.Extensions;
 
 using U_StudyingCommunity_Dream.Books;
 using U_StudyingCommunity_Dream.Books.Dtos;
-
-
-
+using Abp.ObjectMapping;
 
 namespace U_StudyingCommunity_Dream.Books
 {
@@ -33,19 +31,22 @@ namespace U_StudyingCommunity_Dream.Books
     public class BookAppService : U_StudyingCommunity_DreamAppServiceBase, IBookAppService
     {
         private readonly IRepository<Book, long> _entityRepository;
+        private readonly IRepository<BookCategory, int> _categoryRepository;
 
-        
+
 
         /// <summary>
         /// 构造函数 
         ///</summary>
         public BookAppService(
         IRepository<Book, long> entityRepository
-        
+        , IRepository<BookCategory, int> categoryRepository
+        , IObjectMapper objectMapper
         )
         {
-            _entityRepository = entityRepository; 
-            
+            _entityRepository = entityRepository;
+            _categoryRepository = categoryRepository;
+            ObjectMapper = objectMapper;
         }
 
 
@@ -57,8 +58,17 @@ namespace U_StudyingCommunity_Dream.Books
 		 [AbpAllowAnonymous]
         public async Task<PagedResultDto<BookListDto>> GetPaged(GetBooksInput input)
 		{
+            var categoryIds = new List<int>();
+            if (input.CategoryId.HasValue)
+            {
+                categoryIds = GetChildrenCategoryIds(input.CategoryId.Value);
+                categoryIds.Add(input.CategoryId.Value);
+            }
 
-		    var query = _entityRepository.GetAll();
+            var query = _entityRepository.GetAll()
+                .WhereIf(!string.IsNullOrEmpty(input.Keyword)
+                , b => b.Name.Contains(input.Keyword) || b.Author.Contains(input.Keyword))
+                .WhereIf(input.CategoryId.HasValue, i => categoryIds.Contains(i.CategoryId));
 			// TODO:根据传入的参数添加过滤条件
             
 
@@ -69,11 +79,24 @@ namespace U_StudyingCommunity_Dream.Books
 					.PageBy(input)
 					.ToListAsync();
 
-			// var entityListDtos = ObjectMapper.Map<List<BookListDto>>(entityList);
-			var entityListDtos =entityList.MapTo<List<BookListDto>>();
+			var entityListDtos = ObjectMapper.Map<List<BookListDto>>(entityList);
+			//var entityListDtos =entityList.MapTo<List<BookListDto>>();
 
 			return new PagedResultDto<BookListDto>(count,entityListDtos);
 		}
+
+        private List<int> GetChildrenCategoryIds(int id)
+        {
+            var ids = new List<int>();
+            //var a = _categoryRepository.GetAll();
+            var categories = _categoryRepository.GetAll().Where(i => i.Parent == id);
+            foreach (var category in categories)
+            {
+                ids.Add(category.Id);
+                GetChildrenCategoryIds(category.Id);
+            }
+            return ids;
+        }
 
 
 		/// <summary>
@@ -144,13 +167,15 @@ BookEditDto editDto;
 		{
 			//TODO:新增前的逻辑判断，是否允许新增
 
-            // var entity = ObjectMapper.Map <Book>(input);
-            var entity=input.MapTo<Book>();
+            var entity = ObjectMapper.Map<Book>(input);
+            //var entity=input.MapTo<Book>();
 			
 
 			entity = await _entityRepository.InsertAsync(entity);
-			return entity.MapTo<BookEditDto>();
-		}
+            //return entity.MapTo<BookEditDto>();
+            //return ObjectMapper.Map<BookEditDto>(entity);
+            return input;
+        }
 
 		/// <summary>
 		/// 编辑Book
@@ -161,9 +186,9 @@ BookEditDto editDto;
 			//TODO:更新前的逻辑判断，是否允许更新
 
 			var entity = await _entityRepository.GetAsync(input.Id.Value);
-			input.MapTo(entity);
+			//input.MapTo(entity);
 
-			// ObjectMapper.Map(input, entity);
+			ObjectMapper.Map(input, entity);
 		    await _entityRepository.UpdateAsync(entity);
 		}
 

@@ -209,8 +209,10 @@ BookCategoryEditDto editDto;
                 result.Add(new BookCategoryTreeNodesDto()
                 {
                     Key = category.Id,
+                    Value = category.Id,
                     Parent = 0,
                     Title = category.Name,
+                    Lable = category.Name,
                     Children = GetChildNodes(category.Id)
                 });
             }
@@ -226,8 +228,10 @@ BookCategoryEditDto editDto;
                 result.Add(new BookCategoryTreeNodesDto()
                 {
                     Key = category.Id,
+                    Value = category.Id,
                     Title = category.Name,
                     Parent = parent,
+                    Lable = category.Name,
                     Children = GetChildNodes(category.Id)
                 });
             }

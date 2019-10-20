@@ -16,8 +16,10 @@ namespace U_StudyingCommunity_Dream.Books.Dtos
     public class BookCategoryTreeNodesDto
     {
         public string Title { get; set; }
+        public string Lable { get; set; }
 
         public int Key { get; set; }
+        public int Value { get; set; }
 
         public int Parent { get; set; }
 

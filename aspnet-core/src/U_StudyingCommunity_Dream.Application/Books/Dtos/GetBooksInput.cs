@@ -7,7 +7,9 @@ namespace U_StudyingCommunity_Dream.Books.Dtos
 {
     public class GetBooksInput : PagedSortedAndFilteredInputDto, IShouldNormalize
     {
+        public string Keyword { get; set; }
 
+        public int? CategoryId { get; set; }
         /// <summary>
         /// 正常化排序使用
         /// </summary>

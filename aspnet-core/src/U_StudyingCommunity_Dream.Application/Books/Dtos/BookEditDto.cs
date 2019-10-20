@@ -1,13 +1,16 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using Abp.AutoMapper;
 using Abp.Domain.Entities.Auditing;
 using U_StudyingCommunity_Dream.Books;
 using U_StudyingCommunity_Dream.Enums;
 
 namespace  U_StudyingCommunity_Dream.Books.Dtos
 {
-    public class BookEditDto
+
+    [AutoMapTo(typeof(Book))]
+    public class BookEditDto : FullAuditedEntity<long>
     {
 
         /// <summary>

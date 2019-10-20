@@ -1,9 +1,11 @@
-import { Component, OnInit, Injector } from '@angular/core';
+import { Component, OnInit, Injector, ViewChild } from '@angular/core';
 import { PagedListingComponentBase, PagedRequestDto, PagedResultDto } from '@shared/component-base';
 import { BookService } from 'services';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 
 import { NzFormatEmitEvent } from 'ng-zorro-antd/core';
+import { BookDetailComponent } from './book-detail/book-detail.component';
+import { BookCategoryDto, SelectBookCategory } from 'entities';
 
 const options = [
   {
@@ -55,56 +57,38 @@ const options = [
 
 
 export class LibraryComponent extends PagedListingComponentBase<any> {
+  @ViewChild('bookDetailModal', { static: true }) bookDetailModal: BookDetailComponent;
 
   search: any = { name: '', categoryId: '' };
   isTableLoading: boolean = false;
   nzOptions: NzCascaderOption[] = options;
+  //nzOptions:SelectBookCategory[];
   values: string[] | null = null;
 
   constructor(private bookService: BookService,
     private injector: Injector) {
     super(injector);
   }
-  nodes = [
-    {
-      title: 'parent 1',
-      key: '100',
-      expanded: true,
-      children: [
-        {
-          title: 'parent 1-0',
-          key: '1001',
-          expanded: true,
-          children: [
-            { title: 'leaf', key: '10010', isLeaf: true },
-            { title: 'leaf', key: '10011', isLeaf: true },
-            { title: 'leaf', key: '10012', isLeaf: true }
-          ]
-        },
-        {
-          title: 'parent 1-1',
-          key: '1002',
-          children: [{ title: 'leaf', key: '10020', isLeaf: true }]
-        },
-        {
-          title: 'parent 1-2',
-          key: '1003',
-          children: [{ title: 'leaf', key: '10030', isLeaf: true }, { title: 'leaf', key: '10031', isLeaf: true }]
-        }
-      ]
-    }
-  ];
+  
   nzEvent(event: NzFormatEmitEvent): void {
     console.log(event);
+    
   }
   ngOnInit() {
+    this.getBookCategories();
+    this.refreshData();
   }
 
+  getBookCategories():void{
+    this.bookService.getBookCategoriesSelect().subscribe((result)=>{
+      this.nzOptions = result;
+      console.log(this.nzOptions);
+    })
+  }
+
+  //分类选择器改变事件
   onChanges(values: string[]): void {
     console.log(values, this.values);
-    if(values.length > 0){
-      //this.search.categoryId = va
-    }
   }
 
   refresh(): void {
@@ -130,11 +114,13 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
     finishedCallback: Function,
   ): void {
     this.isTableLoading = true;
+    if (this.values!=null || this.values!=undefined)
+      this.search.categoryId = this.values.reverse()[0];
     let params: any = {};
     params.SkipCount = request.skipCount;
     params.MaxResultCount = request.maxResultCount;
     params.Name = this.search.name;
-    params.CategoryId = this.search.CategoryId;
+    params.CategoryId = this.search.categoryId;
     this.bookService.getBookListPaged(params)
       // .finally(() => {
       //     finishedCallback();
@@ -145,5 +131,13 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
         this.dataList = result.items
         this.totalItems = result.totalCount;
       });
+  }
+
+  createBook():void{
+    this.bookDetailModal.show();
+  }
+
+  edit(id:number):void{
+    this.bookDetailModal.show(id);
   }
 }

@@ -6,10 +6,12 @@ using Abp.Domain.Entities.Auditing;
 using System.ComponentModel.DataAnnotations;
 using U_StudyingCommunity_Dream.Books;
 using U_StudyingCommunity_Dream.Enums;
+using Abp.AutoMapper;
 
 namespace U_StudyingCommunity_Dream.Books.Dtos
 {
 
+    [AutoMapFrom(typeof(Book))]
     public class BookListDto : FullAuditedEntityDto<long> 
     {
 

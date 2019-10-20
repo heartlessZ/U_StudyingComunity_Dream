@@ -16,14 +16,14 @@ export class CreateCategoryComponent extends AppComponentBase implements OnInit 
   emodalVisible = false;//模态框是否显示
   isOkLoading = false;
   loading = false;
-  name:string;
-  category:BookCategoryDto;
+  name: string;
+  category: BookCategoryDto;
 
   constructor(injector: Injector,
     private fb: FormBuilder,
-    private bookService : BookService) {
+    private bookService: BookService) {
     super(injector);
-    
+
     this.validateForm = this.fb.group({
       name: ['', [Validators.required]]
     });
@@ -31,7 +31,7 @@ export class CreateCategoryComponent extends AppComponentBase implements OnInit 
   /**
    * 显示模态框（进入用户详情页）
    */
-  show(currentNode:BookCategoryDto) {
+  show(currentNode?: BookCategoryDto) {
     this.emodalVisible = true;
     this.category = currentNode;
   }
@@ -39,11 +39,13 @@ export class CreateCategoryComponent extends AppComponentBase implements OnInit 
   handleOk(): void {
     this.isOkLoading = true;
     this.submitForm(name);
-    if(!this.validateForm.valid)
+    if (!this.validateForm.valid)
       return;
-    this.bookService.createOrUpdateCategory(this.name,this.category.key).subscribe((result)=>{
-      if(result)
-      {
+    let parent = 0;
+    if (this.category != undefined)
+      parent = this.category.key;
+    this.bookService.createOrUpdateCategory(this.name, parent).subscribe((result) => {
+      if (result) {
         this.message.success("修改成功");
         this.emodalVisible = false;
         this.isOkLoading = false;
@@ -58,7 +60,7 @@ export class CreateCategoryComponent extends AppComponentBase implements OnInit 
   }
 
   ngOnInit() {
-    
+
   }
 
   submitForm(value: any): void {

@@ -69,8 +69,8 @@ namespace U_StudyingCommunity_Dream.Books
 					.PageBy(input)
 					.ToListAsync();
 
-			// var entityListDtos = ObjectMapper.Map<List<BookResourceListDto>>(entityList);
-			var entityListDtos =entityList.MapTo<List<BookResourceListDto>>();
+			var entityListDtos = ObjectMapper.Map<List<BookResourceListDto>>(entityList);
+			//var entityListDtos =entityList.MapTo<List<BookResourceListDto>>();
 
 			return new PagedResultDto<BookResourceListDto>(count,entityListDtos);
 		}
@@ -144,12 +144,13 @@ BookResourceEditDto editDto;
 		{
 			//TODO:新增前的逻辑判断，是否允许新增
 
-            // var entity = ObjectMapper.Map <BookResource>(input);
-            var entity=input.MapTo<BookResource>();
+            var entity = ObjectMapper.Map<BookResource>(input);
+            //var entity=input.MapTo<BookResource>();
 			
 
 			entity = await _entityRepository.InsertAsync(entity);
-			return entity.MapTo<BookResourceEditDto>();
+            //return entity.MapTo<BookResourceEditDto>();
+            return input;
 		}
 
 		/// <summary>
@@ -161,9 +162,9 @@ BookResourceEditDto editDto;
 			//TODO:更新前的逻辑判断，是否允许更新
 
 			var entity = await _entityRepository.GetAsync(input.Id.Value);
-			input.MapTo(entity);
+			//input.MapTo(entity);
 
-			// ObjectMapper.Map(input, entity);
+			ObjectMapper.Map(input, entity);
 		    await _entityRepository.UpdateAsync(entity);
 		}
 
@@ -193,18 +194,23 @@ BookResourceEditDto editDto;
 			await _entityRepository.DeleteAsync(s => input.Contains(s.Id));
 		}
 
+        public async Task<List<BookResourceListDto>> GetResourceListByBookId(EntityDto<long> input)
+        {
+            var entities = await _entityRepository.GetAll().Where(i => i.BookId == input.Id).ToListAsync();
+            return ObjectMapper.Map<List<BookResourceListDto>>(entities);
+        }
 
-		/// <summary>
-		/// 导出BookResource为excel表,等待开发。
-		/// </summary>
-		/// <returns></returns>
-		//public async Task<FileDto> GetToExcel()
-		//{
-		//	var users = await UserManager.Users.ToListAsync();
-		//	var userListDtos = ObjectMapper.Map<List<UserListDto>>(users);
-		//	await FillRoleNames(userListDtos);
-		//	return _userListExcelExporter.ExportToFile(userListDtos);
-		//}
+        /// <summary>
+        /// 导出BookResource为excel表,等待开发。
+        /// </summary>
+        /// <returns></returns>
+        //public async Task<FileDto> GetToExcel()
+        //{
+        //	var users = await UserManager.Users.ToListAsync();
+        //	var userListDtos = ObjectMapper.Map<List<UserListDto>>(users);
+        //	await FillRoleNames(userListDtos);
+        //	return _userListExcelExporter.ExportToFile(userListDtos);
+        //}
 
     }
 }

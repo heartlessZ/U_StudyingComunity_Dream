@@ -82,4 +82,13 @@ export class AppSessionService {
 
         return true;
     }
+
+    clearnLoginStatus():void{
+        this._sessionService.clearCurrentLoginStatus().toPromise().then((result: boolean) => {
+            
+            this._user = null;
+
+        }, (err) => {
+        });
+    }
 }

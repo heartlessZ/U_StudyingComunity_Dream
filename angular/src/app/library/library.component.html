@@ -1,37 +1,63 @@
 <nz-card style="width:90%;margin:auto;" [nzBordered]="false">
   <form nz-form (ngSubmit)="refreshData()" [nzLayout]="'inline'">
     <div nz-row [nzGutter]="18">
-        <div nz-col [nzSpan]="8" class="mb-md">
-            <nz-form-item class="d-flex" style="margin-bottom: 0px;">
-                <nz-form-label nzFor="name">书籍查询</nz-form-label>
-                <nz-form-control class="flex-1">
-                    <input nz-input name="name" [(ngModel)]="search.name" [placeholder]="'请输入书名或作者'">
-                </nz-form-control>
-            </nz-form-item>
-        </div>
-        <div nz-col [nzSpan]="8" class="mb-md">
-          <nz-form-item class="d-flex" style="margin-bottom: 0px;">
-            <nz-form-label nzFor="name">分类</nz-form-label>
-            <nz-form-control class="flex-1">
-              <nz-cascader
-              [nzExpandTrigger]="'hover'"
-              [nzOptions]="nzOptions"
-              [(ngModel)]="values"
-              (ngModelChange)="onChanges($event)"
-            >
-            </nz-cascader>
-            </nz-form-control>
+      <div nz-col [nzSpan]="8" class="mb-md">
+        <nz-form-item class="d-flex" style="margin-bottom: 0px;">
+          <nz-form-label nzFor="name">书籍查询</nz-form-label>
+          <nz-form-control class="flex-1">
+            <input nz-input name="name" [(ngModel)]="search.name" [placeholder]="'请输入书名或作者'">
+          </nz-form-control>
         </nz-form-item>
       </div>
-        <div nz-col [nzSpan]="8" class="mb-md right" [class.text-right]="'true'" style="float: right;">
-            <nz-form-item class="d-flex" style="margin-right: 0px;margin-bottom: 0px;">
-                <nz-form-control class="flex-1">
-                    <button nz-button type="button" (click)="refreshData()" nzType="primary"
-                        [nzLoading]="isTableLoading">查询</button>
-                    <button nz-button type="button" (click)="reset()" class="mx-sm">重置</button>
-                </nz-form-control>
-            </nz-form-item>
-        </div>
+      <div nz-col [nzSpan]="8" class="mb-md">
+        <nz-form-item class="d-flex" style="margin-bottom: 0px;">
+          <nz-form-label nzFor="values">分类</nz-form-label>
+          <nz-form-control class="flex-1">
+            <nz-cascader name="values" nzChangeOnSelect [nzShowSearch]="'true'" [nzExpandTrigger]="'hover'"
+              [nzOptions]="nzOptions" [(ngModel)]="values" (ngModelChange)="onChanges($event)">
+            </nz-cascader>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8" class="mb-md right" [class.text-right]="'true'" style="float: right;">
+        <nz-form-item class="d-flex" style="margin-right: 0px;margin-bottom: 0px;">
+          <nz-form-control class="flex-1">
+            <button nz-button type="button" (click)="refreshData()" nzType="primary"
+              [nzLoading]="isTableLoading">查询</button>
+            <button nz-button type="button" (click)="reset()" class="mx-sm">重置</button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
     </div>
   </form>
+</nz-card>
+
+<nz-card style="width:90%;margin:auto;" [nzBordered]="false">
+  <nz-list [nzDataSource]="dataList" [nzItemLayout]="'vertical'" [nzRenderItem]="item" [nzPagination]="pagination">
+    <ng-template #item let-item>
+      <nz-list-item [nzContent]="item.content">
+        <nz-list-item-meta [nzTitle]="nzTitle">
+
+          <ng-template #nzTitle>
+            <div class="book-info">
+              <div class="book-info-cover">
+                <img width="272" alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />
+              </div>
+              <div class="book-info-content">
+                名称：{{item.name}}<br>
+                作者：{{item.author}}<br>
+                分类：{{item.categoryName}}<br>
+                简介：{{item.description}}<br>
+              </div>
+              <a (click)="detail(item.id)">详情</a>
+            </div>
+          </ng-template>
+        </nz-list-item-meta>
+
+      </nz-list-item>
+    </ng-template>
+    <ng-template #pagination>
+      <nz-pagination [nzPageIndex]="1" [nzTotal]="totalItems" (nzPageIndexChange)="loadData($event)"></nz-pagination>
+    </ng-template>
+  </nz-list>
 </nz-card>

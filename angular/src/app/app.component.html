@@ -1,7 +1,7 @@
 <nz-layout>
     <nz-header class="header">
         <div class="logo"></div>
-        <ul nz-menu nzTheme="light" nzMode="horizontal">
+        <ul nz-menu nzTheme="dark" nzMode="horizontal">
             <li nz-menu-item><a routerLink="home">首页</a></li>
             <li nz-menu-item><a routerLink="library">图书资源</a></li>
             <li nz-menu-item><a routerLink="project">学习规划</a></li>
@@ -10,7 +10,7 @@
                 <a (click)="goPersonalInfo(currentUser.userDetailId)">
                     <nz-avatar [nzSize]="64" nzIcon="user" [nzSrc]="headUrl"></nz-avatar>
                 </a>
-                <a (click)="exit()">退出</a>
+                <button nz-button (click)="exit()" nzType="dashed">退出</button>
             </li>
             <ng-template #elseBlock>
                 <li style="float: right;">

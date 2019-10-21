@@ -2,48 +2,8 @@ import { Component, OnInit, Injector } from '@angular/core';
 import { PagedListingComponentBase, PagedRequestDto, PagedResultDto } from '@shared/component-base';
 import { BookService } from 'services';
 import { NzCascaderOption } from 'ng-zorro-antd/cascader';
-
-const options = [
-  {
-    value: 'zhejiang',
-    label: 'Zhejiang',
-    children: [
-      {
-        value: 'hangzhou',
-        label: 'Hangzhou',
-        children: [
-          {
-            value: 'xihu',
-            label: 'West Lake',
-            isLeaf: true
-          }
-        ]
-      },
-      {
-        value: 'ningbo',
-        label: 'Ningbo',
-        isLeaf: true
-      }
-    ]
-  },
-  {
-    value: 'jiangsu',
-    label: 'Jiangsu',
-    children: [
-      {
-        value: 'nanjing',
-        label: 'Nanjing',
-        children: [
-          {
-            value: 'zhonghuamen',
-            label: 'Zhong Hua Men',
-            isLeaf: true
-          }
-        ]
-      }
-    ]
-  }
-];
+import { SelectBookCategory } from 'entities';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-library',
@@ -56,15 +16,32 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
 
   search: any = { name: '', categoryId: '' };
   isTableLoading: boolean = false;
-  nzOptions: NzCascaderOption[] = options;
+  nzOptions:SelectBookCategory[];
   values: string[] | null = null;
 
   constructor(private bookService: BookService,
-    private injector: Injector) {
+    private injector: Injector, 
+    private router: Router) {
     super(injector);
   }
 
   ngOnInit() {
+    this.getBookCategories();
+    this.refreshData();
+  }
+
+  
+
+  getBookCategories(): void {
+    this.bookService.getBookCategoriesSelect().subscribe((result) => {
+      this.nzOptions = result;
+      console.log(this.nzOptions);
+
+      //查出分类名称
+      // this.dataList.forEach(element => {
+      //   element.categoryName = this.searchCategoryName(element.categoryId);
+      // });
+    })
   }
 
   onChanges(values: string[]): void {
@@ -112,5 +89,9 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
         this.dataList = result.items
         this.totalItems = result.totalCount;
       });
+  }
+
+  detail(id:number):void{
+    this.router.navigate(['app/book-detail/' + id]);
   }
 }

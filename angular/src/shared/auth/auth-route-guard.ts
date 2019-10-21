@@ -69,4 +69,9 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
 
         return '';
     }
+
+    //清除登录状态
+    clearLoginStatus():void{
+        this._sessionService.clearnLoginStatus();
+    }
 }

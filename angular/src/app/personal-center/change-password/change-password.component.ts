@@ -4,6 +4,8 @@ import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } fro
 import { Observable, Observer } from 'rxjs';
 import { UserDetailService } from 'services';
 import { AccountServiceProxy, ChangePasswordDto, UserServiceProxy } from '@shared/service-proxies/service-proxies';
+import { Router } from '@angular/router';
+import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 
 @Component({
   selector: 'app-change-password-model',
@@ -23,6 +25,8 @@ export class ChangePasswordComponent extends AppComponentBase implements OnInit 
 
   constructor(injector: Injector,
     private fb: FormBuilder,
+    private router : Router,
+    private appRouteGuard : AppRouteGuard,
     //private userDetailService : UserDetailService,
     //private accountServiceProxy:AccountServiceProxy,
     private userServiceProxy:UserServiceProxy) {
@@ -55,6 +59,8 @@ export class ChangePasswordComponent extends AppComponentBase implements OnInit 
         this.message.success("修改成功");
         this.emodalVisible = false;
         this.isOkLoading = false;
+
+        this.router.navigate(["account/login"]);
       }
     })
   }

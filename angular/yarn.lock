@@ -961,6 +961,13 @@
     tree-kill "1.2.1"
     webpack-sources "1.4.3"
 
+"@notadd/ngx-neditor@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@notadd/ngx-neditor/-/ngx-neditor-1.0.2.tgz#4a644b41814e7511a7c85471ceef06d0b6a0c953"
+  integrity sha512-HuURAloS9n+8171yH3QnhwTXzoGS5vE+Qb4loswwbJ0b8PG7Npvs7SV+eKQMq0AThaLoVwzO0lXIf3p+W0nlqA==
+  dependencies:
+    tslib "^1.9.0"
+
 "@schematics/angular@8.3.2":
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-8.3.2.tgz#8d724b8450a1cbf02b5a7172e1cb46f75d62c686"

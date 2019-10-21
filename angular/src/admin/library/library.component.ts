@@ -7,48 +7,6 @@ import { NzFormatEmitEvent } from 'ng-zorro-antd/core';
 import { BookDetailComponent } from './book-detail/book-detail.component';
 import { BookCategoryDto, SelectBookCategory } from 'entities';
 
-const options = [
-  {
-    value: 'zhejiang',
-    label: 'Zhejiang',
-    children: [
-      {
-        value: 'hangzhou',
-        label: 'Hangzhou',
-        children: [
-          {
-            value: 'xihu',
-            label: 'West Lake',
-            isLeaf: true
-          }
-        ]
-      },
-      {
-        value: 'ningbo',
-        label: 'Ningbo',
-        isLeaf: true
-      }
-    ]
-  },
-  {
-    value: 'jiangsu',
-    label: 'Jiangsu',
-    children: [
-      {
-        value: 'nanjing',
-        label: 'Nanjing',
-        children: [
-          {
-            value: 'zhonghuamen',
-            label: 'Zhong Hua Men',
-            isLeaf: true
-          }
-        ]
-      }
-    ]
-  }
-];
-
 @Component({
   selector: 'app-library',
   templateUrl: './library.component.html',
@@ -61,7 +19,7 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
 
   search: any = { name: '', categoryId: '' };
   isTableLoading: boolean = false;
-  nzOptions: NzCascaderOption[] = options;
+  nzOptions: NzCascaderOption[];
   //nzOptions:SelectBookCategory[];
   values: string[] | null = null;
 
@@ -69,21 +27,37 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
     private injector: Injector) {
     super(injector);
   }
-  
+
   nzEvent(event: NzFormatEmitEvent): void {
     console.log(event);
-    
+
   }
   ngOnInit() {
+    //首先加载类别选项
     this.getBookCategories();
     this.refreshData();
   }
 
-  getBookCategories():void{
-    this.bookService.getBookCategoriesSelect().subscribe((result)=>{
+  getBookCategories(): void {
+    this.bookService.getBookCategoriesSelect().subscribe((result) => {
       this.nzOptions = result;
       console.log(this.nzOptions);
+
+      //查出分类名称
+      this.dataList.forEach(element => {
+        element.categoryName = this.searchCategoryName(element.categoryId);
+      });
     })
+  }
+
+  searchCategoryName(id: string): string {
+    console.log(this.nzOptions);
+
+    let option = this.nzOptions.filter(i => i.value == id);
+    console.log(option);
+    if (option.length > 0)
+      return option[0].label;
+    return undefined;
   }
 
   //分类选择器改变事件
@@ -105,6 +79,7 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
   reset() {
     this.pageNumber = 1;
     this.search = { name: '', categoryId: '' };
+    this.values = null;
     this.refresh();
   }
 
@@ -114,7 +89,7 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
     finishedCallback: Function,
   ): void {
     this.isTableLoading = true;
-    if (this.values!=null || this.values!=undefined)
+    if (this.values != null || this.values != undefined)
       this.search.categoryId = this.values.reverse()[0];
     let params: any = {};
     params.SkipCount = request.skipCount;
@@ -126,18 +101,24 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
       //     finishedCallback();
       // })
       .subscribe((result: PagedResultDto) => {
-        console.log(result);
         this.isTableLoading = false;
         this.dataList = result.items
         this.totalItems = result.totalCount;
+        console.log(this.dataList);
+
+        //初始化封面地址
+        this.dataList.forEach(element => {
+          if (element.coverUrl != null)
+            element.coverUrl = this.bookService.baseUrl + element.coverUrl;
+        });
       });
   }
 
-  createBook():void{
+  createBook(): void {
     this.bookDetailModal.show();
   }
 
-  edit(id:number):void{
+  edit(id: number): void {
     this.bookDetailModal.show(id);
   }
 }

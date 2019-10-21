@@ -5,7 +5,7 @@ import { BookService } from 'services';
 import { BookCategoryDto } from 'entities';
 import { BookDetailDto } from 'entities/book-detail';
 import { Observable, Observer } from 'rxjs';
-import { UploadFile, NzModalService, NzCascaderOption } from 'ng-zorro-antd';
+import { UploadFile, NzModalService, NzCascaderOption, UploadFilter } from 'ng-zorro-antd';
 import { BookResourceDto } from 'entities/book-resource';
 
 @Component({
@@ -25,12 +25,14 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
   title: string;
   isEdit: boolean;
   resourceId: number;
+  bookResource: BookResourceDto;
 
   avatarUrl: string;
   fileUploadUrl: string;
+  fileDownloadUrl:string;
   fileUrl: string;//图片最终上传所得的地址
 
-  
+
   nzOptions: NzCascaderOption[];
   //nzOptions:SelectBookCategory[];
   values: string[] | null = null;
@@ -38,6 +40,19 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
 
   fileList: BookResourceDto[] = [];
   newFileList: BookResourceDto[] = [];
+  filters: UploadFilter[] = [
+    {
+      name: 'type',
+      fn: (fileList: UploadFile[]) => {
+        const filterFiles = fileList.filter(w => ~['application/pdf'].indexOf(w.type));
+        if (filterFiles.length !== fileList.length) {
+          this.notify.error(`包含文件格式不正确，只支持 pdf 格式`);
+          return filterFiles;
+        }
+        return fileList;
+      }
+    }
+  ];
 
   constructor(injector: Injector,
     private fb: FormBuilder,
@@ -50,7 +65,7 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
       author: ['', [Validators.required]],
       otherUrls: [null],
       description: [null],
-      values: [null],
+      values: ['', [Validators.minLength(1)]],
     });
   }
 
@@ -59,9 +74,13 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
     this.setControlVal('author', entity.author);
   }
 
-  
+
   setControlVal(name: string, val: any) {
     this.validateForm.controls[name].setValue(val);
+  }
+
+  searchCategoryName(id: string): any {
+    return this.nzOptions.filter(i => i.value == id);
   }
 
   /**
@@ -79,11 +98,12 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
       this.isEdit = true;
       this.getBookDetailById(id);
     }
+    this.setFormValues(this.book);
   }
 
-  
-  getBookCategories():void{
-    this.bookService.getBookCategoriesSelect().subscribe((result)=>{
+
+  getBookCategories(): void {
+    this.bookService.getBookCategoriesSelect().subscribe((result) => {
       this.nzOptions = result;
       console.log(this.nzOptions);
     })
@@ -93,18 +113,40 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
     this.bookService.getBookDetailById(id).subscribe((result) => {
       console.log(result);
       this.book = result;
-      this.values.push(this.book.categoryId.toString());
+      //this.values = this.searchCategoryName(this.book.categoryId.toString())
+      this.values = [this.book.categoryId.toString()]
+      //this.book.categoryName = this.searchCategoryName(this.book.categoryId.toString())
+      this.setFormValues(this.book);
+
+      //封面赋值
+      this.avatarUrl = this.bookService.baseUrl + this.book.coverUrl;
+
+      //获取资源集合
+      this.getResourceListByBookId(this.book.id);
+    });
+  }
+
+  getResourceListByBookId(id:number):void{
+    this.bookService.getResourceListByBookId(id).subscribe((result)=>{
+      console.log(result);
+      
+      this.fileList = result;
+      this.fileList.forEach(i=>i.url = this.fileDownloadUrl + "?url=" + i.url);
+      console.log(this.fileList);
     });
   }
 
   handleOk(): void {
     this.isOkLoading = true;
     //管理员添加默认审核通过
+    this.book.coverUrl = this.fileUrl;
     this.book.status = 1;
+    if (this.values != null || this.values != undefined)
+      this.book.categoryId = Number(this.values.reverse()[0]);
     //this.submitForm();
     if (!this.validateForm.valid)
       return;
-    
+
     this.bookService.createOrUpdateBook(this.book).subscribe((result) => {
       if (result) {
         this.message.success("成功");
@@ -121,7 +163,8 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
   }
 
   ngOnInit() {
-
+    this.fileUploadUrl = this.bookService.baseUrl+"/api/File/upload";
+    this.fileDownloadUrl = this.bookService.baseUrl+"/api/File/download";
   }
 
   submitForm(value: any): void {
@@ -200,19 +243,53 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
 
   //图书资源上传
   handleChangeBookResource(info: { file: UploadFile }): void {
+    console.log(this.book);
+    this.bookResource = new BookResourceDto();
+    if (info.file.status === 'error') {
+      this.notify.error('上传文件异常，请重试');
+      this.fileList.pop();
+    }
 
+    else {
+      if (info.file.status === 'done') {
+        var res = info.file.response.result;
+        if (res.code == 0) {
+          this.fileList.forEach(element => {
+            if (info.file.uid == element.id.toString()) {
+              element.url = res.data.url;
+            }
+          });
+          this.bookResource.bookId = this.book.id;
+          this.bookResource.name = info.file.name;
+          this.bookResource.url = res.data.url;
+          this.saveBookResource();
+        } else {
+          this.notify.error(res.msg);
+          this.fileList.pop();
+        }
+      }
+    }
+  }
+
+  //保存书籍资源
+  saveBookResource():void{
+    this.bookService.createBookResource(this.bookResource).subscribe((result)=>{
+      this.notify.success('上传文件成功');
+    })
   }
 
   deleteBookResource = (file: UploadFile): boolean => {
     // console.log(file);
     // console.log(this.fileList);
-    // return true;
+    // return false;
     if (file) {
       this.modal.confirm({
         nzContent: '确定是否删除资料文档?',
         nzOnOk: () => {
-          if (this.resourceId) {
-            this.bookService.deleteBookResourceById(file.uid).subscribe(() => {
+          if (file.id) {
+            this.bookService.deleteBookResourceById(file.id).subscribe(() => {
+              console.log(file.id);
+              
               this.notify.success('删除成功！', '');
               //this.getAttachmentList();
               // this.fileList.pop();
@@ -231,7 +308,12 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
       });
       return false;
     }
+    return false;
   }
+
+  beforeUploadResource = (file: File) => {
+    return true;
+  };
 
   //分类选择器改变事件
   onChanges(values: string[]): void {

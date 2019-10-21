@@ -1,3 +1,5 @@
 export * from './user-detail'
 export * from './current-userdeail'
 export * from './book-category'
+export * from './book-resource'
+export * from './book-detail'

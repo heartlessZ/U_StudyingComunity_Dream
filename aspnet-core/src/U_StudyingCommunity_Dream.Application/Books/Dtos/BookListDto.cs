@@ -58,7 +58,7 @@ namespace U_StudyingCommunity_Dream.Books.Dtos
 		/// </summary>
 		public int CategoryId { get; set; }
 
-
+        public string CategoryName { get; set; }
 
 		/// <summary>
 		/// Status

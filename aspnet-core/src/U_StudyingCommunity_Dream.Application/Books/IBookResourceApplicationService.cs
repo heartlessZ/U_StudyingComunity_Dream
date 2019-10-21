@@ -71,6 +71,12 @@ namespace U_StudyingCommunity_Dream.Books
         /// </summary>
         Task BatchDelete(List<long> input);
 
+        /// <summary>
+        /// 通过书籍Id查询书籍资源集合
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        Task<List<BookResourceListDto>> GetResourceListByBookId(EntityDto<long> input);
 
 		/// <summary>
         /// 导出BookResource为excel表

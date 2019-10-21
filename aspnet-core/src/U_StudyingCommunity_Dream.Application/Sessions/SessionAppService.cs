@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Abp.Auditing;
+using Abp.Authorization;
 using Abp.Authorization.Users;
 using Abp.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -51,6 +52,17 @@ namespace U_StudyingCommunity_Dream.Sessions
             }
 
             return output;
+        }
+
+        [DisableAuditing]
+        [AbpAllowAnonymous]
+        public async Task<bool> ClearSession()
+        {
+            using (AbpSession.Use(null,null))
+            {
+
+            }
+            return true;
         }
     }
 }

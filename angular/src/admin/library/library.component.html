@@ -13,7 +13,7 @@
         <nz-form-item class="d-flex" style="margin-bottom: 0px;">
             <nz-form-label nzFor="values">分类</nz-form-label>
             <nz-form-control class="flex-1">
-                <nz-cascader name="values" nzChangeOnSelect  [nzExpandTrigger]="'hover'" [nzOptions]="nzOptions" [(ngModel)]="values"
+                <nz-cascader name="values" nzChangeOnSelect [nzShowSearch]="'true'" [nzExpandTrigger]="'hover'" [nzOptions]="nzOptions" [(ngModel)]="values"
                 (ngModelChange)="onChanges($event)">
               </nz-cascader>
             </nz-form-control>
@@ -51,7 +51,7 @@
             <td>{{item.name}}</td>
             <td>{{item.author}}</td>
             <td>{{item.categoryId}}</td>
-            <td>{{item.coverUrl}}</td>
+            <td><nz-avatar *ngIf="item.coverUrl != null" [nzShape]="'square'" [nzSize]="64" nzIcon="user" nzSrc="{{item.coverUrl}}"></nz-avatar></td>
             <td>{{item.status}}</td>
             <td>{{item.creationTime | date: "yyyy-MM-dd HH:mm:ss"}}</td>
             <td>

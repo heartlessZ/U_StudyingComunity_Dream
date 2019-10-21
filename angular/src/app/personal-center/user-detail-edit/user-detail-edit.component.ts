@@ -6,6 +6,9 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { UploadFile } from 'ng-zorro-antd/upload';
 import { Observable, Observer } from 'rxjs';
 import { AppConsts } from '@shared/AppConsts';
+import { registerLocaleData } from '@angular/common';
+import zh from '@angular/common/locales/zh';
+registerLocaleData(zh);
 
 @Component({
   selector: 'app-user-detail-edit-model',
@@ -37,7 +40,8 @@ export class UserDetailEditComponent extends AppComponentBase implements OnInit 
       surname: ['', [Validators.required]],
       gender:[null],
       description:[null],
-      required: [false]
+      required: [false],
+      birthday:[null],
     });
   }
 
@@ -65,6 +69,8 @@ export class UserDetailEditComponent extends AppComponentBase implements OnInit 
         this.message.success("修改成功");
         this.emodalUserVisible = false;
         this.isOkLoading = false;
+        
+        this.modalSave.emit(null);
       }
     })
   }

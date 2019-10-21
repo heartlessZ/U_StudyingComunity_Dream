@@ -7,6 +7,7 @@ import { SignalRAspNetCoreHelper } from '@shared/helpers/SignalRAspNetCoreHelper
 import { UserDetailService } from 'services';
 import { UserDetailDto, CurrentUserDetailDto } from 'entities';
 import { NzIconService } from 'ng-zorro-antd/icon';
+import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 
 @Component({
     templateUrl: './app.component.html',
@@ -27,7 +28,8 @@ export class AppComponent extends AppComponentBase implements OnInit//, AfterVie
         injector: Injector,
         private router : Router,
         private userDetailService : UserDetailService,
-        private _iconService: NzIconService
+        private _iconService: NzIconService,
+        private appRouteGuard : AppRouteGuard,
     ) {
         super(injector);
         // this._iconService.fetchFromIconfont({
@@ -94,7 +96,8 @@ export class AppComponent extends AppComponentBase implements OnInit//, AfterVie
     }
 
     exit() : void {
-        
+        //this.appRouteGuard.clearLoginStatus();
+        this.router.navigate(["account/login"])
     }
 
     goPersonalInfo(id:string):void{

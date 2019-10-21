@@ -1,0 +1,14 @@
+<nz-card class="simpleInfo">
+    <nz-tabset [nzTabBarExtraContent]="extraTemplate">
+        <nz-tab nzTitle="我的文章">
+          1
+        </nz-tab>
+        <nz-tab nzTitle="Tab 2">
+          2
+        </nz-tab>
+      </nz-tabset>
+      <ng-template #extraTemplate>
+        <button nz-button>发布文章</button>
+        <button nz-button>新建计划</button>
+      </ng-template>
+</nz-card>

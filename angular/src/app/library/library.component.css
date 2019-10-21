@@ -1,3 +1,7 @@
 .ant-cascader-picker {
     width: 300px;
   }
+
+  .book-info-content{
+    float: left;
+  }

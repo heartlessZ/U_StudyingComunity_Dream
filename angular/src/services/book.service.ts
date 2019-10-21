@@ -7,9 +7,9 @@ import { NzTreeNode } from "ng-zorro-antd";
 //import { PagedResultDto } from "@shared/component-base";
 import { API_BASE_URL } from "@shared/service-proxies/service-proxies";
 import { PagedResultDto } from "@shared/component-base/index"
-import { CurrentUserDetailDto, UserDetailDto } from "entities";
+import { CurrentUserDetailDto, UserDetailDto, BookResourceDto } from "entities";
 import { BookCategoryDto, SelectBookCategory } from "entities/book-category";
-import { BookDetailDto } from "entities/book-detail";
+import { BookDetailDto } from "entities";
 
 @Injectable({
   providedIn: 'root'
@@ -90,5 +90,21 @@ export class BookService {
     return this._commonhttp.delete(url_, {id:id}).pipe(map(data => {
       return data;
     }));
+  }
+
+  //创建图书资源
+  createBookResource(bookResource:BookResourceDto):Observable<boolean>{
+    let url_ = "/api/services/app/BookResource/CreateOrUpdate";
+    return this._commonhttp.post(url_, {bookResource:bookResource}).pipe(map(data => {
+      return data;
+    }));
+  }
+
+  //通过书籍Id获取资源集合
+  getResourceListByBookId(id:any):Observable<BookResourceDto[]>{
+    let url_ = "/api/services/app/BookResource/GetResourceListByBookId";
+        return this._commonhttp.get(url_,{id:id}).pipe(map(data => {
+            return BookResourceDto.fromJSArray(data);
+        }));
   }
 }

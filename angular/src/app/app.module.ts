@@ -26,6 +26,8 @@ import { ChangePasswordComponent } from './personal-center/change-password/chang
 import { UserDetailEditComponent } from './personal-center/user-detail-edit/user-detail-edit.component';
 
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { BookDetailComponent } from './library/book-detail/book-detail.component';
+import { ArticleAndProjectComponent } from './personal-center/article-and-project/article-and-project.component';
 
 @NgModule({
    declarations: [
@@ -36,7 +38,9 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
       CommunityComponent,
       PersonalCenterComponent,
       ChangePasswordComponent,
-      UserDetailEditComponent
+      UserDetailEditComponent,
+      BookDetailComponent,
+      ArticleAndProjectComponent,
    ],
    imports: [
       CommonModule,

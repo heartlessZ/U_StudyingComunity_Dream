@@ -3,6 +3,8 @@ export class BookResourceDto implements IBookResourceDto {
     bookId: number | undefined;
     name: string | undefined;
     url: string | undefined;
+    stutus:number|undefined;
+    error:string | undefined;
 
     constructor(data?: IBookResourceDto) {
         if (data) {
@@ -19,6 +21,7 @@ export class BookResourceDto implements IBookResourceDto {
             this.name = data["name"];
             this.bookId = data["bookId"];
             this.url = data["url"];
+            this.stutus = data["stutus"];
         }
     }
 

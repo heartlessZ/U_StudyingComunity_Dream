@@ -69,8 +69,8 @@ namespace U_StudyingCommunity_Dream.Books
                 .WhereIf(!string.IsNullOrEmpty(input.Keyword)
                 , b => b.Name.Contains(input.Keyword) || b.Author.Contains(input.Keyword))
                 .WhereIf(input.CategoryId.HasValue, i => categoryIds.Contains(i.CategoryId));
-			// TODO:根据传入的参数添加过滤条件
-            
+            // TODO:根据传入的参数添加过滤条件
+            var categories = _categoryRepository.GetAll();
 
 			var count = await query.CountAsync();
 
@@ -80,9 +80,17 @@ namespace U_StudyingCommunity_Dream.Books
 					.ToListAsync();
 
 			var entityListDtos = ObjectMapper.Map<List<BookListDto>>(entityList);
-			//var entityListDtos =entityList.MapTo<List<BookListDto>>();
+            //var entityListDtos =entityList.MapTo<List<BookListDto>>();
 
-			return new PagedResultDto<BookListDto>(count,entityListDtos);
+            foreach (var item in entityListDtos)
+            {
+                var category = categories.First(c => c.Id == item.CategoryId);
+                if (category != null)
+                {
+                    item.CategoryName = category.Name;
+                }
+            }
+            return new PagedResultDto<BookListDto>(count,entityListDtos);
 		}
 
         private List<int> GetChildrenCategoryIds(int id)
@@ -107,7 +115,17 @@ namespace U_StudyingCommunity_Dream.Books
 		{
 			var entity = await _entityRepository.GetAsync(input.Id);
 
-		    return entity.MapTo<BookListDto>();
+		    var result = ObjectMapper.Map<BookListDto>(entity);
+
+            if (result != null)
+            {
+                var category = await _categoryRepository.GetAsync(entity.CategoryId);
+                if (category!=null)
+                {
+                    result.CategoryName = category.Name;
+                }
+            }
+            return result;
 		}
 
 		/// <summary>

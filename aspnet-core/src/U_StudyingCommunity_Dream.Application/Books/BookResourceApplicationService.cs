@@ -196,7 +196,7 @@ BookResourceEditDto editDto;
 
         public async Task<List<BookResourceListDto>> GetResourceListByBookId(EntityDto<long> input)
         {
-            var entities = await _entityRepository.GetAll().Where(i => i.BookId == input.Id).ToListAsync();
+            var entities = await _entityRepository.GetAll().Where(i => i.BookId == input.Id && i.Status == Enums.BookResourceStatus.审核通过).ToListAsync();
             return ObjectMapper.Map<List<BookResourceListDto>>(entities);
         }
 

@@ -9,6 +9,7 @@ import { ProjectComponent } from './project/project.component';
 import { CommunityComponent } from './community/community.component';
 import { PersonalCenterComponent } from './personal-center/personal-center.component';
 import { BookDetailComponent } from './library/book-detail/book-detail.component';
+import { CreateArticleComponent } from './community/create-article/create-article.component';
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import { BookDetailComponent } from './library/book-detail/book-detail.component
                     { path: 'book-detail/:id', component:BookDetailComponent},
                     { path: 'project', component:ProjectComponent},
                     { path: 'community', component:CommunityComponent},
-                    { path: 'personal-center', component:PersonalCenterComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }}
+                    { path: 'personal-center', component:PersonalCenterComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }},
+                    { path: 'create-article', component:CreateArticleComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }}
                 ]
             }
         ])

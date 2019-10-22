@@ -85,7 +85,9 @@
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.moment.js",
               "src/bsb-theme/js/admin.js",
               "src/bsb-theme/js/demo.js",
-              "src/bsb-theme/js/jquery.validate.js"
+              "src/bsb-theme/js/jquery.validate.js",
+              "src/assets/node_modules/@notadd/neditor/neditor.config.js",
+              "src/assets/node_modules/@notadd/neditor/neditor.all.js"
             ]
           },
           "configurations": {
@@ -177,7 +179,9 @@
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.moment.js",
               "src/bsb-theme/js/admin.js",
               "src/bsb-theme/js/demo.js",
-              "src/bsb-theme/js/jquery.validate.js"
+              "src/bsb-theme/js/jquery.validate.js",
+              "src/assets/node_modules/@notadd/neditor/neditor.config.js",
+              "src/assets/node_modules/@notadd/neditor/neditor.all.js"
             ],
             "styles": [
               "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",

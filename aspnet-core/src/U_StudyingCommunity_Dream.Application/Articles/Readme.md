@@ -26,7 +26,7 @@ Configuration.Modules.AbpAutoMapper().Configurators.Add(configuration =>
     // ....
 
     // 只需要复制这一段
-ArticleMapper.CreateMappings(configuration);
+ArticleCategoryMapper.CreateMappings(configuration);
 
     // ....
 });
@@ -39,7 +39,7 @@ ArticleMapper.CreateMappings(configuration);
 中的 PreInitialize 方法中:
 
 ```
-Configuration.Authorization.Providers.Add<ArticleAuthorizationProvider>();
+Configuration.Authorization.Providers.Add<ArticleCategoryAuthorizationProvider>();
 
 ```
 
@@ -48,7 +48,7 @@ Configuration.Authorization.Providers.Add<ArticleAuthorizationProvider>();
 可以在```DbContext```中增加：
 
  ```
-public DbSet<Article>  Articles { get; set; }
+public DbSet<ArticleCategory>  ArticleCategorys { get; set; }
 
  ```
 
@@ -57,7 +57,7 @@ public DbSet<Article>  Articles { get; set; }
 ```
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new ArticleCfg());
+            modelBuilder.ApplyConfiguration(new ArticleCategoryCfg());
         }
 
 ```
@@ -69,15 +69,10 @@ public DbSet<Article>  Articles { get; set; }
 
 ```
 
-<text name="Headline"  value="Headline"></text>
-<text name="Content"  value="Content"></text>
-<text name="Praise"  value="Praise"></text>
-<text name="VisitVolume"  value="VisitVolume"></text>
-<text name="ReleaseStatus"  value="ReleaseStatus"></text>
-<text name="UserDetailId"  value="UserDetailId"></text>
+<text name="Name"  value="Name"></text>
 
 
-<text name="Article" value=""></text><text name="QueryArticle"  value="查询"></text><text name="CreateArticle"  value="添加"></text><text name="EditArticle"  value="编辑"></text><text name="DeleteArticle"  value="删除"></text><text name="BatchDeleteArticle" value="批量删除"></text><text name="ExportArticle"  value="导出"></text>                             
+<text name="ArticleCategory" value=""></text><text name="QueryArticleCategory"  value="查询"></text><text name="CreateArticleCategory"  value="添加"></text><text name="EditArticleCategory"  value="编辑"></text><text name="DeleteArticleCategory"  value="删除"></text><text name="BatchDeleteArticleCategory" value="批量删除"></text><text name="ExportArticleCategory"  value="导出"></text>                             
 
 ```
 

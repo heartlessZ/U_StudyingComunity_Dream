@@ -5,3 +5,55 @@
   .book-info-content{
     float: left;
   }
+
+  .book_content_middle_ul{
+	
+    float: left;
+    font-size: 0.8vw;
+    margin: 0px;
+    padding: 0px;
+ 
+ }
+ .book_content_middle_ul li{
+   list-style: none;
+      margin-top: 0.8rem;
+ }
+ .book_content_middle_ul_p{
+   display: inline;
+ }
+ /****全部****/
+ .book_content{
+   width: 90%;
+   height: 185px;
+ }
+ /****中间****/
+ .book_content_middle{
+    width: 80%;
+    height: 185px;
+    float: left;
+ }
+ /****中间上面*****/
+ .book_content_middle_top{
+   width: 100%;
+   height: 80%;
+ }
+ /******中间下面****/
+ .book_content_middle_bottom{
+    float: right;
+    margin-top: 25px;
+ }
+ /****左边*****/
+ .book_content_left{
+ 
+    width: 20%;
+    height: 185px;
+    float: left;
+ }
+ .book_content_left img{
+     height: auto;
+     max-width: 250px;
+     margin-left:20%;
+     margin-top: 20px;
+     display: block;
+ }
+ 

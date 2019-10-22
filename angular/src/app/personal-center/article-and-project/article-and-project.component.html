@@ -8,7 +8,7 @@
         </nz-tab>
       </nz-tabset>
       <ng-template #extraTemplate>
-        <button nz-button>发布文章</button>
+        <button (click)="createArticle()" nz-button>发布文章</button>
         <button nz-button>新建计划</button>
       </ng-template>
 </nz-card>

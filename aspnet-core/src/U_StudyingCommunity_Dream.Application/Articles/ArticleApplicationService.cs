@@ -33,19 +33,20 @@ namespace U_StudyingCommunity_Dream.Articles
     public class ArticleAppService : U_StudyingCommunity_DreamAppServiceBase, IArticleAppService
     {
         private readonly IRepository<Article, long> _entityRepository;
+        private readonly IRepository<Article_ArticleCategory, long> _articleTagsRepository;
 
-        
+
 
         /// <summary>
         /// 构造函数 
         ///</summary>
         public ArticleAppService(
         IRepository<Article, long> entityRepository
-        
+        , IRepository<Article_ArticleCategory, long> articleTagsRepository
         )
         {
-            _entityRepository = entityRepository; 
-            
+            _entityRepository = entityRepository;
+            _articleTagsRepository = articleTagsRepository;
         }
 
 
@@ -142,15 +143,39 @@ ArticleEditDto editDto;
 		
 		protected virtual async Task<ArticleEditDto> Create(ArticleEditDto input)
 		{
-			//TODO:新增前的逻辑判断，是否允许新增
-
-            // var entity = ObjectMapper.Map <Article>(input);
-            var entity=input.MapTo<Article>();
-			
-
+            //TODO:新增前的逻辑判断，是否允许新增
+            
+             var entity = ObjectMapper.Map<Article>(input);
+            //var entity=input.MapTo<Article>();
 			entity = await _entityRepository.InsertAsync(entity);
-			return entity.MapTo<ArticleEditDto>();
+            await CurrentUnitOfWork.SaveChangesAsync();
+            if (input.CategoryIds.Length > 0)
+            {
+                await UpdateArticleTags(input.CategoryIds, entity);
+            }
+            return input;
 		}
+
+        /// <summary>
+        /// 更新中间表
+        /// </summary>
+        /// <returns></returns>
+        private async Task UpdateArticleTags(int[] tagIds, Article article)
+        {
+            var sourceIds = _articleTagsRepository.GetAll().Where(a => a.ArticleId == article.Id).Select(i=>i.Id);
+            if (sourceIds.Count() > 0)
+            {
+                await _articleTagsRepository.DeleteAsync(a => sourceIds.Contains(a.Id));
+            }
+            foreach (var tagId in tagIds)
+            {
+                await _articleTagsRepository.InsertAsync(new Article_ArticleCategory()
+                {
+                    ArticleId = article.Id,
+                    ArticleCategoryId = tagId
+                });
+            }
+        }
 
 		/// <summary>
 		/// 编辑Article
@@ -161,9 +186,14 @@ ArticleEditDto editDto;
 			//TODO:更新前的逻辑判断，是否允许更新
 
 			var entity = await _entityRepository.GetAsync(input.Id.Value);
-			input.MapTo(entity);
+            //input.MapTo(entity);
 
-			// ObjectMapper.Map(input, entity);
+            if (input.CategoryIds.Length > 0)
+            {
+                await UpdateArticleTags(input.CategoryIds, entity);
+            }
+
+            ObjectMapper.Map(input, entity);
 		    await _entityRepository.UpdateAsync(entity);
 		}
 

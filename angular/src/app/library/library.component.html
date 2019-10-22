@@ -37,19 +37,30 @@
     <ng-template #item let-item>
       <nz-list-item [nzContent]="item.content">
         <nz-list-item-meta [nzTitle]="nzTitle">
-
           <ng-template #nzTitle>
-            <div class="book-info">
-              <div class="book-info-cover">
-                <img width="272" alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />
+            <div class="book_content">
+              <div class="book_content_left">
+                <img width="200" height="270" src="{{item.coverUrl}}">
               </div>
-              <div class="book-info-content">
-                名称：{{item.name}}<br>
-                作者：{{item.author}}<br>
-                分类：{{item.categoryName}}<br>
-                简介：{{item.description}}<br>
+              <div class="book_content_middle">
+                <div class="book_content_middle_top">
+                  <ul class="book_content_middle_ul">
+                    <li>书名:<p class="book_content_middle_ul_p">{{item.name}}</p>
+                    </li>
+                    <li>作者:<p class="book_content_middle_ul_p">{{item.author}}</p>
+                    </li>
+                    <li>分类:<p class="book_content_middle_ul_p">{{item.categoryName}}</p>
+                    </li>
+                    <li>简介：<p class="book_content_middle_ul_p">
+                        {{item.description}}
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+                <div class="book_content_middle_bottom">
+                  <a (click)="detail(item.id)">图书详情</a>
+                </div>
               </div>
-              <a (click)="detail(item.id)">详情</a>
             </div>
           </ng-template>
         </nz-list-item-meta>

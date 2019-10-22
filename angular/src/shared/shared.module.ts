@@ -60,6 +60,10 @@ import {ReactiveFormsModule, FormsModule } from "@angular/forms";
 
 //import { DelonACLModule } from '@delon/acl';
 
+//富文本编辑器
+import { NgxNeditorModule } from '@notadd/ngx-neditor';
+import { config } from 'rxjs';
+
 
 @NgModule({
     imports: [
@@ -104,7 +108,9 @@ import {ReactiveFormsModule, FormsModule } from "@angular/forms";
         MatTreeModule,
         NgZorroAntdModule.forRoot(),
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        //富文本编辑器
+        NgxNeditorModule
     ],
     declarations: [
         AbpPaginationControlsComponent,
@@ -158,7 +164,9 @@ import {ReactiveFormsModule, FormsModule } from "@angular/forms";
         MatTooltipModule,
         MatTreeModule,
         ScrollingModule,
-        NgZorroAntdModule
+        NgZorroAntdModule,
+        //富文本编辑器
+        NgxNeditorModule
     ]
 })
 export class SharedModule {

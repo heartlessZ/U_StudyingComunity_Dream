@@ -1,13 +1,15 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using Abp.AutoMapper;
 using Abp.Domain.Entities.Auditing;
 using U_StudyingCommunity_Dream.Articles;
 using U_StudyingCommunity_Dream.Enums;
 
 namespace  U_StudyingCommunity_Dream.Articles.Dtos
 {
-    public class ArticleEditDto
+    [AutoMapTo(typeof(Article))]
+    public class ArticleEditDto : FullAuditedEntity<long>
     {
 
         /// <summary>
@@ -60,7 +62,7 @@ namespace  U_StudyingCommunity_Dream.Articles.Dtos
 		public Guid UserDetailId { get; set; }
 
 
-
+        public int[] CategoryIds { get; set; }
 
     }
 }

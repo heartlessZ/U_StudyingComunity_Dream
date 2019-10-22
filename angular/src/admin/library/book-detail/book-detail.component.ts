@@ -262,6 +262,7 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
           this.bookResource.bookId = this.book.id;
           this.bookResource.name = info.file.name;
           this.bookResource.url = res.data.url;
+          this.bookResource.stutus = 1;
           this.saveBookResource();
         } else {
           this.notify.error(res.msg);

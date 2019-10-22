@@ -21,13 +21,13 @@ import { LibraryComponent } from './library/library.component';
 import { ProjectComponent } from './project/project.component';
 import { CommunityComponent } from './community/community.component';
 import { PersonalCenterComponent } from './personal-center/personal-center.component';
-import { UserDetailService, CommonHttpClient, BookService } from 'services';
+import { UserDetailService, CommonHttpClient, BookService, ArticleService } from 'services';
 import { ChangePasswordComponent } from './personal-center/change-password/change-password.component';
 import { UserDetailEditComponent } from './personal-center/user-detail-edit/user-detail-edit.component';
 
-import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { BookDetailComponent } from './library/book-detail/book-detail.component';
 import { ArticleAndProjectComponent } from './personal-center/article-and-project/article-and-project.component';
+import { CreateArticleComponent } from './community/create-article/create-article.component';
 
 @NgModule({
    declarations: [
@@ -41,6 +41,7 @@ import { ArticleAndProjectComponent } from './personal-center/article-and-projec
       UserDetailEditComponent,
       BookDetailComponent,
       ArticleAndProjectComponent,
+      CreateArticleComponent,
    ],
    imports: [
       CommonModule,
@@ -53,13 +54,13 @@ import { ArticleAndProjectComponent } from './personal-center/article-and-projec
       AppRoutingModule,
       ServiceProxyModule,
       SharedModule,
-      NgxPaginationModule,
-      NgZorroAntdModule
+      NgxPaginationModule
    ],
    providers: [
       UserDetailService,
       CommonHttpClient,
-      BookService
+      BookService,
+      ArticleService,
    ],
    entryComponents: []
 })

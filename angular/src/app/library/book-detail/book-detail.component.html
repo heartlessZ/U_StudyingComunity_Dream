@@ -1,3 +1,56 @@
 <nz-card style="width:90%;margin:auto;" [nzBordered]="false">
-    
+    <div class="book_content">
+        <div class="book_content_left">
+            <img width="200" height="270" src="{{coverUrl}}">
+        </div>
+        <div class="book_content_middle">
+            <div class="book_content_middle_top">
+                <ul class="book_content_middle_ul">
+                    <li>书名:<p class="book_content_middle_ul_p">{{book.name}}</p>
+                    </li>
+                    <li>作者:<p class="book_content_middle_ul_p">{{book.author}}</p>
+                    </li>
+                    <li>分类:<p class="book_content_middle_ul_p">{{book.categoryName}}</p>
+                    </li>
+                    <li>简介：<p class="book_content_middle_ul_p">
+                            {{book.description}}
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <nz-card style="width:90%;margin:auto;" nzTitle="资源链接" [nzBordered]="false">
+        <div class="book-resource">
+            <div class="book-resource-official">
+                <nz-card style="width:90%;margin:auto;" nzTitle="网友上传" [nzBordered]="false">
+                    <div>
+                        <nz-list [nzDataSource]="bookResources" nzBordered [nzRenderItem]="defaultItem">
+                            <ng-template #defaultItem let-item>
+                                <nz-list-item>
+                                    <a href="{{item.url}}">{{item.name}}</a>
+                                </nz-list-item>
+                            </ng-template>
+                        </nz-list>
+                    </div>
+                </nz-card>
+            </div>
+            <div class="book-resource-third">
+                <nz-card style="width:90%;margin:auto;" nzTitle="第三方链接" [nzBordered]="false">
+                    <div>
+                        <!-- <nz-list [nzDataSource]="thirdUrls" nzBordered [nzRenderItem]="defaultItem">
+                            <ng-template #defaultItem let-item>
+                                <nz-list-item>
+                                    <a href="{{item}}">{{item}}</a>
+                                </nz-list-item>
+                            </ng-template>
+                        </nz-list> -->
+                        <p *ngFor="let url of thirdUrls">
+                            <a href="{{url}}">{{url}}</a>
+                        </p>
+                    </div>
+                </nz-card>
+            </div>
+        </div>
+    </nz-card>
 </nz-card>

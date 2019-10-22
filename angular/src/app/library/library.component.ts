@@ -88,6 +88,15 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
         this.isTableLoading = false;
         this.dataList = result.items
         this.totalItems = result.totalCount;
+
+        this.dataList.forEach(d=>{
+          //简介过长自动截取
+          if (d.description.length > 151){
+            d.description = d.description.substr(0,150)+"...";
+          }
+
+          d.coverUrl = this.bookService.baseUrl + d.coverUrl;
+        })
       });
   }
 

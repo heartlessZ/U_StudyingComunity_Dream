@@ -24,10 +24,13 @@ namespace U_StudyingCommunity_Dream.Articles
         [StringLength(200)]
         public virtual string Content { get; set; }
 
+        [Required]
         public virtual Guid UserDetailId { get; set; }
 
+        [Required]
         public virtual long Parent { get; set; }
 
+        [Required]
         public virtual long ArticleId { get; set; }
     }
 }

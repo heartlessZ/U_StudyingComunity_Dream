@@ -7,6 +7,7 @@
 using Abp.Domain.Entities.Auditing;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
@@ -23,9 +24,12 @@ namespace U_StudyingCommunity_Dream.Articles
         [Required]
         [StringLength(100)]
         public virtual string Headline { get; set; }
-
+        
         [Required]
         public virtual string Content { get; set; }
+
+        [DefaultValue(null)]
+        public virtual string Description { get; set; }
 
         public virtual long Praise { get; set; }
 
@@ -35,5 +39,10 @@ namespace U_StudyingCommunity_Dream.Articles
         public virtual ReleaseStatus ReleaseStatus { get; set; }
 
         public virtual Guid UserDetailId { get; set; }
+
+        public Article()
+        {
+            Description = null;
+        }
     }
 }

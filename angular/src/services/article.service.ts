@@ -44,4 +44,28 @@ export class ArticleService {
     }));
   }
 
+  getArticlePaged(params : any):Observable<PagedResultDto>{
+    let url_ = "/api/services/app/Article/GetPaged";
+    return this._commonhttp.get(url_, params).pipe(map(data => {
+      const result = new PagedResultDto();
+      result.items = data.items;
+      result.totalCount = data.totalCount;
+      return result;
+    }));
+  }
+
+  getAllTags():Observable<ArticleCategoryDto[]>{
+    let url_ = "/api/services/app/ArticleCategory/GetAllTags";
+    return this._commonhttp.get(url_).pipe(map(data => {
+      return ArticleCategoryDto.fromJSArray(data);
+    }));
+  }
+
+  getArticleById(id : any):Observable<ArticleDetailDto>{
+    let url_ = "/api/services/app/Article/GetById";
+    return this._commonhttp.get(url_, {id:id}).pipe(map(data => {
+      return ArticleDetailDto.fromJS(data);
+    }));
+  }
+
 }

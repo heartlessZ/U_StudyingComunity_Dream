@@ -193,6 +193,7 @@ ArticleCategoryEditDto editDto;
 			await _entityRepository.DeleteAsync(s => input.Contains(s.Id));
 		}
 
+        [AbpAllowAnonymous]
         public async Task<List<ArticleCategoryListDto>> GetAllTags()
         {
             var entities = await _entityRepository.GetAllListAsync();

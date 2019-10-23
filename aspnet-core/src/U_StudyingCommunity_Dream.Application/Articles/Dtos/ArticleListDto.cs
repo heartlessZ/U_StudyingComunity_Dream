@@ -6,9 +6,11 @@ using Abp.Domain.Entities.Auditing;
 using System.ComponentModel.DataAnnotations;
 using U_StudyingCommunity_Dream.Articles;
 using U_StudyingCommunity_Dream.Enums;
+using Abp.AutoMapper;
 
 namespace U_StudyingCommunity_Dream.Articles.Dtos
 {
+    [AutoMapFrom(typeof(Article))]
     public class ArticleListDto : FullAuditedEntityDto<long> 
     {
 
@@ -56,7 +58,8 @@ namespace U_StudyingCommunity_Dream.Articles.Dtos
 		public Guid UserDetailId { get; set; }
 
 
+        public string UserName { get; set; }
 
-
+        public string HeadPortraitUrl { get; set; }
     }
 }

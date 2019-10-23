@@ -34,6 +34,6 @@
   </form>
   <br>
   <blockquote class="card-bodyquote" [innerHTML]="content"></blockquote>
-  <ngx-neditor ngModelChange="contentChange($event)" [(ngModel)]="content" #neditor [config]="config"></ngx-neditor>
+  <ngx-neditor [(ngModel)]="content" #neditor [config]="config"></ngx-neditor>
 
 </nz-card>

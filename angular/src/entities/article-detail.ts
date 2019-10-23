@@ -7,6 +7,10 @@ export class ArticleDetailDto implements IArticleDetailDto {
     releaseStatus:number | undefined;
     userDetailId:string | undefined;
     categoryIds:number[] | undefined;
+    userName:string | undefined;
+    headPortraitUrl: string | undefined;
+    comment:number | undefined;
+    description:string | undefined;
 
     constructor(data?: IArticleDetailDto) {
         if (data) {
@@ -26,6 +30,10 @@ export class ArticleDetailDto implements IArticleDetailDto {
             this.visitVolume = data["visitVolume"];
             this.releaseStatus = data["releaseStatus"];
             this.userDetailId = data["userDetailId"];
+            this.userName = data["userName"];
+            this.headPortraitUrl = data["headPortraitUrl"];
+            this.comment = data["comment"];
+            this.description = data["description"];
         }
     }
 
@@ -57,6 +65,7 @@ export class ArticleDetailDto implements IArticleDetailDto {
         data["releaseStatus"] = this.releaseStatus;
         data["userDetailId"] = this.userDetailId;
         data["categoryIds"] = this.categoryIds;
+        data["description"] = this.description;
         return data; 
     }
 

@@ -434,6 +434,7 @@ namespace U_StudyingCommunity_Dream.Migrations
                     DeletionTime = table.Column<DateTime>(nullable: true),
                     Headline = table.Column<string>(maxLength: 100, nullable: false),
                     Content = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
                     Praise = table.Column<long>(nullable: false),
                     VisitVolume = table.Column<long>(nullable: false),
                     ReleaseStatus = table.Column<int>(nullable: false),

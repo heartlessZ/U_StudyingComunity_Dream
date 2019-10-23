@@ -20,9 +20,7 @@ using Abp.Linq.Extensions;
 
 using U_StudyingCommunity_Dream.Articles;
 using U_StudyingCommunity_Dream.Articles.Dtos;
-
-
-
+using U_StudyingCommunity_Dream.UserDetails;
 
 namespace U_StudyingCommunity_Dream.Articles
 {
@@ -34,6 +32,7 @@ namespace U_StudyingCommunity_Dream.Articles
     {
         private readonly IRepository<Article, long> _entityRepository;
         private readonly IRepository<Article_ArticleCategory, long> _articleTagsRepository;
+        private readonly IRepository<UserDetail, Guid> _userDetailRepository;
 
 
 
@@ -43,10 +42,12 @@ namespace U_StudyingCommunity_Dream.Articles
         public ArticleAppService(
         IRepository<Article, long> entityRepository
         , IRepository<Article_ArticleCategory, long> articleTagsRepository
+        , IRepository<UserDetail, Guid> userDetailRepository
         )
         {
             _entityRepository = entityRepository;
             _articleTagsRepository = articleTagsRepository;
+            _userDetailRepository = userDetailRepository;
         }
 
 
@@ -55,23 +56,40 @@ namespace U_StudyingCommunity_Dream.Articles
         ///</summary>
         /// <param name="input"></param>
         /// <returns></returns>
-		 
+		[AbpAllowAnonymous]
         public async Task<PagedResultDto<ArticleListDto>> GetPaged(GetArticlesInput input)
 		{
-
-		    var query = _entityRepository.GetAll();
-			// TODO:根据传入的参数添加过滤条件
+            var articleIds = new List<long>();
+            if (input.CategoryId.HasValue)
+            {
+                articleIds = await _articleTagsRepository.GetAll()
+                    .Where(a => a.ArticleCategoryId == input.CategoryId.Value)
+                    .Select(i => i.ArticleId)
+                    .Distinct()
+                    .ToListAsync();
+            }
+            var query = _entityRepository.GetAll()
+                .WhereIf(input.UserDetailId.HasValue, a=>a.UserDetailId == input.UserDetailId.Value)
+                .WhereIf(input.CategoryId.HasValue, a=>articleIds.Contains(a.Id))
+                .WhereIf(input.ReleaseStatus.HasValue ,a=>a.ReleaseStatus==input.ReleaseStatus.Value);
             
-
+			// TODO:根据传入的参数添加过滤条件
 			var count = await query.CountAsync();
 
 			var entityList = await query
-					.OrderBy(input.Sorting).AsNoTracking()
+					.OrderByDescending(i=>i.CreationTime).AsNoTracking()
 					.PageBy(input)
 					.ToListAsync();
 
-			// var entityListDtos = ObjectMapper.Map<List<ArticleListDto>>(entityList);
-			var entityListDtos =entityList.MapTo<List<ArticleListDto>>();
+			 var entityListDtos = ObjectMapper.Map<List<ArticleListDto>>(entityList);
+            foreach (var article in entityListDtos)
+            {
+                var userDetail = await _userDetailRepository.GetAsync(article.UserDetailId);
+                article.UserName = userDetail.Name;
+                article.HeadPortraitUrl = userDetail.HeadPortraitUrl;
+            }
+
+			//var entityListDtos =entityList.MapTo<List<ArticleListDto>>();
 
 			return new PagedResultDto<ArticleListDto>(count,entityListDtos);
 		}
@@ -80,12 +98,22 @@ namespace U_StudyingCommunity_Dream.Articles
 		/// <summary>
 		/// 通过指定id获取ArticleListDto信息
 		/// </summary>
-		 
+		[AbpAllowAnonymous]
 		public async Task<ArticleListDto> GetById(EntityDto<long> input)
 		{
 			var entity = await _entityRepository.GetAsync(input.Id);
 
-		    return entity.MapTo<ArticleListDto>();
+		    var result = ObjectMapper.Map<ArticleListDto>(entity);
+            if (result != null)
+            {
+                var user = await _userDetailRepository.GetAsync(result.UserDetailId);
+                if (user != null)
+                {
+                    result.UserName = user.Name;
+                    result.HeadPortraitUrl = user.HeadPortraitUrl;
+                }
+            }
+            return result;
 		}
 
 		/// <summary>

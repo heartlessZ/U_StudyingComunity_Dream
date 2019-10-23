@@ -28,6 +28,7 @@ import { UserDetailEditComponent } from './personal-center/user-detail-edit/user
 import { BookDetailComponent } from './library/book-detail/book-detail.component';
 import { ArticleAndProjectComponent } from './personal-center/article-and-project/article-and-project.component';
 import { CreateArticleComponent } from './community/create-article/create-article.component';
+import { ArticleDetailComponent } from './community/article-detail/article-detail.component';
 
 @NgModule({
    declarations: [
@@ -42,6 +43,7 @@ import { CreateArticleComponent } from './community/create-article/create-articl
       BookDetailComponent,
       ArticleAndProjectComponent,
       CreateArticleComponent,
+      ArticleDetailComponent,
    ],
    imports: [
       CommonModule,

@@ -871,6 +871,8 @@ namespace U_StudyingCommunity_Dream.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
+                    b.Property<string>("Description");
+
                     b.Property<string>("Headline")
                         .IsRequired()
                         .HasMaxLength(100);

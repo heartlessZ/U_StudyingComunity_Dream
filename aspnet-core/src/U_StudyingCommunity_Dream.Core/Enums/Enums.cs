@@ -17,7 +17,7 @@ namespace U_StudyingCommunity_Dream.Enums
     {
         待审核 = 0,
         草稿=1,
-        发布=2,
+        审核通过=2,
         已删除=3
     }
 

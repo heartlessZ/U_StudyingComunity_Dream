@@ -14,22 +14,23 @@ import { ArticleService, UserDetailService } from 'services';
 export class CreateArticleComponent extends AppComponentBase implements OnInit {
 
   validateForm: FormGroup;
-  isConfirmLoading:boolean = false;
+  isConfirmLoading: boolean = false;
   content: string;
   config: any = {
-    initialFrameHeight: 500
+    initialFrameHeight: 500,
+    
   };
 
-  article:ArticleDetailDto //= new ArticleDetailDto();
-  currentUserId:string;
+  article: ArticleDetailDto //= new ArticleDetailDto();
+  currentUserId: string;
 
 
   constructor(injector: Injector
-    ,private fb: FormBuilder
+    , private fb: FormBuilder
     , private router: Router
-    , private articleService:ArticleService
-    , private userDetailService : UserDetailService) {
-      super(injector);
+    , private articleService: ArticleService
+    , private userDetailService: UserDetailService) {
+    super(injector);
 
     this.validateForm = this.fb.group({
       name: [null, [Validators.required]],
@@ -38,7 +39,7 @@ export class CreateArticleComponent extends AppComponentBase implements OnInit {
   }
 
   //标签
-  listOfOption : Array<{ label: string; value: number }> = [];
+  listOfOption: Array<{ label: string; value: number }> = [];
   //已选中标签
   listOfTagOptions: number[] = [];
 
@@ -47,32 +48,32 @@ export class CreateArticleComponent extends AppComponentBase implements OnInit {
     this.article = new ArticleDetailDto();
     this.getCurrentUser();
     this.getAllArticleCategories();
+    
   }
 
-  getAllArticleCategories():void{
-    this.articleService.getAllArticleCategories().subscribe((result)=>{
+  getAllArticleCategories(): void {
+    this.articleService.getAllArticleCategories().subscribe((result) => {
       console.log(result);
-      if (result.length > 0){
+      if (result.length > 0) {
         result.forEach(item => {
-          this.listOfOption.push({label:item.lable,value:item.id});
+          this.listOfOption.push({ label: item.lable, value: item.id });
         });
       }
     })
   }
 
-  
-  getCurrentUser():void {
-    this.userDetailService.getCurrentUserSimpleInfo().subscribe((result)=>{
-        console.log(result);
-        if(result.userId != undefined)
-        {
-            this.currentUserId = result.userDetailId;
-        }
-        else{
-          this.router.navigate(["account/login"]);
-        }
+
+  getCurrentUser(): void {
+    this.userDetailService.getCurrentUserSimpleInfo().subscribe((result) => {
+      console.log(result);
+      if (result.userId != undefined) {
+        this.currentUserId = result.userDetailId;
+      }
+      else {
+        this.router.navigate(["account/login"]);
+      }
     })
-}
+  }
 
   contentChange(content: SimpleChanges): void {
     console.log(content);
@@ -88,6 +89,7 @@ export class CreateArticleComponent extends AppComponentBase implements OnInit {
     //草稿
     this.article.releaseStatus = 1;
   }
+  
   save(): void {
     this.isConfirmLoading = true;
     //标签
@@ -97,13 +99,13 @@ export class CreateArticleComponent extends AppComponentBase implements OnInit {
     if (!this.validateForm.valid) {
       return;
     }
-    if (this.content == undefined || this.content.length < 20){
+    if (this.content == undefined || this.content.length < 20) {
       this.notify.error("文章内容过短。");
       return;
     }
-    this.articleService.createOrUpdateArticle(this.article).subscribe((result)=>{
-      if (result){
-        this.isConfirmLoading=false;
+    this.articleService.createOrUpdateArticle(this.article).subscribe((result) => {
+      if (result) {
+        this.isConfirmLoading = false;
         this.message.success("成功")
         this.router.navigate(["app/community"])
       }

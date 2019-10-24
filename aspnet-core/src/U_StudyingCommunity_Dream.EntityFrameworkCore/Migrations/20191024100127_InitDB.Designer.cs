@@ -9,7 +9,7 @@ using U_StudyingCommunity_Dream.EntityFrameworkCore;
 namespace U_StudyingCommunity_Dream.Migrations
 {
     [DbContext(typeof(U_StudyingCommunity_DreamDbContext))]
-    [Migration("20191023072204_InitDB")]
+    [Migration("20191024100127_InitDB")]
     partial class InitDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

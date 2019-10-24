@@ -27,7 +27,7 @@ import { ArticleDetailComponent } from './community/article-detail/article-detai
                     { path: 'community/article-detail/:id', component:ArticleDetailComponent},
                     { path: 'community', component:CommunityComponent},
                     { path: 'personal-center', component:PersonalCenterComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }},
-                    { path: 'create-article', component:CreateArticleComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }}
+                    { path: 'create-article', component:CreateArticleComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }},
                 ]
             }
         ])

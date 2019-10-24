@@ -178,25 +178,26 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
     return new Observable((observer: Observer<boolean>) => {
       const isJPG = file.type === 'image/jpeg';
       if (!isJPG) {
-        this.message.error('You can only upload JPG file!');
+        this.message.error('只能上传jpg格式的图片！');
         observer.complete();
         return;
       }
       const isLt2M = file.size / 1024 / 1024 < 2;
       if (!isLt2M) {
-        this.message.error('Image must smaller than 2MB!');
+        this.message.error('封面大小不超过2M！');
         observer.complete();
         return;
       }
       // check height
       this.checkImageDimension(file).then(dimensionRes => {
-        if (!dimensionRes) {
-          this.message.error('Image only 300x300 above');
-          observer.complete();
-          return;
-        }
+        // if (!dimensionRes) {
+        //   this.message.error('Image only 300x300 above');
+        //   observer.complete();
+        //   return;
+        // }
 
-        observer.next(isJPG && isLt2M && dimensionRes);
+        //observer.next(isJPG && isLt2M && dimensionRes);
+        observer.next(isJPG && isLt2M);
         observer.complete();
       });
     });

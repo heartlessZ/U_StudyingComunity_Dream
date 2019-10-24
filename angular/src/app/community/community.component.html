@@ -1,7 +1,7 @@
 <nz-card class="simpleInfo" [nzBordered]="false">
 
     <nz-tabset>
-        <nz-tab [nzTitle]="'全部'" (nzSelect)="refreshData(null)">
+        <nz-tab [nzTitle]="'全部'" (nzClick)="refreshData(null)">
             <nz-list class="demo-loadmore-list" [nzDataSource]="data" [nzItemLayout]="'horizontal'"
                 [nzLoading]="initLoading" [nzRenderItem]="item" [nzLoadMore]="loadMore" [nzFooter]="footer">
                 <ng-template #item let-item>
@@ -12,8 +12,11 @@
                         <ng-template #likeAction><i nz-icon nzType="like-o" style="margin-right: 8px;"></i>
                             {{item.visitVolume}}
                         </ng-template>
-                        <ng-template #msgAction><i nz-icon nzType="message" style="margin-right: 8px;"></i>
-                            {{item.comment}}
+                        <ng-template #msgAction>
+                                <a routerLink="article-detail/{{item.id}}#comment">
+                                    <i nz-icon nzType="message" style="margin-right: 8px;"></i>
+                                </a>
+                            {{item.commentCount}}
                         </ng-template>
                         <nz-list-item-meta [nzTitle]="nzTitle" nzAvatar="{{serverBaseUrl+item.headPortraitUrl}}"
                             nzDescription="{{item.content}}">
@@ -31,7 +34,7 @@
                 </ng-template>
             </nz-list>
         </nz-tab>
-        <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab.name" (nzSelect)="refreshData(tab.id)">
+        <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab.name" (nzClick)="refreshData(tab.id)">
             <nz-list class="demo-loadmore-list" [nzDataSource]="data" [nzItemLayout]="'horizontal'"
                 [nzLoading]="initLoading" [nzRenderItem]="item" [nzLoadMore]="loadMore" [nzFooter]="footer">
                 <ng-template #item let-item>
@@ -42,8 +45,11 @@
                         <ng-template #likeAction><i nz-icon nzType="like-o" style="margin-right: 8px;"></i>
                             {{item.visitVolume}}
                         </ng-template>
-                        <ng-template #msgAction><i nz-icon nzType="message" style="margin-right: 8px;"></i>
-                            {{item.comment}}
+                        <ng-template #msgAction>
+                            <a routerLink="article-detail/{{item.id}}#comment">
+                                <i nz-icon nzType="message" style="margin-right: 8px;"></i>
+                            </a>
+                            {{item.commentCount}}
                         </ng-template>
                         <nz-list-item-meta [nzTitle]="nzTitle" nzAvatar="{{serverBaseUrl+item.headPortraitUrl}}"
                             nzDescription="{{item.content}}">

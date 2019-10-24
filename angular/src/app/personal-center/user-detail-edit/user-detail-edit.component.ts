@@ -82,7 +82,6 @@ export class UserDetailEditComponent extends AppComponentBase implements OnInit 
 
   ngOnInit() {
     this.fileUploadUrl = this.userDetailService.baseUrl+"/api/File/upload";
-    console.log(this.fileUploadUrl);
   }
 
   onChange(result: Date): void {
@@ -100,7 +99,9 @@ export class UserDetailEditComponent extends AppComponentBase implements OnInit 
     this.userDetailService.getUserDetailById(id).subscribe((result)=>{
       this.userDetail = result;
       this.avatarUrl = this.userDetailService.baseUrl + result.headPortraitUrl;
+      this.birthday = result.birthday;
       console.log(this.avatarUrl);
+      console.log(this.userDetail);
       
     });
   }
@@ -109,25 +110,26 @@ export class UserDetailEditComponent extends AppComponentBase implements OnInit 
     return new Observable((observer: Observer<boolean>) => {
       const isJPG = file.type === 'image/jpeg';
       if (!isJPG) {
-        this.message.error('You can only upload JPG file!');
+        this.message.error('只能上传jpg格式的图片！');
         observer.complete();
         return;
       }
       const isLt2M = file.size / 1024 / 1024 < 2;
       if (!isLt2M) {
-        this.message.error('Image must smaller than 2MB!');
+        this.message.error('头像大小必须小于2MB！');
         observer.complete();
         return;
       }
-      // check height
+      //check height
       this.checkImageDimension(file).then(dimensionRes => {
-        if (!dimensionRes) {
-          this.message.error('Image only 300x300 above');
-          observer.complete();
-          return;
-        }
+        // if (!dimensionRes) {
+        //   this.message.error('Image only 300x300 above');
+        //   observer.complete();
+        //   return;
+        // }
 
-        observer.next(isJPG && isLt2M && dimensionRes);
+        //observer.next(isJPG && isLt2M && dimensionRes);
+        observer.next(isJPG && isLt2M);
         observer.complete();
       });
     });

@@ -61,5 +61,10 @@ namespace U_StudyingCommunity_Dream.Articles.Dtos
         public string UserName { get; set; }
 
         public string HeadPortraitUrl { get; set; }
+
+        /// <summary>
+        /// 评论数
+        /// </summary>
+        public int CommentCount { get; set; }
     }
 }

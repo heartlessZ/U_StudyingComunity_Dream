@@ -29,6 +29,7 @@ import { BookDetailComponent } from './library/book-detail/book-detail.component
 import { ArticleAndProjectComponent } from './personal-center/article-and-project/article-and-project.component';
 import { CreateArticleComponent } from './community/create-article/create-article.component';
 import { ArticleDetailComponent } from './community/article-detail/article-detail.component';
+import { ReplyModalComponent } from './community/article-detail/reply-modal/reply-modal.component';
 
 @NgModule({
    declarations: [
@@ -44,6 +45,7 @@ import { ArticleDetailComponent } from './community/article-detail/article-detai
       ArticleAndProjectComponent,
       CreateArticleComponent,
       ArticleDetailComponent,
+      ReplyModalComponent,
    ],
    imports: [
       CommonModule,

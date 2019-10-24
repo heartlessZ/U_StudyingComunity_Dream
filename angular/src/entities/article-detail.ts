@@ -11,6 +11,7 @@ export class ArticleDetailDto implements IArticleDetailDto {
     headPortraitUrl: string | undefined;
     comment:number | undefined;
     description:string | undefined;
+    commentCount:number | undefined;
 
     constructor(data?: IArticleDetailDto) {
         if (data) {
@@ -34,6 +35,7 @@ export class ArticleDetailDto implements IArticleDetailDto {
             this.headPortraitUrl = data["headPortraitUrl"];
             this.comment = data["comment"];
             this.description = data["description"];
+            this.commentCount = data["commentCount"];
         }
     }
 

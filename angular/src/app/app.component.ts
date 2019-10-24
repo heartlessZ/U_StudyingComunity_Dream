@@ -21,8 +21,7 @@ export class AppComponent extends AppComponentBase implements OnInit//, AfterVie
     //private viewContainerRef: ViewContainerRef;
     currentUser : CurrentUserDetailDto;
     isLogin : boolean = false;
-    headurl : string = "";
-    host = AppConsts.remoteServiceBaseUrl;
+    headUrl : string = "";
 
     constructor(
         injector: Injector,
@@ -65,8 +64,8 @@ export class AppComponent extends AppComponentBase implements OnInit//, AfterVie
             {
                 this.isLogin=true;
                 this.currentUser = result;
-                this.headurl = this.host + result.headPortraitUrl;
-                console.log(this.headurl);
+                this.headUrl = this.userDetailService.baseUrl + result.headPortraitUrl;
+                console.log(this.headUrl);
                 
             }
         })

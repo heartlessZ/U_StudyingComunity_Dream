@@ -8,6 +8,7 @@ export class BookDetailDto implements IBookDetailDto {
     categoryId:number | undefined;
     categoryName:string | undefined;
     status:number | undefined;
+    birthday:Date | undefined;
 
     constructor(data?: IBookDetailDto) {
         if (data) {
@@ -28,6 +29,7 @@ export class BookDetailDto implements IBookDetailDto {
             this.otherUrls = data["otherUrls"];
             this.categoryId = data["categoryId"];
             this.status = data["status"];
+            this.birthday = data["birthday"];
         }
     }
 
@@ -59,6 +61,7 @@ export class BookDetailDto implements IBookDetailDto {
         data["otherUrls"] = this.otherUrls;
         data["categoryId"] = this.categoryId;
         data["status"] = this.status;
+        data["birthday"] = this.birthday;
         return data; 
     }
 
@@ -79,4 +82,5 @@ export interface IBookDetailDto {
     otherUrls:string | undefined;
     categoryId:number | undefined;
     status:number | undefined;
+    birthday:Date | undefined;
 }

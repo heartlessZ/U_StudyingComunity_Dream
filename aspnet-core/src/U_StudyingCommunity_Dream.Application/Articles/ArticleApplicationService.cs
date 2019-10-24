@@ -32,6 +32,7 @@ namespace U_StudyingCommunity_Dream.Articles
     {
         private readonly IRepository<Article, long> _entityRepository;
         private readonly IRepository<Article_ArticleCategory, long> _articleTagsRepository;
+        private readonly IRepository<Comment, long> _commentRepository;
         private readonly IRepository<UserDetail, Guid> _userDetailRepository;
 
 
@@ -43,11 +44,13 @@ namespace U_StudyingCommunity_Dream.Articles
         IRepository<Article, long> entityRepository
         , IRepository<Article_ArticleCategory, long> articleTagsRepository
         , IRepository<UserDetail, Guid> userDetailRepository
+        , IRepository<Comment, long> commentRepository
         )
         {
             _entityRepository = entityRepository;
             _articleTagsRepository = articleTagsRepository;
             _userDetailRepository = userDetailRepository;
+            _commentRepository = commentRepository;
         }
 
 
@@ -69,9 +72,9 @@ namespace U_StudyingCommunity_Dream.Articles
                     .ToListAsync();
             }
             var query = _entityRepository.GetAll()
+                .Where(a => a.ReleaseStatus == input.ReleaseStatus)
                 .WhereIf(input.UserDetailId.HasValue, a=>a.UserDetailId == input.UserDetailId.Value)
-                .WhereIf(input.CategoryId.HasValue, a=>articleIds.Contains(a.Id))
-                .WhereIf(input.ReleaseStatus.HasValue ,a=>a.ReleaseStatus==input.ReleaseStatus.Value);
+                .WhereIf(input.CategoryId.HasValue, a=>articleIds.Contains(a.Id));
             
 			// TODO:根据传入的参数添加过滤条件
 			var count = await query.CountAsync();
@@ -87,6 +90,7 @@ namespace U_StudyingCommunity_Dream.Articles
                 var userDetail = await _userDetailRepository.GetAsync(article.UserDetailId);
                 article.UserName = userDetail.Name;
                 article.HeadPortraitUrl = userDetail.HeadPortraitUrl;
+                article.CommentCount = await _commentRepository.GetAll().Where(i => i.ArticleId == article.Id && i.Parent == 0).CountAsync();
             }
 
 			//var entityListDtos =entityList.MapTo<List<ArticleListDto>>();

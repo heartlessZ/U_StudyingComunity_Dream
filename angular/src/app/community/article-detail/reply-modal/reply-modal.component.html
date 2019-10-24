@@ -1,0 +1,22 @@
+
+<form nz-form *ngIf="emodalVisible" [formGroup]="validateForm" (ngSubmit)="handleOk()">
+    <nz-modal
+          [(nzVisible)]="emodalVisible"
+          [nzTitle]="title"
+          (nzOnCancel)="handleCancel()"
+          (nzOnOk)="handleOk()"
+          [nzOkLoading]="isOkLoading"
+          [nzFooter]="modalFooter"
+        >
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="content" [nzSpan]="4">回复内容</nz-form-label>
+            <nz-form-control nzErrorTip="回复内容不能为空" [nzSpan]="16">
+              <textarea rows="4" formControlName="content" nz-input [(ngModel)]="comment.content"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        <ng-template #modalFooter>
+          <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">保存</button>
+          <button nz-button nzType="default" (click)="handleCancel()">取消</button>
+        </ng-template>
+    </nz-modal>
+    </form>

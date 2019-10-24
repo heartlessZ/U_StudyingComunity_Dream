@@ -26,7 +26,7 @@ Configuration.Modules.AbpAutoMapper().Configurators.Add(configuration =>
     // ....
 
     // 只需要复制这一段
-ArticleCategoryMapper.CreateMappings(configuration);
+CommentMapper.CreateMappings(configuration);
 
     // ....
 });
@@ -39,7 +39,7 @@ ArticleCategoryMapper.CreateMappings(configuration);
 中的 PreInitialize 方法中:
 
 ```
-Configuration.Authorization.Providers.Add<ArticleCategoryAuthorizationProvider>();
+Configuration.Authorization.Providers.Add<CommentAuthorizationProvider>();
 
 ```
 
@@ -48,7 +48,7 @@ Configuration.Authorization.Providers.Add<ArticleCategoryAuthorizationProvider>(
 可以在```DbContext```中增加：
 
  ```
-public DbSet<ArticleCategory>  ArticleCategorys { get; set; }
+public DbSet<Comment>  Comments { get; set; }
 
  ```
 
@@ -57,7 +57,7 @@ public DbSet<ArticleCategory>  ArticleCategorys { get; set; }
 ```
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new ArticleCategoryCfg());
+            modelBuilder.ApplyConfiguration(new CommentCfg());
         }
 
 ```
@@ -69,10 +69,13 @@ public DbSet<ArticleCategory>  ArticleCategorys { get; set; }
 
 ```
 
-<text name="Name"  value="Name"></text>
+<text name="Content"  value="Content"></text>
+<text name="UserDetailId"  value="UserDetailId"></text>
+<text name="Parent"  value="Parent"></text>
+<text name="ArticleId"  value="ArticleId"></text>
 
 
-<text name="ArticleCategory" value=""></text><text name="QueryArticleCategory"  value="查询"></text><text name="CreateArticleCategory"  value="添加"></text><text name="EditArticleCategory"  value="编辑"></text><text name="DeleteArticleCategory"  value="删除"></text><text name="BatchDeleteArticleCategory" value="批量删除"></text><text name="ExportArticleCategory"  value="导出"></text>                             
+<text name="Comment" value=""></text><text name="QueryComment"  value="查询"></text><text name="CreateComment"  value="添加"></text><text name="EditComment"  value="编辑"></text><text name="DeleteComment"  value="删除"></text><text name="BatchDeleteComment" value="批量删除"></text><text name="ExportComment"  value="导出"></text>                             
 
 ```
 

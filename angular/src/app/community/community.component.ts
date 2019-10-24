@@ -72,6 +72,7 @@ export class CommunityComponent implements OnInit {
 
   //切换标签页时刷新文章列表
   refreshData(categoryId?: number) {
+    this.loadingMore = true;
     this.search.categoryId = categoryId;
     this.search.skipCount = 0;
     this.getArticleList();

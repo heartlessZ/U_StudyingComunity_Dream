@@ -30,6 +30,9 @@ import { ArticleAndProjectComponent } from './personal-center/article-and-projec
 import { CreateArticleComponent } from './community/create-article/create-article.component';
 import { ArticleDetailComponent } from './community/article-detail/article-detail.component';
 import { ReplyModalComponent } from './community/article-detail/reply-modal/reply-modal.component';
+import { RouterModule } from '@angular/router';
+
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 @NgModule({
    declarations: [
@@ -58,13 +61,14 @@ import { ReplyModalComponent } from './community/article-detail/reply-modal/repl
       AppRoutingModule,
       ServiceProxyModule,
       SharedModule,
-      NgxPaginationModule
+      NgxPaginationModule,
    ],
    providers: [
       UserDetailService,
       CommonHttpClient,
       BookService,
       ArticleService,
+      { provide: LocationStrategy, useClass: HashLocationStrategy }
    ],
    entryComponents: []
 })

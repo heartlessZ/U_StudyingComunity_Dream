@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientJsonpModule } from '@angular/common/http';
@@ -48,7 +48,8 @@ import { TenantChangeDialogComponent } from './tenant/tenant-change-dialog.compo
         TenantChangeDialogComponent,
     ],
     providers: [
-        LoginService
+        LoginService,
+        //{ provide: LocationStrategy, useClass: HashLocationStrategy }
     ],
     entryComponents: [
         // tenant

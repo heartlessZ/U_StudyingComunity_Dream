@@ -2,7 +2,7 @@
     <nz-tabset [nzTabBarExtraContent]="extraTemplate">
         <nz-tab nzTitle="我的文章" (nzClick)="refreshData(2)">
           <nz-list class="demo-loadmore-list" [nzDataSource]="data" [nzItemLayout]="'horizontal'"
-                [nzLoading]="initLoading" [nzRenderItem]="item" [nzLoadMore]="loadMore" [nzFooter]="footer">
+                [nzLoading]="initLoading" [nzRenderItem]="item" [nzLoadMore]="loadMore">
                 <ng-template #item let-item>
                     <nz-list-item [nzActions]="[starAction, likeAction, msgAction]">
                         <ng-template #starAction><i nz-icon nzType="star-o" style="margin-right: 8px;"></i>

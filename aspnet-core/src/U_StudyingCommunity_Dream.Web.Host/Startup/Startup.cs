@@ -59,6 +59,16 @@ namespace U_StudyingCommunity_Dream.Web.Host.Startup
                         .AllowAnyMethod()
                         .AllowCredentials()
                 )
+                //options =>
+                //{
+                //    options.AddPolicy("all", builder =>
+                //    {
+                //        builder.AllowAnyOrigin() //允许任何来源的主机访问
+                //        .AllowAnyMethod()
+                //        .AllowAnyHeader()
+                //        .AllowCredentials();//指定处理cookie
+                //    });
+                //}
             );
 
             // Swagger - Enable this line and the related lines in Configure method to enable swagger UI
@@ -91,7 +101,8 @@ namespace U_StudyingCommunity_Dream.Web.Host.Startup
             app.UseAbp(options => { options.UseAbpRequestLocalization = false; }); // Initializes ABP framework.
 
             app.UseCors(_defaultCorsPolicyName); // Enable CORS!
-
+            //app.UseCors("all");
+            
             app.UseStaticFiles();
 
             app.UseAuthentication();

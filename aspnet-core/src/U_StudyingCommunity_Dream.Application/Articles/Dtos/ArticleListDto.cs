@@ -59,6 +59,11 @@ namespace U_StudyingCommunity_Dream.Articles.Dtos
 
 
         public string UserName { get; set; }
+        
+        /// <summary>
+        /// 标签名称集合
+        /// </summary>
+        public string TagNames { get; set; }
 
         public string HeadPortraitUrl { get; set; }
 

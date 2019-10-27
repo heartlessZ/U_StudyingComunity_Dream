@@ -13,22 +13,26 @@ import { Router } from '@angular/router';
 })
 export class CommunityComponent extends PagedListingComponentBase<any> {
 
-  search: any = { name: '', categoryId: null, releaseStatus: 0 };
+  search: any = { name: '', categoryId: null, releaseStatus: 1 };
   isTableLoading: boolean = false;
   selectedValue: number;
   tags: ArticleCategoryDto[];
-  articleStatus: [
-    {
-      status: 0,
-      lable: "待审核"
-    },
+  articleStatus:any = [
     {
       status: 1,
-      lable: "草稿"
+      lable: "待审核"
     },
     {
       status: 2,
       lable: "审核通过"
+    },
+    {
+      status: 3,
+      lable: "已拒绝"
+    },
+    {
+      status: 4,
+      lable: "草稿"
     },
   ]
 
@@ -46,6 +50,8 @@ export class CommunityComponent extends PagedListingComponentBase<any> {
     //首先加载类别选项
     this.getAllTags();
     this.refreshData();
+    console.log(this.articleStatus);
+    
   }
 
   getAllTags(): void {
@@ -68,7 +74,7 @@ export class CommunityComponent extends PagedListingComponentBase<any> {
    */
   reset() {
     this.pageNumber = 1;
-    this.search = { name: '', categoryId: '' };
+    this.search = { name: '', categoryId: '', releaseStatus:1};
     this.refresh();
   }
 
@@ -83,6 +89,7 @@ export class CommunityComponent extends PagedListingComponentBase<any> {
     params.MaxResultCount = request.maxResultCount;
     params.Name = this.search.name;
     params.CategoryId = this.search.categoryId;
+    params.ReleaseStatus = this.search.releaseStatus;
     this.articleService.getArticlePaged(params)
       .subscribe((result: PagedResultDto) => {
         this.isTableLoading = false;

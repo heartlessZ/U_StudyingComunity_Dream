@@ -1,5 +1,13 @@
 <nz-card class="simpleInfo" [nzTitle]="article.headline" [nzBordered]="false">
   <blockquote class="card-bodyquote" [innerHTML]="article.content"></blockquote>
+  <div *ngIf="currentUser.isAdmin">
+      <button  nz-button nzType="primary" [nzLoading]="auditBtnLoading" (click)="audit(2)" [disabled]="!article.releaseStatus==0" >
+          审核通过
+        </button>
+        <button nz-button nzType="primary" [nzLoading]="auditBtnLoading" (click)="audit(3)" [disabled]="!article.releaseStatus==0" >
+            拒绝
+          </button>
+  </div>
 </nz-card>
 
 <nz-card class="simpleInfo" [nzTitle]="'评论区'" [nzBordered]="false">

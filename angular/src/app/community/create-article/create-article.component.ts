@@ -80,14 +80,9 @@ export class CreateArticleComponent extends AppComponentBase implements OnInit {
 
   }
 
-  publish(): void {
-    //待审核
-    this.article.releaseStatus = 0;
-  }
-
-  draft(): void {
-    //草稿
-    this.article.releaseStatus = 1;
+  saveArticle(status:number):void{
+    this.article.releaseStatus = status;
+    //this.save();
   }
   
   save(): void {
@@ -103,6 +98,8 @@ export class CreateArticleComponent extends AppComponentBase implements OnInit {
       this.notify.error("文章内容过短。");
       return;
     }
+    console.log(this.article);
+    return;
     this.articleService.createOrUpdateArticle(this.article).subscribe((result) => {
       if (result) {
         this.isConfirmLoading = false;

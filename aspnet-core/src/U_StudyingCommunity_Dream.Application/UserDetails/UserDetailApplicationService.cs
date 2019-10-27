@@ -63,17 +63,17 @@ namespace U_StudyingCommunity_Dream.UserDetails
             {
                 return null;
             }
-            var userDetail = _entityRepository.FirstOrDefaultAsync(user.UserDetailId);
+            var userDetail = await _entityRepository.GetAsync(user.UserDetailId);
             if (userDetail != null)
             {
                 return new GetCurrentUserDto()
                 {
                     UserId = user.Id,
                     Name = user.Name,
-                    UserDetailId = userDetail.Result.Id,
+                    UserDetailId = userDetail.Id,
                     Surname = user.Surname,
-                    HeadPortraitUrl = userDetail.Result.HeadPortraitUrl,
-                    IsAdmin = userDetail.Result.IsAdmin
+                    HeadPortraitUrl = userDetail.HeadPortraitUrl,
+                    IsAdmin = userDetail.IsAdmin
                 };
             }
             return new GetCurrentUserDto()
@@ -243,19 +243,26 @@ UserDetailEditDto editDto;
 			// TODO:批量删除前的逻辑判断，是否允许删除
 			await _entityRepository.DeleteAsync(s => input.Contains(s.Id));
 		}
+        
+        public async Task<bool> GetUpdateUserStatus(Guid id)
+        {
+            var user = await _entityRepository.GetAsync(id);
+            user.Enable = !user.Enable;
+            await CurrentUnitOfWork.SaveChangesAsync();
+            return user.Enable;
+        }
 
-
-		/// <summary>
-		/// 导出UserDetail为excel表,等待开发。
-		/// </summary>
-		/// <returns></returns>
-		//public async Task<FileDto> GetToExcel()
-		//{
-		//	var users = await UserManager.Users.ToListAsync();
-		//	var userListDtos = ObjectMapper.Map<List<UserListDto>>(users);
-		//	await FillRoleNames(userListDtos);
-		//	return _userListExcelExporter.ExportToFile(userListDtos);
-		//}
+        /// <summary>
+        /// 导出UserDetail为excel表,等待开发。
+        /// </summary>
+        /// <returns></returns>
+        //public async Task<FileDto> GetToExcel()
+        //{
+        //	var users = await UserManager.Users.ToListAsync();
+        //	var userListDtos = ObjectMapper.Map<List<UserListDto>>(users);
+        //	await FillRoleNames(userListDtos);
+        //	return _userListExcelExporter.ExportToFile(userListDtos);
+        //}
 
     }
 }

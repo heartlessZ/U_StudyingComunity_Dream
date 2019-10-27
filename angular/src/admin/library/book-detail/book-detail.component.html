@@ -8,21 +8,21 @@
           <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
           <div class="ant-upload-text">上传封面</div>
         </ng-container>
-        <img *ngIf="avatarUrl" [src]="avatarUrl" class="avatar" />
+        <img style="max-width: 300px;" *ngIf="avatarUrl" [src]="avatarUrl" class="avatar" />
       </nz-upload>
     </nz-form-item>
 
     <nz-form-item>
       <nz-form-label [nzSpan]="4" nzRequired nzFor="name">书籍名称</nz-form-label>
       <nz-form-control [nzSpan]="8" nzErrorTip="书籍名称不能为空">
-        <input type="text" nz-input formControlName="name" placeholder="请输入书籍名称" [(ngModel)]="book.name" />
+        <input type="text" nz-input name="name" formControlName="name" placeholder="请输入书籍名称" [(ngModel)]="book.name" />
       </nz-form-control>
     </nz-form-item>
 
     <nz-form-item>
       <nz-form-label [nzSpan]="4" nzRequired nzFor="author">作者</nz-form-label>
       <nz-form-control [nzSpan]="8" nzErrorTip="作者不能为空">
-        <input type="text" nz-input formControlName="author" placeholder="请输入作者" [(ngModel)]="book.author" />
+        <input type="text" nz-input name="author" formControlName="author" placeholder="请输入作者" [(ngModel)]="book.author" />
       </nz-form-control>
     </nz-form-item>
 

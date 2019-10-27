@@ -1,3 +1,7 @@
 .ant-cascader-picker {
     width: 300px;
   }
+
+  nz-select {
+    width: 200px;
+  }

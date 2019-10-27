@@ -7,6 +7,7 @@ import { UserComponent } from './user/user.component';
 import { LibraryComponent } from './library/library.component';
 import { BookCategoryComponent } from './book-category/book-category.component';
 import { CommunityComponent } from './community/community.component';
+import { BookResourceComponent } from './library/book-resource/book-resource.component';
 
 @NgModule({
     imports: [
@@ -19,6 +20,7 @@ import { CommunityComponent } from './community/community.component';
                     { path: 'home', component: HomeComponent , canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Admin' } },
                     { path: 'user', component: UserComponent , canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Admin' } },
                     { path: 'library', component: LibraryComponent , canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Admin' } },
+                    { path: 'library/book-resource', component: BookResourceComponent , canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Admin' } },
                     { path: 'book-category', component: BookCategoryComponent , canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Admin' } },
                     { path: 'community', component: CommunityComponent , canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Admin' } },
                 ]

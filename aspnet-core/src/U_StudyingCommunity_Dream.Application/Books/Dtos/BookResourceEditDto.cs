@@ -61,9 +61,6 @@ namespace  U_StudyingCommunity_Dream.Books.Dtos
 		/// Status
 		/// </summary>
 		public BookResourceStatus Status { get; set; }
-
-
-
-
+        
     }
 }

@@ -15,10 +15,10 @@ namespace U_StudyingCommunity_Dream.Enums
     /// </summary>
     public enum ReleaseStatus
     {
-        待审核 = 0,
-        草稿=1,
-        审核通过=2,
-        已删除=3
+        待审核 = 1,
+        审核通过 = 2,
+        拒绝 = 3,
+        草稿 = 4
     }
 
     /// <summary>
@@ -26,14 +26,14 @@ namespace U_StudyingCommunity_Dream.Enums
     /// </summary>
     public enum GenderType
     {
-        女 = 0,
-        男 = 1
+        女 = 1,
+        男 = 2
     }
 
     public enum BookResourceStatus
     {
-        拒绝=-1,
-        待审核=0,
-        审核通过=1
+        待审核 = 1,
+        审核通过 = 2,
+        拒绝 = 3,
     }
 }

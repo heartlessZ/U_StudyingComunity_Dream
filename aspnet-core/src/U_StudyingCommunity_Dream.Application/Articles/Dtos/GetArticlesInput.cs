@@ -28,4 +28,11 @@ namespace U_StudyingCommunity_Dream.Articles.Dtos
         }
 
     }
+
+    public class AuditArticleStatus
+    {
+        public long ArticleId { get; set; }
+
+        public ReleaseStatus Status { get; set; }
+    }
 }

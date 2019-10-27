@@ -41,10 +41,5 @@ namespace U_StudyingCommunity_Dream.Books
         public virtual int CategoryId { get; set; }
         
         public virtual BookResourceStatus Status { get; set; }
-
-        public Book()
-        {
-            Status = BookResourceStatus.待审核;
-        }
     }
 }

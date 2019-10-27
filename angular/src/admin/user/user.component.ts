@@ -33,6 +33,7 @@ export class UserComponent extends PagedListingComponentBase<any>{
 
     search: any = {};
     isTableLoading:boolean=false;
+    switchLoading:boolean=false;
 
     refresh(): void {
         this.getDataPage(this.pageNumber);
@@ -71,11 +72,17 @@ export class UserComponent extends PagedListingComponentBase<any>{
                 this.isTableLoading=false;
                 this.dataList = result.items
                 this.totalItems = result.totalCount;
+                //this.dataList.forEach(i=>i.gender==0?)
             });
     }
 
-    showModal(id:string){
-
+    switchChange(e,id:string):boolean{
+      this.switchLoading = true;
+      this.userDetailService.updateUserStatus(id).subscribe((result)=>{
+        this.switchLoading = false;
+        return result;
+      })
+      return false;
     }
 
 }

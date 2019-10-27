@@ -1,70 +1,70 @@
 <nz-card style="width:90%;margin:auto;" [nzBordered]="false">
-    <form nz-form (ngSubmit)="refreshData()" [nzLayout]="'inline'">
-      <div nz-row [nzGutter]="18">
-        <div nz-col [nzSpan]="8" class="mb-md">
-          <nz-form-item class="d-flex" style="margin-bottom: 0px;">
-            <nz-form-label nzFor="name">标题查询</nz-form-label>
-            <nz-form-control class="flex-1">
-              <input nz-input name="name" [(ngModel)]="search.name" [placeholder]="'请输入标题'">
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col [nzSpan]="8" class="mb-md">
-          <nz-form-item class="d-flex" style="margin-bottom: 0px;">
-              <nz-form-label nzFor="values">分类</nz-form-label>
-              <nz-form-control class="flex-1">
-                  <nz-select [(ngModel)]="search.categoryId" name="categoryId" [nzSize]="'Default'">
-                      <nz-option *ngFor="let tag of tags" [nzLabel]="tag.name" [nzValue]="tag.id"></nz-option>
-                    </nz-select>
-              </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col [nzSpan]="8" class="mb-md">
-            <nz-form-item class="d-flex" style="margin-bottom: 0px;">
-                <nz-form-label nzFor="values">文章状态</nz-form-label>
-                <nz-form-control class="flex-1">
-                    <nz-select [(ngModel)]="search.releaseStatus" name="releaseStatus" [nzSize]="'Default'">
-                        <nz-option *ngFor="let item of articleStatus" [nzLabel]="item.lable" [nzValue]="item.status"></nz-option>
-                      </nz-select>
-                </nz-form-control>
-            </nz-form-item>
-          </div>
-        <div nz-col [nzSpan]="8" class="mb-md right" [class.text-right]="'true'" style="float: right;">
-          <nz-form-item class="d-flex" style="margin-right: 0px;margin-bottom: 0px;">
-            <nz-form-control class="flex-1">
-              <button nz-button type="button" (click)="refreshData()" nzType="primary"
-                [nzLoading]="isTableLoading">查询</button>
-              <button nz-button type="button" (click)="reset()" class="mx-sm">重置</button>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
+  <form nz-form (ngSubmit)="refreshData()" [nzLayout]="'inline'">
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="6" class="mb-md">
+        <nz-form-item class="d-flex" style="margin-bottom: 0px;">
+          <nz-form-label nzFor="name">标题查询</nz-form-label>
+          <nz-form-control class="flex-1">
+            <input nz-input name="name" [(ngModel)]="search.name" [placeholder]="'请输入标题'">
+          </nz-form-control>
+        </nz-form-item>
       </div>
-    </form>
-    <ng-template #totalTemplate let-total>共 {{totalItems}} 条</ng-template>
-    <nz-table #nzTable [nzFrontPagination]="false" [nzShowTotal]="totalTemplate" [nzTotal]="totalItems" [nzData]="dataList"
-      [(nzPageIndex)]="pageNumber" [(nzPageSize)]="pageSize" [nzLoading]="isTableLoading" [nzShowSizeChanger]="true"
-      (nzPageIndexChange)="refresh()" (nzPageSizeChange)="refresh()">
-      <thead>
-          <tr>
-              <th>标题</th>
-              <th>作者</th>
-              <th>类别</th>
-              <th>创建时间</th>
-              <th>状态</th>
-              <th>详情</th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr *ngFor="let item of nzTable.data">
-              <td>{{item.headline}}</td>
-              <td>{{item.userName}}</td>
-              <td>{{item.tagNames}}</td>
-              <td>{{item.creationTime | date: "yyyy-MM-dd HH:mm:ss"}}</td>
-              <td>{{item.releaseStatus}}</td>
-              <td>
-                  <a (click)="detail(item.id)">审核</a>
-              </td>
-          </tr>
-      </tbody>
-    </nz-table>
-  </nz-card>
+      <div nz-col [nzSpan]="6" class="mb-md">
+        <nz-form-item class="d-flex" style="margin-bottom: 0px;">
+          <nz-form-label nzFor="categoryId">分类</nz-form-label>
+          <nz-form-control class="flex-1">
+            <nz-select [(ngModel)]="search.categoryId" name="categoryId" [nzSize]="'default'">
+              <nz-option *ngFor="let tag of tags" [nzLabel]="tag.name" [nzValue]="tag.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="6" class="mb-md">
+        <nz-form-item class="d-flex" style="margin-bottom: 0px;">
+          <nz-form-label nzFor="releaseStatus">文章状态</nz-form-label>
+          <nz-form-control class="flex-1">
+            <nz-select [(ngModel)]="search.releaseStatus" name="releaseStatus" [nzSize]="'default'">
+              <nz-option *ngFor="let item of articleStatus" [nzLabel]="item.lable" [nzValue]="item.status"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="6" class="mb-md right" [class.text-right]="'true'" style="float: right;">
+        <nz-form-item class="d-flex" style="margin-right: 0px;margin-bottom: 0px;">
+          <nz-form-control class="flex-1">
+            <button nz-button type="button" (click)="refreshData()" nzType="primary"
+              [nzLoading]="isTableLoading">查询</button>
+            <button nz-button type="button" (click)="reset()" class="mx-sm">重置</button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <ng-template #totalTemplate let-total>共 {{totalItems}} 条</ng-template>
+  <nz-table #nzTable [nzFrontPagination]="false" [nzShowTotal]="totalTemplate" [nzTotal]="totalItems"
+    [nzData]="dataList" [(nzPageIndex)]="pageNumber" [(nzPageSize)]="pageSize" [nzLoading]="isTableLoading"
+    [nzShowSizeChanger]="true" (nzPageIndexChange)="refresh()" (nzPageSizeChange)="refresh()">
+    <thead>
+      <tr>
+        <th>标题</th>
+        <th>作者</th>
+        <th>类别</th>
+        <th>创建时间</th>
+        <th>状态</th>
+        <th>详情</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of nzTable.data">
+        <td>{{item.headline}}</td>
+        <td>{{item.userName}}</td>
+        <td>{{item.tagNames}}</td>
+        <td>{{item.creationTime | date: "yyyy-MM-dd HH:mm:ss"}}</td>
+        <td>{{item.releaseStatus}}</td>
+        <td>
+          <a (click)="detail(item.id)">审核</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

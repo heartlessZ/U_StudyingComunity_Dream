@@ -59,6 +59,9 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
   currentUser: CurrentUserDetailDto;
   headurl: string;
   isLogin: boolean = false;
+  isAdmin: boolean = false;
+
+  auditBtnLoading:boolean=false;
 
   commentsCount: number = 0;
 
@@ -81,6 +84,7 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
 
   ngOnInit() {
     this.article = new ArticleDetailDto();
+    this.currentUser = new CurrentUserDetailDto();
     this.search.articleId = this.articleId;
     this.getCurrentUser();
     this.getArticleDetailById();
@@ -93,6 +97,7 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
         this.isLogin = true;
         this.currentUser = result;
         this.headurl = this.userDetailService.baseUrl + result.headPortraitUrl;
+        console.log(this.currentUser);
       }
     })
   }
@@ -133,8 +138,8 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
     this.comment.articleId = this.articleId;
     this.comment.userDetailId = this.currentUser.userDetailId;
     this.comment.parent = parent;
-    console.log(this.comment);
-    return;
+    // console.log(this.comment);
+    // return;
     this.articleService.createComment(this.comment).subscribe((result) => {
       if (result) {
         this.notify.success("成功");
@@ -161,6 +166,17 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
 
   createComment(): void {
 
+  }
+
+  audit(status:number){
+    this.auditBtnLoading = true;
+    this.articleService.updateArticleStatus(this.article.id,status).subscribe((result)=>{
+      if(result){
+        this.notify.success("审核成功");
+        this.getArticleDetailById();
+      }
+      this.auditBtnLoading = false;
+    })
   }
 
 }

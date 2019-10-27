@@ -1,15 +1,15 @@
 <nz-card style="width:90%;margin:auto;" [nzBordered]="false">
   <form nz-form (ngSubmit)="refreshData()" [nzLayout]="'inline'">
-    <div nz-row [nzGutter]="18">
-      <div nz-col [nzSpan]="8" class="mb-md">
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="6" class="mb-md">
         <nz-form-item class="d-flex" style="margin-bottom: 0px;">
           <nz-form-label nzFor="name">书籍查询</nz-form-label>
           <nz-form-control class="flex-1">
-            <input nz-input name="name" [(ngModel)]="search.name" [placeholder]="'请输入书名或作者'">
+            <input nz-input name="name"  [(ngModel)]="search.name" [placeholder]="'请输入书名或作者'">
           </nz-form-control>
         </nz-form-item>
       </div>
-      <div nz-col [nzSpan]="8" class="mb-md">
+      <div nz-col [nzSpan]="6" class="mb-md">
         <nz-form-item class="d-flex" style="margin-bottom: 0px;">
             <nz-form-label nzFor="values">分类</nz-form-label>
             <nz-form-control class="flex-1">
@@ -19,7 +19,17 @@
             </nz-form-control>
         </nz-form-item>
       </div>
-      <div nz-col [nzSpan]="8" class="mb-md right" [class.text-right]="'true'" style="float: right;">
+      <div nz-col [nzSpan]="6" class="mb-md">
+        <nz-form-item class="d-flex" style="margin-bottom: 0px;">
+          <nz-form-label nzFor="status">文章状态</nz-form-label>
+          <nz-form-control class="flex-1">
+            <nz-select [(ngModel)]="search.status" name="status" [nzSize]="'default'">
+              <nz-option *ngFor="let item of bookStatus" [nzLabel]="item.lable" [nzValue]="item.status"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="4" class="mb-md right" [class.text-right]="'true'" style="float: right;">
         <nz-form-item class="d-flex" style="margin-right: 0px;margin-bottom: 0px;">
           <nz-form-control class="flex-1">
             <button nz-button type="button" (click)="refreshData()" nzType="primary"

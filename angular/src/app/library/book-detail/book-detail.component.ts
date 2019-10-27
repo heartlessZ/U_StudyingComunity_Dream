@@ -58,7 +58,7 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
   }
 
   getResourceListByBookId(): void {
-    this.bookService.getResourceListByBookId(this.id).subscribe((result) => {
+    this.bookService.getResourceListByBookId(this.id,2).subscribe((result) => {
       this.bookResources = result;
       this.bookResources.forEach(i => i.url = this.fileDownloadUrl + "?url=" + i.url);
 

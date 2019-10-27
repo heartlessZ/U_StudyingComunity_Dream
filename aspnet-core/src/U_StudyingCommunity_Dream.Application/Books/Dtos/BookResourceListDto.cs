@@ -59,7 +59,11 @@ namespace U_StudyingCommunity_Dream.Books.Dtos
 		public BookResourceStatus Status { get; set; }
 
 
+        public string BookName { get; set; }
 
+        public string UploaderName { get; set; }
+
+        public string AuditorName { get; set; }
 
     }
 }

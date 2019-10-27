@@ -71,6 +71,8 @@ namespace U_StudyingCommunity_Dream.UserDetails
         /// </summary>
         Task BatchDelete(List<Guid> input);
 
+        Task<bool> GetUpdateUserStatus(Guid id);
+
 
 		/// <summary>
         /// 导出UserDetail为excel表

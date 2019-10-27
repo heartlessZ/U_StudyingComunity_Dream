@@ -24,6 +24,7 @@ import { CreateCategoryComponent } from './book-category/create-category/create-
 import { BookCategoryDetailComponent } from './book-category/book-category-detail/book-category-detail.component';
 import { BookDetailComponent } from './library/book-detail/book-detail.component';
 import { CommunityComponent } from './community/community.component';
+import { BookResourceComponent } from './library/book-resource/book-resource.component';
 //import { HttpModule } from '@angular/http';
 
 @NgModule({
@@ -46,6 +47,7 @@ import { CommunityComponent } from './community/community.component';
 
         LibraryComponent,
         BookDetailComponent,
+        BookResourceComponent,
 
         BookCategoryComponent,
         CreateCategoryComponent,

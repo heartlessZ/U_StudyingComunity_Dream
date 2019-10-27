@@ -88,4 +88,12 @@ export class ArticleService {
     }));
   }
 
+  updateArticleStatus(articleId:number,status:number):Observable<boolean>{
+    let url_ = "/api/services/app/Article/AduitArticleStatus";
+    
+    return this._commonhttp.post(url_, {articleId:articleId,status:status}).pipe(map(data => {
+      return data;
+    }));
+  }
+
 }

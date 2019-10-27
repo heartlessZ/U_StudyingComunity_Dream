@@ -4,7 +4,7 @@ export class ArticleDetailDto implements IArticleDetailDto {
     content: string | undefined;
     praise: number | undefined;
     visitVolume: number | undefined;
-    releaseStatus:number | undefined;
+    releaseStatus:any | undefined;
     userDetailId:string | undefined;
     categoryIds:number[] | undefined;
     userName:string | undefined;

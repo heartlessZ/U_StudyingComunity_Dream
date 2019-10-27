@@ -17,11 +17,26 @@ import { BookCategoryDto, SelectBookCategory } from 'entities';
 export class LibraryComponent extends PagedListingComponentBase<any> {
   @ViewChild('bookDetailModal', { static: true }) bookDetailModal: BookDetailComponent;
 
-  search: any = { name: '', categoryId: '' };
+  search: any = { name: '', categoryId: '', status:1};
   isTableLoading: boolean = false;
   nzOptions: NzCascaderOption[];
   //nzOptions:SelectBookCategory[];
   values: string[] | null = null;
+
+  bookStatus:any = [
+    {
+      status: 1,
+      lable: "待审核"
+    },
+    {
+      status: 2,
+      lable: "审核通过"
+    },
+    {
+      status: 3,
+      lable: "已拒绝"
+    }
+  ]
 
   constructor(private bookService: BookService,
     private injector: Injector) {
@@ -78,7 +93,7 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
    */
   reset() {
     this.pageNumber = 1;
-    this.search = { name: '', categoryId: '' };
+    this.search = { name: '', categoryId: '', status:1 };
     this.values = null;
     this.refresh();
   }
@@ -96,6 +111,7 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
     params.MaxResultCount = request.maxResultCount;
     params.Name = this.search.name;
     params.CategoryId = this.search.categoryId;
+    params.Status = this.search.status;
     this.bookService.getBookListPaged(params)
       // .finally(() => {
       //     finishedCallback();

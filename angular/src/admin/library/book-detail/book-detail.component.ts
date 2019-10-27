@@ -140,7 +140,7 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
     this.isOkLoading = true;
     //管理员添加默认审核通过
     this.book.coverUrl = this.fileUrl;
-    this.book.status = 1;
+    this.book.status = 2;
     if (this.values != null || this.values != undefined)
       this.book.categoryId = Number(this.values.reverse()[0]);
     //this.submitForm();
@@ -165,6 +165,7 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
   ngOnInit() {
     this.fileUploadUrl = this.bookService.baseUrl+"/api/File/upload";
     this.fileDownloadUrl = this.bookService.baseUrl+"/api/File/download";
+    this.book = new BookDetailDto();
   }
 
   submitForm(value: any): void {
@@ -244,7 +245,6 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
 
   //图书资源上传
   handleChangeBookResource(info: { file: UploadFile }): void {
-    console.log(this.book);
     this.bookResource = new BookResourceDto();
     if (info.file.status === 'error') {
       this.notify.error('上传文件异常，请重试');
@@ -263,8 +263,8 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
           this.bookResource.bookId = this.book.id;
           this.bookResource.name = info.file.name;
           this.bookResource.url = res.data.url;
-          this.bookResource.stutus = 1;
-          this.saveBookResource();
+          this.bookResource.status = 2;
+          this.saveBookResource(this.bookResource);
         } else {
           this.notify.error(res.msg);
           this.fileList.pop();
@@ -274,8 +274,10 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
   }
 
   //保存书籍资源
-  saveBookResource():void{
-    this.bookService.createBookResource(this.bookResource).subscribe((result)=>{
+  saveBookResource(bookResource:BookResourceDto):void{
+    console.log(bookResource);
+    // return;
+    this.bookService.createBookResource(bookResource).subscribe((result)=>{
       this.notify.success('上传文件成功');
     })
   }

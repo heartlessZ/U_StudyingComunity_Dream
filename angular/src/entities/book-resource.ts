@@ -3,7 +3,7 @@ export class BookResourceDto implements IBookResourceDto {
     bookId: number | undefined;
     name: string | undefined;
     url: string | undefined;
-    stutus:number|undefined;
+    status:any|undefined;
     error:string | undefined;
 
     constructor(data?: IBookResourceDto) {
@@ -21,7 +21,7 @@ export class BookResourceDto implements IBookResourceDto {
             this.name = data["name"];
             this.bookId = data["bookId"];
             this.url = data["url"];
-            this.stutus = data["stutus"];
+            this.status = data["status"];
         }
     }
 
@@ -49,6 +49,7 @@ export class BookResourceDto implements IBookResourceDto {
         data["name"] = this.name;
         data["bookId"] = this.bookId;
         data["url"] = this.url;
+        data["status"] = this.status;
         return data; 
     }
 
@@ -65,4 +66,6 @@ export interface IBookResourceDto {
     bookId: number | undefined;
     name: string | undefined;
     url: string | undefined;
+    status:any|undefined;
+    error:string | undefined;
 }

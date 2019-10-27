@@ -20,9 +20,8 @@ using Abp.Linq.Extensions;
 
 using U_StudyingCommunity_Dream.Books;
 using U_StudyingCommunity_Dream.Books.Dtos;
-
-
-
+using U_StudyingCommunity_Dream.Enums;
+using U_StudyingCommunity_Dream.UserDetails;
 
 namespace U_StudyingCommunity_Dream.Books
 {
@@ -33,19 +32,21 @@ namespace U_StudyingCommunity_Dream.Books
     public class BookResourceAppService : U_StudyingCommunity_DreamAppServiceBase, IBookResourceAppService
     {
         private readonly IRepository<BookResource, long> _entityRepository;
-
-        
+        private readonly IRepository<UserDetail, Guid> _userDetailRepository;
+        private readonly IRepository<BookResource, long> _bookResourceRepository;
 
         /// <summary>
         /// 构造函数 
         ///</summary>
         public BookResourceAppService(
         IRepository<BookResource, long> entityRepository
-        
+        , IRepository<UserDetail, Guid> userDetailRepository
+        , IRepository<BookResource, long> bookResourceRepository
         )
         {
-            _entityRepository = entityRepository; 
-            
+            _entityRepository = entityRepository;
+            _userDetailRepository = userDetailRepository;
+            _bookResourceRepository = bookResourceRepository;
         }
 
 
@@ -58,7 +59,9 @@ namespace U_StudyingCommunity_Dream.Books
         public async Task<PagedResultDto<BookResourceListDto>> GetPaged(GetBookResourcesInput input)
 		{
 
-		    var query = _entityRepository.GetAll();
+		    var query = _entityRepository.GetAll()
+                .Where(b=>b.Name.Contains(input.Name))
+                .Where(b=>b.Status == input.Status);
 			// TODO:根据传入的参数添加过滤条件
             
 
@@ -70,6 +73,21 @@ namespace U_StudyingCommunity_Dream.Books
 					.ToListAsync();
 
 			var entityListDtos = ObjectMapper.Map<List<BookResourceListDto>>(entityList);
+            foreach (var dto in entityListDtos)
+            {
+                if (dto.Uploader.HasValue)
+                {
+                    var userDetail = await _userDetailRepository.GetAsync(dto.Uploader.Value);
+                    dto.UploaderName = userDetail.Surname;
+                }
+                if (dto.Auditor.HasValue)
+                {
+                    var userDetail = await _userDetailRepository.GetAsync(dto.Auditor.Value);
+                    dto.AuditorName = userDetail.Surname;
+                }
+                var book = await _bookResourceRepository.GetAsync(dto.BookId);
+                dto.BookName = book.Name;
+            }
 			//var entityListDtos =entityList.MapTo<List<BookResourceListDto>>();
 
 			return new PagedResultDto<BookResourceListDto>(count,entityListDtos);
@@ -194,9 +212,12 @@ BookResourceEditDto editDto;
 			await _entityRepository.DeleteAsync(s => input.Contains(s.Id));
 		}
 
-        public async Task<List<BookResourceListDto>> GetResourceListByBookId(EntityDto<long> input)
+        public async Task<List<BookResourceListDto>> GetResourceListByBookId(EntityDto<long> input, BookResourceStatus? status)
         {
-            var entities = await _entityRepository.GetAll().Where(i => i.BookId == input.Id && i.Status == Enums.BookResourceStatus.审核通过).ToListAsync();
+            var entities = await _entityRepository.GetAll()
+                .Where(i => i.BookId == input.Id)
+                .WhereIf(status.HasValue, i => i.Status == status)
+                .ToListAsync();
             return ObjectMapper.Map<List<BookResourceListDto>>(entities);
         }
 

@@ -20,6 +20,7 @@ using Abp.Application.Services.Dto;
 
 using U_StudyingCommunity_Dream.Articles.Dtos;
 using U_StudyingCommunity_Dream.Articles;
+using U_StudyingCommunity_Dream.Enums;
 
 namespace U_StudyingCommunity_Dream.Articles
 {
@@ -71,12 +72,20 @@ namespace U_StudyingCommunity_Dream.Articles
         /// </summary>
         Task BatchDelete(List<long> input);
 
+        /// <summary>
+        /// 审核文章状态
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        Task<bool> AduitArticleStatus(AuditArticleStatus audit);
 
-		/// <summary>
+
+        /// <summary>
         /// 导出Article为excel表
         /// </summary>
         /// <returns></returns>
-		//Task<FileDto> GetToExcel();
+        //Task<FileDto> GetToExcel();
 
     }
 }

@@ -20,6 +20,7 @@ using Abp.Application.Services.Dto;
 
 using U_StudyingCommunity_Dream.Books.Dtos;
 using U_StudyingCommunity_Dream.Books;
+using U_StudyingCommunity_Dream.Enums;
 
 namespace U_StudyingCommunity_Dream.Books
 {
@@ -76,7 +77,7 @@ namespace U_StudyingCommunity_Dream.Books
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<List<BookResourceListDto>> GetResourceListByBookId(EntityDto<long> input);
+        Task<List<BookResourceListDto>> GetResourceListByBookId(EntityDto<long> input, BookResourceStatus? status);
 
 		/// <summary>
         /// 导出BookResource为excel表

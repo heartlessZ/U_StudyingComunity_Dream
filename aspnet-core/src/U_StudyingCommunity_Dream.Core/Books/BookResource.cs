@@ -42,10 +42,6 @@ namespace U_StudyingCommunity_Dream.Books
         public virtual Guid? Auditor { get; set; }
 
         public virtual BookResourceStatus Status { get; set; }
-
-        public BookResource()
-        {
-            Status = BookResourceStatus.待审核;
-        }
+        
     }
 }

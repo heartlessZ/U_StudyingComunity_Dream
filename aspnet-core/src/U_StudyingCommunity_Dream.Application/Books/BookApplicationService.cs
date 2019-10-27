@@ -61,11 +61,12 @@ namespace U_StudyingCommunity_Dream.Books
             var categoryIds = new List<int>();
             if (input.CategoryId.HasValue)
             {
-                categoryIds = GetChildrenCategoryIds(input.CategoryId.Value);
+               GetChildrenCategoryIds(input.CategoryId.Value, ref categoryIds);
                 categoryIds.Add(input.CategoryId.Value);
             }
 
             var query = _entityRepository.GetAll()
+                .Where(b=>b.Status==input.Status)
                 .WhereIf(!string.IsNullOrEmpty(input.Keyword)
                 , b => b.Name.Contains(input.Keyword) || b.Author.Contains(input.Keyword))
                 .WhereIf(input.CategoryId.HasValue, i => categoryIds.Contains(i.CategoryId));
@@ -93,25 +94,21 @@ namespace U_StudyingCommunity_Dream.Books
             return new PagedResultDto<BookListDto>(count,entityListDtos);
 		}
 
-        private List<int> GetChildrenCategoryIds(int id)
+        private void GetChildrenCategoryIds(int id,ref List<int> ids)
         {
-            var ids = new List<int>();
-            //var a = _categoryRepository.GetAll();
-            var categories = _categoryRepository.GetAll().Where(i => i.Parent == id);
-            foreach (var category in categories)
+            var categorieIds = _categoryRepository.GetAll().Where(c => c.Parent == id).Select(i=>i.Id);
+            foreach (var item in categorieIds)
             {
-                ids.Add(category.Id);
-                GetChildrenCategoryIds(category.Id);
+                ids.Add(item);
+                GetChildrenCategoryIds(item, ref ids);
             }
-            return ids;
         }
+        
+        /// <summary>
+        /// 通过指定id获取BookListDto信息
+        /// </summary>
 
-
-		/// <summary>
-		/// 通过指定id获取BookListDto信息
-		/// </summary>
-		 
-		public async Task<BookListDto> GetById(EntityDto<long> input)
+        public async Task<BookListDto> GetById(EntityDto<long> input)
 		{
 			var entity = await _entityRepository.GetAsync(input.Id);
 

@@ -95,16 +95,27 @@ export class BookService {
   //创建图书资源
   createBookResource(bookResource:BookResourceDto):Observable<boolean>{
     let url_ = "/api/services/app/BookResource/CreateOrUpdate";
+    
     return this._commonhttp.post(url_, {bookResource:bookResource}).pipe(map(data => {
       return data;
     }));
   }
 
   //通过书籍Id获取资源集合
-  getResourceListByBookId(id:any):Observable<BookResourceDto[]>{
+  getResourceListByBookId(id:any,status?:any):Observable<BookResourceDto[]>{
     let url_ = "/api/services/app/BookResource/GetResourceListByBookId";
-        return this._commonhttp.get(url_,{id:id}).pipe(map(data => {
+        return this._commonhttp.get(url_,{id:id,status:status}).pipe(map(data => {
             return BookResourceDto.fromJSArray(data);
         }));
+  }
+
+  getResourcePaged(params:any):Observable<PagedResultDto>{
+    let url_ = "/api/services/app/BookResource/GetPaged";
+    return this._commonhttp.get(url_, params).pipe(map(data => {
+      const result = new PagedResultDto();
+      result.items = data.items;
+      result.totalCount = data.totalCount;
+      return result;
+    }));
   }
 }

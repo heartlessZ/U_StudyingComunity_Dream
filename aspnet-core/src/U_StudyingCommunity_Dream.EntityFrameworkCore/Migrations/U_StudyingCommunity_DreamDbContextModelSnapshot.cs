@@ -1337,6 +1337,8 @@ namespace U_StudyingCommunity_Dream.Migrations
                     b.Property<string>("Email")
                         .HasMaxLength(100);
 
+                    b.Property<bool>("Enable");
+
                     b.Property<int?>("Gender")
                         .HasMaxLength(2);
 

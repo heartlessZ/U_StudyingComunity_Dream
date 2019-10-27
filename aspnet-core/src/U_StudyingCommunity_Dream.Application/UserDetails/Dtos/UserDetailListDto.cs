@@ -93,6 +93,7 @@ namespace U_StudyingCommunity_Dream.UserDetails.Dtos
 
 
 
+        public virtual bool Enable { get; set; }
 
     }
 }

@@ -59,6 +59,8 @@ namespace U_StudyingCommunity_Dream.UserDetails
 
         public virtual bool IsAdmin { get; set; }
 
+        public virtual bool Enable { get; set; }
+
         public UserDetail()
         {
             IsAdmin = false;

@@ -83,7 +83,7 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
     this.router.navigate(["app/community/article-detail/"+id])
   }
   goArticleDetailComment(id:number):void{
-    this.router.navigate(["app/community/article-detail/"+id+"#comment"])
+    this.router.navigate(["app/community/article-detail/"+id])
   }
 
 }

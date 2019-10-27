@@ -7,7 +7,7 @@ export class BookDetailDto implements IBookDetailDto {
     otherUrls:string | undefined;
     categoryId:number | undefined;
     categoryName:string | undefined;
-    status:number | undefined;
+    status:any | undefined;
     birthday:Date | undefined;
 
     constructor(data?: IBookDetailDto) {
@@ -81,6 +81,6 @@ export interface IBookDetailDto {
     coverUrl: string | undefined;
     otherUrls:string | undefined;
     categoryId:number | undefined;
-    status:number | undefined;
+    status:any | undefined;
     birthday:Date | undefined;
 }

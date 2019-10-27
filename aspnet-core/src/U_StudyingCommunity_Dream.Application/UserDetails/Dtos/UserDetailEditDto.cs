@@ -97,6 +97,14 @@ namespace  U_StudyingCommunity_Dream.UserDetails.Dtos
 
 
 
+        public virtual bool Enable { get; set; }
 
+    }
+
+    public class UpdateStatusInput
+    {
+        public Guid Id { get; set; }
+        public bool? IsAdmin { get; set; }
+        public bool? Enable { get; set; }
     }
 }

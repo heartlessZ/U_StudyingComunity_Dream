@@ -21,6 +21,7 @@ using Abp.Linq.Extensions;
 using U_StudyingCommunity_Dream.Articles;
 using U_StudyingCommunity_Dream.Articles.Dtos;
 using U_StudyingCommunity_Dream.UserDetails;
+using U_StudyingCommunity_Dream.Enums;
 
 namespace U_StudyingCommunity_Dream.Articles
 {
@@ -32,6 +33,7 @@ namespace U_StudyingCommunity_Dream.Articles
     {
         private readonly IRepository<Article, long> _entityRepository;
         private readonly IRepository<Article_ArticleCategory, long> _articleTagsRepository;
+        private readonly IRepository<ArticleCategory, int> _categoryRepository;
         private readonly IRepository<Comment, long> _commentRepository;
         private readonly IRepository<UserDetail, Guid> _userDetailRepository;
 
@@ -45,12 +47,14 @@ namespace U_StudyingCommunity_Dream.Articles
         , IRepository<Article_ArticleCategory, long> articleTagsRepository
         , IRepository<UserDetail, Guid> userDetailRepository
         , IRepository<Comment, long> commentRepository
+        , IRepository<ArticleCategory, int> categoryRepository
         )
         {
             _entityRepository = entityRepository;
             _articleTagsRepository = articleTagsRepository;
             _userDetailRepository = userDetailRepository;
             _commentRepository = commentRepository;
+            _categoryRepository = categoryRepository;
         }
 
 
@@ -91,6 +95,8 @@ namespace U_StudyingCommunity_Dream.Articles
                 article.UserName = userDetail.Name;
                 article.HeadPortraitUrl = userDetail.HeadPortraitUrl;
                 article.CommentCount = await _commentRepository.GetAll().Where(i => i.ArticleId == article.Id && i.Parent == 0).CountAsync();
+                var categoryIds = _articleTagsRepository.GetAll().Where(a => a.ArticleId == article.Id).Select(i => i.ArticleCategoryId);
+                article.TagNames = string.Join('、', _categoryRepository.GetAll().Where(c => categoryIds.Contains(c.Id)).Select(c => c.Name));
             }
 
 			//var entityListDtos =entityList.MapTo<List<ArticleListDto>>();
@@ -255,18 +261,29 @@ ArticleEditDto editDto;
 			await _entityRepository.DeleteAsync(s => input.Contains(s.Id));
 		}
 
+        public async Task<bool> AduitArticleStatus(AuditArticleStatus audit)
+        {
+            var article = await _entityRepository.GetAsync(audit.ArticleId);
+            if (article != null)
+            {
+                article.ReleaseStatus = audit.Status;
+                await CurrentUnitOfWork.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
 
-		/// <summary>
-		/// 导出Article为excel表,等待开发。
-		/// </summary>
-		/// <returns></returns>
-		//public async Task<FileDto> GetToExcel()
-		//{
-		//	var users = await UserManager.Users.ToListAsync();
-		//	var userListDtos = ObjectMapper.Map<List<UserListDto>>(users);
-		//	await FillRoleNames(userListDtos);
-		//	return _userListExcelExporter.ExportToFile(userListDtos);
-		//}
+        /// <summary>
+        /// 导出Article为excel表,等待开发。
+        /// </summary>
+        /// <returns></returns>
+        //public async Task<FileDto> GetToExcel()
+        //{
+        //	var users = await UserManager.Users.ToListAsync();
+        //	var userListDtos = ObjectMapper.Map<List<UserListDto>>(users);
+        //	await FillRoleNames(userListDtos);
+        //	return _userListExcelExporter.ExportToFile(userListDtos);
+        //}
 
     }
 }

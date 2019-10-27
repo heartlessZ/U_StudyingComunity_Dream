@@ -1,12 +1,31 @@
-﻿<div class="login-box">
-    <div class="logo">
-        <a href="javascript:void(0);">优学社区</a>
-        <router-outlet></router-outlet>
+﻿<div class="login">
+    <div class="login-logo">
+        <img src="../assets/images/youxuelogo.jpg" />
+        <p style="margin-left: 1%; font-size: 15px; ">
+            优&nbsp;&nbsp;学&nbsp;&nbsp;社&nbsp;&nbsp;区
+        </p>
+        <p style="margin-left: 1%; margin-top: -1%; font-size: 5px;">QUALITY&nbsp;&nbsp;LEARNING</p>
     </div>
-    <div class="row">
-        <div class="col-xs-12 text-center" style="color: #e9e9e9">
-            <small>&copy; {{currentYear}} 优学社区. <b>Version </b> 1.0</small>
+    <div class="login-left">
+        <span class="login-contenttop">
+            <p style="margin-top: 10%;">知之者不如好之者</p>
+            <p>好之者不如乐之者</p>
+        </span>
+
+
+        <span class="login-contentmid">
+            <p style="margin-top: 10%;">有两种类型的人会告诉你，在这个世界上你不能</p>
+            <p> 有所作为：那些害怕尝试的人和那些害怕你会成功的人</p>
+        </span>
+    </div>
+    <div class="login-box">
+        <div class="login-box-logo">
+
+
+            <router-outlet></router-outlet>
         </div>
+
+
     </div>
-    
+
 </div>

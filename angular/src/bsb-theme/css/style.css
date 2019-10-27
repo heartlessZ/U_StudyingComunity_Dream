@@ -7794,6 +7794,7 @@ fieldset[disabled] .form-control {
   color: #2196F3; }
 
 /* Login Page ================================== */
+/*
 .login-page {
   background-color: #00BCD4;
   padding-left: 0;
@@ -7821,7 +7822,7 @@ fieldset[disabled] .form-control {
       width: 100%;
       text-align: center;
       color: #fff;
-      margin-top: -5px; }
+      margin-top: -5px; }*/
 
 /* Sign Up Page ================================ */
 .signup-page {

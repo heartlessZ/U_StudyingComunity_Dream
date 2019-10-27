@@ -13,36 +13,8 @@ import { LoginService } from '../login/login.service';
 
 @Component({
   templateUrl: './register.component.html',
-  animations: [accountModuleAnimation()],
-  styles: [
-    `
-      mat-form-field {
-        width: 100%;
-      }
-      mat-checkbox {
-        padding-bottom: 5px;
-      }
-      [nz-form] {
-        max-width: 600px;
-      }
-
-      .register-are {
-        margin-bottom: 8px;
-      }
-
-      .card {
-        padding: 20px;
-      }
-      
-      .registerbtn{
-        float: right;
-      }
-
-      .login-form-button {
-        width: 100%;
-      }
-    `
-  ]
+  styleUrls: ['./register.component.less'],
+  animations: [accountModuleAnimation()]
 })
 export class RegisterComponent extends AppComponentBase implements OnInit {
   model: RegisterInput = new RegisterInput();

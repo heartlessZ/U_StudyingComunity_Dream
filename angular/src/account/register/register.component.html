@@ -1,32 +1,25 @@
 ﻿<div class="card" [@routerTransition]>
   <form nz-form [formGroup]="validateForm" (ngSubmit)="save()">
-  <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">邮箱</nz-form-label>
+  <nz-form-item  class="card-input">
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="email">邮箱</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请输入正确的邮箱!">
           <input nz-input [(ngModel)]="model.emailAddress" formControlName="email" id="email" required
           [(ngModel)]="model.emailAddress"/>
         </nz-form-control>
       </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="loginname" nzRequired>
-          <span>
+      <nz-form-item  class="card-input">
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="loginname" nzRequired>
+        
             用户名
-            <i
-              nz-icon
-              nz-tooltip
-              nzTitle="登录用户名"
-              nzType="question-circle"
-              nzTheme="outline"
-            ></i>
-          </span>
+        
         </nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请输入用户名!">
           <input nz-input id="loginname" formControlName="loginname" required
           [(ngModel)]="model.userName"/>
         </nz-form-control>
       </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>密码</nz-form-label>
+      <nz-form-item  class="card-input">
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="password" nzRequired>密码</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请输入密码!">
           <input
             nz-input
@@ -39,8 +32,8 @@
           />
         </nz-form-control>
       </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="checkPassword" nzRequired>确认密码</nz-form-label>
+      <nz-form-item  class="card-input">
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="checkPassword" nzRequired>确认密码</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTpl">
           <input nz-input type="password" formControlName="checkPassword" id="checkPassword" required
           />

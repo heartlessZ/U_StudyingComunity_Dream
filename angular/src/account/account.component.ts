@@ -32,6 +32,6 @@ export class AccountComponent extends AppComponentBase implements OnInit {
     }
 
     ngOnInit(): void {
-        $('body').addClass('login-page');
+        //$('body').addClass('login-page');
     }
 }

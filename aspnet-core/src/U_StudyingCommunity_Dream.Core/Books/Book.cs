@@ -38,6 +38,11 @@ namespace U_StudyingCommunity_Dream.Books
         [StringLength(200)]
         public virtual string OtherUrls { get; set; }
 
+        /// <summary>
+        /// 点赞数
+        /// </summary>
+        public virtual long Praise { get; set; }
+
         public virtual int CategoryId { get; set; }
         
         public virtual BookResourceStatus Status { get; set; }

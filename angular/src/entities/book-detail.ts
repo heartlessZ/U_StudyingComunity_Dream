@@ -9,6 +9,7 @@ export class BookDetailDto implements IBookDetailDto {
     categoryName:string | undefined;
     status:any | undefined;
     birthday:Date | undefined;
+    praise:number | undefined;
 
     constructor(data?: IBookDetailDto) {
         if (data) {
@@ -30,6 +31,7 @@ export class BookDetailDto implements IBookDetailDto {
             this.categoryId = data["categoryId"];
             this.status = data["status"];
             this.birthday = data["birthday"];
+            this.praise = data["praise"];
         }
     }
 

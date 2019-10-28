@@ -233,18 +233,43 @@ BookEditDto editDto;
 			await _entityRepository.DeleteAsync(s => input.Contains(s.Id));
 		}
 
+        /// <summary>
+        /// 获取书籍基本信息top10
+        /// </summary>
+        /// <returns></returns>
+        [AbpAllowAnonymous]
+        public async Task<List<BookSimpleInfoDto>> GetBookSimpleInfos()
+        {
+            var result = new List<BookSimpleInfoDto>();
+            var query = _entityRepository.GetAll().Where(i=>i.Status==Enums.BookResourceStatus.审核通过);
+            var entityies = await query.OrderByDescending(i => i.Praise)
+                .Take(10)
+                .ToListAsync();
+            foreach (var book in entityies)
+            {
+                result.Add(new BookSimpleInfoDto
+                {
+                    Id = book.Id,
+                    Author = book.Author,
+                    Name = book.Name,
+                    CoverUrl = book.CoverUrl,
+                    Praise = book.Praise
+                });
+            }
+            return result;
+        }
 
-		/// <summary>
-		/// 导出Book为excel表,等待开发。
-		/// </summary>
-		/// <returns></returns>
-		//public async Task<FileDto> GetToExcel()
-		//{
-		//	var users = await UserManager.Users.ToListAsync();
-		//	var userListDtos = ObjectMapper.Map<List<UserListDto>>(users);
-		//	await FillRoleNames(userListDtos);
-		//	return _userListExcelExporter.ExportToFile(userListDtos);
-		//}
+        /// <summary>
+        /// 导出Book为excel表,等待开发。
+        /// </summary>
+        /// <returns></returns>
+        //public async Task<FileDto> GetToExcel()
+        //{
+        //	var users = await UserManager.Users.ToListAsync();
+        //	var userListDtos = ObjectMapper.Map<List<UserListDto>>(users);
+        //	await FillRoleNames(userListDtos);
+        //	return _userListExcelExporter.ExportToFile(userListDtos);
+        //}
 
     }
 }

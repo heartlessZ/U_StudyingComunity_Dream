@@ -70,4 +70,11 @@ export class UserDetailService {
             return data;
         }));
     }
+
+    getUserSimpleInfo():Observable<UserDetailDto[]>{
+        let url_ = "/api/services/app/UserDetail/GetUserSimpleInfos";
+        return this._commonhttp.get(url_).pipe(map(data => {
+            return UserDetailDto.fromJSArray(data);
+        }));
+    }
 }

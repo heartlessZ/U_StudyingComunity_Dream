@@ -12,6 +12,8 @@ export class UserDetailDto implements IUserDetailDto {
     email: string | undefined;
     id:string | undefined;
     creationTime:Date | undefined;
+    fansCount:number | undefined;
+
 
     constructor(data?: IUserDetailDto) {
         if (data) {
@@ -37,6 +39,7 @@ export class UserDetailDto implements IUserDetailDto {
             this.phoneNumber = data["phoneNumber"];
             this.email = data["email"];
             this.creationTime = data["creationTime"];
+            this.fansCount = data["fansCount"];
         }
     }
 

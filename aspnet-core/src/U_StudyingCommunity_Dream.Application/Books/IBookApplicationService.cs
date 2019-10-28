@@ -72,6 +72,9 @@ namespace U_StudyingCommunity_Dream.Books
         Task BatchDelete(List<long> input);
 
 
+        Task<List<BookSimpleInfoDto>> GetBookSimpleInfos();
+
+
 		/// <summary>
         /// 导出Book为excel表
         /// </summary>

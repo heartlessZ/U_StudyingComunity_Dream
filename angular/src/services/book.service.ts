@@ -118,4 +118,11 @@ export class BookService {
       return result;
     }));
   }
+
+  getBookSimpleInfo():Observable<BookDetailDto[]>{
+    let url_ = "/api/services/app/Book/GetBookSimpleInfos";
+    return this._commonhttp.get(url_).pipe(map(data => {
+        return BookDetailDto.fromJSArray(data);
+    }));
+}
 }

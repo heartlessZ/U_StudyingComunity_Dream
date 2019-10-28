@@ -1,33 +1,72 @@
-<nz-card class="simpleInfo" [nzTitle]="'最新发布'" [nzBordered]="false">
-    <nz-list class="demo-loadmore-list" [nzDataSource]="data" [nzItemLayout]="'horizontal'"
-                [nzLoading]="initLoading" [nzRenderItem]="item" [nzLoadMore]="loadMore">
-                <ng-template #item let-item>
-                    <nz-list-item [nzActions]="[starAction, likeAction, msgAction]">
-                        <ng-template #starAction><i nz-icon nzType="star-o" style="margin-right: 8px;"></i>
-                            {{item.praise}}
+<div>
+    <nz-card class="left-card" [nzTitle]="'最新发布'" [nzBordered]="false">
+        <nz-list class="demo-loadmore-list" [nzDataSource]="data" [nzItemLayout]="'horizontal'"
+            [nzLoading]="initLoading" [nzRenderItem]="item1" [nzLoadMore]="loadMore">
+            <ng-template #item1 let-item1>
+                <nz-list-item [nzActions]="[starAction1, likeAction1, msgAction1]">
+                    <ng-template #starAction1><i nz-icon nzType="star-o" style="margin-right: 8px;"></i>
+                        {{item1.praise}}
+                    </ng-template>
+                    <ng-template #likeAction1><i nz-icon nzType="like-o" style="margin-right: 8px;"></i>
+                        {{item1.visitVolume}}
+                    </ng-template>
+                    <ng-template #msgAction1>
+                        <a (click)="goArticleDetailComment(item1.id)">
+                            <i nz-icon nzType="message" style="margin-right: 8px;"></i>
+                        </a>
+                        {{item1.commentCount}}
+                    </ng-template>
+                    <nz-list-item-meta [nzTitle]="nzTitle1" nzAvatar="{{serverBaseUrl+item1.headPortraitUrl}}"
+                        nzDescription="{{item1.content}}">
+                        <ng-template #nzTitle1>
+                            <a (click)="goArticleDetail(item1.id)">{{ item1.headline }}</a>
                         </ng-template>
-                        <ng-template #likeAction><i nz-icon nzType="like-o" style="margin-right: 8px;"></i>
-                            {{item.visitVolume}}
+                    </nz-list-item-meta>
+                </nz-list-item>
+            </ng-template>
+            <ng-template #loadMore>
+                <div class="loadmore">
+                    <button nz-button *ngIf="!loadingMore" (click)="onLoadMore()">加载更多...</button>
+                    <p *ngIf="loadingMore">已经没有了哟</p>
+                </div>
+            </ng-template>
+        </nz-list>
+    </nz-card>
+    <nz-card class="right-top-card" [nzTitle]="'热点人物'" [nzBordered]="false">
+        <nz-list class="demo-loadmore-list" [nzDataSource]="userSimpleInfos" [nzItemLayout]="'horizontal'"
+            [nzLoading]="initLoading" [nzRenderItem]="item2">
+            <ng-template #item2 let-item2>
+                <nz-list-item [nzActions]="[starAction2]">
+                    <ng-template #starAction2><i nz-icon nzType="star-o" style="margin-right: 8px;"></i>
+                        {{item2.fansCount}}
+                    </ng-template>
+                    <nz-list-item-meta [nzTitle]="nzTitle2" nzAvatar="{{serverBaseUrl+item2.headPortraitUrl}}"
+                        nzDescription="{{item2.description}}">
+                        <ng-template #nzTitle2>
+                            <a (click)="goArticleDetail(item2.id)">{{ item2.surname }}</a>
                         </ng-template>
-                        <ng-template #msgAction>
-                            <a (click)="goArticleDetailComment(item.id)">
-                                <i nz-icon nzType="message" style="margin-right: 8px;"></i>
-                            </a>
-                            {{item.commentCount}}
+                    </nz-list-item-meta>
+                </nz-list-item>
+            </ng-template>
+        </nz-list>
+    </nz-card>
+    <nz-card class="right-bottom-card" [nzTitle]="'推荐书籍'" [nzBordered]="false">
+
+        <nz-list class="demo-loadmore-list" [nzDataSource]="bookSimpleInfos" [nzItemLayout]="'horizontal'"
+            [nzLoading]="initLoading" [nzRenderItem]="item3">
+            <ng-template #item3 let-item3>
+                <nz-list-item [nzActions]="[starAction3]">
+                    <ng-template #starAction3><i nz-icon nzType="star-o" style="margin-right: 8px;"></i>
+                        {{item3.praise}}
+                    </ng-template>
+                    <nz-list-item-meta [nzTitle]="nzTitle3" nzAvatar="{{serverBaseUrl+item3.coverUrl}}" nzDescription="{{item3.author}}">
+                        <ng-template #nzTitle3>
+                            <a (click)="goArticleDetail(item3.id)">{{ item3.name }}</a>
                         </ng-template>
-                        <nz-list-item-meta [nzTitle]="nzTitle" nzAvatar="{{serverBaseUrl+item.headPortraitUrl}}"
-                            nzDescription="{{item.content}}">
-                            <ng-template #nzTitle>
-                                <a (click)="goArticleDetail(item.id)">{{ item.headline }}</a>
-                            </ng-template>
-                        </nz-list-item-meta>
-                    </nz-list-item>
-                </ng-template>
-                <ng-template #loadMore>
-                    <div class="loadmore">
-                        <button nz-button *ngIf="!loadingMore" (click)="onLoadMore()">加载更多...</button>
-                        <p *ngIf="loadingMore">已经没有了哟</p>
-                    </div>
-                </ng-template>
-            </nz-list>
-</nz-card>
+                    </nz-list-item-meta>
+                </nz-list-item>
+            </ng-template>
+        </nz-list>
+    </nz-card>
+
+</div>

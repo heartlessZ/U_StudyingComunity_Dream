@@ -33,6 +33,7 @@ namespace U_StudyingCommunity_Dream.UserDetails
     public class UserDetailAppService : U_StudyingCommunity_DreamAppServiceBase, IUserDetailAppService
     {
         private readonly IRepository<UserDetail, Guid> _entityRepository;
+        private readonly IRepository<Fans, long> _fansRepository;
         private readonly UserManager _userManager;
 
         /// <summary>
@@ -40,11 +41,13 @@ namespace U_StudyingCommunity_Dream.UserDetails
         ///</summary>
         public UserDetailAppService(
         IRepository<UserDetail, Guid> entityRepository,
-        UserManager userManager
+        UserManager userManager,
+        IRepository<Fans, long> fansRepository
         )
         {
             _entityRepository = entityRepository;
             _userManager = userManager;
+            _fansRepository = fansRepository;
         }
 
         /// <summary>
@@ -250,6 +253,36 @@ UserDetailEditDto editDto;
             user.Enable = !user.Enable;
             await CurrentUnitOfWork.SaveChangesAsync();
             return user.Enable;
+        }
+
+        /// <summary>
+        /// 获取用户基本信息top10
+        /// </summary>
+        /// <returns></returns>
+        [AbpAllowAnonymous]
+        public async Task<List<UserSimpleInfoDto>> GetUserSimpleInfos()
+        {
+            var result = new List<UserSimpleInfoDto>();
+            var userIds = _fansRepository.GetAll().Select(i => i.UserId).Distinct();
+            var userDetails = _entityRepository.GetAll()
+                .Where(u => u.Enable)
+                .Where(u => userIds.Contains(u.Id));
+            foreach (var user in userDetails)
+            {
+                result.Add(new UserSimpleInfoDto()
+                {
+                    Id = user.Id,
+                    Surname = user.Surname,
+                    Gender = user.Gender,
+                    Description = user.Description,
+                    HeadPortraitUrl = user.HeadPortraitUrl,
+                    FansCount = await _fansRepository.GetAll().Where(i => i.UserId == user.Id).CountAsync()
+                });
+            }
+
+            return result.OrderByDescending(i => i.FansCount)
+                .Take(10)
+                .ToList();
         }
 
         /// <summary>

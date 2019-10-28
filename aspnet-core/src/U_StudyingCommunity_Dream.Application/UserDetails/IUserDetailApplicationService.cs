@@ -73,6 +73,8 @@ namespace U_StudyingCommunity_Dream.UserDetails
 
         Task<bool> GetUpdateUserStatus(Guid id);
 
+        Task<List<UserSimpleInfoDto>> GetUserSimpleInfos();
+
 
 		/// <summary>
         /// 导出UserDetail为excel表

@@ -1,6 +1,6 @@
-.ant-cascader-picker {
+/*.ant-cascader-picker {
     width: 300px;
-  }
+  }*/
 
   [nz-button] {
     float: right;
@@ -15,7 +15,7 @@
   .book_content_middle_ul{
 	
     float: left;
-    font-size: 0.8vw;
+   
     margin: 0px;
     padding: 0px;
  
@@ -30,36 +30,40 @@
  /****全部****/
  .book_content{
    width: 90%;
-   height: 185px;
+   height: 250px;
  }
  /****中间****/
  .book_content_middle{
-    width: 80%;
-    height: 185px;
+    width: 70%;
+    height: 200px;
+  
     float: left;
  }
  /****中间上面*****/
  .book_content_middle_top{
    width: 100%;
    height: 80%;
+   font-family: 楷书;
+   font-size: 2.0vh;
  }
  /******中间下面****/
  .book_content_middle_bottom{
     float: right;
-    margin-top: 25px;
+    margin-top: 10%;
+    font-size: 2.0vh;
  }
  /****左边*****/
  .book_content_left{
  
     width: 20%;
-    height: 185px;
+    height: 20%;
     float: left;
  }
  .book_content_left img{
      height: auto;
-     max-width: 250px;
-     margin-left:20%;
-     margin-top: 20px;
-     display: block;
+     
+ 
+    
  }
+ 
  

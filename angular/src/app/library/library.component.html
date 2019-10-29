@@ -2,17 +2,17 @@
   <form nz-form (ngSubmit)="refreshData()" [nzLayout]="'inline'">
     <div nz-row [nzGutter]="18">
       <div nz-col [nzSpan]="8" class="mb-md">
-        <nz-form-item class="d-flex" style="margin-bottom: 0px;">
+        <nz-form-item class="d-flex" style="margin-bottom: 0px;width: 70%; font-size: 2.0vh;">
           <nz-form-label nzFor="name">书籍查询</nz-form-label>
           <nz-form-control class="flex-1">
             <input nz-input name="name" [(ngModel)]="search.name" [placeholder]="'请输入书名或作者'">
           </nz-form-control>
         </nz-form-item>
       </div>
-      <div nz-col [nzSpan]="8" class="mb-md">
-        <nz-form-item class="d-flex" style="margin-bottom: 0px;">
+      <div nz-col [nzSpan]="8" class="mb-md" style="margin-left: -10%;">
+        <nz-form-item class="d-flex" style="margin-bottom: 0px; width: 70%; font-size: 2.0vh;">
           <nz-form-label nzFor="values">分类</nz-form-label>
-          <nz-form-control class="flex-1">
+          <nz-form-control class="flex-1"  >
             <nz-cascader name="values" nzChangeOnSelect [nzShowSearch]="'true'" [nzExpandTrigger]="'hover'"
               [nzOptions]="nzOptions" [(ngModel)]="values" (ngModelChange)="onChanges($event)">
             </nz-cascader>
@@ -40,7 +40,7 @@
           <ng-template #nzTitle>
             <div class="book_content">
               <div class="book_content_left">
-                <img width="200" height="270" src="{{item.coverUrl}}">
+                <img width="100%" height="100%" src="{{item.coverUrl}}">
               </div>
               <div class="book_content_middle">
                 <div class="book_content_middle_top">

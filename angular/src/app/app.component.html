@@ -1,30 +1,45 @@
 <nz-layout>
-    <nz-header class="header">
-        <div class="logo"></div>
-        <ul nz-menu nzTheme="dark" nzMode="horizontal">
-            <li nz-menu-item><a routerLink="home">首页</a></li>
-            <li nz-menu-item><a routerLink="library">图书资源</a></li>
-            <li nz-menu-item><a routerLink="project">学习规划</a></li>
-            <li nz-menu-item><a routerLink="community">社区</a></li>
-            <li style="float: right;" *ngIf="isLogin; else elseBlock">
-                <a (click)="goPersonalInfo(currentUser.userDetailId)">
-                    <nz-avatar [nzSize]="64" nzIcon="user" [nzSrc]="headUrl"></nz-avatar>
-                </a>
-                <button nz-button (click)="exit()" nzType="dashed">退出</button>
-            </li>
-            <ng-template #elseBlock>
-                <li style="float: right;">
-                    <button nz-button (click)="login()" nzType="dashed">登录</button>
-                    <button nz-button (click)="register()" nzType="default">注册</button>
-                </li>
-            </ng-template>
-        </ul>
+    <div class="homepage">
+        <div class="header">
 
-    </nz-header>
-    <nz-content>
-        <div class="inner-content">
-            <router-outlet></router-outlet>
+
+            <div class="logo">
+                <img src="../assets/images/logo.png" />
+                <p style="display:inline; vertical-align:bottom; color:white; font-size: 2.7vw; font-family:隶书;">优学</p>
+                
+                
+
+            </div>
+
+            <ul nz-menu nzTheme="" nzMode="horizontal">
+                <li nz-menu-item class="homepage-header-menu-list"  ><a routerLink="home" style="margin-left:50%;" >首页</a></li>
+                <li nz-menu-item class="homepage-header-menu-list" ><a routerLink="library" style="margin-left:10%;">图书资源</a></li>
+                <li nz-menu-item class="homepage-header-menu-list" ><a routerLink="project"style="margin-left:10%;">学习规划</a></li>
+                <li nz-menu-item  class="homepage-header-menu-list" ><a routerLink="community">社区</a></li>
+                <li style="float: right;" *ngIf="isLogin; else elseBlock">
+                    <a (click)="goPersonalInfo(currentUser.userDetailId)">
+                        <nz-avatar [nzSize]="64" nzIcon="user" [nzSrc]="headUrl"></nz-avatar>
+                    </a>
+                    <button nz-button (click)="exit()" nzType="dashed">退出</button>
+                </li>
+                <ng-template #elseBlock>
+                    <li style="float: right;">
+                        <button nz-button (click)="login()" nzType="dashed">登录</button>
+                        <button nz-button (click)="register()" nzType="default">注册</button>
+                    </li>
+                </ng-template>
+            </ul>
+            <div class="homepage-mid">
+
+                </div>
         </div>
-    </nz-content>
-    <nz-footer>优学社区 ©2019 Implement By 拯救问题儿童</nz-footer>
+       
+        <nz-content>
+            <div class="inner-content">
+                <router-outlet></router-outlet>
+            </div>
+        </nz-content>
+        <p style="text-align: center; font-size: 2.0vh; width: 100%;">优学社区 ©2019 Implement By 拯救问题儿童</p>
+
+    </div>
 </nz-layout>

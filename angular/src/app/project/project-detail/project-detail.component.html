@@ -1,0 +1,29 @@
+
+<nz-card class="project-middle" [nzTitle]="currentUserProjectTagName" [nzExtra]="extraTemplate">
+    <ng-template #extraTemplate>
+        <button *ngIf="isCurrentUser" (click)="createNextProject()" [disabled]="!isFirst" nz-button nzType="primary">新增根计划</button>
+      </ng-template>
+      <div *ngFor="let item of data">
+      
+        <div class="context-area" (contextmenu)="contextMenu($event, menu, item.id)">
+          <span class="context-intro">{{item.name}}</span>
+          <span class="context-intro">{{item.remark}}</span>
+          <nz-slider [nzTooltipVisible]="'always'" [(ngModel)]="item.progress"></nz-slider>
+        </div>
+      
+      </div>
+      
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <a (click)="createNextProject()">
+            <li nz-menu-item>添加下级计划</li>
+          </a>
+          <a (click)="editCurrentProject()">
+            <li nz-menu-item>编辑当前计划</li>
+          </a>
+        </ul>
+      </nz-dropdown-menu>
+</nz-card>
+
+
+<app-project-modal #projectModal (modalSave)="getProjectsTreeById()" [isFirst]="isFirst" [userProjectId]="id" [currentProjectId]="currentProjectId"></app-project-modal>

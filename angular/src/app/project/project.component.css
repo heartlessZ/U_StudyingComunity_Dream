@@ -1,0 +1,13 @@
+.project-left{
+    width: 15%;
+    float: left;
+    margin-right: 20px;
+    min-height: 700px;
+}
+
+.project-right{
+    width: 17%;
+    float: right;
+    margin-left: 20px;
+    min-height: 700px;
+}

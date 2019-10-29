@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using U_StudyingCommunity_Dream.EntityFrameworkCore;
 
 namespace U_StudyingCommunity_Dream.Migrations
 {
     [DbContext(typeof(U_StudyingCommunity_DreamDbContext))]
-    partial class U_StudyingCommunity_DreamDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191028235901_addProjectTime")]
+    partial class addProjectTime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1401,8 +1403,6 @@ namespace U_StudyingCommunity_Dream.Migrations
                     b.Property<DateTime>("CreationTime");
 
                     b.Property<bool>("IsPublic");
-
-                    b.Property<long>("Praise");
 
                     b.Property<long>("ProjectId");
 

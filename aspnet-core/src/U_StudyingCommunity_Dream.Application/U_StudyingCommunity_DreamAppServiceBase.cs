@@ -29,7 +29,7 @@ namespace U_StudyingCommunity_Dream
             var user = await UserManager.FindByIdAsync(AbpSession.GetUserId().ToString());
             if (user == null)
             {
-                throw new Exception("There is no current user!");
+                throw new Exception("请先登录!");
             }
 
             return user;

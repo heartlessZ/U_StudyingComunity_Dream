@@ -26,7 +26,7 @@ Configuration.Modules.AbpAutoMapper().Configurators.Add(configuration =>
     // ....
 
     // 只需要复制这一段
-UserDetail_ProjectMapper.CreateMappings(configuration);
+ProjectMapper.CreateMappings(configuration);
 
     // ....
 });
@@ -39,7 +39,7 @@ UserDetail_ProjectMapper.CreateMappings(configuration);
 中的 PreInitialize 方法中:
 
 ```
-Configuration.Authorization.Providers.Add<UserDetail_ProjectAuthorizationProvider>();
+Configuration.Authorization.Providers.Add<ProjectAuthorizationProvider>();
 
 ```
 
@@ -48,7 +48,7 @@ Configuration.Authorization.Providers.Add<UserDetail_ProjectAuthorizationProvide
 可以在```DbContext```中增加：
 
  ```
-public DbSet<UserDetail_Project>  UserDetail_Projects { get; set; }
+public DbSet<Project>  Projects { get; set; }
 
  ```
 
@@ -57,7 +57,7 @@ public DbSet<UserDetail_Project>  UserDetail_Projects { get; set; }
 ```
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new UserDetail_ProjectCfg());
+            modelBuilder.ApplyConfiguration(new ProjectCfg());
         }
 
 ```
@@ -69,15 +69,14 @@ public DbSet<UserDetail_Project>  UserDetail_Projects { get; set; }
 
 ```
 
-<text name="UserId"  value="UserId"></text>
-<text name="ProjectId"  value="ProjectId"></text>
-<text name="TagName"  value="TagName"></text>
-<text name="IsPublic"  value="IsPublic"></text>
-<text name="CreationTime"  value="CreationTime"></text>
-<text name="Praise"  value="Praise"></text>
+<text name="Name"  value="Name"></text>
+<text name="Progress"  value="Progress"></text>
+<text name="Parent"  value="Parent"></text>
+<text name="ExpirationTime"  value="ExpirationTime"></text>
+<text name="Remark"  value="Remark"></text>
 
 
-<text name="UserDetail_Project" value=""></text><text name="QueryUserDetail_Project"  value="查询"></text><text name="CreateUserDetail_Project"  value="添加"></text><text name="EditUserDetail_Project"  value="编辑"></text><text name="DeleteUserDetail_Project"  value="删除"></text><text name="BatchDeleteUserDetail_Project" value="批量删除"></text><text name="ExportUserDetail_Project"  value="导出"></text>                             
+<text name="Project" value=""></text><text name="QueryProject"  value="查询"></text><text name="CreateProject"  value="添加"></text><text name="EditProject"  value="编辑"></text><text name="DeleteProject"  value="删除"></text><text name="BatchDeleteProject" value="批量删除"></text><text name="ExportProject"  value="导出"></text>                             
 
 ```
 

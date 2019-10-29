@@ -21,7 +21,7 @@ import { LibraryComponent } from './library/library.component';
 import { ProjectComponent } from './project/project.component';
 import { CommunityComponent } from './community/community.component';
 import { PersonalCenterComponent } from './personal-center/personal-center.component';
-import { UserDetailService, CommonHttpClient, BookService, ArticleService } from 'services';
+import { UserDetailService, CommonHttpClient, BookService, ArticleService, ProjectService } from 'services';
 import { ChangePasswordComponent } from './personal-center/change-password/change-password.component';
 import { UserDetailEditComponent } from './personal-center/user-detail-edit/user-detail-edit.component';
 
@@ -33,6 +33,9 @@ import { ReplyModalComponent } from './community/article-detail/reply-modal/repl
 import { RouterModule } from '@angular/router';
 
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { ProjectDetailComponent } from './project/project-detail/project-detail.component';
+import { ProjectModalComponent } from './project/project-detail/project-modal/project-modal.component';
+import { ProjectUserModalComponent } from './project/project-detail/project-user-modal/project-user-modal.component';
 
 @NgModule({
    declarations: [
@@ -40,6 +43,9 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
       HomeComponent,
       LibraryComponent,
       ProjectComponent,
+      ProjectDetailComponent,
+      ProjectModalComponent,
+      ProjectUserModalComponent,
       CommunityComponent,
       PersonalCenterComponent,
       ChangePasswordComponent,
@@ -68,7 +74,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
       CommonHttpClient,
       BookService,
       ArticleService,
-      { provide: LocationStrategy, useClass: HashLocationStrategy }
+      ProjectService
    ],
    entryComponents: []
 })

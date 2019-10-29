@@ -11,6 +11,7 @@ import { PersonalCenterComponent } from './personal-center/personal-center.compo
 import { BookDetailComponent } from './library/book-detail/book-detail.component';
 import { CreateArticleComponent } from './community/create-article/create-article.component';
 import { ArticleDetailComponent } from './community/article-detail/article-detail.component';
+import { ProjectDetailComponent } from './project/project-detail/project-detail.component';
 
 @NgModule({
     imports: [
@@ -20,11 +21,13 @@ import { ArticleDetailComponent } from './community/article-detail/article-detai
                 component: AppComponent,
                 children: [
                     { path: '', redirectTo:'home', pathMatch:'full' },
-                    { path: 'home', component:HomeComponent},
-                    { path: 'library', component:LibraryComponent},
+                    { path: 'home', component:HomeComponent },
                     { path: 'book-detail/:id', component:BookDetailComponent},
-                    { path: 'project', component:ProjectComponent},
-                    { path: 'community/article-detail/:id', component:ArticleDetailComponent},
+                    { path: 'library', component:LibraryComponent},
+                    { path: 'project', component:ProjectComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }},
+                    //{ path: 'project/project-detail/:id', component:ProjectDetailComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }},
+                    //{ path: 'project/project-detail', component:ProjectDetailComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }},
+                    { path: 'community/article-detail/:id', component:ArticleDetailComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }},
                     { path: 'community', component:CommunityComponent},
                     { path: 'personal-center', component:PersonalCenterComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }},
                     { path: 'create-article', component:CreateArticleComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }},

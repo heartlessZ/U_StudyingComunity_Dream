@@ -5,7 +5,7 @@
                 [nzLoading]="initLoading" [nzRenderItem]="item" [nzLoadMore]="loadMore">
                 <ng-template #item let-item>
                     <nz-list-item [nzActions]="[starAction, likeAction, msgAction]">
-                        <ng-template #starAction><i nz-icon nzType="star-o" style="margin-right: 8px;"></i>
+                        <ng-template #starAction><i nz-icon nzType="like" nzTheme="outline" style="margin-right: 8px;"></i>
                             {{item.praise}}
                         </ng-template>
                         <ng-template #likeAction><i nz-icon nzType="eye" nzTheme="outline"  style="margin-right: 8px;"></i>
@@ -18,7 +18,7 @@
                             {{item.commentCount}}
                         </ng-template>
                         <nz-list-item-meta [nzTitle]="nzTitle" nzAvatar="{{serverBaseUrl+item.headPortraitUrl}}"
-                            nzDescription="{{item.content}}">
+                            nzDescription="{{item.description}}">
                             <ng-template #nzTitle>
                                 <a (click)="goArticleDetail(item.id)">{{ item.headline }}</a>
                             </ng-template>
@@ -38,7 +38,7 @@
                 [nzLoading]="initLoading" [nzRenderItem]="item" [nzLoadMore]="loadMore" [nzFooter]="footer">
                 <ng-template #item let-item>
                     <nz-list-item [nzActions]="[starAction, likeAction, msgAction]">
-                        <ng-template #starAction><i nz-icon nzType="star-o" style="margin-right: 8px;"></i>
+                        <ng-template #starAction><i nz-icon nzType="like" nzTheme="outline" style="margin-right: 8px;"></i>
                             {{item.praise}}
                         </ng-template>
                         <ng-template #likeAction><i nz-icon nzType="eye" nzTheme="outline"  style="margin-right: 8px;"></i>
@@ -51,7 +51,7 @@
                             {{item.commentCount}}
                         </ng-template>
                         <nz-list-item-meta [nzTitle]="nzTitle" nzAvatar="{{serverBaseUrl+item.headPortraitUrl}}"
-                            nzDescription="{{item.content}}">
+                            nzDescription="{{item.description}}">
                             <ng-template #nzTitle>
                                 <a (click)="goArticleDetail(item.id)">{{ item.headline }}</a>
                             </ng-template>
@@ -71,7 +71,7 @@
                 [nzLoading]="initLoading" [nzRenderItem]="item" [nzLoadMore]="loadMore" [nzFooter]="footer">
                 <ng-template #item let-item>
                     <nz-list-item [nzActions]="[starAction, likeAction, msgAction]">
-                        <ng-template #starAction><i nz-icon nzType="star-o" style="margin-right: 8px;"></i>
+                        <ng-template #starAction><i nz-icon nzType="like" nzTheme="outline" style="margin-right: 8px;"></i>
                             {{item.praise}}
                         </ng-template>
                         <ng-template #likeAction><i nz-icon nzType="eye" nzTheme="outline"  style="margin-right: 8px;"></i>
@@ -84,7 +84,7 @@
                             {{item.commentCount}}
                         </ng-template>
                         <nz-list-item-meta [nzTitle]="nzTitle" nzAvatar="{{serverBaseUrl+item.headPortraitUrl}}"
-                            nzDescription="{{item.content}}">
+                            nzDescription="{{item.description}}">
                             <ng-template #nzTitle>
                                 <a (click)="goArticleDetail(item.id)">{{ item.headline }}</a>
                             </ng-template>
@@ -105,6 +105,6 @@
       </nz-tabset>
       <ng-template #extraTemplate>
         <button *ngIf="isCurrentUser" (click)="createArticle()" nz-button>发布文章</button>
-        <button *ngIf="isCurrentUser" nz-button>新建计划</button>
+        <!-- <button *ngIf="isCurrentUser" nz-button>新建计划</button> -->
       </ng-template>
 </nz-card>

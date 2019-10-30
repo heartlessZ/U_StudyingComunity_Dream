@@ -71,5 +71,6 @@ namespace U_StudyingCommunity_Dream.Articles.Dtos
         /// 评论数
         /// </summary>
         public int CommentCount { get; set; }
+        public virtual string Description { get; set; }
     }
 }

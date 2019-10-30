@@ -202,6 +202,7 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
       if(result){
         this.notify.success("审核成功");
         this.getArticleDetailById();
+        //this.router.
       }
       this.auditBtnLoading = false;
     })

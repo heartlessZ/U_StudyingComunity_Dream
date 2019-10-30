@@ -1,7 +1,7 @@
 <nz-card class="simpleInfo" [nzTitle]="article.headline" [nzBordered]="false">
   <blockquote class="card-bodyquote" [innerHTML]="article.content"></blockquote>
   <div *ngIf="currentUser.isAdmin">
-      <button  nz-button nzType="primary" [nzLoading]="auditBtnLoading" (click)="audit(2)" [disabled]="!article.releaseStatus==0" >
+      <button  nz-button nzType="primary" [nzLoading]="auditBtnLoading" (click)="audit(2)" [disabled]="!article.releaseStatus==1" >
           审核通过
         </button>
         <button nz-button nzType="danger" [nzLoading]="auditBtnLoading" (click)="audit(3)" >
@@ -32,7 +32,6 @@
               </ng-container>
             </nz-comment>
           </ng-template>
-      
           <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: data }"> </ng-template>
     </div>
 

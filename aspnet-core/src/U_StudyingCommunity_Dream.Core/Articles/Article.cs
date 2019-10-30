@@ -27,8 +27,7 @@ namespace U_StudyingCommunity_Dream.Articles
         
         [Required]
         public virtual string Content { get; set; }
-
-        [DefaultValue(null)]
+        
         public virtual string Description { get; set; }
 
         public virtual long Praise { get; set; }
@@ -39,10 +38,6 @@ namespace U_StudyingCommunity_Dream.Articles
         public virtual ReleaseStatus ReleaseStatus { get; set; }
 
         public virtual Guid UserDetailId { get; set; }
-
-        public Article()
-        {
-            Description = null;
-        }
+        
     }
 }

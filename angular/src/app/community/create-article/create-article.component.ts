@@ -36,7 +36,8 @@ export class CreateArticleComponent extends AppComponentBase implements OnInit {
 
     this.validateForm = this.fb.group({
       name: [null, [Validators.required]],
-      tags: [null]
+      description: [null, [Validators.required]],
+      tags: [null,[Validators.required]]
     });
   }
 
@@ -98,10 +99,9 @@ export class CreateArticleComponent extends AppComponentBase implements OnInit {
     }
     if (this.content == undefined || this.content.length < 20) {
       this.notify.error("文章内容过短。");
+      this.isConfirmLoading = false;
       return;
     }
-    console.log(this.article);
-    return;
     this.articleService.createOrUpdateArticle(this.article).subscribe((result) => {
       if (result) {
         this.isConfirmLoading = false;

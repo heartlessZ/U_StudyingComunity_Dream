@@ -64,5 +64,7 @@ namespace  U_StudyingCommunity_Dream.Articles.Dtos
 
         public int[] CategoryIds { get; set; }
 
+        public virtual string Description { get; set; }
+
     }
 }

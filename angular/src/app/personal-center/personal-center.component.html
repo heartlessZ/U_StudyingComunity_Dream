@@ -5,7 +5,10 @@
         
         <nz-descriptions-item nzTitle="用户名">{{user.name}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="昵称">{{user.surname}}</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="性别">{{user.gender}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="性别">
+            <i *ngIf="user.gender==1" nz-icon nzType="woman" nzTheme="outline"></i>
+            <i *ngIf="user.gender==2" nz-icon nzType="man" nzTheme="outline"></i>
+        </nz-descriptions-item>
         <nz-descriptions-item nzTitle="邮箱">{{user.email}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="个人描述">{{user.description}}</nz-descriptions-item>
       </nz-descriptions>

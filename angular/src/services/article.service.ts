@@ -96,4 +96,20 @@ export class ArticleService {
     }));
   }
 
+  createVisitVolume(id:any):Observable<void>{
+    let url_ = "/api/services/app/Article/CreateVisitVolume";
+    
+    return this._commonhttp.post(url_, {id:id}).pipe(map(data => {
+      
+    }));
+  }
+
+  createPraise(id:any):Observable<boolean>{
+    let url_ = "/api/services/app/Article/CreatePraise";
+    
+    return this._commonhttp.post(url_, {id:id}).pipe(map(data => {
+      return data;
+    }));
+  }
+
 }

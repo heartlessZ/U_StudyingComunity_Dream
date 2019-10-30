@@ -17,7 +17,7 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
   loadingMore = false;
   data: ArticleDetailDto[] = [];
   list: Array<{ loading: boolean; name: any }> = [];
-  search: any = { categoryId: null, maxResultCount: 10, skipCount: 0 , releaseStatus: 2};
+  search: any = { categoryId: null, maxResultCount: 10, skipCount: 0 , releaseStatus: 2, userDetailId:null};
   tabs: ArticleCategoryDto[];
   totalCount: number;
   serverBaseUrl: string;
@@ -39,6 +39,7 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
     this.search.skipCount = 0;
     //默认只查询审核通过的
     this.search.releaseStatus = 2;
+    this.search.userDetailId = this.userDetailId;
     this.getArticleList();
   }
 
@@ -57,6 +58,7 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
   refreshData(status:number){
     this.loadingMore = true;
     this.search.releaseStatus = status;
+    this.search.skipCount = 0;
     this.getArticleList();
   }
 

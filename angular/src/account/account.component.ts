@@ -1,6 +1,7 @@
 import { Component, ViewContainerRef, OnInit, ViewEncapsulation, Injector } from '@angular/core';
 import { LoginService } from './login/login.service';
 import { AppComponentBase } from '@shared/component-base/app-component-base';
+import { Router } from '@angular/router';
 
 @Component({
     templateUrl: './account.component.html',
@@ -18,7 +19,8 @@ export class AccountComponent extends AppComponentBase implements OnInit {
 
     public constructor(
         injector: Injector,
-        private _loginService: LoginService
+        private _loginService: LoginService,
+        private _router: Router,
     ) {
         super(injector);
 
@@ -33,5 +35,9 @@ export class AccountComponent extends AppComponentBase implements OnInit {
 
     ngOnInit(): void {
         //$('body').addClass('login-page');
+    }
+
+    returnHome():void{
+        this._router.navigate(["app/home"])
     }
 }

@@ -46,7 +46,7 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
       if (this.book.otherUrls != null) {
         let urls = this.book.otherUrls.split(',');
         urls.forEach(url => {
-          this.thirdUrls.push("http://" + url);
+          this.thirdUrls.push(url);
         });
       }
       console.log(this.thirdUrls);

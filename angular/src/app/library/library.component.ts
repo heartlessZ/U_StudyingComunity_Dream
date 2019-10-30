@@ -104,6 +104,6 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
   }
 
   detail(id:number):void{
-    this.router.navigate(['app/book-detail/' + id]);
+    this.router.navigate(['app/library/book-detail/' + id]);
   }
 }

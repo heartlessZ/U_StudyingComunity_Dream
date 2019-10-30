@@ -273,6 +273,22 @@ ArticleEditDto editDto;
             return false;
         }
 
+        [AbpAllowAnonymous]
+        public async Task CreateVisitVolume(EntityDto<long> input)
+        {
+            var article = await _entityRepository.GetAsync(input.Id);
+            article.VisitVolume++;
+            await CurrentUnitOfWork.SaveChangesAsync();
+        }
+
+        public async Task<bool> CreatePraise(EntityDto<long> input)
+        {
+            var article = await _entityRepository.GetAsync(input.Id);
+            article.Praise++;
+            await CurrentUnitOfWork.SaveChangesAsync();
+            return true;
+        }
+
         /// <summary>
         /// 导出Article为excel表,等待开发。
         /// </summary>

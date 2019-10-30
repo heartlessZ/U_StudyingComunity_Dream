@@ -259,6 +259,14 @@ BookEditDto editDto;
             return result;
         }
 
+        public async Task<bool> CreatePraise(EntityDto<long> input)
+        {
+            var book = await _entityRepository.GetAsync(input.Id);
+            book.Praise++;
+            await CurrentUnitOfWork.SaveChangesAsync();
+            return true;
+        }
+
         /// <summary>
         /// 导出Book为excel表,等待开发。
         /// </summary>

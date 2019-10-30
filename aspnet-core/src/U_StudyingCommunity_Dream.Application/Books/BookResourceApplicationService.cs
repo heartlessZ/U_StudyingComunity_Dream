@@ -212,6 +212,7 @@ BookResourceEditDto editDto;
 			await _entityRepository.DeleteAsync(s => input.Contains(s.Id));
 		}
 
+        [AbpAllowAnonymous]
         public async Task<List<BookResourceListDto>> GetResourceListByBookId(EntityDto<long> input, BookResourceStatus? status)
         {
             var entities = await _entityRepository.GetAll()

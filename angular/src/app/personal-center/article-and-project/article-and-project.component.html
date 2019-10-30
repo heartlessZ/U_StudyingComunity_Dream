@@ -8,7 +8,7 @@
                         <ng-template #starAction><i nz-icon nzType="star-o" style="margin-right: 8px;"></i>
                             {{item.praise}}
                         </ng-template>
-                        <ng-template #likeAction><i nz-icon nzType="like-o" style="margin-right: 8px;"></i>
+                        <ng-template #likeAction><i nz-icon nzType="eye" nzTheme="outline"  style="margin-right: 8px;"></i>
                             {{item.visitVolume}}
                         </ng-template>
                         <ng-template #msgAction>
@@ -28,7 +28,7 @@
                 <ng-template #loadMore>
                     <div class="loadmore">
                         <button nz-button *ngIf="!loadingMore" (click)="onLoadMore()">加载更多...</button>
-                        <p *ngIf="loadingMore">已经没有了哟</p>
+                        <p style="text-align: center;" *ngIf="loadingMore">已经没有了哟</p>
                     </div>
                 </ng-template>
             </nz-list>
@@ -41,7 +41,7 @@
                         <ng-template #starAction><i nz-icon nzType="star-o" style="margin-right: 8px;"></i>
                             {{item.praise}}
                         </ng-template>
-                        <ng-template #likeAction><i nz-icon nzType="like-o" style="margin-right: 8px;"></i>
+                        <ng-template #likeAction><i nz-icon nzType="eye" nzTheme="outline"  style="margin-right: 8px;"></i>
                             {{item.visitVolume}}
                         </ng-template>
                         <ng-template #msgAction>
@@ -61,7 +61,7 @@
                 <ng-template #loadMore>
                     <div class="loadmore">
                         <button nz-button *ngIf="!loadingMore" (click)="onLoadMore()">加载更多...</button>
-                        <p *ngIf="loadingMore">已经没有了哟</p>
+                        <p style="text-align: center;" *ngIf="loadingMore">已经没有了哟</p>
                     </div>
                 </ng-template>
             </nz-list>
@@ -74,7 +74,7 @@
                         <ng-template #starAction><i nz-icon nzType="star-o" style="margin-right: 8px;"></i>
                             {{item.praise}}
                         </ng-template>
-                        <ng-template #likeAction><i nz-icon nzType="like-o" style="margin-right: 8px;"></i>
+                        <ng-template #likeAction><i nz-icon nzType="eye" nzTheme="outline"  style="margin-right: 8px;"></i>
                             {{item.visitVolume}}
                         </ng-template>
                         <ng-template #msgAction>
@@ -94,17 +94,17 @@
                 <ng-template #loadMore>
                     <div class="loadmore">
                         <button nz-button *ngIf="!loadingMore" (click)="onLoadMore()">加载更多...</button>
-                        <p *ngIf="loadingMore">已经没有了哟</p>
+                        <p style="text-align: center;" *ngIf="loadingMore">已经没有了哟</p>
                     </div>
                 </ng-template>
             </nz-list>
         </nz-tab>
-        <nz-tab nzTitle="草稿箱">
+        <nz-tab nzTitle="我的学习计划">
           3
         </nz-tab>
       </nz-tabset>
       <ng-template #extraTemplate>
-        <button (click)="createArticle()" nz-button>发布文章</button>
-        <button nz-button>新建计划</button>
+        <button *ngIf="isCurrentUser" (click)="createArticle()" nz-button>发布文章</button>
+        <button *ngIf="isCurrentUser" nz-button>新建计划</button>
       </ng-template>
 </nz-card>

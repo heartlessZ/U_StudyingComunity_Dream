@@ -17,14 +17,12 @@
  /****全部****/
  .book_content{
    width: 90%;
-   height: 185px;
-    
-   
+   min-height: 185px;
  }
  /****中间****/
  .book_content_middle{
     width: 80%;
-    height: 185px;
+    min-height: 185px;
     float: left;
  
   
@@ -51,7 +49,7 @@
  .book_content_left{
  
    width: 20%;
-  height: 185px;
+    min-height: 185px;
  
      float: left;
      

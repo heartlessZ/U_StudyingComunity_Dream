@@ -60,6 +60,8 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
   headurl: string;
   isLogin: boolean = false;
   isAdmin: boolean = false;
+  isCurrentUser:boolean=false;//当前登录用户是否为文章作者
+  isAlreadyPraise:boolean=false;//是否已经点过赞了
 
   auditBtnLoading:boolean=false;
 
@@ -86,9 +88,28 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
     this.article = new ArticleDetailDto();
     this.currentUser = new CurrentUserDetailDto();
     this.search.articleId = this.articleId;
-    this.getCurrentUser();
     this.getArticleDetailById();
+    this.getCurrentUser();
     this.getCommentsByArticleId();
+  }
+
+  createVisitVolume():void{
+    this.articleService.createVisitVolume(this.articleId).subscribe(()=>{
+
+    })
+  }
+
+  createPraise():void{
+    if(this.isAlreadyPraise){
+      this.notify.warn("点赞虽爽，可不要贪多哟")
+    }else{
+      this.articleService.createPraise(this.articleId).subscribe((result)=>{
+        if(result){
+          this.notify.success("点赞成功")
+          this.isAlreadyPraise=true;
+        }
+      })
+    }
   }
 
   getCurrentUser(): void {
@@ -98,6 +119,13 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
         this.currentUser = result;
         this.headurl = this.userDetailService.baseUrl + result.headPortraitUrl;
         console.log(this.currentUser);
+
+        if(this.article.userDetailId == this.currentUser.userDetailId){
+          this.isCurrentUser = true;
+        }else{
+          //如果不是当前登录用户在查看文章则添加一条访问记录
+          this.createVisitVolume();
+        }
       }
     })
   }

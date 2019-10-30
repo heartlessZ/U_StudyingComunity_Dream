@@ -85,6 +85,14 @@ export class HomeComponent implements OnInit {
   }
 
   goArticleDetailComment(id: number): void {
-    this.router.navigate(["app/community/article-detail/" + id + "#comment"])
+    this.router.navigate(["app/community/article-detail/" + id])
+  }
+
+  goUserDetail(userDetailId:any):void{
+    this.router.navigate(["app/personal-center",{id:userDetailId}])
+  }
+
+  goBookDetail(bookId:any):void{
+    this.router.navigate(["app/library/book-detail/"+bookId])
   }
 }

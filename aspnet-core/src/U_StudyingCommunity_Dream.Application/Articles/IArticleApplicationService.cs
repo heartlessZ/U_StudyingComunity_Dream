@@ -80,7 +80,18 @@ namespace U_StudyingCommunity_Dream.Articles
         /// <returns></returns>
         Task<bool> AduitArticleStatus(AuditArticleStatus audit);
 
+        /// <summary>
+        /// 添加一条访问记录
+        /// </summary>
+        /// <returns></returns>
+        Task CreateVisitVolume(EntityDto<long> input);
 
+        /// <summary>
+        /// 为文章点赞
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        Task<bool> CreatePraise(EntityDto<long> input);
         /// <summary>
         /// 导出Article为excel表
         /// </summary>

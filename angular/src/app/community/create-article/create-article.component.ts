@@ -1,9 +1,10 @@
-import { Component, OnInit, SimpleChanges, Injector } from '@angular/core';
+import { Component, OnInit, SimpleChanges, Injector, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppComponentBase } from '@shared/component-base';
 import { ArticleDetailDto, ArticleCategoryDto, SelectArticleCategoryDto } from 'entities';
 import { ArticleService, UserDetailService } from 'services';
+//import { NgxNeditorComponent } from '../../projects/notadd/ngx-neditor/src/public_api';
 
 @Component({
   selector: 'app-create-article',
@@ -12,6 +13,7 @@ import { ArticleService, UserDetailService } from 'services';
 })
 
 export class CreateArticleComponent extends AppComponentBase implements OnInit {
+  //@ViewChild('neditor', { static: true }) neditor: NgxNeditorComponent;
 
   validateForm: FormGroup;
   isConfirmLoading: boolean = false;

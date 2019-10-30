@@ -16,15 +16,15 @@
                 <li nz-menu-item class="homepage-header-menu-list" ><a routerLink="library" style="margin-left:10%;">图书资源</a></li>
                 <li nz-menu-item class="homepage-header-menu-list" ><a routerLink="project"style="margin-left:10%;">学习规划</a></li>
                 <li nz-menu-item  class="homepage-header-menu-list" ><a routerLink="community">社区</a></li>
-                <li style="float: right;" *ngIf="isLogin; else elseBlock">
-                    <a (click)="goPersonalInfo(currentUser.userDetailId)">
+                <li style="float: right;margin-right: 50px;" *ngIf="isLogin; else elseBlock">
+                    <a style="margin-left: 20px;" (click)="goPersonalInfo(currentUser.userDetailId)">
                         <nz-avatar [nzSize]="64" nzIcon="user" [nzSrc]="headUrl"></nz-avatar>
-                    </a>
-                    <button nz-button (click)="exit()" nzType="dashed">退出</button>
+                    </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <i nz-icon (click)="exit()" nzType="logout" nzTheme="outline"></i>
                 </li>
                 <ng-template #elseBlock>
                     <li style="float: right;">
-                        <button nz-button (click)="login()" nzType="dashed">登录</button>
+                        <button style="margin-left: 20px;" nz-button (click)="login()" nzType="dashed">登录</button>
                         <button nz-button (click)="register()" nzType="default">注册</button>
                     </li>
                 </ng-template>
@@ -39,7 +39,8 @@
                 <router-outlet></router-outlet>
             </div>
         </nz-content>
-        <p style="text-align: center; font-size: 2.0vh; width: 100%;">优学社区 ©2019 Implement By 拯救问题儿童</p>
+        
 
     </div>
+    <p style="text-align: center; font-size: 2.0vh; width: 100%;">优学社区 ©2019 Implement By 拯救问题儿童</p>
 </nz-layout>

@@ -81,6 +81,6 @@ export class CommunityComponent implements OnInit {
   goToArticleDetail(id:number){
     console.log("文章详情");
     
-    this.router.navigate(["app/article-detail/" + id]);
+    this.router.navigate(["app/community/article-detail/" + id]);
   }
 }

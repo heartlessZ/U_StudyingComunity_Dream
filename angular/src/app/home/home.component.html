@@ -7,7 +7,7 @@
                     <ng-template #starAction1><i nz-icon nzType="star-o" style="margin-right: 8px;"></i>
                         {{item1.praise}}
                     </ng-template>
-                    <ng-template #likeAction1><i nz-icon nzType="like-o" style="margin-right: 8px;"></i>
+                    <ng-template #likeAction1><i nz-icon nzType="eye" nzTheme="outline"  style="margin-right: 8px;"></i>
                         {{item1.visitVolume}}
                     </ng-template>
                     <ng-template #msgAction1>
@@ -27,7 +27,7 @@
             <ng-template #loadMore>
                 <div class="loadmore">
                     <button nz-button *ngIf="!loadingMore" (click)="onLoadMore()">加载更多...</button>
-                    <p *ngIf="loadingMore">已经没有了哟</p>
+                    <p style="text-align: center;" *ngIf="loadingMore">已经没有了哟</p>
                 </div>
             </ng-template>
         </nz-list>
@@ -40,10 +40,10 @@
                     <ng-template #starAction2><i nz-icon nzType="star-o" style="margin-right: 8px;"></i>
                         {{item2.fansCount}}
                     </ng-template>
-                    <nz-list-item-meta [nzTitle]="nzTitle2" nzAvatar="{{serverBaseUrl+item2.headPortraitUrl}}"
+                    <nz-list-item-meta [nzTitle]="nzTitle2" (click)="goUserDetail(item2.id)" nzAvatar="{{serverBaseUrl+item2.headPortraitUrl}}"
                         nzDescription="{{item2.description}}">
                         <ng-template #nzTitle2>
-                            <a (click)="goArticleDetail(item2.id)">{{ item2.surname }}</a>
+                            <a (click)="goUserDetail(item2.id)">{{ item2.surname }}</a>
                         </ng-template>
                     </nz-list-item-meta>
                 </nz-list-item>
@@ -59,9 +59,9 @@
                     <ng-template #starAction3><i nz-icon nzType="star-o" style="margin-right: 8px;"></i>
                         {{item3.praise}}
                     </ng-template>
-                    <nz-list-item-meta [nzTitle]="nzTitle3" nzAvatar="{{serverBaseUrl+item3.coverUrl}}" nzDescription="{{item3.author}}">
+                    <nz-list-item-meta [nzTitle]="nzTitle3" (click)="goBookDetail(item3.id)" nzAvatar="{{serverBaseUrl+item3.coverUrl}}" nzDescription="{{item3.author}}">
                         <ng-template #nzTitle3>
-                            <a (click)="goArticleDetail(item3.id)">{{ item3.name }}</a>
+                            <a (click)="goBookDetail(item3.id)">{{ item3.name }}</a>
                         </ng-template>
                     </nz-list-item-meta>
                 </nz-list-item>

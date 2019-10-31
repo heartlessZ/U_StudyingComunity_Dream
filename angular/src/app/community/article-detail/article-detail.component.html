@@ -19,7 +19,7 @@
     <div *ngFor="let data of comments">
         <ng-template #commentTemplateRef let-comment="comment">
             <nz-comment [nzAuthor]="comment.author">
-              <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="comment.avatar"></nz-avatar>
+              <nz-avatar nz-comment-avatar nzIcon="user" (click)="goUserDetail(comment.userDetailId)" [nzSrc]="comment.avatar"></nz-avatar>
               <nz-comment-content>
                 <p>{{ comment.content }}</p>
               </nz-comment-content>

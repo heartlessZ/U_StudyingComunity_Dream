@@ -1,7 +1,7 @@
 import { Component, OnInit, Injector, Input } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import { ArticleService } from 'services';
-import { ArticleDetailDto, ArticleCategoryDto } from 'entities';
+import { ArticleService, ProjectService } from 'services';
+import { ArticleDetailDto, ArticleCategoryDto, UserProjectDto } from 'entities';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppComponentBase } from '@shared/component-base';
 
@@ -23,10 +23,13 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
   serverBaseUrl: string;
   userDetailId:string;
 
+  
+
   constructor(injector: Injector,
     private articleService: ArticleService,
     private actRouter: ActivatedRoute,
-    private router: Router, ) {
+    private router: Router, 
+    private projectService: ProjectService) {
     super(injector);
 
     
@@ -76,6 +79,16 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
     })
   }
 
+  
+  currentUserProjects: UserProjectDto[];//当前用户计划集合
+
+  getCurrentUserProjects(): void {
+    this.projectService.getCurrentUserProjectDtos().subscribe((result) => {
+      this.currentUserProjects = result;
+      //console.log(result);
+
+    })
+  }
 
   createArticle(): void {
     this.router.navigate(["app/create-article"])

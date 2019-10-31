@@ -46,4 +46,12 @@ namespace U_StudyingCommunity_Dream.UserDetails.Dtos
         /// </summary>
         public int FansCount { get; set; }
     }
+
+
+    public class AttentionInput
+    {
+        public Guid UserId { get; set; }
+
+        public Guid FansId { get; set; }
+    }
 }

@@ -2,13 +2,13 @@
     <nz-modal [(nzVisible)]="emodalVisible" [nzTitle]="title" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
       [nzOkLoading]="isOkLoading" [nzFooter]="modalFooter">
       <nz-form-item>
-        <nz-form-label [nzSpan]="4" nzRequired nzFor="tagName">标签名</nz-form-label>
-        <nz-form-control [nzSpan]="8" nzErrorTip="类别名称不能为空">
-          <input type="text" nz-input formControlName="tagName" placeholder="请输入类别名称" [(ngModel)]="userProject.tagName" />
+        <nz-form-label [nzSpan]="6" nzRequired nzFor="tagName">标签名</nz-form-label>
+        <nz-form-control [nzSpan]="14" nzErrorTip="标签名称不能为空">
+          <input type="text" nz-input formControlName="tagName" placeholder="请输入标签名称" [(ngModel)]="userProject.tagName" />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-          <nz-form-control [nzSpan]="12" [nzOffset]="4">
+          <nz-form-control [nzSpan]="16" [nzOffset]="4">
             <label nz-checkbox formControlName="isPublic" [(ngModel)]="userProject.isPublic">是否公开</label>
           </nz-form-control>
         </nz-form-item>

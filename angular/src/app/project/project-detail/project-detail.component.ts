@@ -1,48 +1,55 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Injector } from '@angular/core';
 import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectDto, CurrentUserDetailDto } from 'entities';
 import { ProjectModalComponent } from './project-modal/project-modal.component';
 import { UserDetailService, ProjectService } from 'services';
 import { ProjectUserModalComponent } from './project-user-modal/project-user-modal.component';
+import { AppComponentBase } from '@shared/component-base';
 
 @Component({
   selector: 'app-project-detail',
   templateUrl: './project-detail.component.html',
   styleUrls: ['./project-detail.component.css']
 })
-export class ProjectDetailComponent implements OnInit {
+export class ProjectDetailComponent extends AppComponentBase implements OnInit {
   @ViewChild('projectModal', { static: true }) projectModal: ProjectModalComponent;
   @Input() currentUser: CurrentUserDetailDto;
 
   id: number;
   currentUserProjectTagName:string;
   currentProjectId: number;
+  currentProject:ProjectDto = new ProjectDto();
   currentprojectUserDetailId: any;
   data: ProjectDto[];
   isFirst: boolean = false;
   title: any;
 
-  isCurrentUser: boolean = false;;
+  isCurrentUser: boolean = false;
   isLogin: boolean = false;
   headUrl: string = "";
 
-  constructor(private nzContextMenuService: NzContextMenuService
+  constructor(injector: Injector
+    , private nzContextMenuService: NzContextMenuService
     , private actRouter: ActivatedRoute
     , private router: Router
     , private userDetailService: UserDetailService
     , private projectService: ProjectService) {
-
+      super(injector);
   }
 
   ngOnInit() {
-    this.title = "新增计划";
-    if (this.currentprojectUserDetailId == undefined) {
-      this.isCurrentUser = true;
-    }
+    
   }
 
   getProjectsTreeById(): void {
+    
+    if(this.currentUser.userDetailId == this.currentprojectUserDetailId){
+      this.isCurrentUser = true;
+    }else{
+      this.isCurrentUser = false;
+    }
+
     this.data = [];
     this.projectService.getProjectTreeById(this.id).subscribe((result) => {
       console.log(result);
@@ -68,10 +75,11 @@ export class ProjectDetailComponent implements OnInit {
     }
   }
 
-  contextMenu($event: MouseEvent, menu: NzDropdownMenuComponent, id: any): void {
+  contextMenu($event: MouseEvent, menu: NzDropdownMenuComponent, project: any): void {
     this.nzContextMenuService.create($event, menu);
     //console.log(menu);
-    this.currentProjectId = id;
+    this.currentProject = project;
+    this.currentProjectId = project.id;
   }
 
   closeMenu(): void {
@@ -84,5 +92,11 @@ export class ProjectDetailComponent implements OnInit {
 
   editCurrentProject(): void {
     this.projectModal.showByEdit(this.currentProjectId)
+  }
+
+  saveProgress():void{
+    this.projectService.createOrUpdateProject(this.currentProject).subscribe((result)=>{
+      this.notify.success("保存成功")
+    })
   }
 }

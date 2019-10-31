@@ -75,12 +75,20 @@ namespace U_StudyingCommunity_Dream.UserDetails
 
         Task<List<UserSimpleInfoDto>> GetUserSimpleInfos();
 
+        Task<bool> GetIsAttentionUser(AttentionInput input);
 
-		/// <summary>
+        Task<bool> CreateAttentionRecord(AttentionInput input);
+
+        Task<bool> CancelAttentionRecord(AttentionInput input);
+
+        Task<List<UserSimpleInfoDto>> GetAttentionList(GetFansInfoInput input);
+
+        Task<List<UserSimpleInfoDto>> GetFansList(GetFansInfoInput input);
+        /// <summary>
         /// 导出UserDetail为excel表
         /// </summary>
         /// <returns></returns>
-		//Task<FileDto> GetToExcel();
+        //Task<FileDto> GetToExcel();
 
     }
 }

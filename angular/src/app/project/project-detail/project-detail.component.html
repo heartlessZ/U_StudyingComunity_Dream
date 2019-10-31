@@ -5,21 +5,32 @@
       </ng-template>
       <div *ngFor="let item of data">
       
-        <div class="context-area" (contextmenu)="contextMenu($event, menu, item.id)">
-          <span class="context-intro">{{item.name}}</span>
-          <span class="context-intro">{{item.remark}}</span>
-          <nz-slider [nzTooltipVisible]="'always'" [(ngModel)]="item.progress"></nz-slider>
+        <div style="margin-bottom: 10px; text-align: center;">
+          <div class="context-area" (contextmenu)="contextMenu($event, menu, item)">
+            <span class="context-intro">{{item.name}}</span>
+            <span class="context-intro">{{item.remark}}</span>
+            <!-- <nz-slider *ngIf="isCurrentUser" [nzTooltipVisible]="'always'" [(ngModel)]="item.progress"></nz-slider> -->
+            <div *ngIf="isCurrentUser" class="icon-wrapper test-class">
+              <i nz-icon  nzType="frown" [class.icon-highlight]="preHighLight"></i>
+              <nz-slider [nzMin]="0" [nzMax]="100" [(ngModel)]="item.progress"></nz-slider>
+              <i nz-icon nzType="smile" [class.icon-highlight]="nextHighLight"></i>
+            </div>
+          </div>
+  ↓
         </div>
       
       </div>
       
       <nz-dropdown-menu #menu="nzDropdownMenu">
-        <ul nz-menu>
+        <ul *ngIf="isCurrentUser" nz-menu>
           <a (click)="createNextProject()">
             <li nz-menu-item>添加下级计划</li>
           </a>
           <a (click)="editCurrentProject()">
             <li nz-menu-item>编辑当前计划</li>
+          </a>
+          <a (click)="saveProgress()">
+            <li nz-menu-item>保存当前进度</li>
           </a>
         </ul>
       </nz-dropdown-menu>

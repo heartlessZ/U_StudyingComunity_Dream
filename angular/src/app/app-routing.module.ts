@@ -25,7 +25,7 @@ import { ProjectDetailComponent } from './project/project-detail/project-detail.
                     { path: 'library/book-detail/:id', component:BookDetailComponent},
                     { path: 'library', component:LibraryComponent},
                     { path: 'project', component:ProjectComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }},
-                    //{ path: 'project/project-detail/:id', component:ProjectDetailComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }},
+                    { path: 'project/project-detail/:id', component:ProjectDetailComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }},
                     //{ path: 'project/project-detail', component:ProjectDetailComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }},
                     { path: 'community/article-detail/:id', component:ArticleDetailComponent},
                     { path: 'community', component:CommunityComponent},

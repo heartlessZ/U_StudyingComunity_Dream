@@ -11,3 +11,9 @@
     margin-left: 20px;
     min-height: 700px;
 }
+
+.ant-progress {
+    margin-right: 8px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }

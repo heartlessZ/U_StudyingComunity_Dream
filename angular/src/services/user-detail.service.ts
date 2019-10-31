@@ -77,4 +77,46 @@ export class UserDetailService {
             return UserDetailDto.fromJSArray(data);
         }));
     }
+
+
+    ///关注，粉丝
+    //获取当前用户是否已经关注当前浏览用户
+    getIsAttentionUser(userId:any,fansId:any):Observable<boolean>{
+        let url_ = "/api/services/app/UserDetail/GetIsAttentionUser";
+        return this._commonhttp.get(url_,{userId:userId,fansId:fansId}).pipe(map(data => {
+            return data;
+        }));
+    }
+
+    //获取关注列表
+    getAttentionList(params:any):Observable<UserDetailDto[]>{
+        let url_ = "/api/services/app/UserDetail/GetAttentionList";
+        return this._commonhttp.get(url_,params).pipe(map(data => {
+            return UserDetailDto.fromJSArray(data);
+        }));
+    }
+
+    //获取粉丝列表
+    getFansList(params:any):Observable<UserDetailDto[]>{
+        let url_ = "/api/services/app/UserDetail/GetFansList";
+        return this._commonhttp.get(url_,params).pipe(map(data => {
+            return UserDetailDto.fromJSArray(data);
+        }));
+    }
+
+    //取消关注
+    deleteAttentionRecord(userId:any,fansId:any):Observable<boolean>{
+        let url_ = "/api/services/app/UserDetail/CancelAttentionRecord";
+        return this._commonhttp.post(url_,{userId:userId,fansId:fansId}).pipe(map(data => {
+            return data;
+        }));
+    }
+
+    //添加关注
+    createAttentionRecord(userId:any,fansId:any):Observable<boolean>{
+        let url_ = "/api/services/app/UserDetail/CreateAttentionRecord";
+        return this._commonhttp.post(url_,{userId:userId,fansId:fansId}).pipe(map(data => {
+            return data;
+        }));
+    }
 }

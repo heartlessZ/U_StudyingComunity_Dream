@@ -21,6 +21,10 @@
 
   <ng-template  #extraTemplate>
     <a *ngIf="isCurrentUser" (click)="editUserDetail()">编辑资料</a>
+    <div *ngIf="!isCurrentUser">
+        <button *ngIf="!isAttention" (click)="createAttentionRecord()" nz-button nzType="default">加关注，不迷路</button>
+        <button *ngIf="isAttention" (click)="deleteAttentionRecord()" nz-button nzType="danger">取消关注</button>
+    </div>
   </ng-template>
   <app-user-detail-edit-model #userDetailEditModal (modalSave)="refreshData()"></app-user-detail-edit-model>
   <app-change-password-model #changePasswordModal (modalSave)="refreshData()"></app-change-password-model>

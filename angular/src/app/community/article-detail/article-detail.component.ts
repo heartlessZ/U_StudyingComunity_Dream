@@ -208,4 +208,8 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
     })
   }
 
+  goUserDetail(userDetailId:any):void{
+    this.router.navigate(["app/personal-center",{id:userDetailId}]);
+  }
+
 }

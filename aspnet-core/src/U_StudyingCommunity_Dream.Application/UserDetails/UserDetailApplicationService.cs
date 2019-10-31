@@ -23,6 +23,8 @@ using U_StudyingCommunity_Dream.UserDetails.Dtos;
 using Abp.ObjectMapping;
 using U_StudyingCommunity_Dream.Authorization.Users;
 using Abp.Runtime.Session;
+using U_StudyingCommunity_Dream.Articles.Dtos;
+using U_StudyingCommunity_Dream.Dtos;
 
 namespace U_StudyingCommunity_Dream.UserDetails
 {
@@ -283,6 +285,66 @@ UserDetailEditDto editDto;
             return result.OrderByDescending(i => i.FansCount)
                 .Take(10)
                 .ToList();
+        }
+
+        public async Task<List<UserSimpleInfoDto>> GetAttentionList(GetFansInfoInput input)
+        {
+            var userIds = await _fansRepository.GetAll().Where(i => i.FansId == input.UserDetailId).Select(u => u.UserId).ToListAsync();
+            var result = GetUserSimpleInfoList(userIds);
+            result = result.Skip(input.SkipCount).Take(input.MaxResultCount).ToList();
+            return result;
+        }
+
+        private List<UserSimpleInfoDto> GetUserSimpleInfoList(List<Guid> ids)
+        {
+            var result = new List<UserSimpleInfoDto>();
+            var userDetails = _entityRepository.GetAll().Where(u => ids.Contains(u.Id));
+            foreach (var user in userDetails)
+            {
+                result.Add(new UserSimpleInfoDto()
+                {
+                    Id = user.Id,
+                    Surname = user.Surname,
+                    Gender = user.Gender,
+                    HeadPortraitUrl = user.HeadPortraitUrl
+                });
+            }
+            return result;
+        }
+
+        public async Task<List<UserSimpleInfoDto>> GetFansList(GetFansInfoInput input)
+        {
+            var fanIds = await _fansRepository.GetAll().Where(i => i.UserId == input.UserDetailId).Select(u => u.FansId).ToListAsync();
+            var result = GetUserSimpleInfoList(fanIds);
+            result = result.Skip(input.SkipCount).Take(input.MaxResultCount).ToList();
+            return result;
+        }
+
+        public async Task<bool> GetIsAttentionUser(AttentionInput input)
+        {
+            var fans = await _fansRepository.FirstOrDefaultAsync(f => f.UserId == input.UserId && f.FansId == input.FansId);
+            return fans != null;
+        }
+
+        public async Task<bool> CreateAttentionRecord(AttentionInput input)
+        {
+            var entity = new Fans()
+            {
+                UserId = input.UserId,
+                FansId = input.FansId
+            };
+            await _fansRepository.InsertAsync(entity);
+            return true;
+        }
+
+        public async Task<bool> CancelAttentionRecord(AttentionInput input)
+        {
+            var fans = await _fansRepository.FirstOrDefaultAsync(f => f.UserId == input.UserId && f.FansId == input.FansId);
+            if (fans != null)
+            {
+                _fansRepository.Delete(fans);
+            }
+            return true;
         }
 
         /// <summary>

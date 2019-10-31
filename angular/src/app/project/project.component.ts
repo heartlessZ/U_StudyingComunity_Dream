@@ -46,7 +46,7 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
   getCurrentUserProjects(): void {
     this.projectService.getCurrentUserProjectDtos().subscribe((result) => {
       this.currentUserProjects = result;
-      //console.log(result);
+      console.log(result);
 
     })
   }
@@ -76,9 +76,10 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
     })
   }
 
-  refreshDetail(userProjectId: number,tagName:string): void {
+  refreshDetail(userProjectId: number,tagName:string,userDetailId:any): void {
     this.projectDetail.id = userProjectId;
     this.projectDetail.currentUserProjectTagName = tagName;
+    this.projectDetail.currentprojectUserDetailId = userDetailId;
     this.projectDetail.getProjectsTreeById();
   }
 

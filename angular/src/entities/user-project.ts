@@ -27,6 +27,7 @@ export class UserProjectDto implements IUserProjectDto {
             this.praise = data["praise"];
             this.tagName = data["tagName"];
             this.creationTime = data["creationTime"];
+            this.progress = data["progress"];
         }
     }
 

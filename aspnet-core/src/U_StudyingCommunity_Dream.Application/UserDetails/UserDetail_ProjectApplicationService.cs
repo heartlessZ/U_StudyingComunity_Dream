@@ -20,9 +20,7 @@ using Abp.Linq.Extensions;
 
 using U_StudyingCommunity_Dream.UserDetails;
 using U_StudyingCommunity_Dream.UserDetails.Dtos;
-
-
-
+using U_StudyingCommunity_Dream.Projects;
 
 namespace U_StudyingCommunity_Dream.UserDetails
 {
@@ -33,19 +31,20 @@ namespace U_StudyingCommunity_Dream.UserDetails
     public class UserDetail_ProjectAppService : U_StudyingCommunity_DreamAppServiceBase, IUserDetail_ProjectAppService
     {
         private readonly IRepository<UserDetail_Project, long> _entityRepository;
+        private readonly IRepository<Project, long> _projectRepository;
 
-        
+
 
         /// <summary>
         /// 构造函数 
         ///</summary>
         public UserDetail_ProjectAppService(
         IRepository<UserDetail_Project, long> entityRepository
-        
+        , IRepository<Project, long> projectRepository
         )
         {
-            _entityRepository = entityRepository; 
-            
+            _entityRepository = entityRepository;
+            _projectRepository = projectRepository;
         }
 
 
@@ -209,9 +208,31 @@ UserDetail_ProjectEditDto editDto;
             if (user != null)
             {
                 var userProjects = _entityRepository.GetAll().Where(p => p.UserId == user.UserDetailId);
-                return ObjectMapper.Map<List<UserDetail_ProjectListDto>>(userProjects);
+                result = ObjectMapper.Map<List<UserDetail_ProjectListDto>>(userProjects);
+                foreach (var item in result)
+                {
+                    int count = 1;
+                    decimal sum = 0;
+                    GetProcessById(item.ProjectId,ref sum, ref count);
+                    var project = await _projectRepository.GetAsync(item.ProjectId);
+                    sum += project.Progress;
+                    item.Progress = sum / count;
+                }
+                return result;
             }
             return null;
+        }
+
+        private decimal GetProcessById(long parent, ref decimal progress, ref int count)
+        {
+            var project = _projectRepository.FirstOrDefault(p => p.Parent == parent);
+            if (project != null)
+            {
+                count++;
+                progress += project.Progress;
+                return GetProcessById(project.Id, ref progress, ref count);
+            }
+            return progress;
         }
 
         /// <summary>

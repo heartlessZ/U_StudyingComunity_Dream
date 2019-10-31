@@ -22,6 +22,7 @@ export class PersonalCenterComponent extends AppComponentBase implements OnInit 
   currentUser: CurrentUserDetailDto = new CurrentUserDetailDto();
   headUrl: string;
   isCurrentUser: boolean;
+  isAttention:boolean=false;
 
   constructor(injector: Injector,
     private actRouter: ActivatedRoute,
@@ -32,6 +33,7 @@ export class PersonalCenterComponent extends AppComponentBase implements OnInit 
 
   ngOnInit() {
     this.getCurrentUser();
+    this.getIsAttentionUser();
   }
 
   //获取当前登录用户
@@ -40,6 +42,37 @@ export class PersonalCenterComponent extends AppComponentBase implements OnInit 
       if (result.userId != undefined) {
         this.currentUser = result;
         this.getUserDetail();
+      }
+    })
+  }
+
+  //获取当前用户是否已经关注该用户
+  getIsAttentionUser():void{
+    this.userDetailService.getIsAttentionUser(this.user.id,this.currentUser.userDetailId).subscribe((result)=>{
+      if(result){
+        this.isAttention = true;
+      }else{
+        this.isAttention = false;
+      }
+    })
+  }
+
+  //关注当前浏览客户
+  createAttentionRecord():void{
+    this.userDetailService.createAttentionRecord(this.user.id,this.currentUser.userDetailId).subscribe((result)=>{
+      if(result){
+        this.notify.success("关注成功")
+        this.isAttention = true;
+      }
+    })
+  }
+
+  //关注当前浏览客户
+  deleteAttentionRecord():void{
+    this.userDetailService.deleteAttentionRecord(this.user.id,this.currentUser.userDetailId).subscribe((result)=>{
+      if(result){
+        this.notify.success("取关成功")
+        this.isAttention = false;
       }
     })
   }
@@ -62,7 +95,6 @@ export class PersonalCenterComponent extends AppComponentBase implements OnInit 
   }
 
   editUserDetail(): void {
-
     this.userDetailEditModal.showWin(this.userDetailId);
   }
 

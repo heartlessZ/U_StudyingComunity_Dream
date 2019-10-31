@@ -55,7 +55,7 @@ namespace U_StudyingCommunity_Dream.UserDetails.Dtos
 		public long Praise { get; set; }
 
 
-
+        public decimal Progress { get; set; }
 
     }
 }

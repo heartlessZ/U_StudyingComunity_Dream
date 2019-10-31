@@ -28,12 +28,14 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
             return false;
         }
 
-        if (state.url.indexOf('admin') != -1){
-            if (this._sessionService.user.roleIds.indexOf(1) != -1){
-                return true;
+        if(state.url!=null||state.url!=undefined){
+            if (state.url.indexOf('admin') != -1){
+                if (this._sessionService.user.roleIds.indexOf(1) != -1){
+                    return true;
+                }
+                this._router.navigate(['/account/login']);
+                return false;
             }
-            this._router.navigate(['/account/login']);
-            return false;
         }
         
         if (!this._sessionService.user) {

@@ -1,4 +1,4 @@
-import { Component, Injector , OnInit} from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import { AbpSessionService } from '@abp/session/abp-session.service';
 import { AppComponentBase } from '@shared/component-base/app-component-base';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
@@ -59,7 +59,12 @@ export class LoginComponent extends AppComponentBase implements OnInit {
     });
   }
 
-  register():void {
+  register(): void {
     this._router.navigate(['/account/register']);
+  }
+
+
+  returnHome(): void {
+    this._router.navigate(["app/home"])
   }
 }

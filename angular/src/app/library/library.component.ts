@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 
 export class LibraryComponent extends PagedListingComponentBase<any> {
 
-  search: any = { name: '', categoryId: '', status:2};
+  search: any = { keyword: '', categoryId: '', status:2};
   isTableLoading: boolean = false;
   nzOptions:SelectBookCategory[];
   values: string[] | null = null;
@@ -64,7 +64,7 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
    */
   reset() {
     this.pageNumber = 1;
-    this.search = { name: '', categoryId: '', status:2};
+    this.search = { keyword: '', categoryId: '', status:2};
     this.refresh();
   }
 
@@ -77,7 +77,7 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
     let params: any = {};
     params.SkipCount = request.skipCount;
     params.MaxResultCount = request.maxResultCount;
-    params.Name = this.search.name;
+    params.Keyword = this.search.keyword;
     params.CategoryId = this.search.categoryId;
     params.Status = this.search.status;
     console.log(params);

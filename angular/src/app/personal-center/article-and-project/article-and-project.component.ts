@@ -43,6 +43,8 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
     //默认只查询审核通过的
     this.search.releaseStatus = 2;
     this.search.userDetailId = this.userDetailId;
+
+    this.searchUserProject = {MaxResultCount: 5, SkipCount: 0};
     this.getArticleList();
   }
 
@@ -81,13 +83,26 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
 
   
   currentUserProjects: UserProjectDto[];//当前用户计划集合
+  
+  userProjectTotalCount:number;
+  pageIndex:number = 1;
+  searchUserProject:any = {MaxResultCount: 5, SkipCount: 0}
 
   getCurrentUserProjects(): void {
-    this.projectService.getCurrentUserProjectDtos().subscribe((result) => {
-      this.currentUserProjects = result;
-      //console.log(result);
+    this.projectService.getCurrentUserProjectDtos(this.searchUserProject).subscribe((result) => {
+      this.currentUserProjects = result.items;
+      this.userProjectTotalCount = result.totalCount;
 
     })
+  }
+
+  pageIndexChange():void{
+    this.searchUserProject.SkipCount = (this.pageIndex-1)*this.searchUserProject.MaxResultCount;
+    this.getCurrentUserProjects();
+  }
+
+  goProject():void{
+    this.router.navigate(["app/project"])
   }
 
   createArticle(): void {

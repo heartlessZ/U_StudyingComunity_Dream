@@ -17,3 +17,8 @@
     margin-bottom: 8px;
     display: inline-block;
   }
+
+.paoject-left-ul li:hover{
+    color: rgb(255, 1, 1);
+    cursor:pointer;
+}

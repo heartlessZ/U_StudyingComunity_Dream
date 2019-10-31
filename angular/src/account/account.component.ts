@@ -37,7 +37,4 @@ export class AccountComponent extends AppComponentBase implements OnInit {
         //$('body').addClass('login-page');
     }
 
-    returnHome():void{
-        this._router.navigate(["app/home"])
-    }
 }

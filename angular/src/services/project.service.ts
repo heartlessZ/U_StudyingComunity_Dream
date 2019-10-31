@@ -55,10 +55,13 @@ export class ProjectService {
 
   
   //获取当前登录用户的学习计划
-  getCurrentUserProjectDtos(): Observable<UserProjectDto[]> {
+  getCurrentUserProjectDtos(params:any): Observable<PagedResultDto> {
     let url_ = "/api/services/app/UserDetail_Project/GetCurrentUserProjects";
-    return this._commonhttp.get(url_).pipe(map(data => {
-      return UserProjectDto.fromJSArray(data);
+    return this._commonhttp.get(url_,params).pipe(map(data => {
+      const result = new PagedResultDto();
+      result.items = data.items;
+      result.totalCount = data.totalCount;
+      return result;
     }));
   }
 
@@ -70,7 +73,7 @@ export class ProjectService {
   }
 
   editUserProjectProId(userProjectId:number,projectId:number):Observable<boolean>{
-    let url_ = "/api/services/app/UserDetail_Project/editUserProjectProId";
+    let url_ = "/api/services/app/UserDetail_Project/EditUserProjectProId";
     
     var content = {UserProjectId:userProjectId,ProjectId:projectId};
     return this._commonhttp.post(url_, content).pipe(map(data => {
@@ -92,6 +95,22 @@ export class ProjectService {
       result.items = data.items;
       result.totalCount = data.totalCount;
       return result;
+    }));
+  }
+
+  dropUserProjectById(id:any):Observable<boolean>{
+    let url_ = "/api/services/app/UserDetail_Project/DropUserProjectById";
+    
+    return this._commonhttp.post(url_, {id:id}).pipe(map(data => {
+      return data;
+    }));
+  }
+
+  deleteProjectById(id:any):Observable<boolean>{
+    let url_ = "/api/services/app/Project/Delete";
+    
+    return this._commonhttp.delete(url_, {id:id}).pipe(map(data => {
+      return data;
     }));
   }
 }

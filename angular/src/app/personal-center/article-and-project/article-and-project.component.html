@@ -106,19 +106,20 @@
             </nz-list>
         </nz-tab>
         <nz-tab *ngIf="isCurrentUser" (nzClick)="getCurrentUserProjects()" nzTitle="我的学习计划">
-            <div>
-                <nz-list [nzDataSource]="currentUserProjects" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
-                    <ng-template #item let-item>
-                        <nz-list-item>
-                            <nz-list-item-meta [nzTitle]="nzTitle">
-                                <ng-template #nzTitle>
-                                    <a (click)="refreshDetail(item.id,item.tagName)">{{item.tagName}}</a>
-                                </ng-template>
-                            </nz-list-item-meta>
-                        </nz-list-item>
-                    </ng-template>
-                </nz-list>
-                <button (click)="createProjectTag()" nz-button nzType="primary">新增标签</button>
+            <div style="margin-top: 10px;margin-bottom: 10px;">
+                <ul class="paoject-left-ul">
+                    <li style="line-height: 60px;list-style: none;"
+                        (click)="goProject()"
+                        *ngFor="let item of currentUserProjects">
+                        {{item.tagName}}
+                        <nz-progress style="margin:auto;float:right;" nzType="circle" [nzPercent]="item.progress"
+                            [nzWidth]="40" [nzStrokeColor]="{ '0%': '#108ee9', '50%': '#2db7f5', '100%': '#87d068' }">
+                        </nz-progress>
+                        <nz-divider></nz-divider>
+                    </li>
+                </ul>
+                <nz-pagination [(nzPageIndex)]="pageIndex" [nzTotal]="userProjectTotalCount" [nzPageSize]="5"
+                    (nzPageIndexChange)="pageIndexChange()"></nz-pagination>
             </div>
         </nz-tab>
     </nz-tabset>

@@ -1,35 +1,42 @@
 <nz-card class="project-left" nzTitle="我的学习计划" [nzExtra]="extraTemplate">
     <div style="margin-top: 10px;margin-bottom: 10px;">
-        <ul nz-list [nzDataSource]="currentUserProjects" nzBordered
-            nzSize="large" [nzRenderItem]="largeItem">
-            <ng-template #largeItem let-item>
-                <li style="line-height: 40px;" nz-list-item [nzActions]="[opAction]"
-                    (click)="refreshDetail(item.id,item.tagName,item.userId)" [nzContent]="item.tagName" nzNoFlex>
-                </li>
-                <ng-template #opAction>
-                    <nz-progress style="margin:auto;" nzType="circle" [nzPercent]="item.progress" [nzWidth]="40"
-                        [nzStrokeColor]="{ '0%': '#108ee9', '50%': '#2db7f5', '100%': '#87d068' }">
-                    </nz-progress>
-                </ng-template>
-            </ng-template>
+        <ul class="paoject-left-ul">
+            <li style="line-height: 60px;list-style: none;" (click)="refreshDetail(item.id,item.tagName,item.userId)"
+                *ngFor="let item of currentUserProjects">
+                {{item.tagName}}
+                <nz-progress style="margin:auto;float:right;" nzType="circle" [nzPercent]="item.progress" [nzWidth]="40"
+                    [nzStrokeColor]="{ '0%': '#108ee9', '50%': '#2db7f5', '100%': '#87d068' }">
+                </nz-progress>
+                <nz-divider></nz-divider>
+            </li>
         </ul>
+        <nz-pagination [(nzPageIndex)]="pageIndex" [nzTotal]="userProjectTotalCount" [nzPageSize]="5"
+            (nzPageIndexChange)="pageIndexChange()"></nz-pagination>
     </div>
 </nz-card>
 <ng-template #extraTemplate>
-        <button nz-button nzType="primary" nz-popover nzPopoverContent="创建标签" (click)="createProjectTag()" nzShape="circle">十</button>
+    <button nz-button nzType="primary" nz-popover nzPopoverContent="创建标签" (click)="createProjectTag()"
+        nzShape="circle"><i nz-icon nzType="plus" nzTheme="outline"></i></button>&nbsp;&nbsp;
+    <button nz-button nzType="primary" nzShape="circle" (click)="reload()" [nzLoading]="isReload"><i nz-icon
+            [nzType]="'sync'"></i></button>
 </ng-template>
-<app-project-detail #projectDetail [currentUser]="currentUser"></app-project-detail>
+
+
+<app-project-detail (modalSave)="getCurrentUserProjects()" #projectDetail [currentUser]="currentUser">
+</app-project-detail>
+
+
 <nz-card class="project-right" nzTitle="推荐学习计划">
-        <div style="margin-top: 10px;margin-bottom: 10px;">
-                <ul nz-list [nzDataSource]="recommendUserProjects" nzBordered
-                    nzSize="large" [nzRenderItem]="largeItem">
-                    <ng-template #largeItem let-item>
-                        <li style="line-height: 40px;" nz-list-item
-                            (click)="refreshDetail(item.id,item.tagName,item.userId)" [nzContent]="item.tagName" nzNoFlex>
-                        </li>
-                    </ng-template>
-                </ul>
-            </div>
+    <div style="margin-top: 10px;margin-bottom: 10px;text-align: center;">
+        <ul class="paoject-left-ul" nz-list [nzDataSource]="recommendUserProjects" nzBordered nzSize="large"
+            [nzRenderItem]="largeItem">
+            <ng-template #largeItem let-item>
+                <li style="line-height: 40px;" nz-list-item (click)="refreshDetail(item.id,item.tagName,item.userId)"
+                    [nzContent]="item.tagName" nzNoFlex>
+                </li>
+            </ng-template>
+        </ul>
+    </div>
 </nz-card>
 <app-project-user-modal #projectUserModal (modalSave)="getCurrentUserProjects()" [currentUser]="currentUser">
 </app-project-user-modal>

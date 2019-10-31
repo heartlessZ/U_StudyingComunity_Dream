@@ -1,4 +1,4 @@
-import { Component, Injector ,OnInit} from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
@@ -54,7 +54,7 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
           this._router.navigate(['/account/login']);
           return;
         }
-        else{
+        else {
           //this.notify.error(result.msg);
           this.message.error(result.msg);
         }
@@ -103,5 +103,9 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
       checkPassword: [null, [Validators.required, this.confirmationValidator]],
       loginname: [null, [Validators.required]],
     });
+  }
+
+  returnHome(): void {
+    this._router.navigate(["app/home"])
   }
 }

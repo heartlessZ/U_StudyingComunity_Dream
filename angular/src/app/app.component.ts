@@ -106,4 +106,8 @@ export class AppComponent extends AppComponentBase implements OnInit//, AfterVie
             return;
         this.router.navigate(["/app/personal-center",{id:id}]);
     }
+
+    goAdmin():void{
+        this.router.navigate(["admin/home"])
+    }
 }

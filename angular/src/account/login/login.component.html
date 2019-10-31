@@ -11,7 +11,8 @@
     <nz-form-item class="card-input">
       <nz-form-control nzErrorTip="请输入密码!">
         <nz-input-group nzPrefixIcon="lock">
-          <input type="password" nz-input formControlName="password" [(ngModel)]="loginService.authenticateModel.password" placeholder="密码" />
+          <input type="password" nz-input formControlName="password"
+            [(ngModel)]="loginService.authenticateModel.password" placeholder="密码" />
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
@@ -25,6 +26,9 @@
       </nz-form-control>
     </nz-form-item>
   </form>
+  <div style="float: left; margin-top: 0.8vh;">
+    <a (click)="returnHome()">返回首页</a>
+  </div>
   <button nz-button class="registerbtn" (click)="register()" [nzSize]="large" nzType="link">立即注册>></button>
   <br />
 </div>

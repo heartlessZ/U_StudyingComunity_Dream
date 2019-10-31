@@ -28,6 +28,8 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
 
   ngOnInit() {
     this.search = { userDetailId: null, maxResultCount: 10, skipCount: 0, isPublic:true };
+    this.searchUserProject = {MaxResultCount: 5, SkipCount: 0}
+
     this.getCurrentUser();
     this.getCurrentUserProjects();
     this.getUserProjectsPaged();
@@ -37,6 +39,11 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
   currentUser: CurrentUserDetailDto = new CurrentUserDetailDto();
   isLogin: boolean = false;
   headUrl: string = "";
+  searchUserProject:any = {MaxResultCount: 5, SkipCount: 0}
+  userProjectTotalCount:number;
+  pageIndex:number = 1;
+
+  isReload:boolean=false;
   
   //currentProjectUserDetailId : any;
 
@@ -44,10 +51,12 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
   recommendUserProjects:UserProjectDto[];//推荐学习计划集合
 
   getCurrentUserProjects(): void {
-    this.projectService.getCurrentUserProjectDtos().subscribe((result) => {
-      this.currentUserProjects = result;
+    this.isReload = true;
+    this.projectService.getCurrentUserProjectDtos(this.searchUserProject).subscribe((result) => {
+      this.currentUserProjects = result.items;
+      this.userProjectTotalCount = result.totalCount;
       console.log(result);
-
+      this.isReload = false;
     })
   }
 
@@ -59,6 +68,11 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
         this.headUrl = this.userDetailService.baseUrl + result.headPortraitUrl;
       }
     })
+  }
+
+  pageIndexChange():void{
+    this.searchUserProject.SkipCount = (this.pageIndex-1)*this.searchUserProject.MaxResultCount;
+    this.getCurrentUserProjects();
   }
 
   getUserProjectsPaged():void{
@@ -85,6 +99,10 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
 
   createProjectTag(): void {
     this.projectUserModal.show();
+  }
+
+  reload():void{
+    this.getCurrentUserProjects();
   }
 
 }

@@ -20,6 +20,8 @@ using Abp.Application.Services.Dto;
 
 using U_StudyingCommunity_Dream.UserDetails.Dtos;
 using U_StudyingCommunity_Dream.UserDetails;
+using U_StudyingCommunity_Dream.Dtos;
+using U_StudyingCommunity_Dream.Articles.Dtos;
 
 namespace U_StudyingCommunity_Dream.UserDetails
 {
@@ -71,9 +73,11 @@ namespace U_StudyingCommunity_Dream.UserDetails
         /// </summary>
         Task BatchDelete(List<long> input);
 
-        Task<List<UserDetail_ProjectListDto>> GetCurrentUserProjects();
+        Task<MyPageResultDto<UserDetail_ProjectListDto>> GetCurrentUserProjects(PagedInputDto input);
 
         Task<bool> EditUserProjectProId(EditUserProjectProIdDto input);
+
+        Task<bool> DropUserProjectById(EntityDto<long> input);
         /// <summary>
         /// 导出UserDetail_Project为excel表
         /// </summary>

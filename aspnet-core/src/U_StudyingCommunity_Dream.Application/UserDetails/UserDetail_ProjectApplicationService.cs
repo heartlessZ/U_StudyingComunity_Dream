@@ -21,6 +21,8 @@ using Abp.Linq.Extensions;
 using U_StudyingCommunity_Dream.UserDetails;
 using U_StudyingCommunity_Dream.UserDetails.Dtos;
 using U_StudyingCommunity_Dream.Projects;
+using U_StudyingCommunity_Dream.Dtos;
+using U_StudyingCommunity_Dream.Articles.Dtos;
 
 namespace U_StudyingCommunity_Dream.UserDetails
 {
@@ -201,22 +203,27 @@ UserDetail_ProjectEditDto editDto;
 			await _entityRepository.DeleteAsync(s => input.Contains(s.Id));
 		}
 
-        public async Task<List<UserDetail_ProjectListDto>> GetCurrentUserProjects()
+        public async Task<MyPageResultDto<UserDetail_ProjectListDto>> GetCurrentUserProjects(PagedInputDto input)
         {
-            var result = new List<UserDetail_ProjectListDto>();
+            var result = new MyPageResultDto<UserDetail_ProjectListDto>();
             var user = await GetCurrentUserAsync();
             if (user != null)
             {
                 var userProjects = _entityRepository.GetAll().Where(p => p.UserId == user.UserDetailId);
-                result = ObjectMapper.Map<List<UserDetail_ProjectListDto>>(userProjects);
-                foreach (var item in result)
+                var temp = ObjectMapper.Map<List<UserDetail_ProjectListDto>>(userProjects);
+                result.TotalCount = temp.Count;
+                result.Items = temp.OrderByDescending(i=>i.CreationTime).Skip(input.SkipCount).Take(input.MaxResultCount).ToList();
+                foreach (var item in result.Items)
                 {
                     int count = 1;
                     decimal sum = 0;
                     GetProcessById(item.ProjectId,ref sum, ref count);
-                    var project = await _projectRepository.GetAsync(item.ProjectId);
-                    sum += project.Progress;
-                    item.Progress = sum / count;
+                    var project = await _projectRepository.FirstOrDefaultAsync(item.ProjectId);
+                    if (project != null)
+                    {
+                        sum += project.Progress;
+                        item.Progress = sum / count;
+                    }
                 }
                 return result;
             }
@@ -233,6 +240,12 @@ UserDetail_ProjectEditDto editDto;
                 return GetProcessById(project.Id, ref progress, ref count);
             }
             return progress;
+        }
+
+        public async Task<bool> DropUserProjectById(EntityDto<long> input)
+        {
+            await _entityRepository.DeleteAsync(input.Id);
+            return true;
         }
 
         /// <summary>

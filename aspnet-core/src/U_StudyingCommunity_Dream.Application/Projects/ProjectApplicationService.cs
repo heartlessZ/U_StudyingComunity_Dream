@@ -187,8 +187,15 @@ ProjectEditDto editDto;
 		
 		public async Task Delete(EntityDto<long> input)
 		{
-			//TODO:删除前的逻辑判断，是否允许删除
+            //TODO:删除前的逻辑判断，是否允许删除
+            var project = await _entityRepository.GetAsync(input.Id);
+            var child = await _entityRepository.FirstOrDefaultAsync(p => p.Parent == project.Id);
+            if (child != null)
+            {
+                child.Parent = project.Parent;
+            }
 			await _entityRepository.DeleteAsync(input.Id);
+            await CurrentUnitOfWork.SaveChangesAsync();
 		}
 
 

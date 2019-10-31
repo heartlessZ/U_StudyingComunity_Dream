@@ -15,6 +15,10 @@ namespace U_StudyingCommunity_Dream.Articles.Dtos
     /// </summary>
     public class MyPageResultDto<T>
     {
+        public MyPageResultDto()
+        {
+        }
+
         public MyPageResultDto(int totalCount,List<T> items)
         {
             this.TotalCount = totalCount;

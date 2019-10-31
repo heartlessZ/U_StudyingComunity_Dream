@@ -17,6 +17,7 @@
                 <li nz-menu-item class="homepage-header-menu-list" ><a routerLink="project"style="margin-left:10%;">学习规划</a></li>
                 <li nz-menu-item  class="homepage-header-menu-list" ><a routerLink="community">社区</a></li>
                 <li style="float: right;margin-right: 50px;" *ngIf="isLogin; else elseBlock">
+                        <button *ngIf="currentUser.isAdmin" nz-button (click)="goAdmin()" nzType="primary">管理员入口</button>
                     <a style="margin-left: 20px;" (click)="goPersonalInfo(currentUser.userDetailId)">
                         <nz-avatar [nzSize]="64" nzIcon="user" [nzSrc]="headUrl"></nz-avatar>
                     </a>&nbsp;&nbsp;&nbsp;&nbsp;

@@ -17,7 +17,7 @@
  /****全部****/
  .book_content{
    width: 90%;
-   min-height: 185px;
+   min-height: 400px;
  }
  /****中间****/
  .book_content_middle{
@@ -58,7 +58,8 @@
  }
  .book_content_left img{
      height: auto;
-     max-width: 80%;
+     max-width: 10vw;
+     max-height: 20vh;
    margin-left:30px;
    margin-top: 20px;
      display: block;

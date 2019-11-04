@@ -55,32 +55,32 @@ namespace U_StudyingCommunity_Dream.Books
         ///</summary>
         /// <param name="input"></param>
         /// <returns></returns>
-		 [AbpAllowAnonymous]
+        [AbpAllowAnonymous]
         public async Task<PagedResultDto<BookListDto>> GetPaged(GetBooksInput input)
-		{
+        {
             var categoryIds = new List<int>();
             if (input.CategoryId.HasValue)
             {
-               GetChildrenCategoryIds(input.CategoryId.Value, ref categoryIds);
+                GetChildrenCategoryIds(input.CategoryId.Value, ref categoryIds);
                 categoryIds.Add(input.CategoryId.Value);
             }
 
             var query = _entityRepository.GetAll()
-                .Where(b=>b.Status==input.Status)
+                .Where(b => b.Status == input.Status)
                 .WhereIf(!string.IsNullOrEmpty(input.Keyword)
                 , b => b.Name.Contains(input.Keyword) || b.Author.Contains(input.Keyword))
                 .WhereIf(input.CategoryId.HasValue, i => categoryIds.Contains(i.CategoryId));
             // TODO:根据传入的参数添加过滤条件
             var categories = _categoryRepository.GetAll();
 
-			var count = await query.CountAsync();
+            var count = await query.CountAsync();
 
-			var entityList = await query
-					.OrderBy(input.Sorting).AsNoTracking()
-					.PageBy(input)
-					.ToListAsync();
+            var entityList = await query
+                    .OrderBy(input.Sorting).AsNoTracking()
+                    .PageBy(input)
+                    .ToListAsync();
 
-			var entityListDtos = ObjectMapper.Map<List<BookListDto>>(entityList);
+            var entityListDtos = ObjectMapper.Map<List<BookListDto>>(entityList);
             //var entityListDtos =entityList.MapTo<List<BookListDto>>();
 
             foreach (var item in entityListDtos)
@@ -91,159 +91,167 @@ namespace U_StudyingCommunity_Dream.Books
                     item.CategoryName = category.Name;
                 }
             }
-            return new PagedResultDto<BookListDto>(count,entityListDtos);
-		}
+            return new PagedResultDto<BookListDto>(count, entityListDtos);
+        }
 
-        private void GetChildrenCategoryIds(int id,ref List<int> ids)
+        private void GetChildrenCategoryIds(int id, ref List<int> ids)
         {
-            var categorieIds = _categoryRepository.GetAll().Where(c => c.Parent == id).Select(i=>i.Id);
+            var categorieIds = _categoryRepository.GetAll().Where(c => c.Parent == id).Select(i => i.Id);
             foreach (var item in categorieIds)
             {
                 ids.Add(item);
                 GetChildrenCategoryIds(item, ref ids);
             }
         }
-        
+
         /// <summary>
         /// 通过指定id获取BookListDto信息
         /// </summary>
 
+        [AbpAllowAnonymous]
         public async Task<BookListDto> GetById(EntityDto<long> input)
-		{
-			var entity = await _entityRepository.GetAsync(input.Id);
+        {
+            var entity = await _entityRepository.GetAsync(input.Id);
 
-		    var result = ObjectMapper.Map<BookListDto>(entity);
+            var result = ObjectMapper.Map<BookListDto>(entity);
 
             if (result != null)
             {
                 var category = await _categoryRepository.GetAsync(entity.CategoryId);
-                if (category!=null)
+                if (category != null)
                 {
                     result.CategoryName = category.Name;
                 }
             }
             return result;
-		}
+        }
 
-		/// <summary>
-		/// 获取编辑 Book
-		/// </summary>
-		/// <param name="input"></param>
-		/// <returns></returns>
-		
-		public async Task<GetBookForEditOutput> GetForEdit(NullableIdDto<long> input)
-		{
-			var output = new GetBookForEditOutput();
-BookEditDto editDto;
+        /// <summary>
+        /// 获取编辑 Book
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
 
-			if (input.Id.HasValue)
-			{
-				var entity = await _entityRepository.GetAsync(input.Id.Value);
+        public async Task<GetBookForEditOutput> GetForEdit(NullableIdDto<long> input)
+        {
+            var output = new GetBookForEditOutput();
+            BookEditDto editDto;
 
-				editDto = entity.MapTo<BookEditDto>();
+            if (input.Id.HasValue)
+            {
+                var entity = await _entityRepository.GetAsync(input.Id.Value);
 
-				//bookEditDto = ObjectMapper.Map<List<bookEditDto>>(entity);
-			}
-			else
-			{
-				editDto = new BookEditDto();
-			}
+                editDto = entity.MapTo<BookEditDto>();
 
-			output.Book = editDto;
-			return output;
-		}
+                //bookEditDto = ObjectMapper.Map<List<bookEditDto>>(entity);
+            }
+            else
+            {
+                editDto = new BookEditDto();
+            }
 
-
-		/// <summary>
-		/// 添加或者修改Book的公共方法
-		/// </summary>
-		/// <param name="input"></param>
-		/// <returns></returns>
-		
-		public async Task CreateOrUpdate(CreateOrUpdateBookInput input)
-		{
-
-			if (input.Book.Id.HasValue)
-			{
-				await Update(input.Book);
-			}
-			else
-			{
-				await Create(input.Book);
-			}
-		}
+            output.Book = editDto;
+            return output;
+        }
 
 
-		/// <summary>
-		/// 新增Book
-		/// </summary>
-		
-		protected virtual async Task<BookEditDto> Create(BookEditDto input)
-		{
-			//TODO:新增前的逻辑判断，是否允许新增
+        /// <summary>
+        /// 添加或者修改Book的公共方法
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+
+        public async Task CreateOrUpdate(CreateOrUpdateBookInput input)
+        {
+            var book = _entityRepository.GetAll()
+                .WhereIf(input.Book.Id.HasValue,i=>i.Id!=input.Book.Id)
+                .FirstOrDefaultAsync(i => i.Name == input.Book.Name);
+            if (book != null)
+            {
+                throw new UserFriendlyException("已存在该书籍。");
+            }
+            if (input.Book.Id.HasValue)
+            {
+                await Update(input.Book);
+            }
+            else
+            {
+                await Create(input.Book);
+            }
+        }
+
+
+        /// <summary>
+        /// 新增Book
+        /// </summary>
+
+        protected virtual async Task<BookEditDto> Create(BookEditDto input)
+        {
+            //TODO:新增前的逻辑判断，是否允许新增
 
             var entity = ObjectMapper.Map<Book>(input);
             //var entity=input.MapTo<Book>();
-			
 
-			entity = await _entityRepository.InsertAsync(entity);
+            entity = await _entityRepository.InsertAsync(entity);
             //return entity.MapTo<BookEditDto>();
             //return ObjectMapper.Map<BookEditDto>(entity);
             return input;
         }
 
-		/// <summary>
-		/// 编辑Book
-		/// </summary>
-		
-		protected virtual async Task Update(BookEditDto input)
-		{
-			//TODO:更新前的逻辑判断，是否允许更新
+        /// <summary>
+        /// 编辑Book
+        /// </summary>
 
-			var entity = await _entityRepository.GetAsync(input.Id.Value);
-			//input.MapTo(entity);
+        protected virtual async Task Update(BookEditDto input)
+        {
+            //TODO:更新前的逻辑判断，是否允许更新
 
-			ObjectMapper.Map(input, entity);
-		    await _entityRepository.UpdateAsync(entity);
-		}
+            var entity = await _entityRepository.GetAsync(input.Id.Value);
+            //input.MapTo(entity);
 
-
-
-		/// <summary>
-		/// 删除Book信息的方法
-		/// </summary>
-		/// <param name="input"></param>
-		/// <returns></returns>
-		
-		public async Task Delete(EntityDto<long> input)
-		{
-			//TODO:删除前的逻辑判断，是否允许删除
-			await _entityRepository.DeleteAsync(input.Id);
-		}
+            ObjectMapper.Map(input, entity);
+            await _entityRepository.UpdateAsync(entity);
+        }
 
 
 
-		/// <summary>
-		/// 批量删除Book的方法
-		/// </summary>
-		
-		public async Task BatchDelete(List<long> input)
-		{
-			// TODO:批量删除前的逻辑判断，是否允许删除
-			await _entityRepository.DeleteAsync(s => input.Contains(s.Id));
-		}
+        /// <summary>
+        /// 删除Book信息的方法
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+
+        public async Task Delete(EntityDto<long> input)
+        {
+            //TODO:删除前的逻辑判断，是否允许删除
+            await _entityRepository.DeleteAsync(input.Id);
+        }
+
+
+
+        /// <summary>
+        /// 批量删除Book的方法
+        /// </summary>
+
+        public async Task BatchDelete(List<long> input)
+        {
+            // TODO:批量删除前的逻辑判断，是否允许删除
+            await _entityRepository.DeleteAsync(s => input.Contains(s.Id));
+        }
 
         /// <summary>
         /// 获取书籍基本信息top10
         /// </summary>
         /// <returns></returns>
         [AbpAllowAnonymous]
-        public async Task<List<BookSimpleInfoDto>> GetBookSimpleInfos()
+        public async Task<List<BookSimpleInfoDto>> GetBookSimpleInfos(string Keyword)
         {
             var result = new List<BookSimpleInfoDto>();
-            var query = _entityRepository.GetAll().Where(i=>i.Status==Enums.BookResourceStatus.审核通过);
+            var query = _entityRepository.GetAll()
+                .Where(i => i.Status == Enums.BookResourceStatus.审核通过)
+                .WhereIf(!string.IsNullOrEmpty(Keyword), i => i.Name.Contains(Keyword)||i.Author.Contains(Keyword));
             var entityies = await query.OrderByDescending(i => i.Praise)
-                .Take(10)
+                .Take(5)
                 .ToListAsync();
             foreach (var book in entityies)
             {

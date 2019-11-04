@@ -1,5 +1,5 @@
-<nz-card style="width:90%;margin:auto;" [nzBordered]="false">
-  <form nz-form (ngSubmit)="refreshData()" [nzLayout]="'inline'">
+<nz-card style="width:90%;margin:auto;" [nzBordered]="false" [nzExtra]="selectBookTemplate">
+  <!-- <form nz-form (ngSubmit)="refreshData()" [nzLayout]="'inline'">
     <div nz-row [nzGutter]="18">
       <div nz-col [nzSpan]="8" class="mb-md">
         <nz-form-item class="d-flex" style="margin-bottom: 0px;width: 70%; font-size: 2.0vh;">
@@ -12,7 +12,7 @@
       <div nz-col [nzSpan]="8" class="mb-md" style="margin-left: -10%;">
         <nz-form-item class="d-flex" style="margin-bottom: 0px; width: 70%; font-size: 2.0vh;">
           <nz-form-label nzFor="values">分类</nz-form-label>
-          <nz-form-control class="flex-1"  >
+          <nz-form-control class="flex-1">
             <nz-cascader name="values" nzChangeOnSelect [nzShowSearch]="'true'" [nzExpandTrigger]="'hover'"
               [nzOptions]="nzOptions" [(ngModel)]="values" (ngModelChange)="onChanges($event)">
             </nz-cascader>
@@ -20,6 +20,7 @@
         </nz-form-item>
       </div>
       <div nz-col [nzSpan]="8" class="mb-md right" [class.text-right]="'true'" style="float: right;">
+
         <nz-form-item class="d-flex" style="margin-right: 0px;margin-bottom: 0px;">
           <nz-form-control class="flex-1">
             <button nz-button type="button" (click)="refreshData()" nzType="primary"
@@ -29,9 +30,24 @@
         </nz-form-item>
       </div>
     </div>
-  </form>
+  </form> -->
 </nz-card>
-
+<ng-template #selectBookTemplate>
+  <div style="float: left;">
+      分类：<nz-cascader name="values" nzChangeOnSelect [nzShowSearch]="'true'" [nzExpandTrigger]="'hover'"
+      [nzOptions]="nzOptions" [(ngModel)]="values" (ngModelChange)="onChanges($event)">
+    </nz-cascader>
+  </div>
+  <div style="float: right;margin-left: 50px;">
+      <nz-input-group nzSearch [nzAddOnAfter]="selectBookByName">
+          <input type="text" [(ngModel)]="search.keyword" nz-input placeholder="请输入书名或作者搜索" />
+        </nz-input-group>
+  </div>
+  
+  <ng-template #selectBookByName>
+    <button nz-button nzType="primary" (click)="refreshData()" nzSearch><i nz-icon nzType="search"></i></button>
+  </ng-template>
+</ng-template>
 <nz-card style="width:90%;margin:auto; min-height: 250px;" [nzBordered]="false">
   <nz-list [nzDataSource]="dataList" [nzItemLayout]="'vertical'" [nzRenderItem]="item" [nzPagination]="pagination">
     <ng-template #item let-item>
@@ -40,7 +56,7 @@
           <ng-template #nzTitle>
             <div class="book_content">
               <div class="book_content_left">
-                <img  src="{{item.coverUrl}}">
+                <img src="{{item.coverUrl}}">
               </div>
               <div class="book_content_middle">
                 <div class="book_content_middle_top">

@@ -48,7 +48,9 @@
   </nz-dropdown-menu>
 </nz-card>
 <ng-template #extraTemplate>
-  <button *ngIf="isCurrentUser" nz-button nzType="primary" nz-popover [disabled]="!isFirst" nzPopoverContent="创建第一个任务"
+    <button *ngIf="isCurrentUser" nz-button nzType="default"
+    (click)="editTag()">编辑标签</button>&nbsp;&nbsp;
+  <button *ngIf="isCurrentUser" nz-button nzType="primary" nz-popover [disabled]="!isFirst"
     (click)="createNextProject()">创建第一个任务</button>&nbsp;&nbsp;
   <button *ngIf="isCurrentUser" nz-button nzType="danger" nz-popover (click)="deleteUserProject()">删除当前标签</button>
 
@@ -56,3 +58,5 @@
 
 <app-project-modal #projectModal (modalSave)="getProjectsTreeById()" [isFirst]="isFirst" [userProjectId]="id"
   [currentProjectId]="currentProjectId"></app-project-modal>
+  <app-project-user-modal #projectUserModal (modalSave)="afterChange()" [currentUser]="currentUser">
+    </app-project-user-modal>

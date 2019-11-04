@@ -73,7 +73,7 @@ namespace U_StudyingCommunity_Dream.UserDetails
 
         Task<bool> GetUpdateUserStatus(Guid id);
 
-        Task<List<UserSimpleInfoDto>> GetUserSimpleInfos();
+        Task<List<UserSimpleInfoDto>> GetUserSimpleInfos(string Keyword);
 
         Task<bool> GetIsAttentionUser(AttentionInput input);
 

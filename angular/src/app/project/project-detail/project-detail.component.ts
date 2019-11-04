@@ -16,6 +16,7 @@ import { NzModalService } from 'ng-zorro-antd';
 export class ProjectDetailComponent extends AppComponentBase implements OnInit {
   @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('projectModal', { static: true }) projectModal: ProjectModalComponent;
+  @ViewChild('projectUserModal', { static: true }) projectUserModal: ProjectUserModalComponent;
   @Input() currentUser: CurrentUserDetailDto;
 
   id: number;
@@ -40,6 +41,8 @@ export class ProjectDetailComponent extends AppComponentBase implements OnInit {
     , private projectService: ProjectService
     , private modal: NzModalService) {
       super(injector);
+      
+    this.id = this.actRouter.snapshot.params['id'];
   }
 
   ngOnInit() {
@@ -117,6 +120,12 @@ export class ProjectDetailComponent extends AppComponentBase implements OnInit {
     this.projectModal.showByEdit(this.currentProjectId)
   }
 
+  editTag():void{
+    //console.log(this.id);
+    
+    this.projectUserModal.show(this.id)
+  }
+
   saveProgress():void{
     this.projectService.createOrUpdateProject(this.currentProject).subscribe((result)=>{
       this.notify.success("保存成功")
@@ -141,7 +150,7 @@ export class ProjectDetailComponent extends AppComponentBase implements OnInit {
 
   deleteCurrentProject():void{
     this.modal.confirm({
-      nzContent: '确定是否删除当前标签?该操作不可撤销',
+      nzContent: '确定是否删除当前任务?该操作不可撤销',
       nzOnOk: () => {
         this.projectService.deleteProjectById(this.currentProjectId).subscribe((result)=>{
           this.notify.success("删除成功")

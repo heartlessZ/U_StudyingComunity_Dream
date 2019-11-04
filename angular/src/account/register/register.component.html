@@ -14,22 +14,29 @@
         
         </nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请输入用户名!">
-          <input nz-input id="loginname" formControlName="loginname" required
+          <input nz-input id="loginname" maxlength="20" formControlName="loginname" required
           [(ngModel)]="model.userName"/>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item  class="card-input">
         <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="password" nzRequired>密码</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请输入密码!">
+        <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="combineTpl">
           <input
             nz-input
             type="password"
             id="password"
             formControlName="password"
             [(ngModel)]="model.password"
+            minlength="6"
+            maxlength="16"
             required
             (ngModelChange)="updateConfirmValidator()"
           />
+          <ng-template #combineTpl let-control>
+              <ng-container *ngIf="control.hasError('maxlength')">密码长度不超过16位</ng-container>
+              <ng-container *ngIf="control.hasError('minlength')">密码长度不低于6位</ng-container>
+              <ng-container *ngIf="control.hasError('required')">密码不能为空</ng-container>
+            </ng-template>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item  class="card-input">

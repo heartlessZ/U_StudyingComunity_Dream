@@ -36,7 +36,7 @@ export class ProjectUserModalComponent extends AppComponentBase implements OnIni
     this.emodalVisible = true;
     this.userProject  = new UserProjectDto();
     this.userProject.userId = this.currentUser.userDetailId;
-    if(id != undefined){
+    if(id != 0){
       this.getUserProjectById(id);
       this.title="编辑标签";
     }else{

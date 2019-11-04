@@ -74,6 +74,8 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
     finishedCallback: Function,
   ): void {
     this.isTableLoading = true;
+    if (this.values != null || this.values != undefined)
+      this.search.categoryId = this.values.reverse()[0];
     let params: any = {};
     params.SkipCount = request.skipCount;
     params.MaxResultCount = request.maxResultCount;
@@ -94,8 +96,10 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
 
         this.dataList.forEach(d=>{
           //简介过长自动截取
-          if (d.description.length > 151){
-            d.description = d.description.substr(0,150)+"...";
+          if(d.description != undefined){
+            if (d.description.length > 151){
+              d.description = d.description.substr(0,150)+"...";
+            }
           }
 
           d.coverUrl = this.bookService.baseUrl + d.coverUrl;

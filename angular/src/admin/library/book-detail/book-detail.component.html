@@ -45,7 +45,7 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="4">书籍简介</nz-form-label>
       <nz-form-control [nzSpan]="16">
-        <textarea rows="4" formControlName="description" nz-input [(ngModel)]="book.description"></textarea>
+        <textarea rows="4" formControlName="description" maxlength="500" nz-input [(ngModel)]="book.description"></textarea>
       </nz-form-control>
     </nz-form-item>
 

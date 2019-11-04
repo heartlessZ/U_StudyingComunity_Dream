@@ -1,6 +1,6 @@
 <nz-card class="simpleInfo">
     <nz-tabset [nzTabBarExtraContent]="extraTemplate">
-        <nz-tab nzTitle="我的文章" (nzClick)="refreshData(2)">
+        <nz-tab [nzTitle]="isCurrentUser==true?'我的文章':userDetail.surname+'的文章'" (nzClick)="refreshData(2)">
             <nz-list class="demo-loadmore-list" [nzDataSource]="data" [nzItemLayout]="'horizontal'"
                 [nzLoading]="initLoading" [nzRenderItem]="item" [nzLoadMore]="loadMore">
                 <ng-template #item let-item>
@@ -29,7 +29,7 @@
                 </ng-template>
                 <ng-template #loadMore>
                     <div class="loadmore">
-                        <button nz-button *ngIf="!loadingMore" (click)="onLoadMore()">加载更多...</button>
+                        <button nz-button nzType="link" *ngIf="!loadingMore" (click)="onLoadMore()">加载更多...</button>
                         <p style="text-align: center;" *ngIf="loadingMore">已经没有了哟</p>
                     </div>
                 </ng-template>
@@ -108,8 +108,7 @@
         <nz-tab *ngIf="isCurrentUser" (nzClick)="getCurrentUserProjects()" nzTitle="我的学习计划">
             <div style="margin-top: 10px;margin-bottom: 10px;">
                 <ul class="paoject-left-ul">
-                    <li style="line-height: 60px;list-style: none;"
-                        (click)="goProject()"
+                    <li style="line-height: 60px;list-style: none;" (click)="goProject(item)"
                         *ngFor="let item of currentUserProjects">
                         {{item.tagName}}
                         <nz-progress style="margin:auto;float:right;" nzType="circle" [nzPercent]="item.progress"
@@ -120,6 +119,19 @@
                 </ul>
                 <nz-pagination [(nzPageIndex)]="pageIndex" [nzTotal]="userProjectTotalCount" [nzPageSize]="5"
                     (nzPageIndexChange)="pageIndexChange()"></nz-pagination>
+            </div>
+        </nz-tab>
+        <nz-tab *ngIf="!isCurrentUser" (nzClick)="getUserProjectsByUserDetailId()" [nzTitle]="isCurrentUser==true?'我的学习计划':userDetail.surname+'的学习计划'">
+            <div style="margin-top: 10px;margin-bottom: 10px;">
+                <ul class="paoject-left-ul">
+                    <li style="list-style: none;" (click)="goProject(item)"
+                        *ngFor="let item of currentUserProjects">
+                        {{item.tagName}}
+                        <nz-divider></nz-divider>
+                    </li>
+                </ul>
+                <nz-pagination [(nzPageIndex)]="pageIndexOfNotCurrentUser" [nzTotal]="userProjectNotCurrentTotalCount" [nzPageSize]="5"
+                    (nzPageIndexChange)="pageIndexChangeNotCurrentUser()"></nz-pagination>
             </div>
         </nz-tab>
     </nz-tabset>

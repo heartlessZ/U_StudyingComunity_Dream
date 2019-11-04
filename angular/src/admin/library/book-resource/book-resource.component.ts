@@ -80,12 +80,15 @@ export class BookResourceComponent extends PagedListingComponentBase<any> {
         this.dataList = result.items
         this.totalItems = result.totalCount;
         console.log(this.dataList);
-
-        //初始化封面地址
-        this.dataList.forEach(element => {
-          
-        });
       });
+  }
+
+  audit(entity:any,status:any){
+    let sourceStatus = entity.status;
+    entity.status = status;
+    this.bookService.createBookResource(entity).subscribe((result)=>{
+      this.notify.success("审核成功")
+    })
   }
 
 }

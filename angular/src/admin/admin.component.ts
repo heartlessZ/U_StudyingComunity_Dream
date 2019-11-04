@@ -35,4 +35,8 @@ export class AdminComponent extends AppComponentBase implements OnInit {
     login() : void{
         this.router.navigate(["account/login"])
     }
+
+    goHome():void{
+        this.router.navigate(["app/home"])
+    }
 }

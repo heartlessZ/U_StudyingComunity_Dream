@@ -53,12 +53,12 @@ export class BookService {
   }
 
   //创建或更新书籍类别
-  createOrUpdateCategory(name:string,parent:number,id?:number): Observable<boolean> {
+  createOrUpdateCategory(name: string, parent: number, id?: number): Observable<boolean> {
     let url_ = "/api/services/app/BookCategory/CreateOrUpdate";
-    
-    var content = {bookCategory:{id:id,name:name,parent:parent}};
+
+    var content = { bookCategory: { id: id, name: name, parent: parent } };
     console.log(content);
-    
+
     return this._commonhttp.post(url_, content).pipe(map(data => {
       return data;
     }));
@@ -67,16 +67,16 @@ export class BookService {
   //通过Id获取书籍详情
   getBookDetailById(id: any): Observable<BookDetailDto> {
     let url_ = "/api/services/app/Book/GetById";
-        return this._commonhttp.get(url_,{id:id}).pipe(map(data => {
-            return BookDetailDto.fromJS(data);
-        }));
+    return this._commonhttp.get(url_, { id: id }).pipe(map(data => {
+      return BookDetailDto.fromJS(data);
+    }));
   }
 
   //创建或更新书籍
-  createOrUpdateBook(book:BookDetailDto): Observable<boolean> {
+  createOrUpdateBook(book: BookDetailDto): Observable<boolean> {
     let url_ = "/api/services/app/Book/CreateOrUpdate";
-    
-    var content = {book:book};
+
+    var content = { book: book };
     console.log(content);
     //return new Observable();
     return this._commonhttp.post(url_, content).pipe(map(data => {
@@ -85,31 +85,31 @@ export class BookService {
   }
 
   //通过资源Id删除资源
-  deleteBookResourceById(id:any):Observable<boolean>{
+  deleteBookResourceById(id: any): Observable<boolean> {
     let url_ = "/api/services/app/BookResource/Delete";
-    return this._commonhttp.delete(url_, {id:id}).pipe(map(data => {
+    return this._commonhttp.delete(url_, { id: id }).pipe(map(data => {
       return data;
     }));
   }
 
   //创建图书资源
-  createBookResource(bookResource:BookResourceDto):Observable<boolean>{
+  createBookResource(bookResource: BookResourceDto): Observable<boolean> {
     let url_ = "/api/services/app/BookResource/CreateOrUpdate";
-    
-    return this._commonhttp.post(url_, {bookResource:bookResource}).pipe(map(data => {
+
+    return this._commonhttp.post(url_, { bookResource: bookResource }).pipe(map(data => {
       return data;
     }));
   }
 
   //通过书籍Id获取资源集合
-  getResourceListByBookId(id:any,status?:any):Observable<BookResourceDto[]>{
+  getResourceListByBookId(id: any, status?: any): Observable<BookResourceDto[]> {
     let url_ = "/api/services/app/BookResource/GetResourceListByBookId";
-        return this._commonhttp.get(url_,{id:id,status:status}).pipe(map(data => {
-            return BookResourceDto.fromJSArray(data);
-        }));
+    return this._commonhttp.get(url_, { id: id, status: status }).pipe(map(data => {
+      return BookResourceDto.fromJSArray(data);
+    }));
   }
 
-  getResourcePaged(params:any):Observable<PagedResultDto>{
+  getResourcePaged(params: any): Observable<PagedResultDto> {
     let url_ = "/api/services/app/BookResource/GetPaged";
     return this._commonhttp.get(url_, params).pipe(map(data => {
       const result = new PagedResultDto();
@@ -119,10 +119,25 @@ export class BookService {
     }));
   }
 
-  getBookSimpleInfo():Observable<BookDetailDto[]>{
+  getBookSimpleInfo(keyword: any): Observable<BookDetailDto[]> {
     let url_ = "/api/services/app/Book/GetBookSimpleInfos";
-    return this._commonhttp.get(url_).pipe(map(data => {
-        return BookDetailDto.fromJSArray(data);
+    return this._commonhttp.get(url_, { keyword }).pipe(map(data => {
+      return BookDetailDto.fromJSArray(data);
     }));
-}
+  }
+
+  downloadResource(url:any):Observable<void>{
+    return this._commonhttp.get(url).pipe(map(data => {
+      
+    }));
+  }
+
+  deleteBookCategory(id:any):Observable<boolean>{
+    let url_ = "/api/services/app/BookCategory/CheckCanDelete";
+    return this._commonhttp.post(url_, { id:id }).pipe(map(result => {
+      console.log(result);
+      
+      return result;
+    }));
+  }
 }

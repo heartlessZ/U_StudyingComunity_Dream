@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Injector } from '@angular/core';
 import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserDetailService, ProjectService } from 'services';
 import { CurrentUserDetailDto, ProjectDto, UserProjectDto } from 'entities';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
@@ -17,38 +17,45 @@ import { AppComponentBase } from '@shared/component-base';
 export class ProjectComponent extends AppComponentBase implements OnInit {
   @ViewChild('projectDetail', { static: true }) projectDetail: ProjectDetailComponent;
   @ViewChild('projectUserModal', { static: true }) projectUserModal: ProjectUserModalComponent;
+  userProjectId: any;
+  currentprojectUserDetailId: any;
+  currentUserProjectTagName: any;
 
   constructor(injector: Injector
     , private router: Router
     , private userDetailService: UserDetailService
-    , private projectService: ProjectService) { 
-      
+    , private actRouter: ActivatedRoute
+    , private projectService: ProjectService) {
+
     super(injector);
-    }
+    this.userProjectId = this.actRouter.snapshot.params['id'];
+    this.currentprojectUserDetailId = this.actRouter.snapshot.params['userId'];
+    this.currentUserProjectTagName = this.actRouter.snapshot.params['tagName'];
+  }
 
   ngOnInit() {
-    this.search = { userDetailId: null, maxResultCount: 10, skipCount: 0, isPublic:true };
-    this.searchUserProject = {MaxResultCount: 5, SkipCount: 0}
+    this.search = { userDetailId: null, maxResultCount: 10, skipCount: 0, isPublic: true };
+    this.searchUserProject = { MaxResultCount: 5, SkipCount: 0 }
 
     this.getCurrentUser();
     this.getCurrentUserProjects();
     this.getUserProjectsPaged();
   }
 
-  search: any = { userDetailId: null, maxResultCount: 10, skipCount: 0, isPublic:true };
+  search: any = { userDetailId: null, maxResultCount: 10, skipCount: 0, isPublic: true };
   currentUser: CurrentUserDetailDto = new CurrentUserDetailDto();
   isLogin: boolean = false;
   headUrl: string = "";
-  searchUserProject:any = {MaxResultCount: 5, SkipCount: 0}
-  userProjectTotalCount:number;
-  pageIndex:number = 1;
+  searchUserProject: any = { MaxResultCount: 5, SkipCount: 0 }
 
-  isReload:boolean=false;
-  
-  //currentProjectUserDetailId : any;
+  isReload: boolean = false;
 
+  currentProjectUserDetailId: any;
+
+  userProjectTotalCount: number;
+  pageIndex: number = 1;
   currentUserProjects: UserProjectDto[];//当前用户计划集合
-  recommendUserProjects:UserProjectDto[];//推荐学习计划集合
+  recommendUserProjects: UserProjectDto[];//推荐学习计划集合
 
   getCurrentUserProjects(): void {
     this.isReload = true;
@@ -66,22 +73,30 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
         this.isLogin = true;
         this.currentUser = result;
         this.headUrl = this.userDetailService.baseUrl + result.headPortraitUrl;
+
+        if (this.userProjectId != undefined) {
+          this.projectDetail.currentUser = this.currentUser;
+          this.projectDetail.id = this.userProjectId;
+          this.projectDetail.currentprojectUserDetailId = this.currentprojectUserDetailId;
+          this.projectDetail.currentUserProjectTagName = this.currentUserProjectTagName;
+          this.projectDetail.getProjectsTreeById();
+        }
       }
     })
   }
 
-  pageIndexChange():void{
-    this.searchUserProject.SkipCount = (this.pageIndex-1)*this.searchUserProject.MaxResultCount;
+  pageIndexChange(): void {
+    this.searchUserProject.SkipCount = (this.pageIndex - 1) * this.searchUserProject.MaxResultCount;
     this.getCurrentUserProjects();
   }
 
-  getUserProjectsPaged():void{
-    this.projectService.getUserProjectsPaged(this.search).subscribe((result)=>{
+  getUserProjectsPaged(): void {
+    this.projectService.getUserProjectsPaged(this.search).subscribe((result) => {
       this.recommendUserProjects = UserProjectDto.fromJSArray(result.items);
     })
   }
 
-  //加载更多文章
+  //加载更多计划
   onLoadMore(): void {
     //this.loadingMore = true;
     this.search.skipCount = this.search.maxResultCount * (this.search.skipCount + 1);
@@ -90,7 +105,7 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
     })
   }
 
-  refreshDetail(userProjectId: number,tagName:string,userDetailId:any): void {
+  refreshDetail(userProjectId: number, tagName: string, userDetailId: any): void {
     this.projectDetail.id = userProjectId;
     this.projectDetail.currentUserProjectTagName = tagName;
     this.projectDetail.currentprojectUserDetailId = userDetailId;
@@ -101,7 +116,7 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
     this.projectUserModal.show();
   }
 
-  reload():void{
+  reload(): void {
     this.getCurrentUserProjects();
   }
 

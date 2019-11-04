@@ -68,6 +68,7 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
   commentsCount: number = 0;
 
   articleId: number;
+  baseUrl:string;
 
   constructor(injector: Injector
     , private fb: FormBuilder
@@ -82,6 +83,7 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
     //   tags: [null]
     // });
     this.articleId = this.actRouter.snapshot.params['id'];
+    this.baseUrl = this.articleService.baseUrl;
   }
 
   ngOnInit() {
@@ -133,6 +135,7 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
   getArticleDetailById(): void {
     this.articleService.getArticleById(this.articleId).subscribe((result) => {
       this.article = result;
+      //this.article.creationTime = new Date(this.article.creationTime).getTimezoneOffset
     })
   }
 

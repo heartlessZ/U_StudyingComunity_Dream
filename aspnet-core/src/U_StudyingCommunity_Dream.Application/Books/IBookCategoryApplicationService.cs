@@ -63,7 +63,7 @@ namespace U_StudyingCommunity_Dream.Books
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task Delete(EntityDto<int> input);
+        Task<bool> Delete(EntityDto<int> input);
 
 
         /// <summary>
@@ -77,6 +77,8 @@ namespace U_StudyingCommunity_Dream.Books
         /// </summary>
         /// <returns></returns>
         Task<List<BookCategoryTreeNodesDto>> GetNodes();
+
+        Task<bool> CheckCanDelete(EntityDto<int> input);
 
 
 		/// <summary>

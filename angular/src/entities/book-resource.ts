@@ -5,6 +5,10 @@ export class BookResourceDto implements IBookResourceDto {
     url: string | undefined;
     status:any|undefined;
     error:string | undefined;
+    uploaderName:string | undefined;
+    auditorName:string | undefined;
+    uploader:string|undefined;
+    auditor:string|undefined;
 
     constructor(data?: IBookResourceDto) {
         if (data) {
@@ -22,6 +26,10 @@ export class BookResourceDto implements IBookResourceDto {
             this.bookId = data["bookId"];
             this.url = data["url"];
             this.status = data["status"];
+            this.uploaderName = data["uploaderName"];
+            this.auditorName = data["auditorName"];
+            this.uploader = data["uploader"];
+            this.auditor = data["auditor"];
         }
     }
 
@@ -50,6 +58,8 @@ export class BookResourceDto implements IBookResourceDto {
         data["bookId"] = this.bookId;
         data["url"] = this.url;
         data["status"] = this.status;
+        data["uploader"] = this.uploader;
+        data["auditor"] = this.auditor;
         return data; 
     }
 

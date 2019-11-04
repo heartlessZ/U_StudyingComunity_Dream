@@ -1,4 +1,12 @@
-<nz-card class="simpleInfo" [nzTitle]="article.headline" [nzBordered]="false">
+<nz-card class="simpleInfo" [nzBordered]="false">
+    <nz-card-meta
+    [nzTitle]="article.headline"
+    [nzDescription]="'发布于：'+(article.creationTime | date: 'yyyy-MM-dd HH:mm:ss') + '&nbsp;&nbsp;&nbsp;&nbsp;'+'访问量：'+article.visitVolume"
+    [nzAvatar]="avatarTemplate"
+  ></nz-card-meta>
+  <ng-template #avatarTemplate>
+      <nz-avatar (click)="goUserDetail(article.userDetailId)" [nzSrc]="baseUrl+article.headPortraitUrl"></nz-avatar>
+    </ng-template>
   <blockquote class="card-bodyquote" [innerHTML]="article.content"></blockquote>
   <div *ngIf="currentUser.isAdmin">
       <button  nz-button nzType="primary" [nzLoading]="auditBtnLoading" (click)="audit(2)" [disabled]="!article.releaseStatus==1" >
@@ -50,4 +58,9 @@
         </nz-comment>
         <p *ngIf="!isLogin">请先<a (click)="toLogin()">登录</a></p>
 </nz-card>
+<nz-back-top [nzTemplate]="tpl" [nzVisibilityHeight]="100" (nzOnClick)="notify()">
+  <ng-template #tpl>
+    <div class="ant-back-top-inner">TOP</div>
+  </ng-template>
+</nz-back-top>
 <app-reply-modal #replyModal (modalSave)="getCommentsByArticleId()"></app-reply-modal>

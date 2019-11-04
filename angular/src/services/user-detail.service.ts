@@ -71,9 +71,9 @@ export class UserDetailService {
         }));
     }
 
-    getUserSimpleInfo():Observable<UserDetailDto[]>{
+    getUserSimpleInfo(keyword:any):Observable<UserDetailDto[]>{
         let url_ = "/api/services/app/UserDetail/GetUserSimpleInfos";
-        return this._commonhttp.get(url_).pipe(map(data => {
+        return this._commonhttp.get(url_,{keyword}).pipe(map(data => {
             return UserDetailDto.fromJSArray(data);
         }));
     }

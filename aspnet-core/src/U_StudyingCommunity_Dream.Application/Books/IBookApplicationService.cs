@@ -72,7 +72,7 @@ namespace U_StudyingCommunity_Dream.Books
         Task BatchDelete(List<long> input);
 
 
-        Task<List<BookSimpleInfoDto>> GetBookSimpleInfos();
+        Task<List<BookSimpleInfoDto>> GetBookSimpleInfos(string Keyword);
 
 
 		/// <summary>

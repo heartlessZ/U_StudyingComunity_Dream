@@ -65,9 +65,9 @@ export class ProjectService {
     }));
   }
 
-  getUserProjectById(id:number):Observable<UserProjectDto>{
+  getUserProjectById(id:any):Observable<UserProjectDto>{
     let url_ = "/api/services/app/UserDetail_Project/GetById";
-    return this._commonhttp.get(url_).pipe(map(data => {
+    return this._commonhttp.get(url_,{id:id}).pipe(map(data => {
       return UserProjectDto.fromJS(data);
     }));
   }

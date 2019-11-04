@@ -33,7 +33,7 @@ namespace U_StudyingCommunity_Dream.Books
     {
         private readonly IRepository<BookResource, long> _entityRepository;
         private readonly IRepository<UserDetail, Guid> _userDetailRepository;
-        private readonly IRepository<BookResource, long> _bookResourceRepository;
+        private readonly IRepository<Book, long> _bookRepository;
 
         /// <summary>
         /// 构造函数 
@@ -41,12 +41,12 @@ namespace U_StudyingCommunity_Dream.Books
         public BookResourceAppService(
         IRepository<BookResource, long> entityRepository
         , IRepository<UserDetail, Guid> userDetailRepository
-        , IRepository<BookResource, long> bookResourceRepository
+        , IRepository<Book, long> bookRepository
         )
         {
             _entityRepository = entityRepository;
             _userDetailRepository = userDetailRepository;
-            _bookResourceRepository = bookResourceRepository;
+            _bookRepository = bookRepository;
         }
 
 
@@ -60,7 +60,7 @@ namespace U_StudyingCommunity_Dream.Books
 		{
 
 		    var query = _entityRepository.GetAll()
-                .Where(b=>b.Name.Contains(input.Name))
+                .WhereIf(!string.IsNullOrEmpty(input.Name),b=>b.Name.Contains(input.Name))
                 .Where(b=>b.Status == input.Status);
 			// TODO:根据传入的参数添加过滤条件
             
@@ -85,7 +85,7 @@ namespace U_StudyingCommunity_Dream.Books
                     var userDetail = await _userDetailRepository.GetAsync(dto.Auditor.Value);
                     dto.AuditorName = userDetail.Surname;
                 }
-                var book = await _bookResourceRepository.GetAsync(dto.BookId);
+                var book = await _bookRepository.GetAsync(dto.BookId);
                 dto.BookName = book.Name;
             }
 			//var entityListDtos =entityList.MapTo<List<BookResourceListDto>>();
@@ -94,16 +94,18 @@ namespace U_StudyingCommunity_Dream.Books
 		}
 
 
-		/// <summary>
-		/// 通过指定id获取BookResourceListDto信息
-		/// </summary>
-		 
-		public async Task<BookResourceListDto> GetById(EntityDto<long> input)
+        /// <summary>
+        /// 通过指定id获取BookResourceListDto信息
+        /// </summary>
+
+        [AbpAllowAnonymous]
+        public async Task<BookResourceListDto> GetById(EntityDto<long> input)
 		{
 			var entity = await _entityRepository.GetAsync(input.Id);
 
-		    return entity.MapTo<BookResourceListDto>();
-		}
+		    //return entity.MapTo<BookResourceListDto>();
+            return ObjectMapper.Map<BookResourceListDto>(entity);
+        }
 
 		/// <summary>
 		/// 获取编辑 BookResource
@@ -219,7 +221,22 @@ BookResourceEditDto editDto;
                 .Where(i => i.BookId == input.Id)
                 .WhereIf(status.HasValue, i => i.Status == status)
                 .ToListAsync();
-            return ObjectMapper.Map<List<BookResourceListDto>>(entities);
+            
+            var result = ObjectMapper.Map<List<BookResourceListDto>>(entities);
+            foreach (var item in result)
+            {
+                if (item.Uploader.HasValue)
+                {
+                    var user = await _userDetailRepository.GetAsync(item.Uploader.Value);
+                    item.UploaderName = user.Surname;
+                }
+                if (item.Auditor.HasValue)
+                {
+                    var user = await _userDetailRepository.GetAsync(item.Uploader.Value);
+                    item.AuditorName = user.Surname;
+                }
+            }
+            return result;
         }
 
         /// <summary>

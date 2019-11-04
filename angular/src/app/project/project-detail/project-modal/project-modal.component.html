@@ -5,7 +5,7 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="7" nzRequired>计划名称</nz-form-label>
       <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="计划名称不能为空">
-        <input nz-input type="text" formControlName="name" placeholder="请输入计划名称" [(ngModel)]="project.name" />
+        <input nz-input type="text" formControlName="name" placeholder="请输入计划名称" [(ngModel)]="project.name" maxlength="30"/>
         <ng-template #passwordErrorTp let-control>
           <ng-container *ngIf="control.hasError('required')">
             计划名称不能为空
@@ -15,8 +15,8 @@
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzSpan]="7">备注</nz-form-label>
-      <nz-form-control [nzSpan]="12">
-        <textarea rows="4" formControlName="remark" nz-input [(ngModel)]="project.remark"></textarea>
+      <nz-form-control [nzSpan]="12" nzErrorTip="长度不能超过150">
+        <textarea rows="4" formControlName="remark" nz-input [(ngModel)]="project.remark" maxlength="150"></textarea>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>

@@ -33,19 +33,20 @@ namespace U_StudyingCommunity_Dream.Books
     public class BookCategoryAppService : U_StudyingCommunity_DreamAppServiceBase, IBookCategoryAppService
     {
         private readonly IRepository<BookCategory, int> _entityRepository;
+        private readonly IRepository<Book, long> _bookRepository;
 
-        
+
 
         /// <summary>
         /// 构造函数 
         ///</summary>
         public BookCategoryAppService(
         IRepository<BookCategory, int> entityRepository
-        
+        , IRepository<Book, long> bookRepository
         )
         {
-            _entityRepository = entityRepository; 
-            
+            _entityRepository = entityRepository;
+            _bookRepository = bookRepository;
         }
 
 
@@ -181,10 +182,16 @@ BookCategoryEditDto editDto;
 		/// <param name="input"></param>
 		/// <returns></returns>
 		
-		public async Task Delete(EntityDto<int> input)
+		public async Task<bool> Delete(EntityDto<int> input)
 		{
+            var books = _bookRepository.GetAll().Where(i => i.CategoryId == input.Id);
+            if (books.Count() > 0)
+            {
+                return false;
+            }
 			//TODO:删除前的逻辑判断，是否允许删除
 			await _entityRepository.DeleteAsync(input.Id);
+            return true;
 		}
 
 
@@ -236,6 +243,11 @@ BookCategoryEditDto editDto;
                 });
             }
             return result;
+        }
+
+        public async Task<bool> CheckCanDelete(EntityDto<int> input)
+        {
+            return await Delete(input);
         }
 
         /// <summary>

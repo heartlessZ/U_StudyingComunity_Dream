@@ -262,13 +262,14 @@ UserDetailEditDto editDto;
         /// </summary>
         /// <returns></returns>
         [AbpAllowAnonymous]
-        public async Task<List<UserSimpleInfoDto>> GetUserSimpleInfos()
+        public async Task<List<UserSimpleInfoDto>> GetUserSimpleInfos(string Keyword)
         {
             var result = new List<UserSimpleInfoDto>();
-            var userIds = _fansRepository.GetAll().Select(i => i.UserId).Distinct();
+            //var userIds = _fansRepository.GetAll().Select(i => i.UserId).Distinct();
             var userDetails = _entityRepository.GetAll()
                 .Where(u => u.Enable)
-                .Where(u => userIds.Contains(u.Id));
+                //.Where(u => userIds.Contains(u.Id));
+                .WhereIf(!string.IsNullOrEmpty(Keyword), i => i.Surname.Contains(Keyword));
             foreach (var user in userDetails)
             {
                 result.Add(new UserSimpleInfoDto()
@@ -283,7 +284,7 @@ UserDetailEditDto editDto;
             }
 
             return result.OrderByDescending(i => i.FansCount)
-                .Take(10)
+                .Take(5)
                 .ToList();
         }
 

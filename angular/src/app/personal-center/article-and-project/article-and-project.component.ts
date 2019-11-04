@@ -1,7 +1,7 @@
 import { Component, OnInit, Injector, Input } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { ArticleService, ProjectService } from 'services';
-import { ArticleDetailDto, ArticleCategoryDto, UserProjectDto } from 'entities';
+import { ArticleDetailDto, ArticleCategoryDto, UserProjectDto, UserDetailDto } from 'entities';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppComponentBase } from '@shared/component-base';
 
@@ -11,19 +11,19 @@ import { AppComponentBase } from '@shared/component-base';
   styleUrls: ['./article-and-project.component.css']
 })
 export class ArticleAndProjectComponent extends AppComponentBase implements OnInit {
-@Input() isCurrentUser;
+@Input() isCurrentUser:boolean;
+@Input() userDetail:UserDetailDto;
 
   initLoading = true; // bug
   loadingMore = false;
   data: ArticleDetailDto[] = [];
   list: Array<{ loading: boolean; name: any }> = [];
   search: any = { categoryId: null, maxResultCount: 10, skipCount: 0 , releaseStatus: 2, userDetailId:null};
+
   tabs: ArticleCategoryDto[];
   totalCount: number;
   serverBaseUrl: string;
   userDetailId:string;
-
-  
 
   constructor(injector: Injector,
     private articleService: ArticleService,
@@ -92,8 +92,23 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
     this.projectService.getCurrentUserProjectDtos(this.searchUserProject).subscribe((result) => {
       this.currentUserProjects = result.items;
       this.userProjectTotalCount = result.totalCount;
-
     })
+  }
+
+  searchUserProjectNotCurrentUser:any = {MaxResultCount: 5, SkipCount: 0, UserDetailId:null, IsPublic:true};
+  pageIndexOfNotCurrentUser:number = 1;
+  userProjectNotCurrentTotalCount:number;
+  getUserProjectsByUserDetailId():void{
+    this.searchUserProjectNotCurrentUser.userDetailId = this.userDetail.id;
+    this.projectService.getUserProjectsPaged(this.searchUserProjectNotCurrentUser).subscribe((result)=>{
+      this.currentUserProjects = result.items;
+      this.userProjectNotCurrentTotalCount = result.totalCount;
+    })
+  }
+
+  pageIndexChangeNotCurrentUser():void{
+    this.searchUserProjectNotCurrentUser.SkipCount = (this.pageIndex-1)*this.searchUserProject.MaxResultCount;
+    this.getUserProjectsByUserDetailId();
   }
 
   pageIndexChange():void{
@@ -101,8 +116,8 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
     this.getCurrentUserProjects();
   }
 
-  goProject():void{
-    this.router.navigate(["app/project"])
+  goProject(userProject:UserProjectDto):void{
+    this.router.navigate(["app/project",{id:userProject.id,userId:userProject.userId,tagName:userProject.tagName}])
   }
 
   createArticle(): void {

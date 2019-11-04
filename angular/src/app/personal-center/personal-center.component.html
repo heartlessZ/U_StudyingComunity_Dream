@@ -3,8 +3,9 @@
       
       <nz-descriptions-item nzTitle="头像"><nz-avatar [nzSize]="64" nzIcon="user" [nzSrc]="headUrl"></nz-avatar></nz-descriptions-item>
         
-        <nz-descriptions-item nzTitle="用户名">{{user.name}}</nz-descriptions-item>
+        <!-- <nz-descriptions-item nzTitle="用户名">{{user.name}}</nz-descriptions-item> -->
         <nz-descriptions-item nzTitle="昵称">{{user.surname}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="生日">{{user.birthday | date: "yyyy-MM-dd"}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="性别">
             <i *ngIf="user.gender==1" nz-icon nzType="woman" nzTheme="outline"></i>
             <i *ngIf="user.gender==2" nz-icon nzType="man" nzTheme="outline"></i>
@@ -13,17 +14,24 @@
         <nz-descriptions-item nzTitle="个人描述">{{user.description}}</nz-descriptions-item>
       </nz-descriptions>
       
-
-      <a *ngIf="isCurrentUser" (click)="changePassword()">修改密码</a>
   </nz-card>
 
-  <app-article-and-project [isCurrentUser]="isCurrentUser" #ArticleAndProjectComponent></app-article-and-project>
+  <app-article-and-project [isCurrentUser]="isCurrentUser" [userDetail]="user" #ArticleAndProjectComponent></app-article-and-project>
 
   <ng-template  #extraTemplate>
-    <a *ngIf="isCurrentUser" (click)="editUserDetail()">编辑资料</a>
+    <button nz-button nzType="primary" [nzSize]="size" nz-popover nzPopoverContent="编辑资料"  *ngIf="isCurrentUser" (click)="editUserDetail()">
+      <i nz-icon nzType="edit" nzTheme="outline"></i>
+    </button>&nbsp;&nbsp;&nbsp;&nbsp;
+    <button nz-button nzType="dashed" [nzSize]="size" nz-popover nzPopoverContent="修改密码" *ngIf="isCurrentUser" (click)="changePassword()">
+        <i nz-icon nzType="key" nzTheme="outline"></i>
+      </button>
     <div *ngIf="!isCurrentUser">
-        <button *ngIf="!isAttention" (click)="createAttentionRecord()" nz-button nzType="default">加关注，不迷路</button>
-        <button *ngIf="isAttention" (click)="deleteAttentionRecord()" nz-button nzType="danger">取消关注</button>
+        <button *ngIf="!isAttention" (click)="createAttentionRecord()" [nzSize]="'large'" nz-button nzType="link">
+          <i nz-icon nzType="fire" style="color:gray;" nzTheme="outline"></i>
+        </button>
+        <button *ngIf="isAttention" (click)="deleteAttentionRecord()" [nzSize]="'large'" nz-button nzType="link">
+          <i nz-icon nzType="fire" style="color:red;" nzTheme="outline"></i>
+        </button>
     </div>
   </ng-template>
   <app-user-detail-edit-model #userDetailEditModal (modalSave)="refreshData()"></app-user-detail-edit-model>

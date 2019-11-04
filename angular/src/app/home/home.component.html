@@ -7,7 +7,7 @@
                     <ng-template #starAction1><i nz-icon nzType="like" nzTheme="outline" style="margin-right: 8px;"></i>
                         {{item1.praise}}
                     </ng-template>
-                    <ng-template #likeAction1><i nz-icon nzType="eye" nzTheme="outline"  style="margin-right: 8px;"></i>
+                    <ng-template #likeAction1><i nz-icon nzType="eye" nzTheme="outline" style="margin-right: 8px;"></i>
                         {{item1.visitVolume}}
                     </ng-template>
                     <ng-template #msgAction1>
@@ -32,7 +32,7 @@
             </ng-template>
         </nz-list>
     </nz-card>
-    <nz-card class="right-top-card" [nzTitle]="'热点人物'" [nzBordered]="false">
+    <nz-card class="right-top-card" [nzTitle]="'热点人物'" [nzBordered]="false" [nzExtra]="selectUserTemplate">
         <nz-list class="demo-loadmore-list" [nzDataSource]="userSimpleInfos" [nzItemLayout]="'horizontal'"
             [nzLoading]="initLoading" [nzRenderItem]="item2">
             <ng-template #item2 let-item2>
@@ -40,8 +40,8 @@
                     <ng-template #starAction2><i nz-icon nzType="fire" nzTheme="outline"></i>
                         {{item2.fansCount}}
                     </ng-template>
-                    <nz-list-item-meta [nzTitle]="nzTitle2" (click)="goUserDetail(item2.id)" nzAvatar="{{serverBaseUrl+item2.headPortraitUrl}}"
-                        nzDescription="{{item2.description}}">
+                    <nz-list-item-meta [nzTitle]="nzTitle2" (click)="goUserDetail(item2.id)"
+                        nzAvatar="{{serverBaseUrl+item2.headPortraitUrl}}" nzDescription="{{item2.description}}">
                         <ng-template #nzTitle2>
                             <a (click)="goUserDetail(item2.id)">{{ item2.surname }}</a>
                         </ng-template>
@@ -50,8 +50,15 @@
             </ng-template>
         </nz-list>
     </nz-card>
-    <nz-card class="right-bottom-card" [nzTitle]="'推荐书籍'" [nzBordered]="false">
-
+    <ng-template #selectUserTemplate>
+        <nz-input-group nzSearch [nzAddOnAfter]="selectUserDetail">
+            <input type="text" [(ngModel)]="selectUser"  nz-input placeholder="请输入用户昵称搜索" />
+        </nz-input-group>
+        <ng-template #selectUserDetail>
+            <button nz-button nzType="primary" (click)="getUserSimpleInfos()" nzSearch><i nz-icon nzType="search"></i></button>
+        </ng-template>
+    </ng-template>
+    <nz-card class="right-bottom-card" [nzTitle]="'推荐书籍'" [nzBordered]="false" [nzExtra]="selectBookTemplate">
         <nz-list class="demo-loadmore-list" [nzDataSource]="bookSimpleInfos" [nzItemLayout]="'horizontal'"
             [nzLoading]="initLoading" [nzRenderItem]="item3">
             <ng-template #item3 let-item3>
@@ -59,7 +66,8 @@
                     <ng-template #starAction3><i nz-icon nzType="like" nzTheme="outline" style="margin-right: 8px;"></i>
                         {{item3.praise}}
                     </ng-template>
-                    <nz-list-item-meta [nzTitle]="nzTitle3" (click)="goBookDetail(item3.id)" nzAvatar="{{serverBaseUrl+item3.coverUrl}}" nzDescription="{{item3.author}}">
+                    <nz-list-item-meta [nzTitle]="nzTitle3" (click)="goBookDetail(item3.id)"
+                        nzAvatar="{{serverBaseUrl+item3.coverUrl}}" nzDescription="{{item3.author}}">
                         <ng-template #nzTitle3>
                             <a (click)="goBookDetail(item3.id)">{{ item3.name }}</a>
                         </ng-template>
@@ -68,5 +76,12 @@
             </ng-template>
         </nz-list>
     </nz-card>
-
+    <ng-template #selectBookTemplate>
+        <nz-input-group nzSearch [nzAddOnAfter]="selectBookByName">
+            <input type="text" [(ngModel)]="selectBook" nz-input placeholder="请输入书名或作者搜索" />
+        </nz-input-group>
+        <ng-template #selectBookByName>
+            <button nz-button nzType="primary" (click)="getBookSimpleInfos()" nzSearch><i nz-icon nzType="search"></i></button>
+        </ng-template>
+    </ng-template>
 </div>

@@ -17,6 +17,9 @@ export class HomeComponent implements OnInit {
   search: any = { categoryId: null, maxResultCount: 10, skipCount: 0, releaseStatus: 2 };
   tabs: ArticleCategoryDto[];
 
+  selectUser:any;
+  selectBook:any;
+
   userSimpleInfos: UserDetailDto[];
   bookSimpleInfos: BookDetailDto[];
 
@@ -68,13 +71,13 @@ export class HomeComponent implements OnInit {
   }
 
   getUserSimpleInfos():void{
-    this.userDetailService.getUserSimpleInfo().subscribe((result)=>{
+    this.userDetailService.getUserSimpleInfo(this.selectUser).subscribe((result)=>{
       this.userSimpleInfos = result;
     })
   }
 
   getBookSimpleInfos():void{
-    this.bookService.getBookSimpleInfo().subscribe((result)=>{
+    this.bookService.getBookSimpleInfo(this.selectBook).subscribe((result)=>{
       this.bookSimpleInfos = result;
     })
   }

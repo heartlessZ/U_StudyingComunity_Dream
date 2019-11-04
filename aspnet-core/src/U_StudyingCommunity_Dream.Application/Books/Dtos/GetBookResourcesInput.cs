@@ -19,7 +19,7 @@ namespace U_StudyingCommunity_Dream.Books.Dtos
         {
             if (string.IsNullOrEmpty(Sorting))
             {
-                Sorting = "Id";
+                Sorting = "CreationTime";
             }
         }
 

@@ -12,6 +12,7 @@ export class ArticleDetailDto implements IArticleDetailDto {
     comment:number | undefined;
     description:string | undefined;
     commentCount:number | undefined;
+    creationTime:Date | undefined;
 
     constructor(data?: IArticleDetailDto) {
         if (data) {
@@ -36,6 +37,7 @@ export class ArticleDetailDto implements IArticleDetailDto {
             this.comment = data["comment"];
             this.description = data["description"];
             this.commentCount = data["commentCount"];
+            this.creationTime = data["creationTime"];
         }
     }
 

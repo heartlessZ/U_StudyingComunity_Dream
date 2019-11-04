@@ -94,7 +94,7 @@ export class BookCategoryComponent extends AppComponentBase implements OnInit {
 
   createChild(): void {
     if (this.currentNode == undefined) {
-      this.message.error("未选中任何节点。");
+      this.notify.error("未选中任何节点。");
       return;
     }
     this.createCategoryModal.show(this.currentNode);
@@ -102,14 +102,24 @@ export class BookCategoryComponent extends AppComponentBase implements OnInit {
 
   edit(): void {
     if (this.currentNode == undefined) {
-      this.message.error("未选中任何节点。");
+      this.notify.error("未选中任何节点。");
       return;
     }
     this.bookCategoryDetailModal.show(this.currentNode);
   }
 
 
-  delete(id: string): void {
-
+  delete(): void {
+    if (this.currentNode == undefined) {
+      this.notify.error("未选中任何节点。");
+      return;
+    }
+    this.bookService.deleteBookCategory(this.currentNode.key).subscribe((result)=>{
+      if(result){
+        this.notify.success("删除成功");
+      }else{
+        this.notify.error("该类别或其子节点下具有书籍，请先删除该类别下所有书籍")
+      }
+    })
   }
 }

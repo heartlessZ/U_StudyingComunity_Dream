@@ -212,7 +212,11 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
   }
 
   goUserDetail(userDetailId:any):void{
-    this.router.navigate(["app/personal-center",{id:userDetailId}]);
+    this.router.navigate(["app/personal-center/"+userDetailId]);
+  }
+
+  Anotify(): void {
+    console.log('notify');
   }
 
 }

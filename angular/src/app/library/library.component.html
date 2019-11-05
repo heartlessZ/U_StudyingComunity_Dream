@@ -1,36 +1,44 @@
 <nz-card style="width:90%;margin:auto;" [nzBordered]="false" [nzExtra]="selectBookTemplate">
-  <!-- <form nz-form (ngSubmit)="refreshData()" [nzLayout]="'inline'">
-    <div nz-row [nzGutter]="18">
-      <div nz-col [nzSpan]="8" class="mb-md">
-        <nz-form-item class="d-flex" style="margin-bottom: 0px;width: 70%; font-size: 2.0vh;">
-          <nz-form-label nzFor="name">书籍查询</nz-form-label>
-          <nz-form-control class="flex-1">
-            <input nz-input name="name" [(ngModel)]="search.keyword" [placeholder]="'请输入书名或作者'">
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-      <div nz-col [nzSpan]="8" class="mb-md" style="margin-left: -10%;">
-        <nz-form-item class="d-flex" style="margin-bottom: 0px; width: 70%; font-size: 2.0vh;">
-          <nz-form-label nzFor="values">分类</nz-form-label>
-          <nz-form-control class="flex-1">
-            <nz-cascader name="values" nzChangeOnSelect [nzShowSearch]="'true'" [nzExpandTrigger]="'hover'"
-              [nzOptions]="nzOptions" [(ngModel)]="values" (ngModelChange)="onChanges($event)">
-            </nz-cascader>
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-      <div nz-col [nzSpan]="8" class="mb-md right" [class.text-right]="'true'" style="float: right;">
-
-        <nz-form-item class="d-flex" style="margin-right: 0px;margin-bottom: 0px;">
-          <nz-form-control class="flex-1">
-            <button nz-button type="button" (click)="refreshData()" nzType="primary"
-              [nzLoading]="isTableLoading">查询</button>
-            <button nz-button type="button" (click)="reset()" class="mx-sm">重置</button>
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-    </div>
-  </form> -->
+    <nz-card style="width:100%;margin:auto; min-height: 250px;" [nzBordered]="false">
+        <nz-list [nzDataSource]="dataList" [nzItemLayout]="'vertical'" [nzRenderItem]="item" [nzPagination]="pagination">
+          <ng-template #item let-item>
+            <nz-list-item [nzContent]="item.content">
+              <nz-list-item-meta [nzTitle]="nzTitle">
+                <ng-template #nzTitle>
+                  <div class="book_content">
+                    <div class="book_content_left">
+                      <img src="{{item.coverUrl}}">
+                    </div>
+                    <div class="book_content_middle">
+                      <div class="book_content_middle_top">
+                        <ul class="book_content_middle_ul">
+                          <li>书名:<p class="book_content_middle_ul_p">{{item.name}}</p>
+                          </li>
+                          <li>作者:<p class="book_content_middle_ul_p">{{item.author}}</p>
+                          </li>
+                          <li>分类:<p class="book_content_middle_ul_p">{{item.categoryName}}</p>
+                          </li>
+                          <li>简介：<p class="book_content_middle_ul_p">
+                              {{item.description}}
+                            </p>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="book_content_middle_bottom">
+                        <a (click)="detail(item.id)">图书详情</a>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </nz-list-item-meta>
+      
+            </nz-list-item>
+          </ng-template>
+          <ng-template #pagination>
+            <nz-pagination [nzPageIndex]="1" [nzTotal]="totalItems" (nzPageIndexChange)="loadData($event)"></nz-pagination>
+          </ng-template>
+        </nz-list>
+      </nz-card>
 </nz-card>
 <ng-template #selectBookTemplate>
   <div style="float: left;">
@@ -48,43 +56,3 @@
     <button nz-button nzType="primary" (click)="refreshData()" nzSearch><i nz-icon nzType="search"></i></button>
   </ng-template>
 </ng-template>
-<nz-card style="width:90%;margin:auto; min-height: 250px;" [nzBordered]="false">
-  <nz-list [nzDataSource]="dataList" [nzItemLayout]="'vertical'" [nzRenderItem]="item" [nzPagination]="pagination">
-    <ng-template #item let-item>
-      <nz-list-item [nzContent]="item.content">
-        <nz-list-item-meta [nzTitle]="nzTitle">
-          <ng-template #nzTitle>
-            <div class="book_content">
-              <div class="book_content_left">
-                <img src="{{item.coverUrl}}">
-              </div>
-              <div class="book_content_middle">
-                <div class="book_content_middle_top">
-                  <ul class="book_content_middle_ul">
-                    <li>书名:<p class="book_content_middle_ul_p">{{item.name}}</p>
-                    </li>
-                    <li>作者:<p class="book_content_middle_ul_p">{{item.author}}</p>
-                    </li>
-                    <li>分类:<p class="book_content_middle_ul_p">{{item.categoryName}}</p>
-                    </li>
-                    <li>简介：<p class="book_content_middle_ul_p">
-                        {{item.description}}
-                      </p>
-                    </li>
-                  </ul>
-                </div>
-                <div class="book_content_middle_bottom">
-                  <a (click)="detail(item.id)">图书详情</a>
-                </div>
-              </div>
-            </div>
-          </ng-template>
-        </nz-list-item-meta>
-
-      </nz-list-item>
-    </ng-template>
-    <ng-template #pagination>
-      <nz-pagination [nzPageIndex]="1" [nzTotal]="totalItems" (nzPageIndexChange)="loadData($event)"></nz-pagination>
-    </ng-template>
-  </nz-list>
-</nz-card>

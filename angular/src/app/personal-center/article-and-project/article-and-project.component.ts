@@ -1,6 +1,6 @@
-import { Component, OnInit, Injector, Input } from '@angular/core';
+import { Component, OnInit, Injector, Input, Output, EventEmitter } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import { ArticleService, ProjectService } from 'services';
+import { ArticleService, ProjectService, UserDetailService } from 'services';
 import { ArticleDetailDto, ArticleCategoryDto, UserProjectDto, UserDetailDto } from 'entities';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppComponentBase } from '@shared/component-base';
@@ -11,32 +11,36 @@ import { AppComponentBase } from '@shared/component-base';
   styleUrls: ['./article-and-project.component.css']
 })
 export class ArticleAndProjectComponent extends AppComponentBase implements OnInit {
-@Input() isCurrentUser:boolean;
-@Input() userDetail:UserDetailDto;
+  @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
+  @Input() isCurrentUser: boolean;
+  @Input() userDetail: UserDetailDto;
 
   initLoading = true; // bug
   loadingMore = false;
   data: ArticleDetailDto[] = [];
   list: Array<{ loading: boolean; name: any }> = [];
-  search: any = { categoryId: null, maxResultCount: 10, skipCount: 0 , releaseStatus: 2, userDetailId:null};
+  search: any = { categoryId: null, maxResultCount: 10, skipCount: 0, releaseStatus: 2, userDetailId: null };
 
   tabs: ArticleCategoryDto[];
   totalCount: number;
   serverBaseUrl: string;
-  userDetailId:string;
+  userDetailId: string;
+
+  baseUrl: string;
 
   constructor(injector: Injector,
     private articleService: ArticleService,
     private actRouter: ActivatedRoute,
-    private router: Router, 
+    private userDetailService: UserDetailService,
+    private router: Router,
     private projectService: ProjectService) {
     super(injector);
 
-    
     this.userDetailId = this.actRouter.snapshot.params['id'];
   }
 
   ngOnInit(): void {
+    this.baseUrl = this.userDetailService.baseUrl;
     this.serverBaseUrl = this.articleService.baseUrl;
     this.search.maxResultCount = 5;
     this.search.skipCount = 0;
@@ -44,7 +48,7 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
     this.search.releaseStatus = 2;
     this.search.userDetailId = this.userDetailId;
 
-    this.searchUserProject = {MaxResultCount: 5, SkipCount: 0};
+    this.searchUserProject = { MaxResultCount: 5, SkipCount: 0 };
     this.getArticleList();
   }
 
@@ -60,7 +64,7 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
     })
   }
 
-  refreshData(status:number){
+  refreshData(status: number) {
     this.loadingMore = true;
     this.search.releaseStatus = status;
     this.search.skipCount = 0;
@@ -81,12 +85,12 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
     })
   }
 
-  
+
   currentUserProjects: UserProjectDto[];//当前用户计划集合
-  
-  userProjectTotalCount:number;
-  pageIndex:number = 1;
-  searchUserProject:any = {MaxResultCount: 5, SkipCount: 0}
+
+  userProjectTotalCount: number;
+  pageIndex: number = 1;
+  searchUserProject: any = { MaxResultCount: 5, SkipCount: 0 }
 
   getCurrentUserProjects(): void {
     this.projectService.getCurrentUserProjectDtos(this.searchUserProject).subscribe((result) => {
@@ -95,40 +99,90 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
     })
   }
 
-  searchUserProjectNotCurrentUser:any = {MaxResultCount: 5, SkipCount: 0, UserDetailId:null, IsPublic:true};
-  pageIndexOfNotCurrentUser:number = 1;
-  userProjectNotCurrentTotalCount:number;
-  getUserProjectsByUserDetailId():void{
+  searchUserProjectNotCurrentUser: any = { MaxResultCount: 5, SkipCount: 0, UserDetailId: null, IsPublic: true };
+  pageIndexOfNotCurrentUser: number = 1;
+  userProjectNotCurrentTotalCount: number;
+  getUserProjectsByUserDetailId(): void {
     this.searchUserProjectNotCurrentUser.userDetailId = this.userDetail.id;
-    this.projectService.getUserProjectsPaged(this.searchUserProjectNotCurrentUser).subscribe((result)=>{
+    this.projectService.getUserProjectsPaged(this.searchUserProjectNotCurrentUser).subscribe((result) => {
       this.currentUserProjects = result.items;
       this.userProjectNotCurrentTotalCount = result.totalCount;
     })
   }
 
-  pageIndexChangeNotCurrentUser():void{
-    this.searchUserProjectNotCurrentUser.SkipCount = (this.pageIndex-1)*this.searchUserProject.MaxResultCount;
+  pageIndexChangeNotCurrentUser(): void {
+    this.searchUserProjectNotCurrentUser.SkipCount = (this.pageIndex - 1) * this.searchUserProject.MaxResultCount;
     this.getUserProjectsByUserDetailId();
   }
 
-  pageIndexChange():void{
-    this.searchUserProject.SkipCount = (this.pageIndex-1)*this.searchUserProject.MaxResultCount;
+  pageIndexChange(): void {
+    this.searchUserProject.SkipCount = (this.pageIndex - 1) * this.searchUserProject.MaxResultCount;
     this.getCurrentUserProjects();
   }
 
-  goProject(userProject:UserProjectDto):void{
-    this.router.navigate(["app/project",{id:userProject.id,userId:userProject.userId,tagName:userProject.tagName}])
+  goProject(userProject: UserProjectDto): void {
+    this.router.navigate(["app/project", { id: userProject.id, userId: userProject.userId, tagName: userProject.tagName }])
   }
 
   createArticle(): void {
     this.router.navigate(["app/create-article"])
   }
 
-  goArticleDetail(id:number):void{
-    this.router.navigate(["app/community/article-detail/"+id])
+  editArticle(id:any): void {
+    this.router.navigate(["app/create-article/"+id])
   }
-  goArticleDetailComment(id:number):void{
-    this.router.navigate(["app/community/article-detail/"+id])
+
+  goArticleDetail(id: number): void {
+    this.router.navigate(["app/community/article-detail/" + id])
+  }
+  goArticleDetailComment(id: number): void {
+    this.router.navigate(["app/community/article-detail/" + id])
+  }
+
+  goUserDetail(userDetailId: any): void {
+    this.router.navigate(["app/personal-center/" + userDetailId ])
+    console.log("哈哈哈哈");
+
+    //this.modalSave.emit(null)
+  }
+
+
+  searchFans: any = { UserDetailId: 0, SkipCount: 0, MaxResultCount: 30 }
+  searchAttention: any = { UserDetailId: 0, SkipCount: 0, MaxResultCount: 30 }
+  userSimpleList: UserDetailDto[];
+  pageIndexOfFansList: number = 1;
+  fansListTotalCount: number;
+  pageIndexOfAttentionList: number = 1;
+  attentionListTotalCount: number;
+  //获取粉丝列表
+  getCurrentUserFans(): void {
+    this.searchFans.UserDetailId = this.userDetail.id;
+    this.userDetailService.getFansList(this.searchFans).subscribe((result) => {
+      console.log(result);
+      this.userSimpleList = UserDetailDto.fromJSArray(result.items);
+      this.fansListTotalCount = result.totalCount;
+    })
+  }
+
+  pageIndexChangeOfFansList(): void {
+    this.searchFans.SkipCount = (this.pageIndexOfFansList - 1) * this.searchFans.MaxResultCount;
+    this.getCurrentUserFans();
+  }
+
+  //获取关注列表
+  getCurrentAttentions(): void {
+    this.searchAttention.UserDetailId = this.userDetail.id;
+    this.userDetailService.getAttentionList(this.searchAttention).subscribe((result) => {
+      console.log(result);
+      this.userSimpleList = UserDetailDto.fromJSArray(result.items);
+      this.attentionListTotalCount = result.totalCount;
+    })
+  }
+
+  
+  pageIndexChangeOfAttentions(): void {
+    this.searchAttention.SkipCount = (this.pageIndexOfAttentionList - 1) * this.searchAttention.MaxResultCount;
+    this.getCurrentAttentions();
   }
 
 }

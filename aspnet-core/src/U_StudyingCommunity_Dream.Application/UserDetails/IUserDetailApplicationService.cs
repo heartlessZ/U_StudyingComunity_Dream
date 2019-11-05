@@ -20,6 +20,7 @@ using Abp.Application.Services.Dto;
 
 using U_StudyingCommunity_Dream.UserDetails.Dtos;
 using U_StudyingCommunity_Dream.UserDetails;
+using U_StudyingCommunity_Dream.Articles.Dtos;
 
 namespace U_StudyingCommunity_Dream.UserDetails
 {
@@ -81,9 +82,9 @@ namespace U_StudyingCommunity_Dream.UserDetails
 
         Task<bool> CancelAttentionRecord(AttentionInput input);
 
-        Task<List<UserSimpleInfoDto>> GetAttentionList(GetFansInfoInput input);
+        Task<MyPageResultDto<UserSimpleInfoDto>> GetAttentionList(GetFansInfoInput input);
 
-        Task<List<UserSimpleInfoDto>> GetFansList(GetFansInfoInput input);
+        Task<MyPageResultDto<UserSimpleInfoDto>> GetFansList(GetFansInfoInput input);
         /// <summary>
         /// 导出UserDetail为excel表
         /// </summary>

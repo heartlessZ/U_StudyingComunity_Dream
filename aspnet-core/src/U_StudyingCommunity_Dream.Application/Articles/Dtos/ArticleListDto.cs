@@ -67,6 +67,8 @@ namespace U_StudyingCommunity_Dream.Articles.Dtos
 
         public string HeadPortraitUrl { get; set; }
 
+        public int[] CategoryIds { get; set; }
+
         /// <summary>
         /// 评论数
         /// </summary>

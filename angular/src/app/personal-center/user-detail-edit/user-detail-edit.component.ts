@@ -30,6 +30,7 @@ export class UserDetailEditComponent extends AppComponentBase implements OnInit 
   fileUploadUrl:string;
   fileUrl:string;//图片最终上传所得的地址
   birthday:Date;
+  gender:any;
 
   constructor(injector: Injector,
     private fb: FormBuilder,
@@ -57,6 +58,7 @@ export class UserDetailEditComponent extends AppComponentBase implements OnInit 
   handleOk(): void {
     this.isOkLoading = true;
     this.userDetail.headPortraitUrl = this.fileUrl;
+    this.userDetail.gender = this.gender;
     this.submitForm(this.userDetail);
 
     console.log(this.userDetail);
@@ -100,6 +102,7 @@ export class UserDetailEditComponent extends AppComponentBase implements OnInit 
       this.userDetail = result;
       this.avatarUrl = this.userDetailService.baseUrl + result.headPortraitUrl;
       this.birthday = result.birthday;
+      this.gender = result.gender.toString()
       console.log(this.avatarUrl);
       console.log(this.userDetail);
       

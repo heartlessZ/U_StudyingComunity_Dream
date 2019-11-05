@@ -4,7 +4,7 @@ export class UserDetailDto implements IUserDetailDto {
     description: string | undefined;
     headPortraitUrl: string | undefined;
     userId: number | undefined;
-    gender:number | undefined;
+    gender:any | undefined;
     birthday:Date | undefined;
     site: string | undefined;
     occupation: string | undefined;

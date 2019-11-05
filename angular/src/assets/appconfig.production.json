@@ -1,5 +1,5 @@
 {
-  "remoteServiceBaseUrl":  "http://localhost:21021",
+  "remoteServiceBaseUrl":  "http://49.233.85.77:5000",
   "appBaseUrl": "http://localhost",
   "localeMappings": [
     {

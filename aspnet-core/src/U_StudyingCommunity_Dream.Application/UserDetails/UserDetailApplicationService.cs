@@ -288,12 +288,13 @@ UserDetailEditDto editDto;
                 .ToList();
         }
 
-        public async Task<List<UserSimpleInfoDto>> GetAttentionList(GetFansInfoInput input)
+        public async Task<MyPageResultDto<UserSimpleInfoDto>> GetAttentionList(GetFansInfoInput input)
         {
             var userIds = await _fansRepository.GetAll().Where(i => i.FansId == input.UserDetailId).Select(u => u.UserId).ToListAsync();
             var result = GetUserSimpleInfoList(userIds);
+            var count = result.Count;
             result = result.Skip(input.SkipCount).Take(input.MaxResultCount).ToList();
-            return result;
+            return new MyPageResultDto<UserSimpleInfoDto>(count,result);
         }
 
         private List<UserSimpleInfoDto> GetUserSimpleInfoList(List<Guid> ids)
@@ -313,12 +314,13 @@ UserDetailEditDto editDto;
             return result;
         }
 
-        public async Task<List<UserSimpleInfoDto>> GetFansList(GetFansInfoInput input)
+        public async Task<MyPageResultDto<UserSimpleInfoDto>> GetFansList(GetFansInfoInput input)
         {
             var fanIds = await _fansRepository.GetAll().Where(i => i.UserId == input.UserDetailId).Select(u => u.FansId).ToListAsync();
             var result = GetUserSimpleInfoList(fanIds);
+            var count = result.Count;
             result = result.Skip(input.SkipCount).Take(input.MaxResultCount).ToList();
-            return result;
+            return new MyPageResultDto<UserSimpleInfoDto>(count, result);
         }
 
         public async Task<bool> GetIsAttentionUser(AttentionInput input)

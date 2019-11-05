@@ -1,6 +1,6 @@
 import { Component, OnInit, SimpleChanges, Injector, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AppComponentBase } from '@shared/component-base';
 import { ArticleDetailDto, ArticleCategoryDto, SelectArticleCategoryDto } from 'entities';
 import { ArticleService, UserDetailService } from 'services';
@@ -15,6 +15,7 @@ import { ArticleService, UserDetailService } from 'services';
 export class CreateArticleComponent extends AppComponentBase implements OnInit {
   //@ViewChild('neditor', { static: true }) neditor: NgxNeditorComponent;
 
+  id:any;
   validateForm: FormGroup;
   isConfirmLoading: boolean = false;
   content: string;
@@ -30,9 +31,11 @@ export class CreateArticleComponent extends AppComponentBase implements OnInit {
   constructor(injector: Injector
     , private fb: FormBuilder
     , private router: Router
+    , private actRouter: ActivatedRoute
     , private articleService: ArticleService
     , private userDetailService: UserDetailService) {
     super(injector);
+    this.id = this.actRouter.snapshot.params['id'];
 
     this.validateForm = this.fb.group({
       name: [null, [Validators.required]],
@@ -51,7 +54,10 @@ export class CreateArticleComponent extends AppComponentBase implements OnInit {
     this.article = new ArticleDetailDto();
     this.getCurrentUser();
     this.getAllArticleCategories();
-    
+
+    if(this.id!=undefined){
+      this.getArticleById();
+    }
   }
 
   getAllArticleCategories(): void {
@@ -65,6 +71,15 @@ export class CreateArticleComponent extends AppComponentBase implements OnInit {
     })
   }
 
+  getArticleById():void{
+    this.articleService.getArticleById(this.id).subscribe((result)=>{
+      this.article = result;
+      this.listOfTagOptions = result.categoryIds;
+      this.content = result.content;
+      console.log(result);
+      
+    })
+  }
 
   getCurrentUser(): void {
     this.userDetailService.getCurrentUserSimpleInfo().subscribe((result) => {

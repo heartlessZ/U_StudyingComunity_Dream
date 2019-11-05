@@ -1,6 +1,6 @@
 import { Component, OnInit, Injector, Input, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/component-base/app-component-base';
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { UserDetailService } from 'services';
 import { UserDetailDto, CurrentUserDetailDto } from 'entities';
 import { UserDetailEditComponent } from './user-detail-edit/user-detail-edit.component';
@@ -28,6 +28,7 @@ export class PersonalCenterComponent extends AppComponentBase implements OnInit 
 
   constructor(injector: Injector,
     private actRouter: ActivatedRoute,
+    private router:Router,
     private userDetailService: UserDetailService) {
     super(injector);
     this.userDetailId = this.actRouter.snapshot.params['id'];
@@ -87,7 +88,7 @@ export class PersonalCenterComponent extends AppComponentBase implements OnInit 
       this.user = result;
       this.headUrl = this.userDetailService.baseUrl + result.headPortraitUrl;
       this.ArticleAndProjectComponent.isCurrentUser = this.isCurrentUser;
-      console.log(result.id+"------"+this.currentUser.userDetailId+"------"+this.isCurrentUser)
+      //console.log(result.id+"------"+this.currentUser.userDetailId+"------"+this.isCurrentUser)
     })
   }
 
@@ -101,6 +102,7 @@ export class PersonalCenterComponent extends AppComponentBase implements OnInit 
 
   refreshData(): void {
     this.getCurrentUser();
+    
   }
 
 }

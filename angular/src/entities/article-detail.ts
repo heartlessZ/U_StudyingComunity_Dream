@@ -38,6 +38,7 @@ export class ArticleDetailDto implements IArticleDetailDto {
             this.description = data["description"];
             this.commentCount = data["commentCount"];
             this.creationTime = data["creationTime"];
+            this.categoryIds = data["categoryIds"];
         }
     }
 

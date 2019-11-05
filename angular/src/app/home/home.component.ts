@@ -94,7 +94,7 @@ export class HomeComponent implements OnInit {
   goUserDetail(userDetailId:any):void{
     console.log(userDetailId);
     
-    this.router.navigate(["app/personal-center",{id:userDetailId}])
+    this.router.navigate(["app/personal-center/"+userDetailId])
   }
 
   goBookDetail(bookId:any):void{

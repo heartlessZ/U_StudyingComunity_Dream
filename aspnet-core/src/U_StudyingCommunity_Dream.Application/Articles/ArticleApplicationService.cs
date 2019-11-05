@@ -122,6 +122,11 @@ namespace U_StudyingCommunity_Dream.Articles
                     result.UserName = user.Name;
                     result.HeadPortraitUrl = user.HeadPortraitUrl;
                 }
+                var categoryIds = _articleTagsRepository.GetAll().Where(i => i.ArticleId == input.Id).Select(i => i.ArticleCategoryId).Distinct();
+                if (categoryIds.Count() > 0)
+                {
+                    result.CategoryIds = categoryIds.ToArray();
+                }
             }
             return result;
 		}

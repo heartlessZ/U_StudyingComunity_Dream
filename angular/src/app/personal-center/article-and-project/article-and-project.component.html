@@ -39,25 +39,11 @@
             <nz-list class="demo-loadmore-list" [nzDataSource]="data" [nzItemLayout]="'horizontal'"
                 [nzLoading]="initLoading" [nzRenderItem]="item" [nzLoadMore]="loadMore" [nzFooter]="footer">
                 <ng-template #item let-item>
-                    <nz-list-item [nzActions]="[starAction, likeAction, msgAction]">
-                        <ng-template #starAction><i nz-icon nzType="like" nzTheme="outline"
-                                style="margin-right: 8px;"></i>
-                            {{item.praise}}
-                        </ng-template>
-                        <ng-template #likeAction><i nz-icon nzType="eye" nzTheme="outline"
-                                style="margin-right: 8px;"></i>
-                            {{item.visitVolume}}
-                        </ng-template>
-                        <ng-template #msgAction>
-                            <a (click)="goArticleDetailComment(item.id)">
-                                <i nz-icon nzType="message" style="margin-right: 8px;"></i>
-                            </a>
-                            {{item.commentCount}}
-                        </ng-template>
+                    <nz-list-item>
                         <nz-list-item-meta [nzTitle]="nzTitle" nzAvatar="{{serverBaseUrl+item.headPortraitUrl}}"
                             nzDescription="{{item.description}}">
                             <ng-template #nzTitle>
-                                <a (click)="goArticleDetail(item.id)">{{ item.headline }}</a>
+                                <a (click)="editArticle(item.id)">{{ item.headline }}</a>
                             </ng-template>
                         </nz-list-item-meta>
                     </nz-list-item>
@@ -121,18 +107,40 @@
                     (nzPageIndexChange)="pageIndexChange()"></nz-pagination>
             </div>
         </nz-tab>
-        <nz-tab *ngIf="!isCurrentUser" (nzClick)="getUserProjectsByUserDetailId()" [nzTitle]="isCurrentUser==true?'我的学习计划':userDetail.surname+'的学习计划'">
+        <nz-tab *ngIf="!isCurrentUser" (nzClick)="getUserProjectsByUserDetailId()"
+            [nzTitle]="isCurrentUser==true?'我的学习计划':userDetail.surname+'的学习计划'">
             <div style="margin-top: 10px;margin-bottom: 10px;">
                 <ul class="paoject-left-ul">
-                    <li style="list-style: none;" (click)="goProject(item)"
-                        *ngFor="let item of currentUserProjects">
+                    <li style="list-style: none;" (click)="goProject(item)" *ngFor="let item of currentUserProjects">
                         {{item.tagName}}
                         <nz-divider></nz-divider>
                     </li>
                 </ul>
-                <nz-pagination [(nzPageIndex)]="pageIndexOfNotCurrentUser" [nzTotal]="userProjectNotCurrentTotalCount" [nzPageSize]="5"
-                    (nzPageIndexChange)="pageIndexChangeNotCurrentUser()"></nz-pagination>
+                <nz-pagination [(nzPageIndex)]="pageIndexOfNotCurrentUser" [nzTotal]="userProjectNotCurrentTotalCount"
+                    [nzPageSize]="5" (nzPageIndexChange)="pageIndexChangeNotCurrentUser()"></nz-pagination>
             </div>
+        </nz-tab>
+        <nz-tab *ngIf="isCurrentUser" (nzClick)="getCurrentUserFans()" nzTitle="我的粉丝列表">
+            <div nz-row nzType="flex" nzJustify="start">
+                <div style="margin-bottom: 10px;" *ngFor="let user of userSimpleList" nz-col nzSpan="4">
+                    <nz-avatar (click)="goUserDetail(user.id)" nzIcon="user" [nzSrc]="baseUrl+user.headPortraitUrl">
+                    </nz-avatar>
+                    {{user.surname}}
+                </div>
+            </div>
+            <nz-pagination [(nzPageIndex)]="pageIndexOfFansList" [nzTotal]="fansListTotalCount"
+            [nzPageSize]="30" (nzPageIndexChange)="pageIndexChangeOfFansList()"></nz-pagination>
+        </nz-tab>
+        <nz-tab *ngIf="isCurrentUser" (nzClick)="getCurrentAttentions()" nzTitle="我的关注列表">
+            <div nz-row nzType="flex" nzJustify="start">
+                <div style="margin-bottom: 10px;" *ngFor="let user of userSimpleList" nz-col nzSpan="4">
+                    <nz-avatar (click)="goUserDetail(user.id)" nzIcon="user" [nzSrc]="baseUrl+user.headPortraitUrl">
+                    </nz-avatar>
+                    {{user.surname}}
+                </div>
+            </div>
+            <nz-pagination [(nzPageIndex)]="pageIndexOfAttentionList" [nzTotal]="attentionListTotalCount"
+            [nzPageSize]="30" (nzPageIndexChange)="pageIndexChangeOfAttentions()"></nz-pagination>
         </nz-tab>
     </nz-tabset>
     <ng-template #extraTemplate>

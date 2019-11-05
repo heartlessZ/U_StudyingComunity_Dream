@@ -30,7 +30,9 @@ import { ProjectDetailComponent } from './project/project-detail/project-detail.
                     { path: 'community/article-detail/:id', component:ArticleDetailComponent},
                     { path: 'community', component:CommunityComponent},
                     { path: 'personal-center', component:PersonalCenterComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }},
+                    { path: 'personal-center/:id', component:PersonalCenterComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }},
                     { path: 'create-article', component:CreateArticleComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }},
+                    { path: 'create-article/:id', component:CreateArticleComponent,  canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Users' }},
                 ]
             }
         ])

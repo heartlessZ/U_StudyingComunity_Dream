@@ -2,30 +2,51 @@
   <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
     <div class="logo"></div>
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-menu-item nzIcon="user">
+      <!-- <li nz-menu-item nzIcon="user">
         <a routerLink="home">仪表板</a>
+      </li> -->
+      <li nz-menu-item>
+        <a routerLink="user">
+          <i nz-icon nzIcon="user" nzType="user"></i>
+          <span>用户管理</span>
+        </a>
       </li>
-      <li nz-menu-item nzIcon="user">
-        <a routerLink="user">用户管理</a>
+      <li nz-menu-item>
+        <a routerLink="library">
+          <i nz-icon nzType="book" nzTheme="outline"></i>
+          <span>图书管理</span>
+        </a>
       </li>
-      <li nz-menu-item nzIcon="user">
-        <a routerLink="library">图书管理</a>
+      <li nz-menu-item>
+        <a routerLink="book-category">
+          <i nz-icon nzType="file-done" nzTheme="outline"></i>
+          <span>书籍类别管理</span>
+        </a>
       </li>
-      <li nz-menu-item nzIcon="user">
-        <a routerLink="library/book-resource">图书资源管理</a>
+      <li nz-menu-item>
+        <a routerLink="library/book-resource">
+          <i nz-icon nzType="file" nzTheme="outline"></i>
+          <span>图书资源管理</span>
+        </a>
       </li>
-      <li nz-menu-item nzIcon="user">
-        <a routerLink="book-category">书籍类别管理</a>
+      <li nz-menu-item>
+        <a routerLink="community">
+          <i nz-icon nzType="container" nzTheme="outline"></i>
+          <span>文章管理</span>
+        </a>
       </li>
-      <li nz-menu-item nzIcon="user">
-          <a routerLink="community">文章管理</a>
-        </li>
-      <li nz-menu-item nzIcon="user">
-        <a (click)="login()">返回登录</a>
+      <li nz-menu-item>
+        <a (click)="login()">
+          <i nz-icon nzType="logout" nzTheme="outline"></i>
+          <span>返回登录</span>
+        </a>
       </li>
-      <li nz-menu-item nzIcon="user">
-          <a (click)="goHome()">返回首页</a>
-        </li>
+      <li nz-menu-item>
+        <a (click)="goHome()">
+          <i nz-icon nzType="home" nzTheme="outline"></i>
+          <span>返回首页</span>
+        </a>
+      </li>
     </ul>
   </nz-sider>
   <nz-layout>

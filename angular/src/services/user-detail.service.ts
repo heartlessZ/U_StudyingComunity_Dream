@@ -89,18 +89,24 @@ export class UserDetailService {
     }
 
     //获取关注列表
-    getAttentionList(params:any):Observable<UserDetailDto[]>{
+    getAttentionList(params:any):Observable<PagedResultDto>{
         let url_ = "/api/services/app/UserDetail/GetAttentionList";
         return this._commonhttp.get(url_,params).pipe(map(data => {
-            return UserDetailDto.fromJSArray(data);
+            const result = new PagedResultDto();
+            result.items = data.items;
+            result.totalCount = data.totalCount;
+            return result;
         }));
     }
 
     //获取粉丝列表
-    getFansList(params:any):Observable<UserDetailDto[]>{
+    getFansList(params:any):Observable<PagedResultDto>{
         let url_ = "/api/services/app/UserDetail/GetFansList";
         return this._commonhttp.get(url_,params).pipe(map(data => {
-            return UserDetailDto.fromJSArray(data);
+            const result = new PagedResultDto();
+            result.items = data.items;
+            result.totalCount = data.totalCount;
+            return result;
         }));
     }
 

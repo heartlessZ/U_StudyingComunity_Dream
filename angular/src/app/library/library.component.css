@@ -2,68 +2,79 @@
     width: 300px;
   }*/
 
-  [nz-button] {
+[nz-button] {
     float: right;
     margin-right: 30px;
     margin-bottom: 12px;
-  }
+}
 
-  .book-info-content{
+.book-info-content {
     float: left;
-  }
+}
 
-  .book_content_middle_ul{
-	
+.book_content_middle_ul {
     float: left;
     margin: 0px;
     padding: 0px;
- 
- }
- .book_content_middle_ul li{
-   list-style: none;
-      margin-top: 0.8rem;
- }
- .book_content_middle_ul_p{
-   display: inline;
- }
- /****全部****/
- .book_content{
-   width: 90%;
-   min-height: 250px;
- }
- /****中间****/
- .book_content_middle{
+}
+
+.book_content_middle_ul li {
+    list-style: none;
+    margin-top: 0.8rem;
+}
+
+.book_content_middle_ul_p {
+    display: inline;
+}
+
+
+/****全部****/
+
+.book_content {
+    width: 90%;
+    height: 100%;
+}
+
+
+/****中间****/
+
+.book_content_middle {
     width: 70%;
-    min-height: 250px;
+    height: 200px;
     font-family: 楷书;
-   font-size: 1.0vh;
+    font-size: 1.4vh;
+    font-weight: lighter;
     float: left;
- }
- /****中间上面*****/
- .book_content_middle_top{
-   width: 100%;
-   min-height: 200px;
-  
- }
- /******中间下面****/
- .book_content_middle_bottom{
+    margin-left: 1%;
+}
+
+
+/****中间上面*****/
+
+.book_content_middle_top {
+    width: 100%;
+    height: 200px;
+}
+
+
+/******中间下面****/
+
+.book_content_middle_bottom {
     float: right;
-    margin-top: 3%;
-   
- }
- /****左边*****/
- .book_content_left{
- 
-    width: 20%;
+    margin-top: 1%;
+}
+
+
+/****左边*****/
+
+.book_content_left {
+    width: 16%;
     height: 20%;
     float: left;
- }
- .book_content_left img{
-     height: auto;
-     width: 10vw;
-     height: 25vh;
- 
-    
- }
- 
- 
+}
+
+.book_content_left img {
+    height: auto;
+    width: 10vw;
+    height: 25vh;
+}

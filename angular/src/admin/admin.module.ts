@@ -17,7 +17,7 @@ import { AdminComponent } from './admin.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
-import { UserDetailService, CommonHttpClient, BookService, ArticleService } from 'services';
+import { UserDetailService, CommonHttpClient, BookService, ArticleService, AppAuthService } from 'services';
 import { LibraryComponent } from './library/library.component';
 import { BookCategoryComponent } from './book-category/book-category.component';
 import { CreateCategoryComponent } from './book-category/create-category/create-category.component';
@@ -61,6 +61,7 @@ import { BookResourceComponent } from './library/book-resource/book-resource.com
         CommonHttpClient,
         BookService,
         ArticleService,
+        AppAuthService,
         //{ provide: LocationStrategy, useClass: HashLocationStrategy }
     ],
     entryComponents: [

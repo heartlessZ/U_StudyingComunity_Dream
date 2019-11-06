@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AppConsts } from '@shared/AppConsts'
 
 import { SignalRAspNetCoreHelper } from '@shared/helpers/SignalRAspNetCoreHelper';
-import { UserDetailService } from 'services';
+import { UserDetailService, AppAuthService } from 'services';
 import { UserDetailDto, CurrentUserDetailDto } from 'entities';
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
@@ -27,6 +27,7 @@ export class AppComponent extends AppComponentBase implements OnInit//, AfterVie
         injector: Injector,
         private router : Router,
         private userDetailService : UserDetailService,
+        private appAuthService:AppAuthService,
         private _iconService: NzIconService,
         private appRouteGuard : AppRouteGuard,
     ) {
@@ -96,7 +97,8 @@ export class AppComponent extends AppComponentBase implements OnInit//, AfterVie
 
     exit() : void {
         //this.appRouteGuard.clearLoginStatus();
-        this.router.navigate(["account/login"])
+        //this.router.navigate(["account/login"])
+        this.appAuthService.logout(true)
     }
 
     goPersonalInfo(id:string):void{

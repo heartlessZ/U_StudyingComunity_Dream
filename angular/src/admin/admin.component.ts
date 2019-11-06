@@ -1,6 +1,7 @@
 import { Component, ViewContainerRef, OnInit, ViewEncapsulation, Injector } from '@angular/core';
 import { AppComponentBase } from '@shared/component-base/app-component-base';
 import { Router } from '@angular/router';
+import { AppAuthService } from 'services';
 
 @Component({
     templateUrl: 'admin.component.html',
@@ -19,6 +20,7 @@ export class AdminComponent extends AppComponentBase implements OnInit {
 
     public constructor(
         injector: Injector,
+        private appAuthService:AppAuthService,
         private router : Router,
     ) {
         super(injector);
@@ -34,6 +36,7 @@ export class AdminComponent extends AppComponentBase implements OnInit {
     
     login() : void{
         this.router.navigate(["account/login"])
+        this.appAuthService.logout(true)
     }
 
     goHome():void{

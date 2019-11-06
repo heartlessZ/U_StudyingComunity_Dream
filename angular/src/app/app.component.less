@@ -1,25 +1,13 @@
 [nz-menu] {
   width       : 60%;
-  float       : right;
-  font-size   : 2.5vh;
+  float       : left;
+  font-size: 1vw;
   border-style: none;
   line-height : 200%;
   box-shadow  : 0px 8px 10px #222222;
 
-  a {
-    text-decoration: none;
-
-  }
-
-  .homepage-header-menu-list:hover {
-    background-color: rgb(110, 107, 107);
-
-    a:hover {
-      color: white;
-    }
-  }
-
 }
+
 
 .homepage-mid {
   background-image : url(../assets/images/read.jpg);
@@ -37,7 +25,7 @@ nz-breadcrumb {
 }
 
 nz-content {
-  padding: 0 50px;
+  padding: 0 5vw;
 }
 
 nz-footer {
@@ -47,7 +35,7 @@ nz-footer {
 .inner-content {
   padding   : 24px;
   min-height: 1100px;
-
+  
 
 }
 
@@ -57,7 +45,7 @@ nz-footer {
 }
 
 .logo {
-  width : 20%;
+  width : 12%;
   float : left;
   height: 16.7%;
 
@@ -73,43 +61,88 @@ nz-footer {
 
 
 /****图书资源*****/
-.homepage-header-librarymenu {
-  width           : 100%;
-  background-image: url(../assets/images/read.jpg);
-  /***背景图片可以换****/
+.homepage-mid-librarymenu {
+
+  background-image : url(../assets/images/read.jpg);
   background-size  : 100% 100%;
   background-repeat: no-repeat;
-  font-size        : 3.0vh;
-  border-style     : none;
-  height           : 300px;
+  height           : 400px;
+  float            : left;
+  width            : 100%;
+  margin-top       : 1vh;
+  box-shadow       : 0px 8px 10px #222222;
 }
 
 /******学习计划****/
 .homepage-header-personcentermenu {
-  width            : 100%;
+ 
   background-image : url(../assets/images/read.jpg);
   background-size  : 100% 100%;
   background-repeat: no-repeat;
-  font-size        : 3.0vh;
-  border-style     : none;
   height           : 400px;
+  float            : left;
+  width            : 100%;
+  margin-top       : 1vh;
+  box-shadow       : 0px 8px 10px #222222;
+
+  
 }
 
 /*****社区*****/
-.homepage-header-community {
-  width            : 100%;
+.homepage-mid-community {
+ 
   background-image : url(../assets/images/read.jpg);
   background-size  : 100% 100%;
   background-repeat: no-repeat;
-  font-size        : 3.0vh;
-  border-style     : none;
   height           : 400px;
+  float            : left;
+  width            : 100%;
+  margin-top       : 1vh;
+  box-shadow       : 0px 8px 10px #222222;
 }
 
 .ant-menu-item {
   padding: 1vw;
 }
 
+
+.homepage-header-menu{
+  width       : 50%;
+  float       : left;
+  font-size: 1.4em;
+  border-style: none;
+  line-height : 300%;
+  margin-left: 15%;
+  margin-top: 20px;
+}
+
 .homepage-header-menu-list {
-  width: 15%;
+  width: 20%;
+  text-align: center;
+  float: left;
+  color: black;
+  list-style: none;
+  margin: 0px;
+  max-height: 50px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+
+}
+
+.homepage-header-menu-list:hover {
+  font-weight: bolder;
+}
+
+.test{
+  margin: auto;
+}
+
+.test li{
+  float: left;
+  list-style: none;
+  width: 20%;
+  text-align: center;
 }

@@ -21,7 +21,7 @@ import { LibraryComponent } from './library/library.component';
 import { ProjectComponent } from './project/project.component';
 import { CommunityComponent } from './community/community.component';
 import { PersonalCenterComponent } from './personal-center/personal-center.component';
-import { UserDetailService, CommonHttpClient, BookService, ArticleService, ProjectService } from 'services';
+import { UserDetailService, CommonHttpClient, BookService, ArticleService, ProjectService, AppAuthService } from 'services';
 import { ChangePasswordComponent } from './personal-center/change-password/change-password.component';
 import { UserDetailEditComponent } from './personal-center/user-detail-edit/user-detail-edit.component';
 
@@ -74,7 +74,8 @@ import { ProjectUserModalComponent } from './project/project-detail/project-user
       CommonHttpClient,
       BookService,
       ArticleService,
-      ProjectService
+      ProjectService,
+      AppAuthService,
    ],
    entryComponents: []
 })

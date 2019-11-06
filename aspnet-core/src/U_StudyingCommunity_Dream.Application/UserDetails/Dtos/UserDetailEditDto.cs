@@ -87,17 +87,7 @@ namespace  U_StudyingCommunity_Dream.UserDetails.Dtos
 		/// Email
 		/// </summary>
 		public string Email { get; set; }
-
-
-
-		/// <summary>
-		/// IsAdmin
-		/// </summary>
-		public bool IsAdmin { get; set; }
-
-
-
-        public virtual bool Enable { get; set; }
+        
 
     }
 

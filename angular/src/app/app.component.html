@@ -1,20 +1,21 @@
 <nz-layout class="homepage">
-    <div >
+    <div>
         <div class="header">
 
 
             <div class="logo">
-                <img src="../assets/images/logo.png" width="150" height="100"/>
+                <img src="../assets/images/logo.png" width="150" height="100" />
             </div>
-
-                
             <ul nz-menu nzTheme="" nzMode="horizontal">
-                <li nz-menu-item class="homepage-header-menu-list"  ><a routerLink="home" style="margin-left:50%;" >首页</a></li>
-                <li nz-menu-item class="homepage-header-menu-list" ><a routerLink="library" style="margin-left:10%;">图书资源</a></li>
-                <li nz-menu-item class="homepage-header-menu-list" ><a routerLink="project"style="margin-left:10%;">学习规划</a></li>
-                <li nz-menu-item  class="homepage-header-menu-list" ><a routerLink="community">社区</a></li>
+                <li nz-menu-item class="homepage-header-menu-list"><a routerLink="home" style="margin-left:50%;">首页</a>
+                </li>
+                <li nz-menu-item class="homepage-header-menu-list"><a routerLink="library"
+                        style="margin-left:10%;">图书资源</a></li>
+                <li nz-menu-item class="homepage-header-menu-list"><a routerLink="project"
+                        style="margin-left:10%;">学习规划</a></li>
+                <li nz-menu-item class="homepage-header-menu-list"><a routerLink="community">社区</a></li>
                 <li style="float: right;margin-right: 50px;" *ngIf="isLogin; else elseBlock">
-                        <button *ngIf="currentUser.isAdmin" nz-button (click)="goAdmin()" nzType="primary">管理员入口</button>
+                    <!-- <button *ngIf="currentUser.isAdmin" nz-button (click)="goAdmin()" nzType="primary">管理员入口</button> -->
                     <a style="margin-left: 20px;" (click)="goPersonalInfo(currentUser.userDetailId)">
                         <nz-avatar [nzSize]="64" nzIcon="user" [nzSrc]="headUrl"></nz-avatar>
                     </a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -22,25 +23,26 @@
                 </li>
                 <ng-template #elseBlock>
                     <li style="float: right;margin-right: 20px;line-height: 200%;">
-                        <button style="margin-left: 20px;" nz-button (click)="login()" nzType="dashed">登录</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button style="margin-left: 20px;" nz-button (click)="login()"
+                            nzType="dashed">登录</button>&nbsp;&nbsp;&nbsp;&nbsp;
                         <button nz-button (click)="register()" nzType="default">注册</button>
                     </li>
                 </ng-template>
             </ul>
             <div class="homepage-mid">
 
-                </div>
+            </div>
         </div>
-       
+
         <nz-content>
             <div class="inner-content">
                 <router-outlet></router-outlet>
             </div>
         </nz-content>
-       
+
 
     </div>
-    
+
     <nz-footer style="text-align: center; font-size: 2.0vh; width: 100%;  ">优学社区 ©2019 Implement By 拯救问题儿童</nz-footer>
     <!-- <div style="text-align: center; font-size: 2.0vh; width: 100%;  ">优学社区 ©2019 Implement By 拯救问题儿童</div> -->
 </nz-layout>

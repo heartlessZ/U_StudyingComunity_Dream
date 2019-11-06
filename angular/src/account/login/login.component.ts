@@ -65,6 +65,6 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
 
   returnHome(): void {
-    this._router.navigate(["app/home"])
+    this._router.navigate(["/app/home"])
   }
 }

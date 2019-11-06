@@ -6,6 +6,7 @@ import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 import { NzFormatEmitEvent } from 'ng-zorro-antd/core';
 import { ArticleCategoryDto } from 'entities';
 import { Router } from '@angular/router';
+import { AppConsts } from '@shared/AppConsts';
 @Component({
   selector: 'app-community',
   templateUrl: './community.component.html',
@@ -17,6 +18,8 @@ export class CommunityComponent extends PagedListingComponentBase<any> {
   isTableLoading: boolean = false;
   selectedValue: number;
   tags: ArticleCategoryDto[];
+
+  baseUrl:any;
   articleStatus:any = [
     {
       status: 1,
@@ -47,11 +50,11 @@ export class CommunityComponent extends PagedListingComponentBase<any> {
 
   }
   ngOnInit() {
+    console.log(AppConsts.appBaseUrl)
+    this.baseUrl = AppConsts.appBaseUrl + "/app/community/article-detail/";
     //首先加载类别选项
     this.getAllTags();
     this.refreshData();
-    console.log(this.articleStatus);
-    
   }
 
   getAllTags(): void {

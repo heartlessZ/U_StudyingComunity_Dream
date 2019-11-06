@@ -104,7 +104,7 @@ export class AppComponent extends AppComponentBase implements OnInit//, AfterVie
         
         if (id == undefined)
             return;
-        this.router.navigate(["/app/personal-center",{id:id}]);
+        this.router.navigate(["app/personal-center",{id:id}]);
     }
 
     goAdmin():void{

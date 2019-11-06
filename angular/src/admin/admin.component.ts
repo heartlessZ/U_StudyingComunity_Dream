@@ -37,6 +37,6 @@ export class AdminComponent extends AppComponentBase implements OnInit {
     }
 
     goHome():void{
-        this.router.navigate(["app/home"])
+        this.router.navigate(["../app/home"])
     }
 }

@@ -62,7 +62,7 @@
         <td>{{item.creationTime | date: "yyyy-MM-dd HH:mm:ss"}}</td>
         <td>{{item.releaseStatus}}</td>
         <td>
-          <a (click)="detail(item.id)">审核</a>
+          <a [href]="baseUrl+item.id" target="_blank">审核</a>
         </td>
       </tr>
     </tbody>

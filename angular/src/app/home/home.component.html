@@ -19,7 +19,10 @@
                     <nz-list-item-meta [nzTitle]="nzTitle1" nzAvatar="{{serverBaseUrl+item1.headPortraitUrl}}"
                         nzDescription="{{item1.description}}">
                         <ng-template #nzTitle1>
-                            <a (click)="goArticleDetail(item1.id)">{{ item1.headline }}</a>
+                            <a (click)="goArticleDetail(item1.id)">{{ item1.headline }}</a><br>
+                            <span style="font-weight: lighter;">{{item1.userName}}</span> &nbsp;&nbsp;&nbsp;&nbsp;
+                            <span
+                                style="font-weight: lighter;">发布于：{{item1.creationTime | date: "yyyy-MM-dd HH:mm:ss"}}</span>
                         </ng-template>
                     </nz-list-item-meta>
                 </nz-list-item>
@@ -43,7 +46,9 @@
                     <nz-list-item-meta [nzTitle]="nzTitle2" (click)="goUserDetail(item2.id)"
                         nzAvatar="{{serverBaseUrl+item2.headPortraitUrl}}" nzDescription="{{item2.description}}">
                         <ng-template #nzTitle2>
-                            <a (click)="goUserDetail(item2.id)">{{ item2.surname }}</a>
+                            <a (click)="goUserDetail(item2.id)">{{ item2.surname }}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <i *ngIf="item2.gender==1" style="color: red;" nz-icon nzType="woman" nzTheme="outline"></i>
+                            <i *ngIf="item2.gender==2" style="color: rgb(33, 33, 211);" nz-icon nzType="man" nzTheme="outline"></i>
                         </ng-template>
                     </nz-list-item-meta>
                 </nz-list-item>
@@ -52,10 +57,11 @@
     </nz-card>
     <ng-template #selectUserTemplate>
         <nz-input-group nzSearch [nzAddOnAfter]="selectUserDetail">
-            <input type="text" [(ngModel)]="selectUser"  nz-input placeholder="请输入用户昵称搜索" />
+            <input type="text" [(ngModel)]="selectUser" nz-input placeholder="请输入用户昵称搜索" />
         </nz-input-group>
         <ng-template #selectUserDetail>
-            <button nz-button nzType="primary" (click)="getUserSimpleInfos()" nzSearch><i nz-icon nzType="search"></i></button>
+            <button nz-button nzType="primary" (click)="getUserSimpleInfos()" nzSearch><i nz-icon
+                    nzType="search"></i></button>
         </ng-template>
     </ng-template>
     <nz-card class="right-bottom-card" [nzTitle]="'推荐书籍'" [nzBordered]="false" [nzExtra]="selectBookTemplate">
@@ -81,7 +87,8 @@
             <input type="text" [(ngModel)]="selectBook" nz-input placeholder="请输入书名或作者搜索" />
         </nz-input-group>
         <ng-template #selectBookByName>
-            <button nz-button nzType="primary" (click)="getBookSimpleInfos()" nzSearch><i nz-icon nzType="search"></i></button>
+            <button nz-button nzType="primary" (click)="getBookSimpleInfos()" nzSearch><i nz-icon
+                    nzType="search"></i></button>
         </ng-template>
     </ng-template>
 </div>

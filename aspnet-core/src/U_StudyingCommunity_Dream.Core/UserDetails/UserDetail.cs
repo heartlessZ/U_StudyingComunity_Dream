@@ -63,6 +63,7 @@ namespace U_StudyingCommunity_Dream.UserDetails
 
         public UserDetail()
         {
+            Enable = true;
             IsAdmin = false;
         }
     }

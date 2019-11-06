@@ -1,7 +1,7 @@
 <nz-card class="simpleInfo" [nzBordered]="false">
     <nz-card-meta
     [nzTitle]="article.headline"
-    [nzDescription]="'发布于：'+(article.creationTime | date: 'yyyy-MM-dd HH:mm:ss') + '&nbsp;&nbsp;&nbsp;&nbsp;'+'访问量：'+article.visitVolume"
+    [nzDescription]="article.userName + '&nbsp;&nbsp;&nbsp;&nbsp;' + '发布于：'+(article.creationTime | date: 'yyyy-MM-dd HH:mm:ss') + '&nbsp;&nbsp;&nbsp;&nbsp;'+'访问量：'+article.visitVolume"
     [nzAvatar]="avatarTemplate"
   ></nz-card-meta>
   <ng-template #avatarTemplate>

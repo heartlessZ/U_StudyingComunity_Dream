@@ -35,7 +35,7 @@
             </nz-list-item>
           </ng-template>
           <ng-template #pagination>
-            <nz-pagination [nzPageIndex]="1" [nzTotal]="totalItems" (nzPageIndexChange)="loadData($event)"></nz-pagination>
+            <nz-pagination [(nzPageIndex)]="pageNumber" [nzTotal]="totalItems" (nzPageIndexChange)="refresh()"></nz-pagination>
           </ng-template>
         </nz-list>
       </nz-card>

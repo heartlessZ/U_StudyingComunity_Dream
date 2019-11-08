@@ -26,6 +26,12 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
   }
 
   ngOnInit() {
+    $("div#banner").removeClass('homepage-mid-read');
+    $("div#banner").removeClass('homepage-mid-community');
+    $("div#banner").removeClass('homepage-mid-personal');
+    $("div#banner").removeClass('homepage-mid-learning');
+    $("div#banner").removeClass('homepage-mid-library');
+    $("div#banner").addClass('homepage-mid-library');
     this.getBookCategories();
     this.refreshData();
   }

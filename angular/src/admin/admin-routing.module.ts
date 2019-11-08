@@ -16,7 +16,7 @@ import { BookResourceComponent } from './library/book-resource/book-resource.com
                 path: '',
                 component: AdminComponent,
                 children: [
-                    { path: '', redirectTo:'home',  pathMatch:'full' },
+                    { path: '', redirectTo:'user',  pathMatch:'full' },
                     { path: 'home', component: HomeComponent , canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Admin' } },
                     { path: 'user', component: UserComponent , canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Admin' } },
                     { path: 'library', component: LibraryComponent , canActivate: [AppRouteGuard] ,  data : { guard: 'Pages.Admin' } },

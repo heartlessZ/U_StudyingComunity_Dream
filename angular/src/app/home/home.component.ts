@@ -32,6 +32,12 @@ export class HomeComponent implements OnInit {
     , private router: Router) { }
 
   ngOnInit(): void {
+    $("div#banner").removeClass('homepage-mid-read');
+    $("div#banner").removeClass('homepage-mid-community');
+    $("div#banner").removeClass('homepage-mid-personal');
+    $("div#banner").removeClass('homepage-mid-learning');
+    $("div#banner").removeClass('homepage-mid-library');
+    $("div#banner").addClass('homepage-mid-read');
     this.serverBaseUrl = this.articleService.baseUrl;
     this.search.maxResultCount = 10;
     this.search.skipCount = 0;

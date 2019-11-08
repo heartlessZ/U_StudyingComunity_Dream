@@ -28,15 +28,20 @@ export class PersonalCenterComponent extends AppComponentBase implements OnInit 
 
   constructor(injector: Injector,
     private actRouter: ActivatedRoute,
-    private router:Router,
+    private router: Router,
     private userDetailService: UserDetailService) {
     super(injector);
     this.userDetailId = this.actRouter.snapshot.params['id'];
   }
 
   ngOnInit() {
+    $("div#banner").removeClass('homepage-mid-read');
+    $("div#banner").removeClass('homepage-mid-community');
+    $("div#banner").removeClass('homepage-mid-personal');
+    $("div#banner").removeClass('homepage-mid-learning');
+    $("div#banner").removeClass('homepage-mid-library');
+    $("div#banner").addClass('homepage-mid-personal');
     this.getCurrentUser();
-    this.getIsAttentionUser();
   }
 
   //获取当前登录用户
@@ -52,7 +57,9 @@ export class PersonalCenterComponent extends AppComponentBase implements OnInit 
   //获取当前用户是否已经关注该用户
   getIsAttentionUser(): void {
     this.userDetailService.getIsAttentionUser(this.user.id, this.currentUser.userDetailId).subscribe((result) => {
-      if (result) {
+      console.log(result);
+      
+      if (result == true) {
         this.isAttention = true;
       } else {
         this.isAttention = false;
@@ -89,6 +96,7 @@ export class PersonalCenterComponent extends AppComponentBase implements OnInit 
       this.headUrl = this.userDetailService.baseUrl + result.headPortraitUrl;
       this.ArticleAndProjectComponent.isCurrentUser = this.isCurrentUser;
       //console.log(result.id+"------"+this.currentUser.userDetailId+"------"+this.isCurrentUser)
+      this.getIsAttentionUser();
     })
   }
 
@@ -102,7 +110,7 @@ export class PersonalCenterComponent extends AppComponentBase implements OnInit 
 
   refreshData(): void {
     this.getCurrentUser();
-    
+
   }
 
 }

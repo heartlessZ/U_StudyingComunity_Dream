@@ -34,6 +34,12 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
   }
 
   ngOnInit() {
+    $("div#banner").removeClass('homepage-mid-read');
+    $("div#banner").removeClass('homepage-mid-community');
+    $("div#banner").removeClass('homepage-mid-personal');
+    $("div#banner").removeClass('homepage-mid-learning');
+    $("div#banner").removeClass('homepage-mid-library');
+    $("div#banner").addClass('homepage-mid-learning');
     this.search = { userDetailId: null, maxResultCount: 10, skipCount: 0, isPublic: true };
     this.searchUserProject = { MaxResultCount: 5, SkipCount: 0 }
 

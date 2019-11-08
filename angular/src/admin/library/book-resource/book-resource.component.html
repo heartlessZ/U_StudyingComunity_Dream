@@ -42,7 +42,7 @@
             <th>上传人</th>
             <th>审核人</th>
             <th>创建时间</th>
-            <th>状态</th>
+            <!-- <th>状态</th> -->
             <th>操作</th>
         </tr>
     </thead>
@@ -54,7 +54,7 @@
             <td>{{item.uploaderName}}</td>
             <td>{{item.auditorName}}</td>
             <td>{{item.creationTime | date: "yyyy-MM-dd HH:mm:ss"}}</td>
-            <td>{{item.status}}</td>
+            <!-- <td>{{item.status}}</td> -->
             <td>
                 <button *ngIf="item.status==1||item.status==3" (click)="audit(item,2)" nz-button nzType="primary" [nzSize]="size">通过</button>&nbsp;&nbsp;&nbsp;&nbsp;
                 <button *ngIf="item.status==1||item.status==2" (click)="audit(item,3)" nz-button nzType="danger" [nzSize]="size">拒绝</button>

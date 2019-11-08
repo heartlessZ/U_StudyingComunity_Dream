@@ -84,6 +84,14 @@ export class BookService {
     }));
   }
 
+  //创建或更新书籍
+  deleteBook(id:any): Observable<boolean> {
+    let url_ = "/api/services/app/Book/Delete";
+    return this._commonhttp.delete(url_,{id:id}).pipe(map(data => {
+      return data;
+    }));
+  }
+
   //通过资源Id删除资源
   deleteBookResourceById(id: any): Observable<boolean> {
     let url_ = "/api/services/app/BookResource/Delete";

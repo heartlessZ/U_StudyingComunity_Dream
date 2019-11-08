@@ -25,8 +25,13 @@ export class CommunityComponent implements OnInit {
     , private router: Router) { }
 
   ngOnInit(): void {
+    $("div#banner").removeClass('homepage-mid-read');
+    $("div#banner").removeClass('homepage-mid-community');
+    $("div#banner").removeClass('homepage-mid-personal');
+    $("div#banner").removeClass('homepage-mid-learning');
+    $("div#banner").removeClass('homepage-mid-library');
+    $("div#banner").addClass('homepage-mid-community');
     this.serverBaseUrl = this.articleService.baseUrl;
-    this.search.categoryId = 1;
     this.search.maxResultCount = 10;
     this.search.skipCount = 0;
     //默认只查询审核通过的
@@ -79,8 +84,6 @@ export class CommunityComponent implements OnInit {
   }
 
   goToArticleDetail(id:number){
-    console.log("文章详情");
-    
     this.router.navigate(["app/community/article-detail/" + id]);
   }
 }

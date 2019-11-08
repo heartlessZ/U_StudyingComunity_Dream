@@ -9,8 +9,8 @@ using U_StudyingCommunity_Dream.EntityFrameworkCore;
 namespace U_StudyingCommunity_Dream.Migrations
 {
     [DbContext(typeof(U_StudyingCommunity_DreamDbContext))]
-    [Migration("20191028015536_addBookPraise")]
-    partial class addBookPraise
+    [Migration("20191108085059_InitDB")]
+    partial class InitDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1283,9 +1283,9 @@ namespace U_StudyingCommunity_Dream.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<DateTime>("ExpirationTime");
 
-                    b.Property<bool>("IsPublic");
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<DateTime?>("LastModificationTime");
 
@@ -1295,11 +1295,12 @@ namespace U_StudyingCommunity_Dream.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<Guid>("Node");
-
-                    b.Property<Guid?>("ParentNode");
+                    b.Property<long>("Parent");
 
                     b.Property<decimal>("Progress");
+
+                    b.Property<string>("Remark")
+                        .HasMaxLength(200);
 
                     b.HasKey("Id");
 
@@ -1399,7 +1400,15 @@ namespace U_StudyingCommunity_Dream.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<bool>("IsPublic");
+
+                    b.Property<long>("Praise");
+
                     b.Property<long>("ProjectId");
+
+                    b.Property<string>("TagName");
 
                     b.Property<Guid>("UserId");
 

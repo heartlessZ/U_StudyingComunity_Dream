@@ -40,6 +40,8 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
     this.model.name = this.model.userName;
     this.model.surname = this.model.userName;
     this.submitForm()
+    if(!this.validateForm.valid)
+      return;
     this._accountService
       .register(this.model)
       .pipe(

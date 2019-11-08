@@ -67,6 +67,8 @@ export class UserDetailService {
     updateUserStatus(id:any):Observable<boolean>{
         let url_ = "/api/services/app/UserDetail/GetUpdateUserStatus";
         return this._commonhttp.get(url_,{id:id}).pipe(map(data => {
+            console.log(data);
+            
             return data;
         }));
     }
@@ -83,8 +85,8 @@ export class UserDetailService {
     //获取当前用户是否已经关注当前浏览用户
     getIsAttentionUser(userId:any,fansId:any):Observable<boolean>{
         let url_ = "/api/services/app/UserDetail/GetIsAttentionUser";
-        return this._commonhttp.get(url_,{userId:userId,fansId:fansId}).pipe(map(data => {
-            return data;
+        return this._commonhttp.get(url_,{userId:userId,fansId:fansId}).pipe(map(result => {
+            return result;
         }));
     }
 

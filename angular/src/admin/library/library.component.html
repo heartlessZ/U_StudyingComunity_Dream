@@ -1,4 +1,4 @@
-<nz-card style="width:90%;margin:auto;" [nzBordered]="false">
+<nz-card style="margin:auto;" [nzBordered]="false">
   <form nz-form (ngSubmit)="refreshData()" [nzLayout]="'inline'">
     <div nz-row [nzGutter]="24">
       <div nz-col [nzSpan]="6" class="mb-md">
@@ -51,7 +51,7 @@
             <th>作者</th>
             <th>类别</th>
             <th>封面</th>
-            <th>状态</th>
+            <!-- <th>状态</th> -->
             <th>创建时间</th>
             <th>操作</th>
         </tr>
@@ -62,10 +62,11 @@
             <td>{{item.author}}</td>
             <td>{{item.categoryName}}</td>
             <td><nz-avatar *ngIf="item.coverUrl != null" [nzShape]="'square'" [nzSize]="64" nzIcon="user" nzSrc="{{item.coverUrl}}"></nz-avatar></td>
-            <td>{{item.status}}</td>
+            <!-- <td>{{item.status}}</td> -->
             <td>{{item.creationTime | date: "yyyy-MM-dd HH:mm:ss"}}</td>
             <td>
-                <a (click)="edit(item.id)">编辑</a>
+                <a (click)="edit(item.id)">编辑</a>&nbsp;&nbsp;
+                <a (click)="delete(item.id)">删除</a>
             </td>
         </tr>
     </tbody>

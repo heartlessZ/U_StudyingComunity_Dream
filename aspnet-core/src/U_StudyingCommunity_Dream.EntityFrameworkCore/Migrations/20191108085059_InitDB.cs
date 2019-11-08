@@ -503,6 +503,7 @@ namespace U_StudyingCommunity_Dream.Migrations
                     Description = table.Column<string>(maxLength: 500, nullable: true),
                     CoverUrl = table.Column<string>(maxLength: 200, nullable: true),
                     OtherUrls = table.Column<string>(maxLength: 200, nullable: true),
+                    Praise = table.Column<long>(nullable: false),
                     CategoryId = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false)
                 },
@@ -561,11 +562,11 @@ namespace U_StudyingCommunity_Dream.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeleterUserId = table.Column<long>(nullable: true),
                     DeletionTime = table.Column<DateTime>(nullable: true),
-                    Node = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     Progress = table.Column<decimal>(nullable: false),
-                    IsPublic = table.Column<bool>(nullable: false),
-                    ParentNode = table.Column<Guid>(nullable: true)
+                    Parent = table.Column<long>(nullable: false),
+                    ExpirationTime = table.Column<DateTime>(nullable: false),
+                    Remark = table.Column<string>(maxLength: 200, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -593,7 +594,11 @@ namespace U_StudyingCommunity_Dream.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<Guid>(nullable: false),
-                    ProjectId = table.Column<long>(nullable: false)
+                    ProjectId = table.Column<long>(nullable: false),
+                    TagName = table.Column<string>(nullable: true),
+                    IsPublic = table.Column<bool>(nullable: false),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    Praise = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -623,7 +628,8 @@ namespace U_StudyingCommunity_Dream.Migrations
                     Occupation = table.Column<string>(maxLength: 50, nullable: true),
                     PhoneNumber = table.Column<string>(maxLength: 11, nullable: true),
                     Email = table.Column<string>(maxLength: 100, nullable: true),
-                    IsAdmin = table.Column<bool>(nullable: false)
+                    IsAdmin = table.Column<bool>(nullable: false),
+                    Enable = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

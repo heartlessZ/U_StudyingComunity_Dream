@@ -1,7 +1,7 @@
 ﻿<div class="card" [@routerTransition]>
   <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="login()">
     <nz-form-item class="card-input">
-      <nz-form-control nzErrorTip="请输入邮箱!">
+      <nz-form-control nzErrorTip="请输入邮箱或用户名!">
         <nz-input-group nzPrefixIcon="user">
           <input type="text" nz-input formControlName="userName" [(ngModel)]="
           loginService.authenticateModel.userNameOrEmailAddress" placeholder="用户名或邮箱" />

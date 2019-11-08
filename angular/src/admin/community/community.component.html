@@ -1,4 +1,4 @@
-<nz-card style="width:90%;margin:auto;" [nzBordered]="false">
+<nz-card style="margin:auto;" [nzBordered]="false">
   <form nz-form (ngSubmit)="refreshData()" [nzLayout]="'inline'">
     <div nz-row [nzGutter]="24">
       <div nz-col [nzSpan]="6" class="mb-md">
@@ -50,7 +50,7 @@
         <th>作者</th>
         <th>类别</th>
         <th>创建时间</th>
-        <th>状态</th>
+        <!-- <th>状态</th> -->
         <th>详情</th>
       </tr>
     </thead>
@@ -60,7 +60,7 @@
         <td>{{item.userName}}</td>
         <td>{{item.tagNames}}</td>
         <td>{{item.creationTime | date: "yyyy-MM-dd HH:mm:ss"}}</td>
-        <td>{{item.releaseStatus}}</td>
+        <!-- <td>{{item.releaseStatus}}</td> -->
         <td>
           <a [href]="baseUrl+item.id" target="_blank">审核</a>
         </td>

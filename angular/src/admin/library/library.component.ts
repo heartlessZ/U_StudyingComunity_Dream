@@ -137,4 +137,11 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
   edit(id: number): void {
     this.bookDetailModal.show(id);
   }
+
+  delete(id:number):void{
+    this.bookService.deleteBook(id).subscribe((result)=>{
+      this.notify.success("删除成功")
+      this.refresh()
+    })
+  }
 }

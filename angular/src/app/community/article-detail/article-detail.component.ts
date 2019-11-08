@@ -87,6 +87,11 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
   }
 
   ngOnInit() {
+    $("div#banner").removeClass('homepage-mid-read');
+    $("div#banner").removeClass('homepage-mid-community');
+    $("div#banner").removeClass('homepage-mid-personal');
+    $("div#banner").removeClass('homepage-mid-learning');
+    $("div#banner").removeClass('homepage-mid-library');
     this.article = new ArticleDetailDto();
     this.currentUser = new CurrentUserDetailDto();
     this.search.articleId = this.articleId;

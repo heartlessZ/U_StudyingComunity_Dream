@@ -74,12 +74,14 @@ namespace U_StudyingCommunity_Dream.Books
 
         Task<List<BookSimpleInfoDto>> GetBookSimpleInfos(string Keyword);
 
+        Task<bool> CreatePraise(EntityDto<long> input);
 
-		/// <summary>
+
+        /// <summary>
         /// 导出Book为excel表
         /// </summary>
         /// <returns></returns>
-		//Task<FileDto> GetToExcel();
+        //Task<FileDto> GetToExcel();
 
     }
 }

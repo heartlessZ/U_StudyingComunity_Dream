@@ -148,4 +148,12 @@ export class BookService {
       return result;
     }));
   }
+
+  createPraise(id:any):Observable<boolean>{
+    let url_ = "/api/services/app/Book/CreatePraise";
+    
+    return this._commonhttp.post(url_, {id:id}).pipe(map(data => {
+      return data;
+    }));
+  }
 }

@@ -10705,14 +10705,9 @@ fieldset[disabled] .form-control {
 
 /* banner ================================== */
 
-[nz-button] {
-    float: right;
-    margin-right: 30px;
-    margin-bottom: 12px;
-}
 
 .homepage-mid-read {
-    background-image : url(../../assets/images/read.jpg);
+    background-image : url(../../assets/images/read.jpg);   
     background-size  : 100% 100%;
     background-repeat: no-repeat;
     height           : 400px;

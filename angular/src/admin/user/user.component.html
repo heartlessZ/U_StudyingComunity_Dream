@@ -30,14 +30,14 @@
           <th>性别</th>
           <th>邮箱</th>
           <th>注册时间</th>
-          <th>是否允许登录</th>
+          <th>登录许可</th>
       </tr>
   </thead>
   <tbody>
       <tr *ngFor="let item of nzTable.data">
           <td>{{item.name}}</td>
           <td>{{item.surname}}</td>
-          <td>{{item.gender==0?'女':'男'}}</td>
+          <td>{{item.gender==1?'女':'男'}}</td>
           <td>{{item.email}}</td>
           <td>{{item.creationTime | date: "yyyy-MM-dd HH:mm:ss"}}</td>
           <td>

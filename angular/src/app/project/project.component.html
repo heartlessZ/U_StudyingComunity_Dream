@@ -36,6 +36,7 @@
                 </li>
             </ng-template>
         </ul>
+        <button nz-button nzType="primary" (click)="onLoadMore()" [nzLoading]="loadingMore">换一换</button>
     </div>
 </nz-card>
 <app-project-user-modal #projectUserModal (modalSave)="getCurrentUserProjects()" [currentUser]="currentUser">

@@ -92,7 +92,7 @@ namespace U_StudyingCommunity_Dream.Articles
             foreach (var article in entityListDtos)
             {
                 var userDetail = await _userDetailRepository.GetAsync(article.UserDetailId);
-                article.UserName = userDetail.Name;
+                article.UserName = userDetail.Surname;
                 article.HeadPortraitUrl = userDetail.HeadPortraitUrl;
                 article.CommentCount = await _commentRepository.GetAll().Where(i => i.ArticleId == article.Id && i.Parent == 0).CountAsync();
                 var categoryIds = _articleTagsRepository.GetAll().Where(a => a.ArticleId == article.Id).Select(i => i.ArticleCategoryId);
@@ -119,7 +119,7 @@ namespace U_StudyingCommunity_Dream.Articles
                 var user = await _userDetailRepository.GetAsync(result.UserDetailId);
                 if (user != null)
                 {
-                    result.UserName = user.Name;
+                    result.UserName = user.Surname;
                     result.HeadPortraitUrl = user.HeadPortraitUrl;
                 }
                 var categoryIds = _articleTagsRepository.GetAll().Where(i => i.ArticleId == input.Id).Select(i => i.ArticleCategoryId).Distinct();

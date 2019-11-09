@@ -163,7 +163,7 @@ namespace U_StudyingCommunity_Dream.Books
 
         public async Task CreateOrUpdate(CreateOrUpdateBookInput input)
         {
-            var book = _entityRepository.GetAll()
+            var book = await _entityRepository.GetAll()
                 .WhereIf(input.Book.Id.HasValue,i=>i.Id!=input.Book.Id)
                 .FirstOrDefaultAsync(i => i.Name == input.Book.Name);
             if (book != null)

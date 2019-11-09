@@ -30,7 +30,7 @@
         <nz-comment-content>
           <p>{{ comment.content }}</p>
         </nz-comment-content>
-        <nz-comment-action><button nz-button (click)="reply(comment)" nzType="link">回复</button></nz-comment-action>
+        <nz-comment-action><button *ngIf="isLogin" nz-button (click)="reply(comment)" nzType="link">回复</button></nz-comment-action>
         <ng-container *ngIf="comment.children && comment.children.length">
           <ng-template ngFor let-child [ngForOf]="comment.children">
             <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: child }">

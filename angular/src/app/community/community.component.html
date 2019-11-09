@@ -36,6 +36,7 @@
                     </div>
                 </ng-template>
             </nz-list>
+
         </nz-tab>
         <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab.name" (nzClick)="refreshData(tab.id)">
             <nz-list class="demo-loadmore-list" [nzDataSource]="data" [nzItemLayout]="'horizontal'"

@@ -57,7 +57,8 @@ export class UserDetailEditComponent extends AppComponentBase implements OnInit 
 
   handleOk(): void {
     this.isOkLoading = true;
-    this.userDetail.headPortraitUrl = this.fileUrl;
+    if(this.fileUrl != undefined)
+      this.userDetail.headPortraitUrl = this.fileUrl;
     this.userDetail.gender = this.gender;
     this.submitForm(this.userDetail);
 

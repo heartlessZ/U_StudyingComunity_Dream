@@ -27,6 +27,7 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
   headUrl: string = "";
 
   baseUrl:string;
+  isAlreadyPraise:boolean=false;//是否已经点过赞了
 
   constructor(injector: Injector
     , private actRouter: ActivatedRoute
@@ -182,6 +183,19 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
 
   back():void{
     this.router.navigate(["app/library"])
+  }
+
+  createPraise():void{
+    if(this.isAlreadyPraise){
+      this.notify.warn("点赞虽爽，可不要贪多哟")
+    }else{
+      this.bookService.createPraise(this.id).subscribe((result)=>{
+        if(result){
+          this.notify.success("点赞成功")
+          this.isAlreadyPraise=true;
+        }
+      })
+    }
   }
 
 }

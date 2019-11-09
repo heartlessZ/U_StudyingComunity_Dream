@@ -15,7 +15,7 @@ export class CommunityComponent implements OnInit {
   loadingMore = false;
   data: ArticleDetailDto[] = [];
   list: Array<{ loading: boolean; name: any }> = [];
-  search: any = { categoryId: null, maxResultCount: 10, skipCount: 0 , releaseStatus: 2};
+  search: any = { categoryId: null, maxResultCount: 10, skipCount: 0, releaseStatus: 2 };
   tabs: ArticleCategoryDto[];
   totalCount: number;
   serverBaseUrl: string;
@@ -49,6 +49,7 @@ export class CommunityComponent implements OnInit {
 
   //获取文章
   getArticleList(): void {
+    this.initLoading = true;
     this.loadingMore = true;
     this.articleService.getArticlePaged(this.search).subscribe((result) => {
       this.totalCount = result.totalCount;
@@ -63,27 +64,33 @@ export class CommunityComponent implements OnInit {
 
   //加载更多文章
   onLoadMore(): void {
+    this.initLoading = true;
     this.loadingMore = true;
     this.search.skipCount = this.search.maxResultCount * (this.search.skipCount + 1);
     this.articleService.getArticlePaged(this.search).subscribe((result) => {
-      this.totalCount = result.totalCount;
-      let articles = ArticleDetailDto.fromJSArray(result.items);
-      this.data.push(...articles)
       if (result.items.length > 0) {
-        this.loadingMore = false;
+        let articles = ArticleDetailDto.fromJSArray(result.items);
+        this.data.push(...articles)
+        this.initLoading = false;
+
+        if (result.items.length >= this.search.maxResultCount) {
+          this.loadingMore = false;
+        } else {
+          this.loadingMore = true;
+        }
       }
     })
   }
 
   //切换标签页时刷新文章列表
   refreshData(categoryId?: number) {
-    this.loadingMore = true;
+    this.loadingMore = false;
     this.search.categoryId = categoryId;
     this.search.skipCount = 0;
     this.getArticleList();
   }
 
-  goToArticleDetail(id:number){
+  goToArticleDetail(id: number) {
     this.router.navigate(["app/community/article-detail/" + id]);
   }
 }

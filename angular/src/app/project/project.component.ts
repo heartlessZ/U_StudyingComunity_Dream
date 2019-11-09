@@ -55,6 +55,7 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
   searchUserProject: any = { MaxResultCount: 5, SkipCount: 0 }
 
   isReload: boolean = false;
+  loadingMore:boolean = false;
 
   currentProjectUserDetailId: any;
 
@@ -104,10 +105,15 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
 
   //加载更多计划
   onLoadMore(): void {
-    //this.loadingMore = true;
+    this.loadingMore = true;
     this.search.skipCount = this.search.maxResultCount * (this.search.skipCount + 1);
     this.projectService.getUserProjectsPaged(this.search).subscribe((result) => {
       this.recommendUserProjects = UserProjectDto.fromJSArray(result.items);
+      
+      this.loadingMore = false;
+      if(result.items.length < this.search.maxResultCount){
+        this.search.skipCount = -1;
+      }
     })
   }
 

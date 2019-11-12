@@ -35,7 +35,7 @@
                 </ng-template>
             </nz-list>
         </nz-tab>
-        <nz-tab *ngIf="isCurrentUser" (nzClick)="refreshData(4)" nzTitle="草稿箱">
+        <nz-tab class="tabs" *ngIf="isCurrentUser" (nzClick)="refreshData(4)" nzTitle="草稿箱">
             <nz-list class="demo-loadmore-list" [nzDataSource]="data" [nzItemLayout]="'horizontal'"
                 [nzLoading]="initLoading" [nzRenderItem]="item" [nzLoadMore]="loadMore" [nzFooter]="footer">
                 <ng-template #item let-item>
@@ -56,7 +56,7 @@
                 </ng-template>
             </nz-list>
         </nz-tab>
-        <nz-tab *ngIf="isCurrentUser" (nzClick)="refreshData(1)" nzTitle="待审核">
+        <nz-tab class="tabs" *ngIf="isCurrentUser" (nzClick)="refreshData(1)" nzTitle="待审核">
             <nz-list class="demo-loadmore-list" [nzDataSource]="data" [nzItemLayout]="'horizontal'"
                 [nzLoading]="initLoading" [nzRenderItem]="item" [nzLoadMore]="loadMore" [nzFooter]="footer">
                 <ng-template #item let-item>
@@ -91,7 +91,7 @@
                 </ng-template>
             </nz-list>
         </nz-tab>
-        <nz-tab *ngIf="isCurrentUser" (nzClick)="getCurrentUserProjects()" nzTitle="我的学习计划">
+        <nz-tab class="tabs" *ngIf="isCurrentUser" (nzClick)="getCurrentUserProjects()" nzTitle="我的学习计划">
             <div style="margin-top: 10px;margin-bottom: 10px;">
                 <ul class="paoject-left-ul">
                     <li style="line-height: 60px;list-style: none;" (click)="goProject(item)"
@@ -107,7 +107,7 @@
                     (nzPageIndexChange)="pageIndexChange()"></nz-pagination>
             </div>
         </nz-tab>
-        <nz-tab *ngIf="!isCurrentUser" (nzClick)="getUserProjectsByUserDetailId()"
+        <nz-tab class="tabs" *ngIf="!isCurrentUser" (nzClick)="getUserProjectsByUserDetailId()"
             [nzTitle]="isCurrentUser==true?'我的学习计划':userDetail.surname+'的学习计划'">
             <div style="margin-top: 10px;margin-bottom: 10px;">
                 <ul class="paoject-left-ul">
@@ -120,7 +120,7 @@
                     [nzPageSize]="5" (nzPageIndexChange)="pageIndexChangeNotCurrentUser()"></nz-pagination>
             </div>
         </nz-tab>
-        <nz-tab *ngIf="isCurrentUser" (nzClick)="getCurrentUserFans()" nzTitle="我的粉丝列表">
+        <nz-tab class="tabs" *ngIf="isCurrentUser" (nzClick)="getCurrentUserFans()" nzTitle="我的粉丝列表">
             <div nz-row nzType="flex" nzJustify="start">
                 <div style="margin-bottom: 10px;" *ngFor="let user of userSimpleList" nz-col nzSpan="4">
                     <nz-avatar (click)="goUserDetail(user.id)" nzIcon="user" [nzSrc]="baseUrl+user.headPortraitUrl">
@@ -131,7 +131,7 @@
             <nz-pagination [(nzPageIndex)]="pageIndexOfFansList" [nzTotal]="fansListTotalCount"
             [nzPageSize]="30" (nzPageIndexChange)="pageIndexChangeOfFansList()"></nz-pagination>
         </nz-tab>
-        <nz-tab *ngIf="isCurrentUser" (nzClick)="getCurrentAttentions()" nzTitle="我的关注列表">
+        <nz-tab class="tabs" *ngIf="isCurrentUser" (nzClick)="getCurrentAttentions()" nzTitle="我的关注列表">
             <div nz-row nzType="flex" nzJustify="start">
                 <div style="margin-bottom: 10px;" *ngFor="let user of userSimpleList" nz-col nzSpan="4">
                     <nz-avatar (click)="goUserDetail(user.id)" nzIcon="user" [nzSrc]="baseUrl+user.headPortraitUrl">

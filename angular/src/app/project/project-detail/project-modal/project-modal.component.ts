@@ -94,7 +94,7 @@ export class ProjectModalComponent extends AppComponentBase implements OnInit {
         this.validateForm.reset();
         if(this.isFirst && result != 0){
           this.projectService.editUserProjectProId(this.userProjectId,result).subscribe((res)=>{
-            console.log("成功");
+            this.modalSave.emit(null);
           })
         }
         this.modalSave.emit(null);

@@ -31,7 +31,7 @@
     <i nz-icon nzType="key" nzTheme="outline"></i>
   </button>
   <div *ngIf="!isCurrentUser">
-    <button *ngIf="!isAttention" (click)="createAttentionRecord()" nz-popover nzPopoverContent="关注Ta"  [nzSize]="'large'" nz-button>
+    <button *ngIf="!isAttention" (click)="createAttentionRecord()" nz-popover nzPopoverContent="关注Ta"  [nzSize]="'large'" nz-button nzType="link">
       <!-- <i nz-icon nzType="fire" style="color:gray;" nzTheme="outline"></i> -->
       <i nz-icon style="color: gray;">
           <svg>

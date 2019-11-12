@@ -22,8 +22,10 @@
 </ng-template>
 
 
-<app-project-detail (modalSave)="getCurrentUserProjects()" #projectDetail [currentUser]="currentUser">
-</app-project-detail>
+<div>
+    <app-project-detail (modalSave)="getCurrentUserProjects()" #projectDetail [currentUser]="currentUser">
+    </app-project-detail>
+</div>
 
 
 <nz-card class="project-right" nzTitle="推荐学习计划">

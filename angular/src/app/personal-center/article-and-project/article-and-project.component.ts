@@ -73,14 +73,18 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
 
   //加载更多文章
   onLoadMore(): void {
+    this.initLoading = true;
     this.loadingMore = true;
     this.search.skipCount = this.search.maxResultCount * (this.search.skipCount + 1);
     this.articleService.getArticlePaged(this.search).subscribe((result) => {
       this.totalCount = result.totalCount;
       let articles = ArticleDetailDto.fromJSArray(result.items);
       this.data.push(...articles)
-      if (result.items.length > 0) {
+      this.initLoading = false;
+      if (result.items.length >= this.search.maxResultCount) {
         this.loadingMore = false;
+      } else {
+        this.loadingMore = true;
       }
     })
   }

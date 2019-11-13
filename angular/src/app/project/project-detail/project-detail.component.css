@@ -2,25 +2,28 @@
     background: rgb(190, 200, 200);
     padding: 5px;
     border-radius: 10px;
-  }
+}
 
-  .context-intro {
+.context-intro {
     color: #000;
     font-size: 14px;
-  }
+}
 
-.project-middle{
-  width: 56%;
-  margin-left: 15%;
-  position: absolute;
-  min-height: 720px;
-  margin-bottom: 10px;
+.project-middle {
+    width: 100%;
+    /*margin-left: 15%;
+    position: absolute;
+    min-height: 720px;
+    margin-bottom: 10px;*/
+    min-height: 720px;
 }
 
 .icon-wrapper {
-  position: relative;
-  padding: 0px 30px;
+    position: relative;
+    padding: 0px 30px;
 }
+
+
 /* 
 [nz-icon] {
   position: absolute;
@@ -41,5 +44,5 @@
 } */
 
 .icon-highlight {
-  color: rgba(0, 0, 0, 0.45);
+    color: rgba(0, 0, 0, 0.45);
 }

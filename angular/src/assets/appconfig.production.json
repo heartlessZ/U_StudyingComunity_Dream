@@ -1,18 +1,17 @@
 {
-  "remoteServiceBaseUrl":  "http://localhost:21021",
-  "appBaseUrl": "http://localhost:4200",
-  "localeMappings": [
-    {
-      "from": "pt-BR",
-      "to": "pt"
-    },
-    {
-      "from": "zh-CN",
-      "to": "zh"
-    },
-    {
-      "from": "he-IL",
-      "to": "he"
-    }
-  ]
+    "remoteServiceBaseUrl": "http://49.233.85.77:5000",
+    "appBaseUrl": "http://localhost:4200",
+    "localeMappings": [{
+            "from": "pt-BR",
+            "to": "pt"
+        },
+        {
+            "from": "zh-CN",
+            "to": "zh"
+        },
+        {
+            "from": "he-IL",
+            "to": "he"
+        }
+    ]
 }

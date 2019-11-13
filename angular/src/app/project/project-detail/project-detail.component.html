@@ -1,6 +1,11 @@
 <div>
     <nz-card class="project-middle" [nzTitle]="currentUserProjectTagName" [nzExtra]="extraTemplate">
-
+        <div *ngIf="id&&isCurrentUser" style="text-align: center;color: gray;">
+          操作提示:创建计划后在灰色区域单击鼠标右键可对计划进行操作
+        </div>
+        <div *ngIf="!id" style="text-align: center;color: gray;">
+          操作提示:左侧选择我的计划进行操作，右侧选择其他人的计划进行查看
+        </div>
         <div *ngFor="let item of data">
       
           <div style="margin-bottom: 10px;">
@@ -16,9 +21,9 @@
                 {{item.remark}}
               </div>
               <div *ngIf="isCurrentUser" class="icon-wrapper test-class">
-                <i nz-icon nzType="frown" [class.icon-highlight]="preHighLight"></i>
+                <!-- <i nz-icon nzType="frown" [class.icon-highlight]="preHighLight"></i> -->
                 <nz-slider [nzMin]="0" [nzMax]="100" [(ngModel)]="item.progress"></nz-slider>
-                <i nz-icon nzType="smile" [class.icon-highlight]="nextHighLight"></i>
+                <!-- <i nz-icon nzType="smile" [class.icon-highlight]="nextHighLight"></i> -->
               </div>
             </div>
             <div style="text-align: center;height: 20px;">
@@ -27,14 +32,14 @@
           </div>
         </div>
       
-        <div *ngIf="!isSuccsess&&data.length"
+        <!-- <div *ngIf="!isSuccsess&&data.length"
           style="text-align: center; width: 30%;padding: 10px;background-color: gray;margin: auto;border-radius: 10px;">
           计划达成
         </div>
         <div *ngIf="isSuccsess&&data.length"
           style="text-align: center;width: 30%;padding: 10px;background-color:greenyellow;margin: auto;border-radius: 10px;">
           计划达成
-        </div>
+        </div> -->
         <nz-dropdown-menu #menu="nzDropdownMenu">
           <ul *ngIf="isCurrentUser" nz-menu>
             <a (click)="createNextProject()">
@@ -53,11 +58,16 @@
         </nz-dropdown-menu>
       </nz-card>
       <ng-template #extraTemplate>
-        <button *ngIf="isCurrentUser" nz-button nzType="default" (click)="editTag()">编辑标签</button>&nbsp;&nbsp;
-        <button *ngIf="isCurrentUser" nz-button nzType="primary" nz-popover [disabled]="!isFirst"
-          (click)="createNextProject()">创建第一个任务</button>&nbsp;&nbsp;
-        <button *ngIf="isCurrentUser" nz-button nzType="danger" nz-popover (click)="deleteUserProject()">删除当前标签</button>
-      
+        <!-- <button *ngIf="isCurrentUser" nz-button nzType="default" (click)="editTag()">编辑标签</button>&nbsp;&nbsp; -->
+        <button *ngIf="isCurrentUser" nz-button nzType="default" nzShape="circle" nz-popover nzPopoverContent="创建标签" (click)="editTag()">
+          <i nz-icon nzType="edit" nzTheme="outline"></i></button>&nbsp;&nbsp;
+          <button nz-button *ngIf="isCurrentUser" nzType="primary" nz-popover nzPopoverContent="创建第一个任务" [disabled]="!isFirst" (click)="createNextProject()"
+        nzShape="circle"><i nz-icon nzType="plus" nzTheme="outline"></i></button>&nbsp;&nbsp;
+        <!-- <button *ngIf="isCurrentUser" nz-button nzType="primary" nz-popover [disabled]="!isFirst"
+          (click)="createNextProject()">创建第一个任务</button>&nbsp;&nbsp; -->
+        <!-- <button *ngIf="isCurrentUser" nz-button nzType="danger" nz-popover (click)="deleteUserProject()">删除当前标签</button> -->
+        <button nz-button *ngIf="isCurrentUser" nzType="danger" nz-popover nzPopoverContent="删除当前标签" (click)="deleteUserProject()"
+        nzShape="circle"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
       </ng-template>
       
       <app-project-modal #projectModal (modalSave)="getProjectsTreeById()" [isFirst]="isFirst" [userProjectId]="id"

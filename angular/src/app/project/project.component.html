@@ -33,7 +33,7 @@
         <ul class="paoject-left-ul" nz-list [nzDataSource]="recommendUserProjects" nzBordered nzSize="large"
             [nzRenderItem]="largeItem">
             <ng-template #largeItem let-item>
-                <li style="line-height: 40px;" nz-list-item (click)="refreshDetail(item.id,item.tagName,item.userId)"
+                <li style="line-height: 20px;" nz-list-item (click)="refreshDetail(item.id,item.tagName,item.userId)"
                     [nzContent]="item.tagName" nzNoFlex>
                 </li>
             </ng-template>

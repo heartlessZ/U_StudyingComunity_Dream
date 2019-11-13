@@ -22,11 +22,11 @@
   #ArticleAndProjectComponent></app-article-and-project>
 
 <ng-template #extraTemplate>
-  <button nz-button nzType="primary" [nzSize]="'large'" nz-popover nzPopoverContent="编辑资料" *ngIf="isCurrentUser"
+  <button nz-button nzType="link" [nzSize]="'large'" nz-popover nzPopoverContent="编辑资料" *ngIf="isCurrentUser"
     (click)="editUserDetail()">
     <i nz-icon nzType="edit" nzTheme="outline"></i>
   </button>&nbsp;&nbsp;&nbsp;&nbsp;
-  <button nz-button nzType="dashed" [nzSize]="'large'" nz-popover nzPopoverContent="修改密码" *ngIf="isCurrentUser"
+  <button nz-button nzType="link" [nzSize]="'large'" nz-popover nzPopoverContent="修改密码" *ngIf="isCurrentUser"
     (click)="changePassword()">
     <i nz-icon nzType="key" nzTheme="outline"></i>
   </button>

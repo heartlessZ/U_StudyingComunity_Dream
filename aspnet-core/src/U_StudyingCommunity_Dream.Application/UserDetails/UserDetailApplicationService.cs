@@ -101,7 +101,7 @@ namespace U_StudyingCommunity_Dream.UserDetails
         public async Task<PagedResultDto<UserDetailListDto>> GetPaged(GetUserDetailsInput input)
 		{
 
-		    var query = _entityRepository.GetAll();
+		    var query = _entityRepository.GetAll().Where(i=>!i.IsAdmin);
 			// TODO:根据传入的参数添加过滤条件
             
 

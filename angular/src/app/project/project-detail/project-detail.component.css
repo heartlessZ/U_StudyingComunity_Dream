@@ -5,7 +5,7 @@
   }
 
   .context-intro {
-    color: #fff;
+    color: #000;
     font-size: 14px;
   }
 
@@ -13,7 +13,7 @@
   width: 56%;
   margin-left: 15%;
   position: absolute;
-  min-height: 700px;
+  min-height: 720px;
   margin-bottom: 10px;
 }
 
@@ -21,7 +21,7 @@
   position: relative;
   padding: 0px 30px;
 }
-
+/* 
 [nz-icon] {
   position: absolute;
   top: -2px;
@@ -38,7 +38,7 @@
 
 [nz-icon]:last-child {
   right: 0;
-}
+} */
 
 .icon-highlight {
   color: rgba(0, 0, 0, 0.45);

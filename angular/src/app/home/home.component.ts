@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   loadingMore = false;
   data: ArticleDetailDto[] = [];
   list: Array<{ loading: boolean; name: any }> = [];
-  search: any = { categoryId: null, maxResultCount: 10, skipCount: 0, releaseStatus: 2 };
+  search: any = { categoryId: null, maxResultCount: 8, skipCount: 0, releaseStatus: 2 };
   tabs: ArticleCategoryDto[];
 
   selectUser:any;
@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
     $("div#banner").removeClass('homepage-mid-library');
     $("div#banner").addClass('homepage-mid-read');
     this.serverBaseUrl = this.articleService.baseUrl;
-    this.search.maxResultCount = 10;
+    this.search.maxResultCount = 8;
     this.search.skipCount = 0;
     //默认只查询审核通过的
     this.search.releaseStatus = 2;

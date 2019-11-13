@@ -7,14 +7,14 @@
 .right-top-card{
     width: 28%;
     float: right;
-    min-height: 335px;
+    min-height: 500px;
 }
 
 .right-bottom-card{
     width: 28%;
     float: right;
     margin-top: 30px;
-    min-height: 335px;
+    min-height: 500px;
 }
 
 .loadmore{

@@ -2,7 +2,7 @@
     width: 15%;
     float: left;
     margin-right: 20px;
-    min-height: 700px;
+    min-height: 720px;
     margin-bottom: 10px;
 }
 
@@ -10,7 +10,7 @@
     width: 17%;
     float: right;
     margin-left: 20px;
-    min-height: 700px;
+    min-height: 720px;
 }
 
 .ant-progress {
@@ -20,7 +20,7 @@
   }
 
 .paoject-left-ul li:hover{
-    color: rgb(255, 1, 1);
+    font-weight: bolder;
     cursor:pointer;
 }
 

@@ -59,7 +59,7 @@ export class BookCategoryComponent extends AppComponentBase implements OnInit {
   }
 
   nzEvent(event: NzFormatEmitEvent): void {
-    console.log(event);
+    //console.log(event);
     if (event.keys.length <= 0) {
       this.currentNode = undefined;
       return;
@@ -71,7 +71,7 @@ export class BookCategoryComponent extends AppComponentBase implements OnInit {
   }
 
   editNode(event: NzFormatEmitEvent): void {
-    console.log(event);
+    //console.log(event);
   }
 
   search: any = {};
@@ -83,7 +83,7 @@ export class BookCategoryComponent extends AppComponentBase implements OnInit {
 
   getBookCategoryNodes(): void {
     this.bookService.getBookCategoryList().subscribe((result) => {
-      console.log(result);
+      //console.log(result);
       this.bookCategoryNodes = result;
     });
   }

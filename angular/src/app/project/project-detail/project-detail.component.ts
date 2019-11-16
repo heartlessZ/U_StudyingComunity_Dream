@@ -82,7 +82,7 @@ export class ProjectDetailComponent extends AppComponentBase implements OnInit {
       this.data.forEach(d=>{
         sum += d.progress;
       })
-      console.log(sum);
+      //console.log(sum);
       
       //判断任务是否完成
       if(sum == this.data.length*100){
@@ -102,7 +102,7 @@ export class ProjectDetailComponent extends AppComponentBase implements OnInit {
 
   contextMenu($event: MouseEvent, menu: NzDropdownMenuComponent, project: any): void {
     this.nzContextMenuService.create($event, menu);
-    //console.log(menu);
+    ////console.log(menu);
     this.currentProject = project;
     this.currentProjectId = project.id;
   }
@@ -121,7 +121,7 @@ export class ProjectDetailComponent extends AppComponentBase implements OnInit {
   }
 
   editTag():void{
-    //console.log(this.id);
+    ////console.log(this.id);
     
     this.projectUserModal.show(this.id)
   }

@@ -27,7 +27,7 @@ export class UserComponent extends PagedListingComponentBase<any>{
   //   searchParams.SkipCount = 0;
   //   searchParams.MaxResultCount = 10;
   //   this.userDetailService.getAll(searchParams).subscribe((data)=>{
-  //     console.log(data);
+  //     //console.log(data);
   //   });
   // }
 
@@ -68,7 +68,7 @@ export class UserComponent extends PagedListingComponentBase<any>{
             //     finishedCallback();
             // })
             .subscribe((result: PagedResultDto) => {
-                console.log(result);
+                //console.log(result);
                 this.isTableLoading=false;
                 this.dataList = result.items
                 this.totalItems = result.totalCount;

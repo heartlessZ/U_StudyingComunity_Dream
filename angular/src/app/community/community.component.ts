@@ -58,7 +58,7 @@ export class CommunityComponent implements OnInit {
         this.loadingMore = false;
       }
       this.initLoading = false;
-      console.log(result);
+      //console.log(result);
     })
   }
 

@@ -49,7 +49,7 @@ export class ProjectModalComponent extends AppComponentBase implements OnInit {
     this.project = new ProjectDto();
     this.project.expirationTime=new Date();
     this.project.parent = this.currentProjectId;
-    console.log(this.project);
+    //console.log(this.project);
     
     if (id!=undefined){
       this.project.parent = id;
@@ -82,7 +82,7 @@ export class ProjectModalComponent extends AppComponentBase implements OnInit {
     this.isOkLoading = true;
     this.submitForm(this.project);
     
-    console.log(this.project);
+    //console.log(this.project);
     //return;
       if(!this.validateForm.valid)
       return;

@@ -129,11 +129,11 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
   }
 
   createArticle(): void {
-    this.router.navigate(["app/create-article"])
+    this.router.navigate(["app/personal-center/create-article"])
   }
 
   editArticle(id:any): void {
-    this.router.navigate(["app/create-article/"+id])
+    this.router.navigate(["app/personal-center/create-article/"+id])
   }
 
   goArticleDetail(id: number): void {
@@ -145,7 +145,7 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
 
   goUserDetail(userDetailId: any): void {
     this.router.navigate(["app/personal-center/" + userDetailId ])
-    console.log("哈哈哈哈");
+    //console.log("哈哈哈哈");
 
     //this.modalSave.emit(null)
   }
@@ -162,7 +162,7 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
   getCurrentUserFans(): void {
     this.searchFans.UserDetailId = this.userDetail.id;
     this.userDetailService.getFansList(this.searchFans).subscribe((result) => {
-      console.log(result);
+      //console.log(result);
       this.userSimpleList = UserDetailDto.fromJSArray(result.items);
       this.fansListTotalCount = result.totalCount;
     })
@@ -177,7 +177,7 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
   getCurrentAttentions(): void {
     this.searchAttention.UserDetailId = this.userDetail.id;
     this.userDetailService.getAttentionList(this.searchAttention).subscribe((result) => {
-      console.log(result);
+      //console.log(result);
       this.userSimpleList = UserDetailDto.fromJSArray(result.items);
       this.attentionListTotalCount = result.totalCount;
     })

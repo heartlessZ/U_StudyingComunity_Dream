@@ -62,7 +62,7 @@ export class UserDetailEditComponent extends AppComponentBase implements OnInit 
     this.userDetail.gender = this.gender;
     this.submitForm(this.userDetail);
 
-    console.log(this.userDetail);
+    //console.log(this.userDetail);
     //return;
     if(!this.validateForm.valid)
       return;
@@ -104,8 +104,8 @@ export class UserDetailEditComponent extends AppComponentBase implements OnInit 
       this.avatarUrl = this.userDetailService.baseUrl + result.headPortraitUrl;
       this.birthday = result.birthday;
       this.gender = result.gender.toString()
-      console.log(this.avatarUrl);
-      console.log(this.userDetail);
+      //console.log(this.avatarUrl);
+      //console.log(this.userDetail);
       
     });
   }

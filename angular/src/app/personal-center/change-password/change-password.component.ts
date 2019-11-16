@@ -43,7 +43,7 @@ export class ChangePasswordComponent extends AppComponentBase implements OnInit 
    */
   show() {
     this.emodalVisible = true;
-    console.log("修改密码");
+    //console.log("修改密码");
     
   }
 

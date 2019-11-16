@@ -41,20 +41,23 @@ import { ProjectUserModalComponent } from './project/project-detail/project-user
    declarations: [
       AppComponent,
       HomeComponent,
-      LibraryComponent,
-      ProjectComponent,
-      ProjectDetailComponent,
-      ProjectModalComponent,
-      ProjectUserModalComponent,
-      CommunityComponent,
-      PersonalCenterComponent,
-      ChangePasswordComponent,
-      UserDetailEditComponent,
-      BookDetailComponent,
-      ArticleAndProjectComponent,
-      CreateArticleComponent,
-      ArticleDetailComponent,
-      ReplyModalComponent,
+      // ProjectComponent,
+      // ProjectDetailComponent,
+      // ProjectModalComponent,
+      // ProjectUserModalComponent,
+
+      // PersonalCenterComponent,
+      // ChangePasswordComponent,
+      // UserDetailEditComponent,
+      // ArticleAndProjectComponent,
+
+      //LibraryComponent,
+      //BookDetailComponent,
+
+      // CommunityComponent,
+      // CreateArticleComponent,
+      // ArticleDetailComponent,
+      // ReplyModalComponent,
    ],
    imports: [
       CommonModule,
@@ -77,6 +80,9 @@ import { ProjectUserModalComponent } from './project/project-detail/project-user
       ProjectService,
       AppAuthService,
    ],
-   entryComponents: []
+   entryComponents: [
+      AppComponent,
+      HomeComponent,
+   ]
 })
 export class AppModule {}

@@ -57,7 +57,7 @@ export class BookService {
     let url_ = "/api/services/app/BookCategory/CreateOrUpdate";
 
     var content = { bookCategory: { id: id, name: name, parent: parent } };
-    console.log(content);
+    //console.log(content);
 
     return this._commonhttp.post(url_, content).pipe(map(data => {
       return data;
@@ -77,7 +77,7 @@ export class BookService {
     let url_ = "/api/services/app/Book/CreateOrUpdate";
 
     var content = { book: book };
-    console.log(content);
+    //console.log(content);
     //return new Observable();
     return this._commonhttp.post(url_, content).pipe(map(data => {
       return data;
@@ -143,7 +143,7 @@ export class BookService {
   deleteBookCategory(id:any):Observable<boolean>{
     let url_ = "/api/services/app/BookCategory/CheckCanDelete";
     return this._commonhttp.post(url_, { id:id }).pipe(map(result => {
-      console.log(result);
+      //console.log(result);
       
       return result;
     }));

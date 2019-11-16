@@ -69,7 +69,7 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
     this.projectService.getCurrentUserProjectDtos(this.searchUserProject).subscribe((result) => {
       this.currentUserProjects = result.items;
       this.userProjectTotalCount = result.totalCount;
-      console.log(result);
+      //console.log(result);
       this.isReload = false;
     })
   }

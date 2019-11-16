@@ -41,7 +41,7 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
   getBookCategories(): void {
     this.bookService.getBookCategoriesSelect().subscribe((result) => {
       this.nzOptions = result;
-      console.log(this.nzOptions);
+      //console.log(this.nzOptions);
 
       //查出分类名称
       // this.dataList.forEach(element => {
@@ -51,7 +51,7 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
   }
 
   onChanges(values: string[]): void {
-    console.log(values, this.values);
+    //console.log(values, this.values);
     if(values.length > 0){
       //this.search.categoryId = va
     }
@@ -88,14 +88,14 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
     params.Keyword = this.search.keyword;
     params.CategoryId = this.search.categoryId;
     params.Status = this.search.status;
-    console.log(params);
+    //console.log(params);
     
     this.bookService.getBookListPaged(params)
       // .finally(() => {
       //     finishedCallback();
       // })
       .subscribe((result: PagedResultDto) => {
-        console.log(result);
+        //console.log(result);
         this.isTableLoading = false;
         this.dataList = result.items
         this.totalItems = result.totalCount;

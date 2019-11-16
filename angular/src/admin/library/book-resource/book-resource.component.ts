@@ -36,7 +36,7 @@ export class BookResourceComponent extends PagedListingComponentBase<any> {
   }
 
   nzEvent(event: NzFormatEmitEvent): void {
-    console.log(event);
+    //console.log(event);
 
   }
   ngOnInit() {
@@ -79,7 +79,7 @@ export class BookResourceComponent extends PagedListingComponentBase<any> {
         this.isTableLoading = false;
         this.dataList = result.items
         this.totalItems = result.totalCount;
-        console.log(this.dataList);
+        //console.log(this.dataList);
       });
   }
 

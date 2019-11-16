@@ -50,12 +50,12 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
 
   getCurrentUser(): void {
     this.userDetailService.getCurrentUserSimpleInfo().subscribe((result) => {
-      console.log(result);
+      //console.log(result);
       if (result.userId != undefined) {
         this.isLogin = true;
         this.currentUser = result;
         this.headUrl = this.userDetailService.baseUrl + result.headPortraitUrl;
-        console.log(this.headUrl);
+        //console.log(this.headUrl);
 
       }
     })
@@ -63,7 +63,7 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
 
   getBookDetailById(): void {
     this.bookService.getBookDetailById(this.id).subscribe((result) => {
-      //console.log(result);
+      ////console.log(result);
 
       this.book = result;
       //封面地址拼接
@@ -75,7 +75,7 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
           this.thirdUrls.push(url);
         });
       }
-      console.log(this.thirdUrls);
+      //console.log(this.thirdUrls);
 
 
       //获取资源集合
@@ -88,8 +88,8 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
       this.bookResources = result;
       this.bookResources.forEach(i => i.url = this.fileDownloadUrl + "?url=" + i.url);
 
-      console.log(this.book);
-      console.log(this.bookResources);
+      //console.log(this.book);
+      //console.log(this.bookResources);
     });
   }
 
@@ -133,7 +133,7 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
 
   //图书资源上传
   handleChange(info: { file: UploadFile }): void {
-    console.log(info.file);
+    //console.log(info.file);
     //return;
     this.bookResource = new BookResourceDto();
     if (info.file.status === 'error') {
@@ -166,7 +166,7 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
 
   //保存书籍资源
   saveBookResource(bookResource: BookResourceDto): void {
-    console.log(bookResource);
+    //console.log(bookResource);
     // return;
     this.bookService.createBookResource(bookResource).subscribe((result) => {
       this.notify.success('分享成功,请等待管理员审核');
@@ -174,7 +174,7 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
   }
 
   downloadResource(url:any){
-    console.log(url);
+    //console.log(url);
     //return;
     this.bookService.downloadResource(url).subscribe((result)=>{
 

@@ -37,7 +37,7 @@ export class ArticleService {
     let url_ = "/api/services/app/Article/CreateOrUpdate";
     
     var content = {Article:article};
-    console.log(content);
+    //console.log(content);
     
     return this._commonhttp.post(url_, content).pipe(map(data => {
       return data;

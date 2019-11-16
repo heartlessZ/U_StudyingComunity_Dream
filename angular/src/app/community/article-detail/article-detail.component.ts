@@ -125,7 +125,7 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
         this.isLogin = true;
         this.currentUser = result;
         this.headurl = this.userDetailService.baseUrl + result.headPortraitUrl;
-        console.log(this.currentUser);
+        //console.log(this.currentUser);
 
         if(this.article.userDetailId == this.currentUser.userDetailId){
           this.isCurrentUser = true;
@@ -149,7 +149,7 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
       this.commentsCount = result.totalCount;
       this.comments = CommentDto.fromJSArray(result.items);
       this.setCommentsAvatar(this.comments);
-      console.log(this.comments);
+      //console.log(this.comments);
 
     })
   }
@@ -174,7 +174,7 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
     this.comment.articleId = this.articleId;
     this.comment.userDetailId = this.currentUser.userDetailId;
     this.comment.parent = parent;
-    // console.log(this.comment);
+    // //console.log(this.comment);
     // return;
     this.articleService.createComment(this.comment).subscribe((result) => {
       if (result) {
@@ -187,7 +187,7 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
   }
 
   reply(entity: CommentDto) {
-    console.log("reply")
+    //console.log("reply")
     this.comment = new CommentCreate();
     this.comment.articleId = this.articleId;
     this.comment.userDetailId = this.currentUser.userDetailId;
@@ -221,7 +221,7 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
   }
 
   Anotify(): void {
-    console.log('notify');
+    //console.log('notify');
   }
 
 }

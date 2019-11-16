@@ -44,7 +44,7 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
   }
 
   nzEvent(event: NzFormatEmitEvent): void {
-    console.log(event);
+    //console.log(event);
 
   }
   ngOnInit() {
@@ -56,7 +56,7 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
   getBookCategories(): void {
     this.bookService.getBookCategoriesSelect().subscribe((result) => {
       this.nzOptions = result;
-      console.log(this.nzOptions);
+      //console.log(this.nzOptions);
 
       //查出分类名称
       this.dataList.forEach(element => {
@@ -66,10 +66,10 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
   }
 
   searchCategoryName(id: string): string {
-    console.log(this.nzOptions);
+    //console.log(this.nzOptions);
 
     let option = this.nzOptions.filter(i => i.value == id);
-    console.log(option);
+    //console.log(option);
     if (option.length > 0)
       return option[0].label;
     return undefined;
@@ -77,7 +77,7 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
 
   //分类选择器改变事件
   onChanges(values: string[]): void {
-    console.log(values, this.values);
+    //console.log(values, this.values);
   }
 
   refresh(): void {
@@ -120,7 +120,7 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
         this.isTableLoading = false;
         this.dataList = result.items
         this.totalItems = result.totalCount;
-        console.log(this.dataList);
+        //console.log(this.dataList);
 
         //初始化封面地址
         this.dataList.forEach(element => {

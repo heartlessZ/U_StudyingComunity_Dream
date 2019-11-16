@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
         this.loadingMore = false;
       }
       this.initLoading = false;
-      console.log(result);
+      //console.log(result);
     })
   }
 
@@ -104,7 +104,7 @@ export class HomeComponent implements OnInit {
   }
 
   goUserDetail(userDetailId:any):void{
-    console.log(userDetailId);
+    //console.log(userDetailId);
     
     this.router.navigate(["app/personal-center/"+userDetailId])
   }

@@ -67,7 +67,7 @@ export class UserDetailService {
     updateUserStatus(id:any):Observable<boolean>{
         let url_ = "/api/services/app/UserDetail/GetUpdateUserStatus";
         return this._commonhttp.get(url_,{id:id}).pipe(map(data => {
-            console.log(data);
+            //console.log(data);
             
             return data;
         }));

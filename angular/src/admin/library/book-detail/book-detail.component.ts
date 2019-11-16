@@ -105,13 +105,13 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
   getBookCategories(): void {
     this.bookService.getBookCategoriesSelect().subscribe((result) => {
       this.nzOptions = result;
-      console.log(this.nzOptions);
+      //console.log(this.nzOptions);
     })
   }
 
   getBookDetailById(id: number): void {
     this.bookService.getBookDetailById(id).subscribe((result) => {
-      console.log(result);
+      //console.log(result);
       this.book = result;
       //this.values = this.searchCategoryName(this.book.categoryId.toString())
       this.values = [this.book.categoryId.toString()]
@@ -128,11 +128,11 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
 
   getResourceListByBookId(id:number):void{
     this.bookService.getResourceListByBookId(id).subscribe((result)=>{
-      console.log(result);
+      //console.log(result);
       
       this.fileList = result;
       this.fileList.forEach(i=>i.url = this.fileDownloadUrl + "?url=" + i.url);
-      console.log(this.fileList);
+      //console.log(this.fileList);
     });
   }
 
@@ -275,7 +275,7 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
 
   //保存书籍资源
   saveBookResource(bookResource:BookResourceDto):void{
-    console.log(bookResource);
+    //console.log(bookResource);
     // return;
     this.bookService.createBookResource(bookResource).subscribe((result)=>{
       this.notify.success('上传文件成功');
@@ -283,8 +283,8 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
   }
 
   deleteBookResource = (file: UploadFile): boolean => {
-    // console.log(file);
-    // console.log(this.fileList);
+    // //console.log(file);
+    // //console.log(this.fileList);
     // return false;
     if (file) {
       this.modal.confirm({
@@ -292,7 +292,7 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
         nzOnOk: () => {
           if (file.id) {
             this.bookService.deleteBookResourceById(file.id).subscribe(() => {
-              console.log(file.id);
+              //console.log(file.id);
               
               this.notify.success('删除成功！', '');
               //this.getAttachmentList();
@@ -321,6 +321,6 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
 
   //分类选择器改变事件
   onChanges(values: string[]): void {
-    console.log(values, this.values);
+    //console.log(values, this.values);
   }
 }

@@ -60,13 +60,13 @@ export class AppComponent extends AppComponentBase implements OnInit//, AfterVie
 
     getCurrentUser():void {
         this.userDetailService.getCurrentUserSimpleInfo().subscribe((result)=>{
-            console.log(result);
+            //console.log(result);
             if(result.userId != undefined)
             {
                 this.isLogin=true;
                 this.currentUser = result;
                 this.headUrl = this.userDetailService.baseUrl + result.headPortraitUrl;
-                console.log(this.headUrl);
+                //console.log(this.headUrl);
                 
             }
         })
@@ -102,7 +102,7 @@ export class AppComponent extends AppComponentBase implements OnInit//, AfterVie
     }
 
     goPersonalInfo(id:string):void{
-        console.log(id);
+        //console.log(id);
         
         if (id == undefined)
             return;

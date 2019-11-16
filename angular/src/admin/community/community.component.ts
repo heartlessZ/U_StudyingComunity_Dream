@@ -46,11 +46,11 @@ export class CommunityComponent extends PagedListingComponentBase<any> {
   }
 
   nzEvent(event: NzFormatEmitEvent): void {
-    console.log(event);
+    //console.log(event);
 
   }
   ngOnInit() {
-    console.log(AppConsts.appBaseUrl)
+    //console.log(AppConsts.appBaseUrl)
     this.baseUrl = AppConsts.appBaseUrl + "/app/community/article-detail/";
     //首先加载类别选项
     this.getAllTags();
@@ -98,7 +98,7 @@ export class CommunityComponent extends PagedListingComponentBase<any> {
         this.isTableLoading = false;
         this.dataList = result.items
         this.totalItems = result.totalCount;
-        console.log(this.dataList);
+        //console.log(this.dataList);
 
         //初始化封面地址
         this.dataList.forEach(element => {

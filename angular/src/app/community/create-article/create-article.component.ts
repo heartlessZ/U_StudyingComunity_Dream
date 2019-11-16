@@ -62,7 +62,7 @@ export class CreateArticleComponent extends AppComponentBase implements OnInit {
 
   getAllArticleCategories(): void {
     this.articleService.getAllArticleCategories().subscribe((result) => {
-      console.log(result);
+      //console.log(result);
       if (result.length > 0) {
         result.forEach(item => {
           this.listOfOption.push({ label: item.lable, value: item.id });
@@ -76,14 +76,14 @@ export class CreateArticleComponent extends AppComponentBase implements OnInit {
       this.article = result;
       this.listOfTagOptions = result.categoryIds;
       this.content = result.content;
-      console.log(result);
+      //console.log(result);
       
     })
   }
 
   getCurrentUser(): void {
     this.userDetailService.getCurrentUserSimpleInfo().subscribe((result) => {
-      console.log(result);
+      //console.log(result);
       if (result.userId != undefined) {
         this.currentUserId = result.userDetailId;
       }
@@ -94,7 +94,7 @@ export class CreateArticleComponent extends AppComponentBase implements OnInit {
   }
 
   contentChange(content: SimpleChanges): void {
-    console.log(content);
+    //console.log(content);
 
   }
 

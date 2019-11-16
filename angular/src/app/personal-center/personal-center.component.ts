@@ -57,7 +57,7 @@ export class PersonalCenterComponent extends AppComponentBase implements OnInit 
   //获取当前用户是否已经关注该用户
   getIsAttentionUser(): void {
     this.userDetailService.getIsAttentionUser(this.user.id, this.currentUser.userDetailId).subscribe((result) => {
-      console.log(result);
+      //console.log(result);
       
       if (result == true) {
         this.isAttention = true;
@@ -95,7 +95,7 @@ export class PersonalCenterComponent extends AppComponentBase implements OnInit 
       this.user = result;
       this.headUrl = this.userDetailService.baseUrl + result.headPortraitUrl;
       this.ArticleAndProjectComponent.isCurrentUser = this.isCurrentUser;
-      //console.log(result.id+"------"+this.currentUser.userDetailId+"------"+this.isCurrentUser)
+      ////console.log(result.id+"------"+this.currentUser.userDetailId+"------"+this.isCurrentUser)
       this.getIsAttentionUser();
     })
   }

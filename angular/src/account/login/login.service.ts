@@ -85,7 +85,7 @@ export class LoginService {
         if(isAdmin)
             initialUrl = "/admin/user";
 
-        //console.log(initialUrl);
+        ////console.log(initialUrl);
         
         location.href = initialUrl;
     }

@@ -221,7 +221,7 @@
             var $searchBar = $('.search-bar');
             $searchBar.addClass('open');
             $searchBar.find('input[type="text"]').focus();
-            console.log($searchBar);
+            //console.log($searchBar);
         },
         hideSearchBar: function () {
             var $searchBar = $('.search-bar');

@@ -17,38 +17,6 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
   validateForm: FormGroup;
   isConfirmLoading: boolean = false;
   comments: CommentDto[];
-  // data = {
-  //   author: 'Han Solo',
-  //   avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-  //   content:
-  //     'We supply a series of design principles, practical patterns and high quality design resources' +
-  //     '(Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-  //   children: [
-  //     {
-  //       author: 'Han Solo',
-  //       avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-  //       content:
-  //         'We supply a series of design principles, practical patterns and high quality design resources' +
-  //         '(Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-  //       children: [
-  //         {
-  //           author: 'Han Solo',
-  //           avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-  //           content:
-  //             'We supply a series of design principles, practical patterns and high quality design resources' +
-  //             '(Sketch and Axure), to help people create their product prototypes beautifully and efficiently.'
-  //         },
-  //         {
-  //           author: 'Han Solo',
-  //           avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-  //           content:
-  //             'We supply a series of design principles, practical patterns and high quality design resources' +
-  //             '(Sketch and Axure), to help people create their product prototypes beautifully and efficiently.'
-  //         }
-  //       ]
-  //     }
-  //   ]
-  // };
   content: string;
   config: any = {
     initialFrameHeight: 500
@@ -150,7 +118,6 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
       this.comments = CommentDto.fromJSArray(result.items);
       this.setCommentsAvatar(this.comments);
       //console.log(this.comments);
-
     })
   }
 
@@ -158,6 +125,7 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
   setCommentsAvatar(comments: CommentDto[]) {
     comments.forEach(element => {
       element.avatar = this.userDetailService.baseUrl + element.avatar;
+      //element.creationTime = element.creationTime.ToString("yy-MM-dd HH:mm:ss")
       if (element.children.length > 0)
         this.setCommentsAvatar(element.children)
     });
@@ -180,6 +148,7 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
       if (result) {
         this.notify.success("成功");
         this.submitting = false;
+        this.inputValue = '';
         //刷新
         this.getCommentsByArticleId();
       }
@@ -222,6 +191,13 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
 
   Anotify(): void {
     //console.log('notify');
+  }
+
+  delete(id:any){
+    this.articleService.deleteComment(id).subscribe((result)=>{
+      this.notify.success("删除成功");
+      this.getCommentsByArticleId();
+    })
   }
 
 }

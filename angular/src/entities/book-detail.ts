@@ -32,6 +32,7 @@ export class BookDetailDto implements IBookDetailDto {
             this.status = data["status"];
             this.birthday = data["birthday"];
             this.praise = data["praise"];
+            this.categoryName = data["categoryName"];
         }
     }
 

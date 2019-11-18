@@ -88,6 +88,14 @@ export class ArticleService {
     }));
   }
 
+  deleteComment(id:any):Observable<boolean>{
+    let url_ = "/api/services/app/Comment/Delete";
+    
+    return this._commonhttp.delete(url_, {id:id}).pipe(map(data => {
+      return true;
+    }));
+  }
+
   updateArticleStatus(articleId:number,status:number):Observable<boolean>{
     let url_ = "/api/services/app/Article/AduitArticleStatus";
     

@@ -6,6 +6,7 @@ export class CommentDto implements ICommentDto {
     content: string | undefined;
     children:CommentDto[] | undefined;
     parent:number | undefined;
+    creationTime:Date | undefined;
 
     constructor(data?: ICommentDto) {
         if (data) {
@@ -24,6 +25,7 @@ export class CommentDto implements ICommentDto {
             this.avatar = data["avatar"];
             this.content = data["content"];
             this.children = data["children"];
+            this.creationTime = data["creationTime"];
         }
     }
 

@@ -217,7 +217,8 @@ CommentEditDto editDto;
                 {
                     UserDetailId = comment.UserDetailId,
                     Id = comment.Id,
-                    Content = comment.Content
+                    Content = comment.Content,
+                    CreationTime = comment.CreationTime
                 });
             }
 
@@ -248,6 +249,7 @@ CommentEditDto editDto;
                 entity.Content = comment.Content;
                 entity.Author = user.Surname;
                 entity.Avatar = user.HeadPortraitUrl;
+                entity.CreationTime = comment.CreationTime;
                 entity.Children = GetChildrenComments(articleId, comment.Id);
                 result.Add(entity);
             }

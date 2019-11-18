@@ -23,3 +23,8 @@
   :host ::ng-deep strong {
     color: #1088e9;
   }
+
+  .ant-back-top{
+    margin-top: 200%;
+    margin-left: 200%;
+  }

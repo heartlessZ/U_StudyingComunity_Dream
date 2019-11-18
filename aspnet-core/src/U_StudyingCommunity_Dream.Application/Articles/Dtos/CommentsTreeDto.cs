@@ -28,6 +28,8 @@ namespace U_StudyingCommunity_Dream.Articles.Dtos
 
         public string Content { get; set; }
 
+        public DateTime CreationTime { get; set; }
+
         public List<CommentsTreeDto> Children { get; set; }
     }
 }

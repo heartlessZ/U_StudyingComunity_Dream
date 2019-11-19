@@ -1,34 +1,36 @@
 ﻿<div class="card" [@routerTransition]>
-  <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="login()">
-    <nz-form-item class="card-input">
-      <nz-form-control nzErrorTip="请输入邮箱或用户名!">
-        <nz-input-group nzPrefixIcon="user">
-          <input type="text" nz-input formControlName="userName" [(ngModel)]="
+    <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="login()">
+        <nz-form-item class="card-input">
+            <nz-form-control nzErrorTip="请输入邮箱或用户名!">
+                <nz-input-group nzPrefixIcon="user">
+                    <input type="text" nz-input formControlName="userName" [(ngModel)]="
           loginService.authenticateModel.userNameOrEmailAddress" placeholder="用户名或邮箱" />
-        </nz-input-group>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item class="card-input">
-      <nz-form-control nzErrorTip="请输入密码!">
-        <nz-input-group nzPrefixIcon="lock">
-          <input type="password" nz-input formControlName="password"
-            [(ngModel)]="loginService.authenticateModel.password" placeholder="密码" />
-        </nz-input-group>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item class="card-input">
-      <nz-form-control>
-        <!-- <label nz-checkbox [(ngModel)]="loginService.rememberMe" formControlName="remember">
+                </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="card-input">
+            <nz-form-control nzErrorTip="请输入密码!">
+                <nz-input-group nzPrefixIcon="lock">
+                    <input type="password" nz-input formControlName="password" [(ngModel)]="loginService.authenticateModel.password" placeholder="密码" />
+                </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="card-input">
+            <nz-form-control>
+                <!-- <label nz-checkbox [(ngModel)]="loginService.rememberMe" formControlName="remember">
           <span>记住我</span>
         </label>
         <a class="login-form-forgot" class="login-form-forgot">忘记密码？</a> -->
-        <button nz-button class="login-form-button" [nzType]="'primary'">登录</button>
-      </nz-form-control>
-    </nz-form-item>
-  </form>
-  <div style="float: left; margin-top: 0.8vh;">
-    <a (click)="returnHome()">返回首页</a>
-  </div>
-  <button nz-button class="registerbtn" (click)="register()" [nzSize]="'large'" nzType="link">立即注册>></button>
-  <br />
+                <button nz-button class="login-form-button" [nzType]="'primary'">登录</button>
+
+            </nz-form-control>
+            <p>欢迎您的光临！</p>
+            <p>这是我们准备好的账号：test 密码:666666</p>
+        </nz-form-item>
+    </form>
+    <div style="float: left; margin-top: 0.8vh;">
+        <a (click)="returnHome()">返回首页</a>
+    </div>
+    <button nz-button class="registerbtn" (click)="register()" [nzSize]="'large'" nzType="link">立即注册>></button>
+    <br />
 </div>

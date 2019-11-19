@@ -109,7 +109,7 @@ namespace U_StudyingCommunity_Dream.UserDetails
 
 			var entityList = await query
                 .WhereIf(!string.IsNullOrEmpty(input.Name),u=>u.Name.Contains(input.Name) || u.Surname.Contains(input.Name) || u.Email.Contains(input.Name))
-					.OrderBy(input.Sorting).AsNoTracking()
+					.OrderByDescending(i=>i.CreationTime).AsNoTracking()
 					.PageBy(input)
 					.ToListAsync();
 

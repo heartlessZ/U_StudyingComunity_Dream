@@ -85,8 +85,11 @@ namespace U_StudyingCommunity_Dream.Books
                     var userDetail = await _userDetailRepository.GetAsync(dto.Auditor.Value);
                     dto.AuditorName = userDetail.Surname;
                 }
-                var book = await _bookRepository.GetAsync(dto.BookId);
-                dto.BookName = book.Name;
+                var book = await _bookRepository.FirstOrDefaultAsync(i=>i.Id==dto.BookId);
+                if (book!=null)
+                {
+                    dto.BookName = book.Name;
+                }
             }
 			//var entityListDtos =entityList.MapTo<List<BookResourceListDto>>();
 

@@ -32,6 +32,8 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
   isAlreadyPraise:boolean=false;//是否已经点过赞了
 
   auditBtnLoading:boolean=false;
+  loadMoreLoading:boolean=false;
+  isMoreComment:boolean=false;
 
   commentsCount: number = 0;
 
@@ -114,9 +116,30 @@ export class ArticleDetailComponent extends AppComponentBase implements OnInit {
 
   getCommentsByArticleId(): void {
     this.articleService.getCommentsByArticleId(this.search).subscribe((result) => {
+      if(result.items.length < this.search.maxResultCount){
+        this.isMoreComment = false;
+      }else{
+        this.isMoreComment = true;
+      }
       this.commentsCount = result.totalCount;
       this.comments = CommentDto.fromJSArray(result.items);
       this.setCommentsAvatar(this.comments);
+      //console.log(this.comments);
+    })
+  }
+
+  loadMoreComments(): void{
+    this.search.skipCount += this.search.maxResultCount;
+    this.articleService.getCommentsByArticleId(this.search).subscribe((result) => {
+      if(result.items.length < this.search.maxResultCount){
+        this.isMoreComment = false;
+      }else{
+        this.isMoreComment = true;
+      }
+      this.commentsCount = result.totalCount;
+      let moreComments = CommentDto.fromJSArray(result.items);
+      this.setCommentsAvatar(moreComments);
+      this.comments.push(...moreComments);
       //console.log(this.comments);
     })
   }

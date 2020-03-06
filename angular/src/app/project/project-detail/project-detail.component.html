@@ -59,7 +59,7 @@
     </nz-card>
     <ng-template #extraTemplate>
         <!-- <button *ngIf="isCurrentUser" nz-button nzType="default" (click)="editTag()">编辑标签</button>&nbsp;&nbsp; -->
-        <button *ngIf="isCurrentUser" nz-button nzType="default" nzShape="circle" nz-popover nzPopoverContent="创建标签" (click)="editTag()">
+        <button *ngIf="isCurrentUser" nz-button nzType="default" nzShape="circle" nz-popover nzPopoverContent="编辑标签" (click)="editTag()">
           <i nz-icon nzType="edit" nzTheme="outline"></i></button>&nbsp;&nbsp;
         <button nz-button *ngIf="isCurrentUser" nzType="primary" nz-popover nzPopoverContent="创建第一个任务" [disabled]="!isFirst" (click)="createNextProject()" nzShape="circle"><i nz-icon nzType="plus" nzTheme="outline"></i></button>&nbsp;&nbsp;
         <!-- <button *ngIf="isCurrentUser" nz-button nzType="primary" nz-popover [disabled]="!isFirst"

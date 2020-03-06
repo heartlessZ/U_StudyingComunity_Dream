@@ -120,7 +120,7 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
 
       //封面赋值
       this.avatarUrl = this.bookService.baseUrl + this.book.coverUrl;
-
+      this.fileUrl = this.book.coverUrl;
       //获取资源集合
       this.getResourceListByBookId(this.book.id);
     });

@@ -50,7 +50,9 @@
     </ng-template>
     <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: data }"> </ng-template>
   </div>
-
+  <div class="loadmore">
+    <a *ngIf="isMoreComment" (click)="loadMoreComments()">加载更多评论...</a>
+</div>
   <!-- <div *ngFor="let data of comments">
     <ng-template #commentTemplateRef let-comment="comment">
       <nz-comment [nzAuthor]="comment.author">

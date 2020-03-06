@@ -71,7 +71,6 @@ export class CommunityComponent implements OnInit {
       if (result.items.length > 0) {
         let articles = ArticleDetailDto.fromJSArray(result.items);
         this.data.push(...articles)
-        this.initLoading = false;
 
         if (result.items.length >= this.search.maxResultCount) {
           this.loadingMore = false;
@@ -79,6 +78,7 @@ export class CommunityComponent implements OnInit {
           this.loadingMore = true;
         }
       }
+      this.initLoading = false;
     })
   }
 

@@ -117,6 +117,7 @@ export class BookCategoryComponent extends AppComponentBase implements OnInit {
     this.bookService.deleteBookCategory(this.currentNode.key).subscribe((result)=>{
       if(result){
         this.notify.success("删除成功");
+        this.refreshData();
       }else{
         this.notify.error("该类别或其子节点下具有书籍，请先删除该类别下所有书籍")
       }

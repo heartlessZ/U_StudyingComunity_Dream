@@ -28,3 +28,11 @@
     margin-top: 200%;
     margin-left: 200%;
   }
+
+  .loadmore{
+    
+    text-align: center;
+    margin-top: 12px;
+    height: 32px;
+    line-height: 32px;
+  }

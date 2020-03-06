@@ -19,25 +19,24 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
     ) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        //alert(JSON.stringify(this._sessionService.user));
-        //权限分流
+        // alert(JSON.stringify(this._sessionService.user));
+        // 权限分流
 
-        if (this._sessionService.user == undefined)
-        {
+        if (this._sessionService.user == undefined) {
             this._router.navigate(['/account/login']);
             return false;
         }
 
-        if(state.url!=null||state.url!=undefined){
-            if (state.url.indexOf('admin') != -1){
-                if (this._sessionService.user.roleIds.indexOf(1) != -1){
+        if (state.url != null || state.url != undefined) {
+            if (state.url.indexOf('admin') != -1) {
+                if (this._sessionService.user.roleIds.indexOf(1) != -1) {
                     return true;
                 }
                 this._router.navigate(['/account/login']);
                 return false;
             }
         }
-        
+
         if (!this._sessionService.user) {
             this._router.navigate(['/account/login']);
             return false;
@@ -65,15 +64,15 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
         }
 
         if (this._permissionChecker.isGranted('Pages.Users')) {
-            //return '/app/admin/users';
+            // return '/app/admin/users';
             return '/app/home';
         }
 
         return '';
     }
 
-    //清除登录状态
-    clearLoginStatus():void{
+    // 清除登录状态
+    clearLoginStatus(): void {
         this._sessionService.clearnLoginStatus();
     }
 }

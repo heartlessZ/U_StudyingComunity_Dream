@@ -19,79 +19,15 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
   book: BookDetailDto = new BookDetailDto();
   bookResources: BookResourceDto[];
   fileDownloadUrl: string;
-  coverUrl: string;//封面地址
+  coverUrl: string; // 封面地址
   thirdUrls: string[] = [];
 
   currentUser: CurrentUserDetailDto;
-  isLogin: boolean = false;
-  headUrl: string = "";
+  isLogin = false;
+  headUrl = '';
 
-  baseUrl:string;
-  isAlreadyPraise:boolean=false;//是否已经点过赞了
-
-  constructor(injector: Injector
-    , private actRouter: ActivatedRoute
-    , private router: Router
-    , private bookService: BookService
-    , private userDetailService: UserDetailService) {
-    super(injector);
-
-    this.id = this.actRouter.snapshot.params['id'];
-  }
-
-  ngOnInit() {
-    this.baseUrl = this.bookService.baseUrl;
-    this.fileUploadUrl = this.bookService.baseUrl + "/api/File/upload";
-    this.fileDownloadUrl = this.bookService.baseUrl + "/api/File/download";
-    this.getBookDetailById();
-    this.getCurrentUser();
-  }
-
-
-  getCurrentUser(): void {
-    this.userDetailService.getCurrentUserSimpleInfo().subscribe((result) => {
-      //console.log(result);
-      if (result.userId != undefined) {
-        this.isLogin = true;
-        this.currentUser = result;
-        this.headUrl = this.userDetailService.baseUrl + result.headPortraitUrl;
-        //console.log(this.headUrl);
-
-      }
-    })
-  }
-
-  getBookDetailById(): void {
-    this.bookService.getBookDetailById(this.id).subscribe((result) => {
-      ////console.log(result);
-
-      this.book = result;
-      //封面地址拼接
-      this.coverUrl = this.bookService.baseUrl + this.book.coverUrl;
-
-      if (this.book.otherUrls != null) {
-        let urls = this.book.otherUrls.split(',');
-        urls.forEach(url => {
-          this.thirdUrls.push(url);
-        });
-      }
-      //console.log(this.thirdUrls);
-
-
-      //获取资源集合
-      this.getResourceListByBookId();
-    });
-  }
-
-  getResourceListByBookId(): void {
-    this.bookService.getResourceListByBookId(this.id, 2).subscribe((result) => {
-      this.bookResources = result;
-      this.bookResources.forEach(i => i.url = this.fileDownloadUrl + "?url=" + i.url);
-
-      //console.log(this.book);
-      //console.log(this.bookResources);
-    });
-  }
+  baseUrl: string;
+  isAlreadyPraise = false; // 是否已经点过赞了
 
   filters: UploadFilter[] = [
     {
@@ -101,10 +37,10 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
         if (filterFiles.length !== fileList.length) {
           this.notify.error(`包含文件格式不正确，只支持 pdf 格式`);
           return filterFiles;
-          //return [];
+          // return [];
         }
         return fileList;
-        //return [];
+        // return [];
       }
     }
   ];
@@ -118,6 +54,70 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
 
   bookResource: BookResourceDto;
 
+  constructor(injector: Injector
+    , private actRouter: ActivatedRoute
+    , private router: Router
+    , private bookService: BookService
+    , private userDetailService: UserDetailService) {
+    super(injector);
+
+    this.id = this.actRouter.snapshot.params['id'];
+  }
+
+  ngOnInit() {
+    this.baseUrl = this.bookService.baseUrl;
+    this.fileUploadUrl = this.bookService.baseUrl + '/api/File/upload';
+    this.fileDownloadUrl = this.bookService.baseUrl + '/api/File/download';
+    this.getBookDetailById();
+    this.getCurrentUser();
+  }
+
+
+  getCurrentUser(): void {
+    this.userDetailService.getCurrentUserSimpleInfo().subscribe((result) => {
+      // console.log(result);
+      if (result.userId != undefined) {
+        this.isLogin = true;
+        this.currentUser = result;
+        this.headUrl = this.userDetailService.baseUrl + result.headPortraitUrl;
+        // console.log(this.headUrl);
+
+      }
+    });
+  }
+
+  getBookDetailById(): void {
+    this.bookService.getBookDetailById(this.id).subscribe((result) => {
+      //// console.log(result);
+
+      this.book = result;
+      // 封面地址拼接
+      this.coverUrl = this.bookService.baseUrl + this.book.coverUrl;
+
+      if (this.book.otherUrls != null) {
+        const urls = this.book.otherUrls.split(',');
+        urls.forEach(url => {
+          this.thirdUrls.push(url);
+        });
+      }
+      // console.log(this.thirdUrls);
+
+
+      // 获取资源集合
+      this.getResourceListByBookId();
+    });
+  }
+
+  getResourceListByBookId(): void {
+    this.bookService.getResourceListByBookId(this.id, 2).subscribe((result) => {
+      this.bookResources = result;
+      this.bookResources.forEach(i => i.url = this.fileDownloadUrl + '?url=' + i.url);
+
+      // console.log(this.book);
+      // console.log(this.bookResources);
+    });
+  }
+
   beforeUpload = (file: File) => {
     if (this.fileList.length >= 1) {
       this.notify.error('只能上传一个附件,请先删除原有附件');
@@ -129,21 +129,19 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
       return false;
     }
     return true;
-  };
+  }
 
-  //图书资源上传
+  // 图书资源上传
   handleChange(info: { file: UploadFile }): void {
-    //console.log(info.file);
-    //return;
+    // console.log(info.file);
+    // return;
     this.bookResource = new BookResourceDto();
     if (info.file.status === 'error') {
       this.notify.error('上传文件异常，请重试');
       this.fileList.pop();
-    }
-
-    else {
+    } else {
       if (info.file.status === 'done') {
-        var res = info.file.response.result;
+        const res = info.file.response.result;
         if (res.code == 0) {
           this.fileList.forEach(element => {
             if (info.file.uid == element.id.toString()) {
@@ -164,37 +162,37 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
     }
   }
 
-  //保存书籍资源
+  // 保存书籍资源
   saveBookResource(bookResource: BookResourceDto): void {
-    //console.log(bookResource);
+    // console.log(bookResource);
     // return;
     this.bookService.createBookResource(bookResource).subscribe((result) => {
       this.notify.success('分享成功,请等待管理员审核');
-    })
+    });
   }
 
-  downloadResource(url:any){
-    //console.log(url);
-    //return;
-    this.bookService.downloadResource(url).subscribe((result)=>{
+  downloadResource(url: any) {
+    // console.log(url);
+    // return;
+    this.bookService.downloadResource(url).subscribe((result) => {
 
-    })
+    });
   }
 
-  back():void{
-    this.router.navigate(["app/library"])
+  back(): void {
+    this.router.navigate(['app/library']);
   }
 
-  createPraise():void{
-    if(this.isAlreadyPraise){
-      this.notify.warn("点赞虽爽，可不要贪多哟")
-    }else{
-      this.bookService.createPraise(this.id).subscribe((result)=>{
-        if(result){
-          this.notify.success("点赞成功")
-          this.isAlreadyPraise=true;
+  createPraise(): void {
+    if (this.isAlreadyPraise) {
+      this.notify.warn('点赞虽爽，可不要贪多哟');
+    } else {
+      this.bookService.createPraise(this.id).subscribe((result) => {
+        if (result) {
+          this.notify.success('点赞成功');
+          this.isAlreadyPraise = true;
         }
-      })
+      });
     }
   }
 

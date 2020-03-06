@@ -13,7 +13,7 @@ export class CreateCategoryComponent extends AppComponentBase implements OnInit 
   @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
   validateForm: FormGroup;
-  emodalVisible = false;//模态框是否显示
+  emodalVisible = false; // 模态框是否显示
   isOkLoading = false;
   loading = false;
   name: string;
@@ -39,19 +39,21 @@ export class CreateCategoryComponent extends AppComponentBase implements OnInit 
   handleOk(): void {
     this.isOkLoading = true;
     this.submitForm(name);
-    if (!this.validateForm.valid)
+    if (!this.validateForm.valid) {
       return;
+    }
     let parent = 0;
-    if (this.category != undefined)
+    if (this.category != undefined) {
       parent = this.category.key;
+    }
     this.bookService.createOrUpdateCategory(this.name, parent).subscribe((result) => {
       if (result) {
-        this.message.success("修改成功");
+        this.message.success('修改成功');
         this.emodalVisible = false;
         this.isOkLoading = false;
         this.modalSave.emit(null);
       }
-    })
+    });
   }
 
   handleCancel(): void {

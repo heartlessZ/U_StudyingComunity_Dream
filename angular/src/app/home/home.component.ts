@@ -17,8 +17,8 @@ export class HomeComponent implements OnInit {
   search: any = { categoryId: null, maxResultCount: 8, skipCount: 0, releaseStatus: 2 };
   tabs: ArticleCategoryDto[];
 
-  selectUser:any;
-  selectBook:any;
+  selectUser: any;
+  selectBook: any;
 
   userSimpleInfos: UserDetailDto[];
   bookSimpleInfos: BookDetailDto[];
@@ -32,23 +32,23 @@ export class HomeComponent implements OnInit {
     , private router: Router) { }
 
   ngOnInit(): void {
-    $("div#banner").removeClass('homepage-mid-read');
-    $("div#banner").removeClass('homepage-mid-community');
-    $("div#banner").removeClass('homepage-mid-personal');
-    $("div#banner").removeClass('homepage-mid-learning');
-    $("div#banner").removeClass('homepage-mid-library');
-    $("div#banner").addClass('homepage-mid-read');
+    $('div#banner').removeClass('homepage-mid-read');
+    $('div#banner').removeClass('homepage-mid-community');
+    $('div#banner').removeClass('homepage-mid-personal');
+    $('div#banner').removeClass('homepage-mid-learning');
+    $('div#banner').removeClass('homepage-mid-library');
+    $('div#banner').addClass('homepage-mid-read');
     this.serverBaseUrl = this.articleService.baseUrl;
     this.search.maxResultCount = 8;
     this.search.skipCount = 0;
-    //默认只查询审核通过的
+    // 默认只查询审核通过的
     this.search.releaseStatus = 2;
     this.getArticleList();
     this.getUserSimpleInfos();
     this.getBookSimpleInfos();
   }
 
-  //获取文章
+  // 获取文章
   getArticleList(): void {
     this.loadingMore = true;
     this.articleService.getArticlePaged(this.search).subscribe((result) => {
@@ -58,19 +58,19 @@ export class HomeComponent implements OnInit {
         this.loadingMore = false;
       }
       this.initLoading = false;
-      //console.log(result);
-    })
+      // console.log(result);
+    });
   }
 
-  //加载更多文章
+  // 加载更多文章
   onLoadMore(): void {
     this.initLoading = true;
     this.loadingMore = true;
     this.search.skipCount = this.search.maxResultCount * (this.search.skipCount + 1);
     this.articleService.getArticlePaged(this.search).subscribe((result) => {
       if (result.items.length > 0) {
-        let articles = ArticleDetailDto.fromJSArray(result.items);
-        this.data.push(...articles)
+        const articles = ArticleDetailDto.fromJSArray(result.items);
+        this.data.push(...articles);
 
         if (result.items.length >= this.search.maxResultCount) {
           this.loadingMore = false;
@@ -79,37 +79,37 @@ export class HomeComponent implements OnInit {
         }
       }
       this.initLoading = false;
-    })
+    });
   }
 
-  getUserSimpleInfos():void{
-    this.userDetailService.getUserSimpleInfo(this.selectUser).subscribe((result)=>{
+  getUserSimpleInfos(): void {
+    this.userDetailService.getUserSimpleInfo(this.selectUser).subscribe((result) => {
       this.userSimpleInfos = result;
-    })
+    });
   }
 
-  getBookSimpleInfos():void{
-    this.bookService.getBookSimpleInfo(this.selectBook).subscribe((result)=>{
+  getBookSimpleInfos(): void {
+    this.bookService.getBookSimpleInfo(this.selectBook).subscribe((result) => {
       this.bookSimpleInfos = result;
-    })
+    });
   }
 
 
   goArticleDetail(id: number): void {
-    this.router.navigate(["app/community/article-detail/" + id])
+    this.router.navigate(['app/community/article-detail/' + id]);
   }
 
   goArticleDetailComment(id: number): void {
-    this.router.navigate(["app/community/article-detail/" + id])
+    this.router.navigate(['app/community/article-detail/' + id]);
   }
 
-  goUserDetail(userDetailId:any):void{
-    //console.log(userDetailId);
-    
-    this.router.navigate(["app/personal-center/"+userDetailId])
+  goUserDetail(userDetailId: any): void {
+    // console.log(userDetailId);
+
+    this.router.navigate(['app/personal-center/' + userDetailId]);
   }
 
-  goBookDetail(bookId:any):void{
-    this.router.navigate(["app/library/book-detail/"+bookId])
+  goBookDetail(bookId: any): void {
+    this.router.navigate(['app/library/book-detail/' + bookId]);
   }
 }

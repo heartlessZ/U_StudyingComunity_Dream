@@ -20,8 +20,8 @@ export class AdminComponent extends AppComponentBase implements OnInit {
 
     public constructor(
         injector: Injector,
-        private appAuthService:AppAuthService,
-        private router : Router,
+        private appAuthService: AppAuthService,
+        private router: Router,
     ) {
         super(injector);
 
@@ -30,16 +30,16 @@ export class AdminComponent extends AppComponentBase implements OnInit {
     }
 
     ngOnInit(): void {
-        
+
     }
 
-    
-    login() : void{
-        this.router.navigate(["account/login"])
-        this.appAuthService.logout(true)
+
+    login(): void {
+        this.router.navigate(['account/login']);
+        this.appAuthService.logout(true);
     }
 
-    goHome():void{
-        this.router.navigate(["../app/home"])
+    goHome(): void {
+        this.router.navigate(['../app/home']);
     }
 }

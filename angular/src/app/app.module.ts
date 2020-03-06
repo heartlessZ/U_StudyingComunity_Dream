@@ -51,8 +51,8 @@ import { ProjectUserModalComponent } from './project/project-detail/project-user
       // UserDetailEditComponent,
       // ArticleAndProjectComponent,
 
-      //LibraryComponent,
-      //BookDetailComponent,
+      // LibraryComponent,
+      // BookDetailComponent,
 
       // CommunityComponent,
       // CreateArticleComponent,

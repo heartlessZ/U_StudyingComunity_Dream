@@ -25,7 +25,7 @@ import { BookCategoryDetailComponent } from './book-category/book-category-detai
 import { BookDetailComponent } from './library/book-detail/book-detail.component';
 import { CommunityComponent } from './community/community.component';
 import { BookResourceComponent } from './library/book-resource/book-resource.component';
-//import { HttpModule } from '@angular/http';
+// import { HttpModule } from '@angular/http';
 
 @NgModule({
     imports: [
@@ -62,7 +62,7 @@ import { BookResourceComponent } from './library/book-resource/book-resource.com
         BookService,
         ArticleService,
         AppAuthService,
-        //{ provide: LocationStrategy, useClass: HashLocationStrategy }
+        // { provide: LocationStrategy, useClass: HashLocationStrategy }
     ],
     entryComponents: [
     ]

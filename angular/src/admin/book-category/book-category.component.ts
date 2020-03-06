@@ -45,9 +45,12 @@ export class BookCategoryComponent extends AppComponentBase implements OnInit {
   //     ]
   //   }
   // ];
-  currentNode: BookCategoryDto;//当前选中节点
+  currentNode: BookCategoryDto; // 当前选中节点
   nodes: NzTreeNode;
   bookCategoryNodes: BookCategoryDto[];
+
+  search: any = {};
+  isTableLoading = false;
 
   constructor(private bookService: BookService,
     private injector: Injector) {
@@ -59,7 +62,7 @@ export class BookCategoryComponent extends AppComponentBase implements OnInit {
   }
 
   nzEvent(event: NzFormatEmitEvent): void {
-    //console.log(event);
+    // console.log(event);
     if (event.keys.length <= 0) {
       this.currentNode = undefined;
       return;
@@ -71,11 +74,8 @@ export class BookCategoryComponent extends AppComponentBase implements OnInit {
   }
 
   editNode(event: NzFormatEmitEvent): void {
-    //console.log(event);
+    // console.log(event);
   }
-
-  search: any = {};
-  isTableLoading: boolean = false;
 
   refreshData() {
     this.getBookCategoryNodes();
@@ -83,18 +83,18 @@ export class BookCategoryComponent extends AppComponentBase implements OnInit {
 
   getBookCategoryNodes(): void {
     this.bookService.getBookCategoryList().subscribe((result) => {
-      //console.log(result);
+      // console.log(result);
       this.bookCategoryNodes = result;
     });
   }
 
-  createRootNode():void{
+  createRootNode(): void {
     this.createCategoryModal.show();
   }
 
   createChild(): void {
     if (this.currentNode == undefined) {
-      this.notify.error("未选中任何节点。");
+      this.notify.error('未选中任何节点。');
       return;
     }
     this.createCategoryModal.show(this.currentNode);
@@ -102,7 +102,7 @@ export class BookCategoryComponent extends AppComponentBase implements OnInit {
 
   edit(): void {
     if (this.currentNode == undefined) {
-      this.notify.error("未选中任何节点。");
+      this.notify.error('未选中任何节点。');
       return;
     }
     this.bookCategoryDetailModal.show(this.currentNode);
@@ -111,16 +111,16 @@ export class BookCategoryComponent extends AppComponentBase implements OnInit {
 
   delete(): void {
     if (this.currentNode == undefined) {
-      this.notify.error("未选中任何节点。");
+      this.notify.error('未选中任何节点。');
       return;
     }
-    this.bookService.deleteBookCategory(this.currentNode.key).subscribe((result)=>{
-      if(result){
-        this.notify.success("删除成功");
+    this.bookService.deleteBookCategory(this.currentNode.key).subscribe((result) => {
+      if (result) {
+        this.notify.success('删除成功');
         this.refreshData();
-      }else{
-        this.notify.error("该类别或其子节点下具有书籍，请先删除该类别下所有书籍")
+      } else {
+        this.notify.error('该类别或其子节点下具有书籍，请先删除该类别下所有书籍');
       }
-    })
+    });
   }
 }

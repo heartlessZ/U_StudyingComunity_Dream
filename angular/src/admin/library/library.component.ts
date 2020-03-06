@@ -17,26 +17,26 @@ import { BookCategoryDto, SelectBookCategory } from 'entities';
 export class LibraryComponent extends PagedListingComponentBase<any> {
   @ViewChild('bookDetailModal', { static: true }) bookDetailModal: BookDetailComponent;
 
-  search: any = { name: '', categoryId: '', status:1};
-  isTableLoading: boolean = false;
+  search: any = { name: '', categoryId: '', status: 1};
+  isTableLoading = false;
   nzOptions: NzCascaderOption[];
-  //nzOptions:SelectBookCategory[];
+  // nzOptions:SelectBookCategory[];
   values: string[] | null = null;
 
-  bookStatus:any = [
+  bookStatus: any = [
     {
       status: 1,
-      lable: "待审核"
+      lable: '待审核'
     },
     {
       status: 2,
-      lable: "审核通过"
+      lable: '审核通过'
     },
     {
       status: 3,
-      lable: "已拒绝"
+      lable: '已拒绝'
     }
-  ]
+  ];
 
   constructor(private bookService: BookService,
     private injector: Injector) {
@@ -44,11 +44,11 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
   }
 
   nzEvent(event: NzFormatEmitEvent): void {
-    //console.log(event);
+    // console.log(event);
 
   }
   ngOnInit() {
-    //首先加载类别选项
+    // 首先加载类别选项
     this.getBookCategories();
     this.refreshData();
   }
@@ -56,28 +56,29 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
   getBookCategories(): void {
     this.bookService.getBookCategoriesSelect().subscribe((result) => {
       this.nzOptions = result;
-      //console.log(this.nzOptions);
+      // console.log(this.nzOptions);
 
-      //查出分类名称
+      // 查出分类名称
       this.dataList.forEach(element => {
         element.categoryName = this.searchCategoryName(element.categoryId);
       });
-    })
+    });
   }
 
   searchCategoryName(id: string): string {
-    //console.log(this.nzOptions);
+    // console.log(this.nzOptions);
 
-    let option = this.nzOptions.filter(i => i.value == id);
-    //console.log(option);
-    if (option.length > 0)
+    const option = this.nzOptions.filter(i => i.value == id);
+    // console.log(option);
+    if (option.length > 0) {
       return option[0].label;
+    }
     return undefined;
   }
 
-  //分类选择器改变事件
+  // 分类选择器改变事件
   onChanges(values: string[]): void {
-    //console.log(values, this.values);
+    // console.log(values, this.values);
   }
 
   refresh(): void {
@@ -93,9 +94,24 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
    */
   reset() {
     this.pageNumber = 1;
-    this.search = { name: '', categoryId: '', status:1 };
+    this.search = { name: '', categoryId: '', status: 1 };
     this.values = null;
     this.refresh();
+  }
+
+  createBook(): void {
+    this.bookDetailModal.show();
+  }
+
+  edit(id: number): void {
+    this.bookDetailModal.show(id);
+  }
+
+  delete(id: number): void {
+    this.bookService.deleteBook(id).subscribe((result) => {
+      this.notify.success('删除成功');
+      this.refresh();
+    });
   }
 
   protected fetchDataList(
@@ -104,9 +120,10 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
     finishedCallback: Function,
   ): void {
     this.isTableLoading = true;
-    if (this.values != null || this.values != undefined)
+    if (this.values != null || this.values != undefined) {
       this.search.categoryId = this.values.reverse()[0];
-    let params: any = {};
+    }
+    const params: any = {};
     params.SkipCount = request.skipCount;
     params.MaxResultCount = request.maxResultCount;
     params.Name = this.search.name;
@@ -118,30 +135,16 @@ export class LibraryComponent extends PagedListingComponentBase<any> {
       // })
       .subscribe((result: PagedResultDto) => {
         this.isTableLoading = false;
-        this.dataList = result.items
+        this.dataList = result.items;
         this.totalItems = result.totalCount;
-        //console.log(this.dataList);
+        // console.log(this.dataList);
 
-        //初始化封面地址
+        // 初始化封面地址
         this.dataList.forEach(element => {
-          if (element.coverUrl != null)
+          if (element.coverUrl != null) {
             element.coverUrl = this.bookService.baseUrl + element.coverUrl;
+          }
         });
       });
-  }
-
-  createBook(): void {
-    this.bookDetailModal.show();
-  }
-
-  edit(id: number): void {
-    this.bookDetailModal.show(id);
-  }
-
-  delete(id:number):void{
-    this.bookService.deleteBook(id).subscribe((result)=>{
-      this.notify.success("删除成功")
-      this.refresh()
-    })
   }
 }

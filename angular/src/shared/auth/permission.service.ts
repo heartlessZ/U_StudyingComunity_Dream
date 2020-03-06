@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-//import { ACLService } from '@delon/acl';
+// import { ACLService } from '@delon/acl';
 
 @Injectable()
 export class PermissionService {
@@ -81,7 +81,7 @@ export class PermissionService {
 
   //   /**
   // * 填充数据
-  // * @param auth 
+  // * @param auth
   // */
   //   extend(auth) {
 

@@ -15,23 +15,23 @@ import { ProjectDto } from 'entities';
 })
 export class ProjectModalComponent extends AppComponentBase implements OnInit {
   @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
-  @Input() isFirst:boolean;
-  @Input() userProjectId:number;
-  @Input() currentProjectId:number;
+  @Input() isFirst: boolean;
+  @Input() userProjectId: number;
+  @Input() currentProjectId: number;
 
   validateForm: FormGroup;
-  title:string;
-  emodalVisible = false;//模态框是否显示
+  title: string;
+  emodalVisible = false; // 模态框是否显示
   isOkLoading = false;
 
-  project:ProjectDto = new ProjectDto();
-  
+  project: ProjectDto = new ProjectDto();
+
 
   constructor(injector: Injector,
     private fb: FormBuilder,
-    private router : Router,
-    private appRouteGuard : AppRouteGuard,
-    private projectService:ProjectService) {
+    private router: Router,
+    private appRouteGuard: AppRouteGuard,
+    private projectService: ProjectService) {
       super(injector);
     this.validateForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -43,18 +43,18 @@ export class ProjectModalComponent extends AppComponentBase implements OnInit {
   /**
    * 显示模态框（进入新增页）
    */
-  showByCreate(id?:number) {
+  showByCreate(id?: number) {
     this.emodalVisible = true;
-    this.title = "新增计划"
+    this.title = '新增计划';
     this.project = new ProjectDto();
-    this.project.expirationTime=new Date();
+    this.project.expirationTime = new Date();
     this.project.parent = this.currentProjectId;
-    //console.log(this.project);
-    
-    if (id!=undefined){
+    // console.log(this.project);
+
+    if (id != undefined) {
       this.project.parent = id;
     }
-    if(this.isFirst){
+    if (this.isFirst) {
       this.project.parent = 0;
     }
   }
@@ -62,43 +62,44 @@ export class ProjectModalComponent extends AppComponentBase implements OnInit {
   /**
    * 显示模态框（进入编辑页）
    */
-  showByEdit(id:number) {
+  showByEdit(id: number) {
     this.emodalVisible = true;
-    this.title = "编辑计划";
+    this.title = '编辑计划';
     this.getProjectById(id);
   }
 
-  getProjectById(id:number):void{
-    this.projectService.getProjectById(id).subscribe((result)=>{
+  getProjectById(id: number): void {
+    this.projectService.getProjectById(id).subscribe((result) => {
       this.project = result;
-    })
+    });
   }
 
   onChange(result: Date): void {
-    //this.project.expirationTime = result;
+    // this.project.expirationTime = result;
   }
 
   handleOk(): void {
     this.isOkLoading = true;
     this.submitForm(this.project);
-    
-    //console.log(this.project);
-    //return;
-      if(!this.validateForm.valid)
+
+    // console.log(this.project);
+    // return;
+      if (!this.validateForm.valid) {
       return;
-    
-    this.projectService.createOrUpdateProject(this.project).subscribe((result)=>{
-      this.notify.success("成功");
+      }
+
+    this.projectService.createOrUpdateProject(this.project).subscribe((result) => {
+      this.notify.success('成功');
         this.emodalVisible = false;
         this.isOkLoading = false;
         this.validateForm.reset();
-        if(this.isFirst && result != 0){
-          this.projectService.editUserProjectProId(this.userProjectId,result).subscribe((res)=>{
+        if (this.isFirst && result != 0) {
+          this.projectService.editUserProjectProId(this.userProjectId, result).subscribe((res) => {
             this.modalSave.emit(null);
-          })
+          });
         }
         this.modalSave.emit(null);
-    })
+    });
   }
 
   handleCancel(): void {
@@ -107,7 +108,7 @@ export class ProjectModalComponent extends AppComponentBase implements OnInit {
   }
 
   ngOnInit() {
-    
+
   }
 
   submitForm(value: any): void {
@@ -122,7 +123,7 @@ export class ProjectModalComponent extends AppComponentBase implements OnInit {
     this.validateForm.reset();
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsPristine();
-      //this.validateForm.controls[key].updateValueAndValidity();
+      // this.validateForm.controls[key].updateValueAndValidity();
     }
   }
 

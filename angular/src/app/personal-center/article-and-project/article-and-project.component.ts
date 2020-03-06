@@ -28,6 +28,26 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
 
   baseUrl: string;
 
+
+  currentUserProjects: UserProjectDto[]; // 当前用户计划集合
+
+  userProjectTotalCount: number;
+  pageIndex = 1;
+  searchUserProject: any = { MaxResultCount: 5, SkipCount: 0 };
+
+  searchUserProjectNotCurrentUser: any = { MaxResultCount: 5, SkipCount: 0, UserDetailId: null, IsPublic: true };
+  pageIndexOfNotCurrentUser = 1;
+  userProjectNotCurrentTotalCount: number;
+
+
+  searchFans: any = { UserDetailId: 0, SkipCount: 0, MaxResultCount: 30 };
+  searchAttention: any = { UserDetailId: 0, SkipCount: 0, MaxResultCount: 30 };
+  userSimpleList: UserDetailDto[];
+  pageIndexOfFansList = 1;
+  fansListTotalCount: number;
+  pageIndexOfAttentionList = 1;
+  attentionListTotalCount: number;
+
   constructor(injector: Injector,
     private articleService: ArticleService,
     private actRouter: ActivatedRoute,
@@ -44,7 +64,7 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
     this.serverBaseUrl = this.articleService.baseUrl;
     this.search.maxResultCount = 5;
     this.search.skipCount = 0;
-    //默认只查询审核通过的
+    // 默认只查询审核通过的
     this.search.releaseStatus = 2;
     this.search.userDetailId = this.userDetailId;
 
@@ -52,7 +72,7 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
     this.getArticleList();
   }
 
-  //获取文章
+  // 获取文章
   getArticleList(): void {
     this.articleService.getArticlePaged(this.search).subscribe((result) => {
       this.totalCount = result.totalCount;
@@ -61,7 +81,7 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
         this.loadingMore = false;
       }
       this.initLoading = false;
-    })
+    });
   }
 
   refreshData(status: number) {
@@ -71,47 +91,36 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
     this.getArticleList();
   }
 
-  //加载更多文章
+  // 加载更多文章
   onLoadMore(): void {
     this.initLoading = true;
     this.loadingMore = true;
     this.search.skipCount = this.search.maxResultCount * (this.search.skipCount + 1);
     this.articleService.getArticlePaged(this.search).subscribe((result) => {
       this.totalCount = result.totalCount;
-      let articles = ArticleDetailDto.fromJSArray(result.items);
-      this.data.push(...articles)
+      const articles = ArticleDetailDto.fromJSArray(result.items);
+      this.data.push(...articles);
       this.initLoading = false;
       if (result.items.length >= this.search.maxResultCount) {
         this.loadingMore = false;
       } else {
         this.loadingMore = true;
       }
-    })
+    });
   }
-
-
-  currentUserProjects: UserProjectDto[];//当前用户计划集合
-
-  userProjectTotalCount: number;
-  pageIndex: number = 1;
-  searchUserProject: any = { MaxResultCount: 5, SkipCount: 0 }
 
   getCurrentUserProjects(): void {
     this.projectService.getCurrentUserProjectDtos(this.searchUserProject).subscribe((result) => {
       this.currentUserProjects = result.items;
       this.userProjectTotalCount = result.totalCount;
-    })
+    });
   }
-
-  searchUserProjectNotCurrentUser: any = { MaxResultCount: 5, SkipCount: 0, UserDetailId: null, IsPublic: true };
-  pageIndexOfNotCurrentUser: number = 1;
-  userProjectNotCurrentTotalCount: number;
   getUserProjectsByUserDetailId(): void {
     this.searchUserProjectNotCurrentUser.userDetailId = this.userDetail.id;
     this.projectService.getUserProjectsPaged(this.searchUserProjectNotCurrentUser).subscribe((result) => {
       this.currentUserProjects = result.items;
       this.userProjectNotCurrentTotalCount = result.totalCount;
-    })
+    });
   }
 
   pageIndexChangeNotCurrentUser(): void {
@@ -125,47 +134,38 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
   }
 
   goProject(userProject: UserProjectDto): void {
-    this.router.navigate(["app/project", { id: userProject.id, userId: userProject.userId, tagName: userProject.tagName }])
+    this.router.navigate(['app/project', { id: userProject.id, userId: userProject.userId, tagName: userProject.tagName }]);
   }
 
   createArticle(): void {
-    this.router.navigate(["app/personal-center/create-article"])
+    this.router.navigate(['app/personal-center/create-article']);
   }
 
-  editArticle(id:any): void {
-    this.router.navigate(["app/personal-center/create-article/"+id])
+  editArticle(id: any): void {
+    this.router.navigate(['app/personal-center/create-article/' + id]);
   }
 
   goArticleDetail(id: number): void {
-    this.router.navigate(["app/community/article-detail/" + id])
+    this.router.navigate(['app/community/article-detail/' + id]);
   }
   goArticleDetailComment(id: number): void {
-    this.router.navigate(["app/community/article-detail/" + id])
+    this.router.navigate(['app/community/article-detail/' + id]);
   }
 
   goUserDetail(userDetailId: any): void {
-    this.router.navigate(["app/personal-center/" + userDetailId ])
-    //console.log("哈哈哈哈");
+    this.router.navigate(['app/personal-center/' + userDetailId ]);
+    // console.log("哈哈哈哈");
 
-    //this.modalSave.emit(null)
+    // this.modalSave.emit(null)
   }
-
-
-  searchFans: any = { UserDetailId: 0, SkipCount: 0, MaxResultCount: 30 }
-  searchAttention: any = { UserDetailId: 0, SkipCount: 0, MaxResultCount: 30 }
-  userSimpleList: UserDetailDto[];
-  pageIndexOfFansList: number = 1;
-  fansListTotalCount: number;
-  pageIndexOfAttentionList: number = 1;
-  attentionListTotalCount: number;
-  //获取粉丝列表
+  // 获取粉丝列表
   getCurrentUserFans(): void {
     this.searchFans.UserDetailId = this.userDetail.id;
     this.userDetailService.getFansList(this.searchFans).subscribe((result) => {
-      //console.log(result);
+      // console.log(result);
       this.userSimpleList = UserDetailDto.fromJSArray(result.items);
       this.fansListTotalCount = result.totalCount;
-    })
+    });
   }
 
   pageIndexChangeOfFansList(): void {
@@ -173,17 +173,17 @@ export class ArticleAndProjectComponent extends AppComponentBase implements OnIn
     this.getCurrentUserFans();
   }
 
-  //获取关注列表
+  // 获取关注列表
   getCurrentAttentions(): void {
     this.searchAttention.UserDetailId = this.userDetail.id;
     this.userDetailService.getAttentionList(this.searchAttention).subscribe((result) => {
-      //console.log(result);
+      // console.log(result);
       this.userSimpleList = UserDetailDto.fromJSArray(result.items);
       this.attentionListTotalCount = result.totalCount;
-    })
+    });
   }
 
-  
+
   pageIndexChangeOfAttentions(): void {
     this.searchAttention.SkipCount = (this.pageIndexOfAttentionList - 1) * this.searchAttention.MaxResultCount;
     this.getCurrentAttentions();

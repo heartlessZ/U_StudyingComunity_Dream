@@ -17,7 +17,7 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
   @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
   validateForm: FormGroup;
-  emodalVisible = false;//模态框是否显示
+  emodalVisible = false; // 模态框是否显示
   isOkLoading = false;
   loading = false;
   name: string;
@@ -29,12 +29,12 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
 
   avatarUrl: string;
   fileUploadUrl: string;
-  fileDownloadUrl:string;
-  fileUrl: string;//图片最终上传所得的地址
+  fileDownloadUrl: string;
+  fileUrl: string; // 图片最终上传所得的地址
 
 
   nzOptions: NzCascaderOption[];
-  //nzOptions:SelectBookCategory[];
+  // nzOptions:SelectBookCategory[];
   values: string[] | null = null;
 
 
@@ -69,11 +69,6 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
     });
   }
 
-  protected setFormValues(entity: BookDetailDto): void {
-    this.setControlVal('name', entity.name);
-    this.setControlVal('author', entity.author);
-  }
-
 
   setControlVal(name: string, val: any) {
     this.validateForm.controls[name].setValue(val);
@@ -90,11 +85,11 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
     this.emodalVisible = true;
     this.getBookCategories();
     if (id == undefined) {
-      this.title = "新增书籍"
+      this.title = '新增书籍';
       this.isEdit = false;
       this.book = new BookDetailDto();
     } else {
-      this.title = "编辑书籍"
+      this.title = '编辑书籍';
       this.isEdit = true;
       this.getBookDetailById(id);
     }
@@ -105,56 +100,58 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
   getBookCategories(): void {
     this.bookService.getBookCategoriesSelect().subscribe((result) => {
       this.nzOptions = result;
-      //console.log(this.nzOptions);
-    })
+      // console.log(this.nzOptions);
+    });
   }
 
   getBookDetailById(id: number): void {
     this.bookService.getBookDetailById(id).subscribe((result) => {
-      //console.log(result);
+      // console.log(result);
       this.book = result;
-      //this.values = this.searchCategoryName(this.book.categoryId.toString())
-      this.values = [this.book.categoryId.toString()]
-      //this.book.categoryName = this.searchCategoryName(this.book.categoryId.toString())
+      // this.values = this.searchCategoryName(this.book.categoryId.toString())
+      this.values = [this.book.categoryId.toString()];
+      // this.book.categoryName = this.searchCategoryName(this.book.categoryId.toString())
       this.setFormValues(this.book);
 
-      //封面赋值
+      // 封面赋值
       this.avatarUrl = this.bookService.baseUrl + this.book.coverUrl;
       this.fileUrl = this.book.coverUrl;
-      //获取资源集合
+      // 获取资源集合
       this.getResourceListByBookId(this.book.id);
     });
   }
 
-  getResourceListByBookId(id:number):void{
-    this.bookService.getResourceListByBookId(id).subscribe((result)=>{
-      //console.log(result);
-      
+  getResourceListByBookId(id: number): void {
+    this.bookService.getResourceListByBookId(id).subscribe((result) => {
+      // console.log(result);
+
       this.fileList = result;
-      this.fileList.forEach(i=>i.url = this.fileDownloadUrl + "?url=" + i.url);
-      //console.log(this.fileList);
+      this.fileList.forEach(i => i.url = this.fileDownloadUrl + '?url=' + i.url);
+      // console.log(this.fileList);
     });
   }
 
   handleOk(): void {
     this.isOkLoading = true;
-    //管理员添加默认审核通过
+    // 管理员添加默认审核通过
     this.book.coverUrl = this.fileUrl;
     this.book.status = 2;
-    if (this.values != null || this.values != undefined)
+    if (this.values != null || this.values != undefined) {
       this.book.categoryId = Number(this.values.reverse()[0]);
-    //this.submitForm();
-    if (!this.validateForm.valid)
+    }
+    // this.submitForm();
+    if (!this.validateForm.valid) {
       return;
+    }
 
     this.bookService.createOrUpdateBook(this.book).subscribe((result) => {
       if (result) {
-        this.message.success("成功");
+        this.message.success('成功');
         this.emodalVisible = false;
         this.isOkLoading = false;
         this.modalSave.emit(null);
       }
-    })
+    });
   }
 
   handleCancel(): void {
@@ -163,8 +160,8 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
   }
 
   ngOnInit() {
-    this.fileUploadUrl = this.bookService.baseUrl+"/api/File/upload";
-    this.fileDownloadUrl = this.bookService.baseUrl+"/api/File/download";
+    this.fileUploadUrl = this.bookService.baseUrl + '/api/File/upload';
+    this.fileDownloadUrl = this.bookService.baseUrl + '/api/File/download';
     this.book = new BookDetailDto();
   }
 
@@ -197,29 +194,10 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
         //   return;
         // }
 
-        //observer.next(isJPG && isLt2M && dimensionRes);
+        // observer.next(isJPG && isLt2M && dimensionRes);
         observer.next(isJPG && isLt2M);
         observer.complete();
       });
-    });
-  };
-
-  private getBase64(img: File, callback: (img: string) => void): void {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result!.toString()));
-    reader.readAsDataURL(img);
-  }
-
-  private checkImageDimension(file: File): Promise<boolean> {
-    return new Promise(resolve => {
-      const img = new Image(); // create image
-      img.src = window.URL.createObjectURL(file);
-      img.onload = () => {
-        const width = img.naturalWidth;
-        const height = img.naturalHeight;
-        window.URL.revokeObjectURL(img.src!);
-        resolve(width === height && width >= 300);
-      };
     });
   }
 
@@ -243,17 +221,15 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
     }
   }
 
-  //图书资源上传
+  // 图书资源上传
   handleChangeBookResource(info: { file: UploadFile }): void {
     this.bookResource = new BookResourceDto();
     if (info.file.status === 'error') {
       this.notify.error('上传文件异常，请重试');
       this.fileList.pop();
-    }
-
-    else {
+    } else {
       if (info.file.status === 'done') {
-        var res = info.file.response.result;
+        const res = info.file.response.result;
         if (res.code == 0) {
           this.fileList.forEach(element => {
             if (info.file.uid == element.id.toString()) {
@@ -273,13 +249,13 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
     }
   }
 
-  //保存书籍资源
-  saveBookResource(bookResource:BookResourceDto):void{
-    //console.log(bookResource);
+  // 保存书籍资源
+  saveBookResource(bookResource: BookResourceDto): void {
+    // console.log(bookResource);
     // return;
-    this.bookService.createBookResource(bookResource).subscribe((result)=>{
+    this.bookService.createBookResource(bookResource).subscribe((result) => {
       this.notify.success('上传文件成功');
-    })
+    });
   }
 
   deleteBookResource = (file: UploadFile): boolean => {
@@ -292,18 +268,18 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
         nzOnOk: () => {
           if (file.id) {
             this.bookService.deleteBookResourceById(file.id).subscribe(() => {
-              //console.log(file.id);
-              
+              // console.log(file.id);
+
               this.notify.success('删除成功！', '');
-              //this.getAttachmentList();
+              // this.getAttachmentList();
               // this.fileList.pop();
-              let tflist = JSON.parse(JSON.stringify(this.fileList));
+              const tflist = JSON.parse(JSON.stringify(this.fileList));
               tflist.pop();
               this.fileList = tflist;
               return true;
             });
           } else {
-            let tflist: BookResourceDto[] = BookResourceDto.fromJSArray(JSON.parse(JSON.stringify(this.fileList)));
+            const tflist: BookResourceDto[] = BookResourceDto.fromJSArray(JSON.parse(JSON.stringify(this.fileList)));
             tflist.pop();
             this.newFileList = [];
             this.fileList = tflist;
@@ -317,10 +293,34 @@ export class BookDetailComponent extends AppComponentBase implements OnInit {
 
   beforeUploadResource = (file: File) => {
     return true;
-  };
+  }
 
-  //分类选择器改变事件
+  // 分类选择器改变事件
   onChanges(values: string[]): void {
-    //console.log(values, this.values);
+    // console.log(values, this.values);
+  }
+
+  protected setFormValues(entity: BookDetailDto): void {
+    this.setControlVal('name', entity.name);
+    this.setControlVal('author', entity.author);
+  }
+
+  private getBase64(img: File, callback: (img: string) => void): void {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result!.toString()));
+    reader.readAsDataURL(img);
+  }
+
+  private checkImageDimension(file: File): Promise<boolean> {
+    return new Promise(resolve => {
+      const img = new Image(); // create image
+      img.src = window.URL.createObjectURL(file);
+      img.onload = () => {
+        const width = img.naturalWidth;
+        const height = img.naturalHeight;
+        window.URL.revokeObjectURL(img.src!);
+        resolve(width === height && width >= 300);
+      };
+    });
   }
 }

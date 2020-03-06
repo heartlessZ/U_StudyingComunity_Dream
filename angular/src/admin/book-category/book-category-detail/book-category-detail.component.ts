@@ -13,16 +13,16 @@ export class BookCategoryDetailComponent extends AppComponentBase implements OnI
   @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
   validateForm: FormGroup;
-  emodalVisible = false;//模态框是否显示
+  emodalVisible = false; // 模态框是否显示
   isOkLoading = false;
   loading = false;
-  category:BookCategoryDto;
+  category: BookCategoryDto;
 
   constructor(injector: Injector,
     private fb: FormBuilder,
-    private bookService : BookService) {
+    private bookService: BookService) {
     super(injector);
-    
+
     this.validateForm = this.fb.group({
       name: ['', [Validators.required]]
     });
@@ -30,7 +30,7 @@ export class BookCategoryDetailComponent extends AppComponentBase implements OnI
   /**
    * 显示模态框（进入用户详情页）
    */
-  show(currentNode:BookCategoryDto) {
+  show(currentNode: BookCategoryDto) {
     this.emodalVisible = true;
     this.category = currentNode;
   }
@@ -38,17 +38,17 @@ export class BookCategoryDetailComponent extends AppComponentBase implements OnI
   handleOk(): void {
     this.isOkLoading = true;
     this.submitForm(name);
-    if(!this.validateForm.valid)
+    if (!this.validateForm.valid) {
       return;
-    this.bookService.createOrUpdateCategory(this.category.title,this.category.parent,this.category.key).subscribe((result)=>{
-      if(result)
-      {
-        this.message.success("修改成功");
+    }
+    this.bookService.createOrUpdateCategory(this.category.title, this.category.parent, this.category.key).subscribe((result) => {
+      if (result) {
+        this.message.success('修改成功');
         this.emodalVisible = false;
         this.isOkLoading = false;
         this.modalSave.emit(null);
       }
-    })
+    });
   }
 
   handleCancel(): void {
@@ -57,7 +57,7 @@ export class BookCategoryDetailComponent extends AppComponentBase implements OnI
   }
 
   ngOnInit() {
-    
+
   }
 
   submitForm(value: any): void {

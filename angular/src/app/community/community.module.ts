@@ -20,13 +20,13 @@ import { ReplyModalComponent } from './article-detail/reply-modal/reply-modal.co
     ],
     declarations: [
         CommunityComponent,
-        //CreateArticleComponent,
+        // CreateArticleComponent,
         ArticleDetailComponent,
         ReplyModalComponent,
     ],
     entryComponents: [
         CommunityComponent,
-        //CreateArticleComponent,
+        // CreateArticleComponent,
         ArticleDetailComponent,
         ReplyModalComponent,
     ],

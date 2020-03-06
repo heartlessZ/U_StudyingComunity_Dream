@@ -56,9 +56,9 @@ import { BusyDirective } from './directives/busy.directive';
 import { EqualValidator } from './directives/equal-validator.directive';
 
 import { NgZorroAntdModule } from 'ng-zorro-antd';
-import {ReactiveFormsModule, FormsModule } from "@angular/forms";
+import {ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-//富文本编辑器
+// 富文本编辑器
 import { NgxNeditorModule } from '@notadd/ngx-neditor';
 import { config } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
@@ -107,7 +107,7 @@ import { HttpClientModule } from '@angular/common/http';
         NgZorroAntdModule,
         ReactiveFormsModule,
         FormsModule,
-        //富文本编辑器
+        // 富文本编辑器
         NgxNeditorModule
     ],
     declarations: [
@@ -163,7 +163,7 @@ import { HttpClientModule } from '@angular/common/http';
         // MatTreeModule,
         ScrollingModule,
         NgZorroAntdModule,
-        //富文本编辑器
+        // 富文本编辑器
         NgxNeditorModule
     ]
 })

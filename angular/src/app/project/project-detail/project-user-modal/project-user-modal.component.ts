@@ -11,14 +11,14 @@ import { BookCategoryDto, ProjectDto, UserProjectDto, CurrentUserDetailDto } fro
 })
 export class ProjectUserModalComponent extends AppComponentBase implements OnInit  {
   @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
-  @Input() currentUser:CurrentUserDetailDto;
+  @Input() currentUser: CurrentUserDetailDto;
 
   validateForm: FormGroup;
-  emodalVisible = false;//模态框是否显示
+  emodalVisible = false; // 模态框是否显示
   isOkLoading = false;
   loading = false;
   name: string;
-  title:string;
+  title: string;
   userProject: UserProjectDto = new UserProjectDto();
 
   constructor(injector: Injector,
@@ -28,42 +28,43 @@ export class ProjectUserModalComponent extends AppComponentBase implements OnIni
 
     this.validateForm = this.fb.group({
       tagName: ['', [Validators.required]],
-      isPublic:['']
+      isPublic: ['']
     });
   }
 
-  show(id? : number) {
+  show(id?: number) {
     this.emodalVisible = true;
     this.userProject  = new UserProjectDto();
     this.userProject.userId = this.currentUser.userDetailId;
-    if(id != undefined && id != 0){
+    if (id != undefined && id != 0) {
       this.getUserProjectById(id);
-      this.title="编辑标签";
-    }else{
-      this.title = "新建标签"
+      this.title = '编辑标签';
+    } else {
+      this.title = '新建标签';
     }
   }
 
   handleOk(): void {
     this.isOkLoading = true;
     this.submitForm(name);
-    if (!this.validateForm.valid)
+    if (!this.validateForm.valid) {
       return;
-    let parent = 0;
+    }
+    const parent = 0;
     this.projectService.createOrUpdateUserProject(this.userProject).subscribe((result) => {
       if (result) {
-        this.message.success("成功");
+        this.message.success('成功');
         this.emodalVisible = false;
         this.isOkLoading = false;
         this.modalSave.emit(null);
       }
-    })
+    });
   }
 
-  getUserProjectById(id:number):void{
-    this.projectService.getUserProjectById(id).subscribe((result)=>{
+  getUserProjectById(id: number): void {
+    this.projectService.getUserProjectById(id).subscribe((result) => {
       this.userProject = result;
-    })
+    });
   }
 
   handleCancel(): void {

@@ -25,29 +25,29 @@ export class CommunityComponent implements OnInit {
     , private router: Router) { }
 
   ngOnInit(): void {
-    $("div#banner").removeClass('homepage-mid-read');
-    $("div#banner").removeClass('homepage-mid-community');
-    $("div#banner").removeClass('homepage-mid-personal');
-    $("div#banner").removeClass('homepage-mid-learning');
-    $("div#banner").removeClass('homepage-mid-library');
-    $("div#banner").addClass('homepage-mid-community');
+    $('div#banner').removeClass('homepage-mid-read');
+    $('div#banner').removeClass('homepage-mid-community');
+    $('div#banner').removeClass('homepage-mid-personal');
+    $('div#banner').removeClass('homepage-mid-learning');
+    $('div#banner').removeClass('homepage-mid-library');
+    $('div#banner').addClass('homepage-mid-community');
     this.serverBaseUrl = this.articleService.baseUrl;
     this.search.maxResultCount = 10;
     this.search.skipCount = 0;
-    //默认只查询审核通过的
+    // 默认只查询审核通过的
     this.search.releaseStatus = 2;
     this.getArticleList();
     this.getAllTags();
   }
 
-  //获取所有的标签
+  // 获取所有的标签
   getAllTags(): void {
     this.articleService.getAllTags().subscribe((result) => {
       this.tabs = result;
-    })
+    });
   }
 
-  //获取文章
+  // 获取文章
   getArticleList(): void {
     this.initLoading = true;
     this.loadingMore = true;
@@ -58,19 +58,19 @@ export class CommunityComponent implements OnInit {
         this.loadingMore = false;
       }
       this.initLoading = false;
-      //console.log(result);
-    })
+      // console.log(result);
+    });
   }
 
-  //加载更多文章
+  // 加载更多文章
   onLoadMore(): void {
     this.initLoading = true;
     this.loadingMore = true;
     this.search.skipCount = this.search.maxResultCount * (this.search.skipCount + 1);
     this.articleService.getArticlePaged(this.search).subscribe((result) => {
       if (result.items.length > 0) {
-        let articles = ArticleDetailDto.fromJSArray(result.items);
-        this.data.push(...articles)
+        const articles = ArticleDetailDto.fromJSArray(result.items);
+        this.data.push(...articles);
 
         if (result.items.length >= this.search.maxResultCount) {
           this.loadingMore = false;
@@ -79,10 +79,10 @@ export class CommunityComponent implements OnInit {
         }
       }
       this.initLoading = false;
-    })
+    });
   }
 
-  //切换标签页时刷新文章列表
+  // 切换标签页时刷新文章列表
   refreshData(categoryId?: number) {
     this.loadingMore = false;
     this.search.categoryId = categoryId;
@@ -91,6 +91,6 @@ export class CommunityComponent implements OnInit {
   }
 
   goToArticleDetail(id: number) {
-    this.router.navigate(["app/community/article-detail/" + id]);
+    this.router.navigate(['app/community/article-detail/' + id]);
   }
 }

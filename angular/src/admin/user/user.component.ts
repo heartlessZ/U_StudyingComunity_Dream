@@ -8,21 +8,11 @@ import { PagedListingComponentBase, PagedRequestDto, PagedResultDto } from '@sha
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent extends PagedListingComponentBase<any>{
+export class UserComponent extends PagedListingComponentBase<any> {
 
-  constructor(private userDetailService : UserDetailService,
-    private injector: Injector) {
-      super(injector);
-   }
-
-  ngOnInit() {
-    //this.getUserDetailList();
-    this.refreshData();
-  }
-
-  //分页获取用户详情
+  // 分页获取用户详情
   // getUserDetailList(){
-    
+
   //   let searchParams:any = {};
   //   searchParams.SkipCount = 0;
   //   searchParams.MaxResultCount = 10;
@@ -32,8 +22,18 @@ export class UserComponent extends PagedListingComponentBase<any>{
   // }
 
     search: any = {};
-    isTableLoading:boolean=false;
-    switchLoading:boolean=false;
+    isTableLoading = false;
+    switchLoading = false;
+
+  constructor(private userDetailService: UserDetailService,
+    private injector: Injector) {
+      super(injector);
+   }
+
+  ngOnInit() {
+    // this.getUserDetailList();
+    this.refreshData();
+  }
 
     refresh(): void {
         this.getDataPage(this.pageNumber);
@@ -52,13 +52,22 @@ export class UserComponent extends PagedListingComponentBase<any>{
         this.refresh();
     }
 
+    switchChange(e, id: string): boolean {
+      this.switchLoading = true;
+      this.userDetailService.updateUserStatus(id).subscribe((result) => {
+        this.switchLoading = false;
+        return result;
+      });
+      return false;
+    }
+
     protected fetchDataList(
         request: PagedRequestDto,
         pageNumber: number,
         finishedCallback: Function,
     ): void {
-      this.isTableLoading=true;
-        let params: any = {};
+      this.isTableLoading = true;
+        const params: any = {};
         params.SkipCount = request.skipCount;
         params.MaxResultCount = request.maxResultCount;
         params.Name = this.search.name;
@@ -68,21 +77,12 @@ export class UserComponent extends PagedListingComponentBase<any>{
             //     finishedCallback();
             // })
             .subscribe((result: PagedResultDto) => {
-                //console.log(result);
-                this.isTableLoading=false;
-                this.dataList = result.items
+                // console.log(result);
+                this.isTableLoading = false;
+                this.dataList = result.items;
                 this.totalItems = result.totalCount;
-                //this.dataList.forEach(i=>i.gender==0?)
+                // this.dataList.forEach(i=>i.gender==0?)
             });
-    }
-
-    switchChange(e,id:string):boolean{
-      this.switchLoading = true;
-      this.userDetailService.updateUserStatus(id).subscribe((result)=>{
-        this.switchLoading = false;
-        return result;
-      })
-      return false;
     }
 
 }

@@ -29,12 +29,12 @@ export class AccountComponent extends AppComponentBase implements OnInit {
     }
 
     showTenantChange(): boolean {
-        //return abp.multiTenancy.isEnabled;
+        // return abp.multiTenancy.isEnabled;
         return false;
     }
 
     ngOnInit(): void {
-        //$('body').addClass('login-page');
+        // $('body').addClass('login-page');
     }
 
 }

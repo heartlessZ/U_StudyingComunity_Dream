@@ -20,18 +20,18 @@ export class ProjectDetailComponent extends AppComponentBase implements OnInit {
   @Input() currentUser: CurrentUserDetailDto;
 
   id: number;
-  currentUserProjectTagName:string;
+  currentUserProjectTagName: string;
   currentProjectId: number;
-  currentProject:ProjectDto = new ProjectDto();
+  currentProject: ProjectDto = new ProjectDto();
   currentprojectUserDetailId: any;
   data: ProjectDto[] = [];
-  isFirst: boolean = false;
+  isFirst = false;
   title: any;
 
-  isCurrentUser: boolean = false;
-  isLogin: boolean = false;
-  headUrl: string = "";
-  isSuccsess:boolean = false;
+  isCurrentUser = false;
+  isLogin = false;
+  headUrl = '';
+  isSuccsess = false;
 
   constructor(injector: Injector
     , private nzContextMenuService: NzContextMenuService
@@ -41,53 +41,53 @@ export class ProjectDetailComponent extends AppComponentBase implements OnInit {
     , private projectService: ProjectService
     , private modal: NzModalService) {
       super(injector);
-      
+
     this.id = this.actRouter.snapshot.params['id'];
   }
 
   ngOnInit() {
-    
+
   }
 
   getProjectsTreeById(): void {
-    
-    if(this.currentUser.userDetailId == this.currentprojectUserDetailId){
+
+    if (this.currentUser.userDetailId == this.currentprojectUserDetailId) {
       this.isCurrentUser = true;
-    }else{
+    } else {
       this.isCurrentUser = false;
     }
 
     this.data = [];
     this.projectService.getProjectTreeById(this.id).subscribe((result) => {
-      this.isFirst =false;
+      this.isFirst = false;
       if (result.id != undefined) {
         this.data.push(result);
         this.loadTree(result);
       }
       this.afterChange();
-    })
+    });
   }
 
-  //当任务发生变化后
-  afterChange(){
-      //创建第一个任务按钮是否显示
+  // 当任务发生变化后
+  afterChange() {
+      // 创建第一个任务按钮是否显示
       if (this.data.length <= 0) {
         this.isFirst = true;
       } else {
         this.isFirst = false;
       }
 
-      //循环加载每个标签的进度
+      // 循环加载每个标签的进度
       let sum = 0;
-      this.data.forEach(d=>{
+      this.data.forEach(d => {
         sum += d.progress;
-      })
-      //console.log(sum);
-      
-      //判断任务是否完成
-      if(sum == this.data.length*100){
+      });
+      // console.log(sum);
+
+      // 判断任务是否完成
+      if (sum == this.data.length * 100) {
         this.isSuccsess = true;
-      }else{
+      } else {
         this.isSuccsess = false;
       }
       this.modalSave.emit(null);
@@ -96,13 +96,13 @@ export class ProjectDetailComponent extends AppComponentBase implements OnInit {
   loadTree(project: ProjectDto): void {
     if (project.childProject != undefined) {
       this.data.push(project.childProject);
-      this.loadTree(project.childProject)
+      this.loadTree(project.childProject);
     }
   }
 
   contextMenu($event: MouseEvent, menu: NzDropdownMenuComponent, project: any): void {
     this.nzContextMenuService.create($event, menu);
-    ////console.log(menu);
+    //// console.log(menu);
     this.currentProject = project;
     this.currentProjectId = project.id;
   }
@@ -112,50 +112,50 @@ export class ProjectDetailComponent extends AppComponentBase implements OnInit {
   }
 
   createNextProject(): void {
-    this.projectModal.showByCreate()
+    this.projectModal.showByCreate();
     this.afterChange();
   }
 
   editCurrentProject(): void {
-    this.projectModal.showByEdit(this.currentProjectId)
+    this.projectModal.showByEdit(this.currentProjectId);
   }
 
-  editTag():void{
-    ////console.log(this.id);
-    
-    this.projectUserModal.show(this.id)
+  editTag(): void {
+    //// console.log(this.id);
+
+    this.projectUserModal.show(this.id);
   }
 
-  saveProgress():void{
-    this.projectService.createOrUpdateProject(this.currentProject).subscribe((result)=>{
-      this.notify.success("保存成功")
+  saveProgress(): void {
+    this.projectService.createOrUpdateProject(this.currentProject).subscribe((result) => {
+      this.notify.success('保存成功');
       this.afterChange();
-    })
+    });
   }
 
-  deleteUserProject():void{
+  deleteUserProject(): void {
     this.modal.confirm({
       nzContent: '确定是否删除当前标签?该操作不可撤销',
       nzOnOk: () => {
-        this.projectService.dropUserProjectById(this.id).subscribe((result)=>{
-          this.notify.success("删除成功");
+        this.projectService.dropUserProjectById(this.id).subscribe((result) => {
+          this.notify.success('删除成功');
           this.afterChange();
           this.isCurrentUser = false;
-          this.currentUserProjectTagName = "";
+          this.currentUserProjectTagName = '';
           this.currentProject = new ProjectDto();
-        })
+        });
       }
     });
   }
 
-  deleteCurrentProject():void{
+  deleteCurrentProject(): void {
     this.modal.confirm({
       nzContent: '确定是否删除当前任务?该操作不可撤销',
       nzOnOk: () => {
-        this.projectService.deleteProjectById(this.currentProjectId).subscribe((result)=>{
-          this.notify.success("删除成功")
-          this.getProjectsTreeById()
-        })
+        this.projectService.deleteProjectById(this.currentProjectId).subscribe((result) => {
+          this.notify.success('删除成功');
+          this.getProjectsTreeById();
+        });
       }
     });
   }

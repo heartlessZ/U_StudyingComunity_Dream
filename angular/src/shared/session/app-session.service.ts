@@ -11,15 +11,6 @@ import {
 @Injectable()
 export class AppSessionService {
 
-    private _user: UserLoginInfoDto;
-    private _tenant: TenantLoginInfoDto;
-    private _application: ApplicationInfoDto;
-
-    constructor(
-        private _sessionService: SessionServiceProxy,
-        private _abpMultiTenancyService: AbpMultiTenancyService) {
-    }
-
     get application(): ApplicationInfoDto {
         return this._application;
     }
@@ -38,6 +29,15 @@ export class AppSessionService {
 
     get tenantId(): number {
         return this.tenant ? this.tenant.id : null;
+    }
+
+    private _user: UserLoginInfoDto;
+    private _tenant: TenantLoginInfoDto;
+    private _application: ApplicationInfoDto;
+
+    constructor(
+        private _sessionService: SessionServiceProxy,
+        private _abpMultiTenancyService: AbpMultiTenancyService) {
     }
 
     getShownLoginName(): string {
@@ -73,6 +73,15 @@ export class AppSessionService {
         return true;
     }
 
+    clearnLoginStatus(): void {
+        this._sessionService.clearCurrentLoginStatus().toPromise().then((result: boolean) => {
+
+            this._user = null;
+
+        }, (err) => {
+        });
+    }
+
     private isCurrentTenant(tenantId?: number) {
         if (!tenantId && this.tenant) {
             return false;
@@ -81,14 +90,5 @@ export class AppSessionService {
         }
 
         return true;
-    }
-
-    clearnLoginStatus():void{
-        this._sessionService.clearCurrentLoginStatus().toPromise().then((result: boolean) => {
-            
-            this._user = null;
-
-        }, (err) => {
-        });
     }
 }

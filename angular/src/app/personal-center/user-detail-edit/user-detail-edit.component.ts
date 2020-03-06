@@ -19,30 +19,30 @@ registerLocaleData(zh);
 })
 export class UserDetailEditComponent extends AppComponentBase implements OnInit {
   @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
-  
-  
+
+
   validateForm: FormGroup;
-  userDetail : UserDetailDto;
-  emodalUserVisible = false;//模态框是否显示
+  userDetail: UserDetailDto;
+  emodalUserVisible = false; // 模态框是否显示
   isOkLoading = false;
   loading = false;
   avatarUrl: string;
-  fileUploadUrl:string;
-  fileUrl:string;//图片最终上传所得的地址
-  birthday:Date;
-  gender:any;
+  fileUploadUrl: string;
+  fileUrl: string; // 图片最终上传所得的地址
+  birthday: Date;
+  gender: any;
 
   constructor(injector: Injector,
     private fb: FormBuilder,
-    private userDetailService : UserDetailService) {
+    private userDetailService: UserDetailService) {
     super(injector);
-    
+
     this.validateForm = this.fb.group({
       surname: ['', [Validators.required]],
-      gender:[null],
-      description:[null],
+      gender: [null],
+      description: [null],
       required: [false],
-      birthday:[null],
+      birthday: [null],
     });
   }
 
@@ -51,31 +51,32 @@ export class UserDetailEditComponent extends AppComponentBase implements OnInit 
    */
   showWin(id: string) {
     this.emodalUserVisible = true;
-    this.userDetail = new UserDetailDto()
+    this.userDetail = new UserDetailDto();
     this.getUserDetailById(id);
   }
 
   handleOk(): void {
     this.isOkLoading = true;
-    if(this.fileUrl != undefined)
+    if (this.fileUrl != undefined) {
       this.userDetail.headPortraitUrl = this.fileUrl;
+    }
     this.userDetail.gender = this.gender;
     this.submitForm(this.userDetail);
 
-    //console.log(this.userDetail);
-    //return;
-    if(!this.validateForm.valid)
+    // console.log(this.userDetail);
+    // return;
+    if (!this.validateForm.valid) {
       return;
-    this.userDetailService.editUserDetail(this.userDetail).subscribe((result)=>{
-      if(result)
-      {
-        this.message.success("修改成功");
+    }
+    this.userDetailService.editUserDetail(this.userDetail).subscribe((result) => {
+      if (result) {
+        this.message.success('修改成功');
         this.emodalUserVisible = false;
         this.isOkLoading = false;
-        
+
         this.modalSave.emit(null);
       }
-    })
+    });
   }
 
   handleCancel(): void {
@@ -84,7 +85,7 @@ export class UserDetailEditComponent extends AppComponentBase implements OnInit 
   }
 
   ngOnInit() {
-    this.fileUploadUrl = this.userDetailService.baseUrl+"/api/File/upload";
+    this.fileUploadUrl = this.userDetailService.baseUrl + '/api/File/upload';
   }
 
   onChange(result: Date): void {
@@ -98,15 +99,15 @@ export class UserDetailEditComponent extends AppComponentBase implements OnInit 
     }
   }
 
-  getUserDetailById(id:string):void{
-    this.userDetailService.getUserDetailById(id).subscribe((result)=>{
+  getUserDetailById(id: string): void {
+    this.userDetailService.getUserDetailById(id).subscribe((result) => {
       this.userDetail = result;
       this.avatarUrl = this.userDetailService.baseUrl + result.headPortraitUrl;
       this.birthday = result.birthday;
-      this.gender = result.gender.toString()
-      //console.log(this.avatarUrl);
-      //console.log(this.userDetail);
-      
+      this.gender = result.gender.toString();
+      // console.log(this.avatarUrl);
+      // console.log(this.userDetail);
+
     });
   }
 
@@ -124,7 +125,7 @@ export class UserDetailEditComponent extends AppComponentBase implements OnInit 
         observer.complete();
         return;
       }
-      //check height
+      // check height
       this.checkImageDimension(file).then(dimensionRes => {
         // if (!dimensionRes) {
         //   this.message.error('Image only 300x300 above');
@@ -132,29 +133,10 @@ export class UserDetailEditComponent extends AppComponentBase implements OnInit 
         //   return;
         // }
 
-        //observer.next(isJPG && isLt2M && dimensionRes);
+        // observer.next(isJPG && isLt2M && dimensionRes);
         observer.next(isJPG && isLt2M);
         observer.complete();
       });
-    });
-  };
-
-  private getBase64(img: File, callback: (img: string) => void): void {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result!.toString()));
-    reader.readAsDataURL(img);
-  }
-
-  private checkImageDimension(file: File): Promise<boolean> {
-    return new Promise(resolve => {
-      const img = new Image(); // create image
-      img.src = window.URL.createObjectURL(file);
-      img.onload = () => {
-        const width = img.naturalWidth;
-        const height = img.naturalHeight;
-        window.URL.revokeObjectURL(img.src!);
-        resolve(width === height && width >= 300);
-      };
     });
   }
 
@@ -176,5 +158,24 @@ export class UserDetailEditComponent extends AppComponentBase implements OnInit 
         this.loading = false;
         break;
     }
+  }
+
+  private getBase64(img: File, callback: (img: string) => void): void {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result!.toString()));
+    reader.readAsDataURL(img);
+  }
+
+  private checkImageDimension(file: File): Promise<boolean> {
+    return new Promise(resolve => {
+      const img = new Image(); // create image
+      img.src = window.URL.createObjectURL(file);
+      img.onload = () => {
+        const width = img.naturalWidth;
+        const height = img.naturalHeight;
+        window.URL.revokeObjectURL(img.src!);
+        resolve(width === height && width >= 300);
+      };
+    });
   }
 }

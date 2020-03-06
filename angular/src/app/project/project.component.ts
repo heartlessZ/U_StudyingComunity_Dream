@@ -21,6 +21,22 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
   currentprojectUserDetailId: any;
   currentUserProjectTagName: any;
 
+  search: any = { userDetailId: null, maxResultCount: 10, skipCount: 0, isPublic: true };
+  currentUser: CurrentUserDetailDto = new CurrentUserDetailDto();
+  isLogin = false;
+  headUrl = '';
+  searchUserProject: any = { MaxResultCount: 5, SkipCount: 0 };
+
+  isReload = false;
+  loadingMore = false;
+
+  currentProjectUserDetailId: any;
+
+  userProjectTotalCount: number;
+  pageIndex = 1;
+  currentUserProjects: UserProjectDto[]; // 当前用户计划集合
+  recommendUserProjects: UserProjectDto[]; // 推荐学习计划集合
+
   constructor(injector: Injector
     , private router: Router
     , private userDetailService: UserDetailService
@@ -34,44 +50,28 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
   }
 
   ngOnInit() {
-    $("div#banner").removeClass('homepage-mid-read');
-    $("div#banner").removeClass('homepage-mid-community');
-    $("div#banner").removeClass('homepage-mid-personal');
-    $("div#banner").removeClass('homepage-mid-learning');
-    $("div#banner").removeClass('homepage-mid-library');
-    $("div#banner").addClass('homepage-mid-learning');
+    $('div#banner').removeClass('homepage-mid-read');
+    $('div#banner').removeClass('homepage-mid-community');
+    $('div#banner').removeClass('homepage-mid-personal');
+    $('div#banner').removeClass('homepage-mid-learning');
+    $('div#banner').removeClass('homepage-mid-library');
+    $('div#banner').addClass('homepage-mid-learning');
     this.search = { userDetailId: null, maxResultCount: 10, skipCount: 0, isPublic: true };
-    this.searchUserProject = { MaxResultCount: 5, SkipCount: 0 }
+    this.searchUserProject = { MaxResultCount: 5, SkipCount: 0 };
 
     this.getCurrentUser();
     this.getCurrentUserProjects();
     this.getUserProjectsPaged();
   }
 
-  search: any = { userDetailId: null, maxResultCount: 10, skipCount: 0, isPublic: true };
-  currentUser: CurrentUserDetailDto = new CurrentUserDetailDto();
-  isLogin: boolean = false;
-  headUrl: string = "";
-  searchUserProject: any = { MaxResultCount: 5, SkipCount: 0 }
-
-  isReload: boolean = false;
-  loadingMore:boolean = false;
-
-  currentProjectUserDetailId: any;
-
-  userProjectTotalCount: number;
-  pageIndex: number = 1;
-  currentUserProjects: UserProjectDto[];//当前用户计划集合
-  recommendUserProjects: UserProjectDto[];//推荐学习计划集合
-
   getCurrentUserProjects(): void {
     this.isReload = true;
     this.projectService.getCurrentUserProjectDtos(this.searchUserProject).subscribe((result) => {
       this.currentUserProjects = result.items;
       this.userProjectTotalCount = result.totalCount;
-      //console.log(result);
+      // console.log(result);
       this.isReload = false;
-    })
+    });
   }
 
   getCurrentUser(): void {
@@ -89,7 +89,7 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
           this.projectDetail.getProjectsTreeById();
         }
       }
-    })
+    });
   }
 
   pageIndexChange(): void {
@@ -100,21 +100,21 @@ export class ProjectComponent extends AppComponentBase implements OnInit {
   getUserProjectsPaged(): void {
     this.projectService.getUserProjectsPaged(this.search).subscribe((result) => {
       this.recommendUserProjects = UserProjectDto.fromJSArray(result.items);
-    })
+    });
   }
 
-  //加载更多计划
+  // 加载更多计划
   onLoadMore(): void {
     this.loadingMore = true;
     this.search.skipCount = this.search.maxResultCount * (this.search.skipCount + 1);
     this.projectService.getUserProjectsPaged(this.search).subscribe((result) => {
       this.recommendUserProjects = UserProjectDto.fromJSArray(result.items);
-      
+
       this.loadingMore = false;
-      if(result.items.length < this.search.maxResultCount){
+      if (result.items.length < this.search.maxResultCount) {
         this.search.skipCount = -1;
       }
-    })
+    });
   }
 
   refreshDetail(userProjectId: number, tagName: string, userDetailId: any): void {

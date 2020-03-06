@@ -49,7 +49,7 @@ import { TenantChangeDialogComponent } from './tenant/tenant-change-dialog.compo
     ],
     providers: [
         LoginService,
-        //{ provide: LocationStrategy, useClass: HashLocationStrategy }
+        // { provide: LocationStrategy, useClass: HashLocationStrategy }
     ],
     entryComponents: [
         // tenant

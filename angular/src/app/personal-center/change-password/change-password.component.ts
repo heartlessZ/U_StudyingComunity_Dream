@@ -18,18 +18,18 @@ export class ChangePasswordComponent extends AppComponentBase implements OnInit 
   @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
   validateForm: FormGroup;
-  emodalVisible = false;//模态框是否显示
+  emodalVisible = false; // 模态框是否显示
   isOkLoading = false;
 
-  pwdDto:ChangePasswordDto = new ChangePasswordDto();
+  pwdDto: ChangePasswordDto = new ChangePasswordDto();
 
   constructor(injector: Injector,
     private fb: FormBuilder,
-    private router : Router,
-    private appRouteGuard : AppRouteGuard,
-    //private userDetailService : UserDetailService,
-    //private accountServiceProxy:AccountServiceProxy,
-    private userServiceProxy:UserServiceProxy) {
+    private router: Router,
+    private appRouteGuard: AppRouteGuard,
+    // private userDetailService : UserDetailService,
+    // private accountServiceProxy:AccountServiceProxy,
+    private userServiceProxy: UserServiceProxy) {
     super(injector);
     this.validateForm = this.fb.group({
       oldPwd: ['', [Validators.required]],
@@ -43,26 +43,26 @@ export class ChangePasswordComponent extends AppComponentBase implements OnInit 
    */
   show() {
     this.emodalVisible = true;
-    //console.log("修改密码");
-    
+    // console.log("修改密码");
+
   }
 
   handleOk(): void {
     this.isOkLoading = true;
     this.submitForm(this.pwdDto);
-    
-    if(!this.validateForm.valid)
+
+    if (!this.validateForm.valid) {
       return;
-    this.userServiceProxy.changePassword(this.pwdDto).subscribe((result)=>{
-      if(result)
-      {
-        this.message.success("修改成功");
+    }
+    this.userServiceProxy.changePassword(this.pwdDto).subscribe((result) => {
+      if (result) {
+        this.message.success('修改成功');
         this.emodalVisible = false;
         this.isOkLoading = false;
 
-        this.router.navigate(["account/login"]);
+        this.router.navigate(['account/login']);
       }
-    })
+    });
   }
 
   handleCancel(): void {
@@ -100,7 +100,7 @@ export class ChangePasswordComponent extends AppComponentBase implements OnInit 
       return { confirm: true, error: true };
     }
     return {};
-  };
+  }
 
 }
 

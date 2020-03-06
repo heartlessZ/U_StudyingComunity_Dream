@@ -41,8 +41,9 @@ export class LoginComponent extends AppComponentBase implements OnInit {
   login(): void {
     this.submitting = true;
     this.submitForm();
-    if(!this.validateForm.valid)
+    if (!this.validateForm.valid) {
       return;
+    }
     this.loginService.authenticate(() => (this.submitting = false));
   }
 
@@ -67,6 +68,6 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
 
   returnHome(): void {
-    this._router.navigate(["/app/home"])
+    this._router.navigate(['/app/home']);
   }
 }

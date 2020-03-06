@@ -12,23 +12,23 @@ import { NzFormatEmitEvent } from 'ng-zorro-antd/core';
 })
 export class BookResourceComponent extends PagedListingComponentBase<any> {
 
-  search: any = { name: '', status:1};
-  isTableLoading: boolean = false;
+  search: any = { name: '', status: 1};
+  isTableLoading = false;
 
-  bookStatus:any = [
+  bookStatus: any = [
     {
       status: 1,
-      lable: "待审核"
+      lable: '待审核'
     },
     {
       status: 2,
-      lable: "审核通过"
+      lable: '审核通过'
     },
     {
       status: 3,
-      lable: "已拒绝"
+      lable: '已拒绝'
     }
-  ]
+  ];
 
   constructor(private bookService: BookService,
     private injector: Injector) {
@@ -36,7 +36,7 @@ export class BookResourceComponent extends PagedListingComponentBase<any> {
   }
 
   nzEvent(event: NzFormatEmitEvent): void {
-    //console.log(event);
+    // console.log(event);
 
   }
   ngOnInit() {
@@ -60,13 +60,21 @@ export class BookResourceComponent extends PagedListingComponentBase<any> {
     this.refresh();
   }
 
+  audit(entity: any, status: any) {
+    const sourceStatus = entity.status;
+    entity.status = status;
+    this.bookService.createBookResource(entity).subscribe((result) => {
+      this.notify.success('审核成功');
+    });
+  }
+
   protected fetchDataList(
     request: PagedRequestDto,
     pageNumber: number,
     finishedCallback: Function,
   ): void {
     this.isTableLoading = true;
-    let params: any = {};
+    const params: any = {};
     params.SkipCount = request.skipCount;
     params.MaxResultCount = request.maxResultCount;
     params.Name = this.search.name;
@@ -77,18 +85,10 @@ export class BookResourceComponent extends PagedListingComponentBase<any> {
       // })
       .subscribe((result: PagedResultDto) => {
         this.isTableLoading = false;
-        this.dataList = result.items
+        this.dataList = result.items;
         this.totalItems = result.totalCount;
-        //console.log(this.dataList);
+        // console.log(this.dataList);
       });
-  }
-
-  audit(entity:any,status:any){
-    let sourceStatus = entity.status;
-    entity.status = status;
-    this.bookService.createBookResource(entity).subscribe((result)=>{
-      this.notify.success("审核成功")
-    })
   }
 
 }

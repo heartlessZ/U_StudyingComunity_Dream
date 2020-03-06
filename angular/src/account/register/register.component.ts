@@ -39,9 +39,10 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
     this.saving = true;
     this.model.name = this.model.userName;
     this.model.surname = this.model.userName;
-    this.submitForm()
-    if(!this.validateForm.valid)
+    this.submitForm();
+    if (!this.validateForm.valid) {
       return;
+    }
     this._accountService
       .register(this.model)
       .pipe(
@@ -51,13 +52,12 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
       )
       .subscribe((result: RegisterOutput) => {
         if (result.code == 200) {
-          //this.notify.success('注册成功');
+          // this.notify.success('注册成功');
           this.message.success('注册成功');
           this._router.navigate(['/account/login']);
           return;
-        }
-        else {
-          //this.notify.error(result.msg);
+        } else {
+          // this.notify.error(result.msg);
           this.message.error(result.msg);
         }
 
@@ -92,7 +92,7 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
       return { confirm: true, error: true };
     }
     return {};
-  };
+  }
 
   getCaptcha(e: MouseEvent): void {
     e.preventDefault();
@@ -108,6 +108,6 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
   }
 
   returnHome(): void {
-    this._router.navigate(["app/home"])
+    this._router.navigate(['app/home']);
   }
 }

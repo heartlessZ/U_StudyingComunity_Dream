@@ -1,7 +1,7 @@
 import { Component, ViewContainerRef, Injector, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { AppComponentBase } from '@shared/component-base/app-component-base';
 import { Router } from '@angular/router';
-import { AppConsts } from '@shared/AppConsts'
+import { AppConsts } from '@shared/AppConsts';
 
 import { SignalRAspNetCoreHelper } from '@shared/helpers/SignalRAspNetCoreHelper';
 import { UserDetailService, AppAuthService } from 'services';
@@ -15,21 +15,20 @@ import { AppRouteGuard } from '@shared/auth/auth-route-guard';
         './app.component.less'
     ],
 })
-export class AppComponent extends AppComponentBase implements OnInit//, AfterViewInit
- {
+export class AppComponent extends AppComponentBase implements OnInit {
 
-    //private viewContainerRef: ViewContainerRef;
-    currentUser : CurrentUserDetailDto;
-    isLogin : boolean = false;
-    headUrl : string = "";
+    // private viewContainerRef: ViewContainerRef;
+    currentUser: CurrentUserDetailDto;
+    isLogin = false;
+    headUrl = '';
 
     constructor(
         injector: Injector,
-        private router : Router,
-        private userDetailService : UserDetailService,
-        private appAuthService:AppAuthService,
+        private router: Router,
+        private userDetailService: UserDetailService,
+        private appAuthService: AppAuthService,
         private _iconService: NzIconService,
-        private appRouteGuard : AppRouteGuard,
+        private appRouteGuard: AppRouteGuard,
     ) {
         super(injector);
         // this._iconService.fetchFromIconfont({
@@ -58,18 +57,17 @@ export class AppComponent extends AppComponentBase implements OnInit//, AfterVie
 
     }
 
-    getCurrentUser():void {
-        this.userDetailService.getCurrentUserSimpleInfo().subscribe((result)=>{
-            //console.log(result);
-            if(result.userId != undefined)
-            {
-                this.isLogin=true;
+    getCurrentUser(): void {
+        this.userDetailService.getCurrentUserSimpleInfo().subscribe((result) => {
+            // console.log(result);
+            if (result.userId != undefined) {
+                this.isLogin = true;
                 this.currentUser = result;
                 this.headUrl = this.userDetailService.baseUrl + result.headPortraitUrl;
-                //console.log(this.headUrl);
-                
+                // console.log(this.headUrl);
+
             }
-        })
+        });
     }
 
     // ngAfterViewInit(): void {
@@ -87,29 +85,30 @@ export class AppComponent extends AppComponentBase implements OnInit//, AfterVie
     //     $.AdminBSB.demo.setSettingListHeightAndScroll();
     // }
 
-    login() : void{
-        this.router.navigate(["account/login"])
+    login(): void {
+        this.router.navigate(['account/login']);
     }
 
-    register() : void{
-        this.router.navigate(["account/register"])
+    register(): void {
+        this.router.navigate(['account/register']);
     }
 
-    exit() : void {
-        //this.appRouteGuard.clearLoginStatus();
-        //this.router.navigate(["account/login"])
-        this.appAuthService.logout(true)
+    exit(): void {
+        // this.appRouteGuard.clearLoginStatus();
+        // this.router.navigate(["account/login"])
+        this.appAuthService.logout(true);
     }
 
-    goPersonalInfo(id:string):void{
-        //console.log(id);
-        
-        if (id == undefined)
+    goPersonalInfo(id: string): void {
+        // console.log(id);
+
+        if (id == undefined) {
             return;
-        this.router.navigate(["app/personal-center",{id:id}]);
+        }
+        this.router.navigate(['app/personal-center', {id: id}]);
     }
 
-    goAdmin():void{
-        this.router.navigate(["admin/home"])
+    goAdmin(): void {
+        this.router.navigate(['admin/home']);
     }
 }

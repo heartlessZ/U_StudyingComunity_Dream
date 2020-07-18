@@ -712,6 +712,57 @@ export class SessionServiceProxy {
         }
         return _observableOf<GetCurrentLoginInformationsOutput>(<any>null);
     }
+
+    /**
+     * @return Success
+     */
+    clearCurrentLoginStatus(): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/Session/ClearSession";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processClearCurrentLoginStatus(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processClearCurrentLoginStatus(<any>response_);
+                } catch (e) {
+                    return <Observable<boolean>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<boolean>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processClearCurrentLoginStatus(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetCurrentLoginInformationsOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(<any>null);
+    }
 }
 
 @Injectable()
@@ -1845,6 +1896,8 @@ export interface IRegisterInput {
 
 export class RegisterOutput implements IRegisterOutput {
     canLogin: boolean | undefined;
+    code:number;
+    msg:string;
 
     constructor(data?: IRegisterOutput) {
         if (data) {
@@ -1858,6 +1911,8 @@ export class RegisterOutput implements IRegisterOutput {
     init(data?: any) {
         if (data) {
             this.canLogin = data["canLogin"];
+            this.code = data["code"];
+            this.msg = data["msg"];
         }
     }
 
@@ -1871,6 +1926,8 @@ export class RegisterOutput implements IRegisterOutput {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["canLogin"] = this.canLogin;
+        data["code"] = this.code;
+        data["msg"] = this.msg;
         return data; 
     }
 
@@ -1884,6 +1941,8 @@ export class RegisterOutput implements IRegisterOutput {
 
 export interface IRegisterOutput {
     canLogin: boolean | undefined;
+    code:number;
+    msg:string;
 }
 
 export class ChangeUiThemeInput implements IChangeUiThemeInput {
@@ -2639,6 +2698,7 @@ export class UserLoginInfoDto implements IUserLoginInfoDto {
     userName: string | undefined;
     emailAddress: string | undefined;
     id: number | undefined;
+    roleIds:number[] | undefined;
 
     constructor(data?: IUserLoginInfoDto) {
         if (data) {
@@ -2656,6 +2716,7 @@ export class UserLoginInfoDto implements IUserLoginInfoDto {
             this.userName = data["userName"];
             this.emailAddress = data["emailAddress"];
             this.id = data["id"];
+            this.roleIds = data["roleIds"];
         }
     }
 
@@ -2673,6 +2734,7 @@ export class UserLoginInfoDto implements IUserLoginInfoDto {
         data["userName"] = this.userName;
         data["emailAddress"] = this.emailAddress;
         data["id"] = this.id;
+        data["roleIds"] = this.roleIds;
         return data; 
     }
 
@@ -2690,6 +2752,7 @@ export interface IUserLoginInfoDto {
     userName: string | undefined;
     emailAddress: string | undefined;
     id: number | undefined;
+    roleIds:number[] | undefined;
 }
 
 export class TenantLoginInfoDto implements ITenantLoginInfoDto {
@@ -2968,6 +3031,7 @@ export class AuthenticateResultModel implements IAuthenticateResultModel {
     encryptedAccessToken: string | undefined;
     expireInSeconds: number | undefined;
     userId: number | undefined;
+    isAdmin:boolean;
 
     constructor(data?: IAuthenticateResultModel) {
         if (data) {
@@ -2984,6 +3048,7 @@ export class AuthenticateResultModel implements IAuthenticateResultModel {
             this.encryptedAccessToken = data["encryptedAccessToken"];
             this.expireInSeconds = data["expireInSeconds"];
             this.userId = data["userId"];
+            this.isAdmin = data["isAdmin"];
         }
     }
 
@@ -3000,6 +3065,7 @@ export class AuthenticateResultModel implements IAuthenticateResultModel {
         data["encryptedAccessToken"] = this.encryptedAccessToken;
         data["expireInSeconds"] = this.expireInSeconds;
         data["userId"] = this.userId;
+        data["isAdmin"] = this.isAdmin;
         return data; 
     }
 

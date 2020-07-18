@@ -45,6 +45,8 @@ export class AppPreBootstrap {
     }
 
     private static getUserConfiguration(callback: () => void): JQueryPromise<any> {
+        // console.log(AppConsts.remoteServiceBaseUrl);
+
         return abp.ajax({
             url: AppConsts.remoteServiceBaseUrl + '/AbpUserConfiguration/GetAll',
             method: 'GET',

@@ -1,0 +1,68 @@
+<form nz-form *ngIf="emodalVisible" [formGroup]="validateForm" (ngSubmit)="handleOk()">
+  <nz-modal [(nzVisible)]="emodalVisible" [nzTitle]="title" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+    [nzOkLoading]="isOkLoading" [nzFooter]="modalFooter">
+    <nz-form-item>
+      <nz-upload class="avatar-uploader" [nzAction]="fileUploadUrl" nzName="avatar" nzListType="picture-card"
+        [nzShowUploadList]="false" [nzBeforeUpload]="beforeUpload" (nzChange)="handleChange($event)">
+        <ng-container *ngIf="!avatarUrl">
+          <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+          <div class="ant-upload-text">上传封面</div>
+        </ng-container>
+        <img style="max-width: 300px;" *ngIf="avatarUrl" [src]="avatarUrl" class="avatar" />
+      </nz-upload>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzRequired nzFor="name">书籍名称</nz-form-label>
+      <nz-form-control [nzSpan]="8" nzErrorTip="书籍名称不能为空">
+        <input type="text" nz-input name="name" formControlName="name" placeholder="请输入书籍名称" [(ngModel)]="book.name" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzRequired nzFor="author">作者</nz-form-label>
+      <nz-form-control [nzSpan]="8" nzErrorTip="作者不能为空">
+        <input type="text" nz-input name="author" formControlName="author" placeholder="请输入作者" [(ngModel)]="book.author" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="d-flex" style="margin-bottom: 0px;">
+      <nz-form-label [nzSpan]="4" nzRequired nzFor="values">分类</nz-form-label>
+      <nz-form-control [nzSpan]="20"  nzErrorTip="请选择分类" class="flex-1">
+          <nz-cascader name="values" formControlName="values" nzChangeOnSelect  [nzExpandTrigger]="'hover'" [nzOptions]="nzOptions" [(ngModel)]="values"
+          (ngModelChange)="onChanges($event)">
+        </nz-cascader>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4">第三方链接</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <input type="text" nz-input formControlName="otherUrls" placeholder="不同链接请用逗号隔开" [(ngModel)]="book.otherUrls" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4">书籍简介</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <textarea rows="4" formControlName="description" maxlength="500" nz-input [(ngModel)]="book.description"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item *ngIf="isEdit" nz-row>
+        <nz-form-label nz-col [nzSm]="4"  nzFor="attach">资源链接</nz-form-label>
+        <nz-form-control [nzSm]="20">
+            <nz-upload [nzAction]="fileUploadUrl" [nzBeforeUpload]="beforeUploadResource"
+                [nzFileList]="fileList" nzMultiple [nzLimit]="5" [nzFilter]="filters"
+                (nzChange)="handleChangeBookResource($event)" [nzRemove]="deleteBookResource">
+                <button nz-button type="button"><i nz-icon nzType="upload"></i><span>上传资源</span></button>
+            </nz-upload>
+        </nz-form-control>
+    </nz-form-item>
+
+    <ng-template #modalFooter>
+      <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">保存</button>
+      <button nz-button nzType="default" (click)="handleCancel()">取消</button>
+    </ng-template>
+  </nz-modal>
+</form>

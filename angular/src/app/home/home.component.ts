@@ -1,138 +1,115 @@
-import { Component, Injector, AfterViewInit } from '@angular/core';
-import { AppComponentBase } from '@shared/app-component-base';
-import { appModuleAnimation } from '@shared/animations/routerTransition';
-
+import { Component, OnInit } from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd';
+import { ArticleService, BookService, UserDetailService } from 'services';
+import { ArticleDetailDto, ArticleCategoryDto, UserDetailDto, BookDetailDto } from 'entities';
+import { Router } from '@angular/router';
 @Component({
-    templateUrl: './home.component.html',
-    animations: [appModuleAnimation()]
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
-export class HomeComponent extends AppComponentBase implements AfterViewInit {
+export class HomeComponent implements OnInit {
 
-    constructor(
-        injector: Injector
-    ) {
-        super(injector);
-    }
+  initLoading = true; // bug
+  loadingMore = false;
+  data: ArticleDetailDto[] = [];
+  list: Array<{ loading: boolean; name: any }> = [];
+  search: any = { categoryId: null, maxResultCount: 8, skipCount: 0, releaseStatus: 2 };
+  tabs: ArticleCategoryDto[];
 
-    ngAfterViewInit(): void {
+  selectUser: any;
+  selectBook: any;
 
-        $(function () {
-            // Widgets count
-            $('.count-to').countTo();
+  userSimpleInfos: UserDetailDto[];
+  bookSimpleInfos: BookDetailDto[];
 
-            // Sales count to
-            $('.sales-count-to').countTo({
-                formatter: function (value, options) {
-                    return '$' + value.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, ' ').replace('.', ',');
-                }
-            });
+  totalCount: number;
+  serverBaseUrl: string;
+  constructor(private articleService: ArticleService
+    , private bookService: BookService
+    , private userDetailService: UserDetailService
+    , private msg: NzMessageService
+    , private router: Router) { }
 
-            initRealTimeChart();
-            initDonutChart();
-            initSparkline();
-        });
+  ngOnInit(): void {
+    $('div#banner').removeClass('homepage-mid-read');
+    $('div#banner').removeClass('homepage-mid-community');
+    $('div#banner').removeClass('homepage-mid-personal');
+    $('div#banner').removeClass('homepage-mid-learning');
+    $('div#banner').removeClass('homepage-mid-library');
+    $('div#banner').addClass('homepage-mid-read');
+    this.serverBaseUrl = this.articleService.baseUrl;
+    this.search.maxResultCount = 8;
+    this.search.skipCount = 0;
+    // 默认只查询审核通过的
+    this.search.releaseStatus = 2;
+    this.getArticleList();
+    this.getUserSimpleInfos();
+    this.getBookSimpleInfos();
+  }
 
-        let realtime = 'on';
-        function initRealTimeChart() {
-            // Real time ==========================================================================================
-            const plot = ($ as any).plot('#real_time_chart', [getRandomData()], {
-                series: {
-                    shadowSize: 0,
-                    color: 'rgb(0, 188, 212)'
-                },
-                grid: {
-                    borderColor: '#f3f3f3',
-                    borderWidth: 1,
-                    tickColor: '#f3f3f3'
-                },
-                lines: {
-                    fill: true
-                },
-                yaxis: {
-                    min: 0,
-                    max: 100
-                },
-                xaxis: {
-                    min: 0,
-                    max: 100
-                }
-            });
+  // 获取文章
+  getArticleList(): void {
+    this.loadingMore = true;
+    this.articleService.getArticlePaged(this.search).subscribe((result) => {
+      this.totalCount = result.totalCount;
+      this.data = ArticleDetailDto.fromJSArray(result.items);
+      if (result.items.length > 0) {
+        this.loadingMore = false;
+      }
+      this.initLoading = false;
+      // console.log(result);
+    });
+  }
 
-            function updateRealTime() {
-                plot.setData([getRandomData()]);
-                plot.draw();
+  // 加载更多文章
+  onLoadMore(): void {
+    this.initLoading = true;
+    this.loadingMore = true;
+    this.search.skipCount = this.search.maxResultCount * (this.search.skipCount + 1);
+    this.articleService.getArticlePaged(this.search).subscribe((result) => {
+      if (result.items.length > 0) {
+        const articles = ArticleDetailDto.fromJSArray(result.items);
+        this.data.push(...articles);
 
-                let timeout;
-                if (realtime === 'on') {
-                    timeout = setTimeout(updateRealTime, 320);
-                } else {
-                    clearTimeout(timeout);
-                }
-            }
-
-            updateRealTime();
-
-            $('#realtime').on('change', function () {
-                realtime = (this as any).checked ? 'on' : 'off';
-                updateRealTime();
-            });
-            // ====================================================================================================
+        if (result.items.length >= this.search.maxResultCount) {
+          this.loadingMore = false;
+        } else {
+          this.loadingMore = true;
         }
+      }
+      this.initLoading = false;
+    });
+  }
 
-        function initSparkline() {
-            $('.sparkline').each(function () {
-                const $this = $(this);
-                $this.sparkline('html', $this.data());
-            });
-        }
+  getUserSimpleInfos(): void {
+    this.userDetailService.getUserSimpleInfo(this.selectUser).subscribe((result) => {
+      this.userSimpleInfos = result;
+    });
+  }
 
-        function initDonutChart() {
-            ((window as any).Morris).Donut({
-                element: 'donut_chart',
-                data: [{
-                        label: 'Chrome',
-                        value: 37
-                    }, {
-                        label: 'Firefox',
-                        value: 30
-                    }, {
-                        label: 'Safari',
-                        value: 18
-                    }, {
-                        label: 'Opera',
-                        value: 12
-                    },
-                    {
-                        label: 'Other',
-                        value: 3
-                    }],
-                colors: ['rgb(233, 30, 99)', 'rgb(0, 188, 212)', 'rgb(255, 152, 0)', 'rgb(0, 150, 136)', 'rgb(96, 125, 139)'],
-                formatter: function (y) {
-                    return y + '%';
-                }
-            });
-        }
+  getBookSimpleInfos(): void {
+    this.bookService.getBookSimpleInfo(this.selectBook).subscribe((result) => {
+      this.bookSimpleInfos = result;
+    });
+  }
 
-        let data = [];
-        const totalPoints = 110;
 
-        function getRandomData() {
-            if (data.length > 0) { data = data.slice(1); }
+  goArticleDetail(id: number): void {
+    this.router.navigate(['app/community/article-detail/' + id]);
+  }
 
-            while (data.length < totalPoints) {
-                const prev = data.length > 0 ? data[data.length - 1] : 50;
-                let y = prev + Math.random() * 10 - 5;
-                if (y < 0) { y = 0; } else if (y > 100) { y = 100; }
+  goArticleDetailComment(id: number): void {
+    this.router.navigate(['app/community/article-detail/' + id]);
+  }
 
-                data.push(y);
-            }
+  goUserDetail(userDetailId: any): void {
+    // console.log(userDetailId);
 
-            const res = [];
-            for (let i = 0; i < data.length; ++i) {
-                res.push([i, data[i]]);
-            }
+    this.router.navigate(['app/personal-center/' + userDetailId]);
+  }
 
-            return res;
-        }
-    }
+  goBookDetail(bookId: any): void {
+    this.router.navigate(['app/library/book-detail/' + bookId]);
+  }
 }

@@ -17,6 +17,8 @@ using U_StudyingCommunity_Dream.Authorization;
 using U_StudyingCommunity_Dream.Authorization.Users;
 using U_StudyingCommunity_Dream.Models.TokenAuth;
 using U_StudyingCommunity_Dream.MultiTenancy;
+using Abp.Domain.Repositories;
+using U_StudyingCommunity_Dream.Authorization.Roles;
 
 namespace U_StudyingCommunity_Dream.Controllers
 {
@@ -30,6 +32,8 @@ namespace U_StudyingCommunity_Dream.Controllers
         private readonly IExternalAuthConfiguration _externalAuthConfiguration;
         private readonly IExternalAuthManager _externalAuthManager;
         private readonly UserRegistrationManager _userRegistrationManager;
+        private readonly IRepository<UserRole, long> _userRoleRepository;
+        private readonly IRepository<Role,int> _roleRepository;
 
         public TokenAuthController(
             LogInManager logInManager,
@@ -38,7 +42,9 @@ namespace U_StudyingCommunity_Dream.Controllers
             TokenAuthConfiguration configuration,
             IExternalAuthConfiguration externalAuthConfiguration,
             IExternalAuthManager externalAuthManager,
-            UserRegistrationManager userRegistrationManager)
+            UserRegistrationManager userRegistrationManager,
+            IRepository<UserRole, long> userRoleRepository,
+            IRepository<Role,int> roleRepository)
         {
             _logInManager = logInManager;
             _tenantCache = tenantCache;
@@ -47,6 +53,8 @@ namespace U_StudyingCommunity_Dream.Controllers
             _externalAuthConfiguration = externalAuthConfiguration;
             _externalAuthManager = externalAuthManager;
             _userRegistrationManager = userRegistrationManager;
+            _userRoleRepository = userRoleRepository;
+            _roleRepository = roleRepository;
         }
 
         [HttpPost]
@@ -60,12 +68,21 @@ namespace U_StudyingCommunity_Dream.Controllers
 
             var accessToken = CreateAccessToken(CreateJwtClaims(loginResult.Identity));
 
+            //判断是否为管理员
+            var isAdmin = false;
+            var userRole = await _userRoleRepository.FirstOrDefaultAsync(u => u.UserId == loginResult.User.Id);
+            var role = _roleRepository.FirstOrDefaultAsync(r => r.IsDefault);
+            if (userRole?.RoleId == role.Result.Id)
+            {
+                isAdmin = true;
+            }
             return new AuthenticateResultModel
             {
                 AccessToken = accessToken,
                 EncryptedAccessToken = GetEncryptedAccessToken(accessToken),
                 ExpireInSeconds = (int)_configuration.Expiration.TotalSeconds,
-                UserId = loginResult.User.Id
+                UserId = loginResult.User.Id,
+                IsAdmin = isAdmin
             };
         }
 
@@ -189,7 +206,8 @@ namespace U_StudyingCommunity_Dream.Controllers
                 case AbpLoginResultType.Success:
                     return loginResult;
                 default:
-                    throw _abpLoginResultTypeHelper.CreateExceptionForFailedLoginAttempt(loginResult.Result, usernameOrEmailAddress, tenancyName);
+                    //throw _abpLoginResultTypeHelper.CreateExceptionForFailedLoginAttempt(loginResult.Result, usernameOrEmailAddress, tenancyName);
+                    throw new UserFriendlyException("用户名或密码错误");
             }
         }
 

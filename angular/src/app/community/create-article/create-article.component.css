@@ -1,0 +1,11 @@
+.simpleInfo {
+    width:90%;
+    margin: auto;
+}
+
+
+  [nz-button] {
+    float: right;
+    margin-right: 30px;
+    margin-bottom: 12px;
+  }

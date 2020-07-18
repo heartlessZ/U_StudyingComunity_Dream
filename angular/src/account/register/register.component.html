@@ -1,70 +1,68 @@
 ﻿<div class="card" [@routerTransition]>
-  <div class="body">
-    <form novalidate 
-          #registerForm="ngForm" 
-          (ngSubmit)="save()">
-      <h4 class="text-center">{{ "Register" | localize }}</h4>
-      <div class="form-group form-float">
-          <mat-form-field>
-              <input matInput
-                 name="Name"
-                 [(ngModel)]="model.name"
-                 [placeholder]="'Name' | localize"
-                 required
-                 maxlength="32" />
-          </mat-form-field>
-          <mat-form-field>
-              <input matInput
-                  name="Surname"
-                  [(ngModel)]="model.surname"
-                  [placeholder]="'Surname' | localize"
-                  required
-                  maxlength="32"/>
-          </mat-form-field>
-          <mat-form-field>
-              <input matInput
-                   type="email"
-                   name="EmailAddress"
-                   [(ngModel)]="model.emailAddress"
-                   [placeholder]="'EmailAddress' | localize"         
-                   required
-                   maxlength="255"
-                   pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$"/>
-          </mat-form-field>
-          <mat-form-field>
-              <input matInput
-                   name="UserName"
-                   [(ngModel)]="model.userName"
-                   [placeholder]="'UserName' | localize"         
-                   required
-                   maxlength="32"/>
-          </mat-form-field>
-          <mat-form-field>
-             <input matInput
-                    name="Password"
-                    [(ngModel)]="model.password"
-                    [placeholder]="'Password' | localize"
-                    type="password"         
-                    required
-                    maxlength="32"/>
-          </mat-form-field>
-      </div>
-      <div class="form-actions text-center">
-            <button mat-button 
-                    type="button"
-                    [disabled]="saving"
-                    [routerLink]="['../login']">
-                    {{ "Back" | localize }}
-            </button>
-            <span>&nbsp;</span>
-            <button mat-flat-button
-                    type="submit"
-                    flex="15"
-                    color="primary"
-                    [disabled]="!registerForm.form.valid || saving">
-                    {{ "Submit" | localize }}
-            </button>    
-      </div>
-    </form>
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="save()">
+  <nz-form-item  class="card-input">
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="email">邮箱</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请输入正确的邮箱!">
+          <input nz-input [(ngModel)]="model.emailAddress" formControlName="email" id="email" required
+          [(ngModel)]="model.emailAddress"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item  class="card-input">
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="loginname" nzRequired>
+        
+            用户名
+        
+        </nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请输入用户名!">
+          <input nz-input id="loginname" maxlength="20" formControlName="loginname" required
+          [(ngModel)]="model.userName"/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item  class="card-input">
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="password" nzRequired>密码</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="combineTpl">
+          <input
+            nz-input
+            type="password"
+            id="password"
+            formControlName="password"
+            [(ngModel)]="model.password"
+            minlength="6"
+            maxlength="16"
+            required
+            (ngModelChange)="updateConfirmValidator()"
+          />
+          <ng-template #combineTpl let-control>
+              <ng-container *ngIf="control.hasError('maxlength')">密码长度不超过16位</ng-container>
+              <ng-container *ngIf="control.hasError('minlength')">密码长度不低于6位</ng-container>
+              <ng-container *ngIf="control.hasError('required')">密码不能为空</ng-container>
+            </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item  class="card-input">
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="checkPassword" nzRequired>确认密码</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTpl">
+          <input nz-input type="password" formControlName="checkPassword" id="checkPassword" required
+          />
+          <ng-template #errorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              请确认密码!
+            </ng-container>
+            <ng-container *ngIf="control.hasError('confirm')">
+              密码不一致!
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nz-row class="register-area">
+        <nz-form-control [nzSpan]="14" [nzOffset]="6">
+          <button nz-button  class="login-form-button" nzType="primary">注册</button>
+        </nz-form-control>
+      </nz-form-item>
+</form>
+<div style="float: left; margin-top: 0.8vh;">
+    <a (click)="returnHome()">返回首页</a>
   </div>
+<button nz-button class="registerbtn" (click)="back()" [nzSize]="'large'" nzType="link">返回登录>></button>
+<br/>
 </div>

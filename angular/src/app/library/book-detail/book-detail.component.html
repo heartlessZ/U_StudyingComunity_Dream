@@ -1,0 +1,75 @@
+<ng-template #backTemplate>
+    <button nz-button (click)="back()" nzType="default"><i nz-icon nzType="rollback" nzTheme="outline"></i></button>
+</ng-template>
+<nz-card style="width:90%;margin:auto;" [nzBordered]="false" [nzExtra]="backTemplate">
+    <div class="book_content">
+        <div class="book_content_left">
+            <img src="{{coverUrl}}"   >
+        </div>
+        <div class="book_content_middle">
+            <div class="book_content_middle_top">
+                <ul class="book_content_middle_ul">
+                    <li>书名:<p class="book_content_middle_ul_p">{{book.name}}</p>
+                    </li>
+                    <li>作者:<p class="book_content_middle_ul_p">{{book.author}}</p>
+                    </li>
+                    <li>分类:<p class="book_content_middle_ul_p">{{book.categoryName}}</p>
+                    </li>
+                    <li>简介：<p class="book_content_middle_ul_p">
+                            {{book.description}}
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <nz-card style="width:90%;min-height: 370px;" nzTitle="资源链接" [nzBordered]="false">
+        <div class="book-resource">
+            <div class="book-resource-official">
+                <nz-card style="width:90%;margin:auto;" nzTitle="网友上传" [nzBordered]="false" [nzExtra]="uploadTemplate">
+                    <div>
+                        <nz-list [nzDataSource]="bookResources" nzBordered [nzRenderItem]="defaultItem">
+                            <ng-template #defaultItem let-item>
+                                <nz-list-item>
+                                    <div style="width: 100%;">
+                                            <a href="{{item.url}}">{{item.name}}</a>
+                                            <!-- <div style="float: right;">
+                                                <button nz-button nzType="primary" (click)="downloadResource(item.url)" [nzSize]="size" nzShape="round"><i nz-icon
+                                                        nzType="download"></i>
+                                                    </button>
+                                            </div> -->
+                                    </div>
+                                </nz-list-item>
+                            </ng-template>
+                        </nz-list>
+                    </div>
+                    <nz-upload *ngIf="isLogin" nzType="drag" [nzMultiple]="true" [nzLimit]="1" [nzFilter]="filters"
+                        [nzFileList]="fileList" [nzAction]="fileUploadUrl" (nzChange)="handleChange($event)">
+                        <p class="ant-upload-drag-icon">
+                            <i nz-icon nzType="inbox"></i>
+                        </p>
+                        <p class="ant-upload-text">拖拽或单击分享资源</p>
+                    </nz-upload>
+                </nz-card>
+                <ng-template #uploadTemplate>
+
+                </ng-template>
+
+            </div>
+            <div class="book-resource-third">
+                <nz-card style="width:90%;margin:auto;" nzTitle="第三方链接" [nzBordered]="false">
+                    <div>
+                        <p *ngFor="let url of thirdUrls">
+                            <a href="{{url}}" target="_blank">{{url}}</a>
+                        </p>
+                    </div>
+                </nz-card>
+            </div>
+        </div>
+    </nz-card>
+    <div style="width: 20%; margin: auto; text-align: center;" *ngIf="isLogin">
+        <a (click)="createPraise()">
+          <img src="../../../assets/images/zan.jpg" alt="好文要顶" width="200" height="200">
+        </a>
+      </div>
+</nz-card>

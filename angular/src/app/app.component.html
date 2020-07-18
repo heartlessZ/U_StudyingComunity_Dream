@@ -1,19 +1,87 @@
-<div class="overlay"></div>
+<nz-layout class="homepage">
+    <div style="margin-bottom: 25px;">
+        <div class="header">
+            <div class="header-top">
+                <div class="logo">
+                    <img src="../assets/images/logo.png" width="100%" height="100%" />
+                </div>
+                <ul class="homepage-header-menu">
+                    <a routerLink="home">
+                        <li class="homepage-header-menu-list">首页</li>
+                    </a>
+                    <a routerLink="library">
+                        <li class="homepage-header-menu-list">图书资源</li>
+                    </a>
+                    <a routerLink="project">
+                        <li class="homepage-header-menu-list">学习规划</li>
+                    </a>
+                    <a routerLink="community">
+                        <li class="homepage-header-menu-list">社区</li>
+                    </a>
+                </ul>
+                <!-- <ul class="test">
+                    <li>首页</li>|
+                    <li>图书资源</li>|
+                    <li>学习规划</li>|
+                    <li>社区</li>
+                </ul> -->
 
-<top-bar></top-bar>
 
-<section (window:resize)="onResize($event)">
-    <aside id="leftsidebar" class="sidebar">
-        <sidebar-user-area></sidebar-user-area>
-        <sidebar-nav></sidebar-nav>
-        <sidebar-footer></sidebar-footer>
-    </aside>
+                <!--<ul nz-menu nzTheme="" nzMode="horizontal">
+                    <li nz-menu-item class="homepage-header-menu-list"><a routerLink="home">首页</a></li>
+                    <li nz-menu-item class="homepage-header-menu-list"><a routerLink="library">图书资源</a></li>
+                    <li nz-menu-item class="homepage-header-menu-list"><a routerLink="project">学习规划</a></li>
+                    <li nz-menu-item class="homepage-header-menu-list"><a routerLink="community">社区</a></li>-->
 
-    <right-sidebar></right-sidebar>
-</section>
+                <!-- <li style="float: right;line-height: 300%; margin-right: 10%;" *ngIf="isLogin; else elseBlock">
+                        <button *ngIf="currentUser.isAdmin" nz-button (click)="goAdmin()" nzType="primary">管理员入口</button>
+                        <a (click)="goPersonalInfo(currentUser.userDetailId)">
+                            <nz-avatar [nzSize]="64" nzIcon="user" [nzSrc]="headUrl" style="margin-top: 5%;"></nz-avatar>
+                        </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <i nz-icon (click)="exit()" nzType="logout" nzTheme="outline"></i>
+                    </li>
+                    <ng-template #elseBlock>
+                        <li style="float: right;line-height: 300%; margin-right: 10%;">
+                            <button nz-button (click)="login()" nzType="dashed">登录</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button nz-button (click)="register()" nzType="default">注册</button>
+                        </li>
+                    </ng-template>
+                </ul> -->
+                <div style="float:right;margin-top: 1%;margin-right: 5%;">
+                    <div style="float: right; " *ngIf="isLogin; else elseBlock">
 
-<section class="content">
-    <div class="container-fluid">
-        <router-outlet></router-outlet>
+                        <!-- <button *ngIf="currentUser.isAdmin" nz-button (click)="goAdmin()" nzType="default">管理员入口</button>&nbsp;&nbsp;&nbsp;&nbsp; -->
+                        <a (click)="goPersonalInfo(currentUser.userDetailId)">
+                            <nz-avatar [nzSize]="64" nzIcon="user" [nzSrc]="headUrl" style="margin-top: 1%;">
+                            </nz-avatar>
+                        </a>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        <button nz-button (click)="exit()" nzType="default" [nzSize]="'default'" nzShape="circle"><i
+                                nz-icon nzType="logout" nzTheme="outline"></i></button>
+
+                    </div>
+                    <div style="float: right; margin-right: 20%; width: 100%; ">
+                        <ng-template #elseBlock>
+                            <button nz-button (click)="login()" nzType="dashed">登录</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button nz-button (click)="register()" nzType="default">注册</button>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+            <div id="banner">
+
+            </div>
+        </div>
+
+        <nz-content>
+            <div class="inner-content">
+                <router-outlet></router-outlet>
+            </div>
+        </nz-content>
+
+
     </div>
-</section>
+
+    <!-- <nz-footer style="text-align: center; width: 100%;  ">优学社区 ©2019 Implement By 拯救问题儿童</nz-footer> -->
+    <div style="text-align: center; width: 100%;height: 60px;line-height: 60px;">优学社区 ©2019 Implement By 拯救问题儿童</div>
+</nz-layout>

@@ -3,6 +3,10 @@ using Abp.Zero.EntityFrameworkCore;
 using U_StudyingCommunity_Dream.Authorization.Roles;
 using U_StudyingCommunity_Dream.Authorization.Users;
 using U_StudyingCommunity_Dream.MultiTenancy;
+using U_StudyingCommunity_Dream.UserDetails;
+using U_StudyingCommunity_Dream.Articles;
+using U_StudyingCommunity_Dream.Books;
+using U_StudyingCommunity_Dream.Projects;
 
 namespace U_StudyingCommunity_Dream.EntityFrameworkCore
 {
@@ -14,5 +18,18 @@ namespace U_StudyingCommunity_Dream.EntityFrameworkCore
             : base(options)
         {
         }
+
+        public virtual DbSet<UserDetail> UserDetails { get; set; }
+        public virtual DbSet<UserDetail_Book> UserDetail_Books { get; set; }
+        public virtual DbSet<UserDetail_Project> UserDetail_Projects { get; set; }
+        public virtual DbSet<Fans> Fans { get; set; }
+        public virtual DbSet<Article> Articles { get; set; }
+        public virtual DbSet<Article_ArticleCategory> Article_ArticleCategories { get; set; }
+        public virtual DbSet<ArticleCategory> ArticleCategories { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Book> Books { get; set; }
+        public virtual DbSet<BookCategory> BookCategories { get; set; }
+        public virtual DbSet<BookResource> BookResources { get; set; }
+        public virtual DbSet<Project> Projects { get; set; }
     }
 }

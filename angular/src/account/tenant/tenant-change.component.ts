@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit, Injector } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { AppComponentBase } from '@shared/app-component-base';
+import { AppComponentBase } from '@shared/component-base/app-component-base';
 import { TenantChangeDialogComponent } from './tenant-change-dialog.component';
 
 @Component({

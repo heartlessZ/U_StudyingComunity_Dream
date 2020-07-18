@@ -1,0 +1,20 @@
+<form nz-form *ngIf="emodalVisible" [formGroup]="validateForm" (ngSubmit)="handleOk()">
+    <nz-modal [(nzVisible)]="emodalVisible" [nzTitle]="title" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+      [nzOkLoading]="isOkLoading" [nzFooter]="modalFooter">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzRequired nzFor="tagName">标签名</nz-form-label>
+        <nz-form-control [nzSpan]="14" nzErrorTip="标签名称不能为空">
+          <input type="text" nz-input formControlName="tagName" placeholder="请输入标签名称" [(ngModel)]="userProject.tagName" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+          <nz-form-control [nzSpan]="16" [nzOffset]="4">
+            <label nz-checkbox formControlName="isPublic" [(ngModel)]="userProject.isPublic">是否公开</label>
+          </nz-form-control>
+        </nz-form-item>
+      <ng-template #modalFooter>
+        <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">保存</button>
+        <button nz-button nzType="default" (click)="handleCancel()">取消</button>
+      </ng-template>
+    </nz-modal>
+  </form>

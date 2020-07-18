@@ -1,12 +1,25 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Abp.Auditing;
+using Abp.Authorization;
+using Abp.Authorization.Users;
+using Abp.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
+using U_StudyingCommunity_Dream.Authorization.Roles;
 using U_StudyingCommunity_Dream.Sessions.Dto;
 
 namespace U_StudyingCommunity_Dream.Sessions
 {
     public class SessionAppService : U_StudyingCommunity_DreamAppServiceBase, ISessionAppService
     {
+        private readonly IRepository<UserRole,long> _userRolesRepository;
+
+        public SessionAppService(IRepository<UserRole, long> userRolesRepository)
+        {
+            _userRolesRepository = userRolesRepository;
+        }
+
         [DisableAuditing]
         public async Task<GetCurrentLoginInformationsOutput> GetCurrentLoginInformations()
         {
@@ -27,10 +40,29 @@ namespace U_StudyingCommunity_Dream.Sessions
 
             if (AbpSession.UserId.HasValue)
             {
-                output.User = ObjectMapper.Map<UserLoginInfoDto>(await GetCurrentUserAsync());
+                var user = await GetCurrentUserAsync();
+                output.User = ObjectMapper.Map<UserLoginInfoDto>(user);
+                var test = _userRolesRepository.GetAll();
+                //角色名
+                var userRoles = await _userRolesRepository.GetAll().Where(r => r.UserId == user.Id).ToListAsync();
+                if (userRoles.Count > 0)
+                {
+                    output.User.RoleIds = userRoles.Select(r => r.RoleId).ToArray();
+                }
             }
 
             return output;
+        }
+
+        [DisableAuditing]
+        [AbpAllowAnonymous]
+        public async Task<bool> ClearSession()
+        {
+            using (AbpSession.Use(null,null))
+            {
+
+            }
+            return true;
         }
     }
 }

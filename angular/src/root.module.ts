@@ -1,7 +1,7 @@
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, Injector, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
-import { PlatformLocation, registerLocaleData } from '@angular/common';
+import { PlatformLocation, registerLocaleData, CommonModule } from '@angular/common';
 
 import { AbpModule } from '@abp/abp.module';
 import { AbpHttpInterceptor } from '@abp/abpHttpInterceptor';
@@ -23,6 +23,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { GestureConfig } from '@angular/material';
 
 import * as _ from 'lodash';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { ServicesModule } from 'services';
+import { LocalizationService } from 'abp-ng2-module/dist/src/localization/localization.service';
 
 export function appInitializerFactory(injector: Injector,
     platformLocation: PlatformLocation) {
@@ -91,16 +94,22 @@ export function getCurrentLanguage(): string {
     return 'en';
 }
 
+
+
 @NgModule({
     imports: [
-        BrowserModule,
+        CommonModule,
         BrowserAnimationsModule,
-        SharedModule.forRoot(),
-        ModalModule.forRoot(),
+        BrowserModule,
         AbpModule,
         ServiceProxyModule,
+        ServicesModule,
         RootRoutingModule,
-        HttpClientModule
+        HttpClientModule,
+        /** 导入 ng-zorro-antd 模块 **/
+        NgZorroAntdModule,
+        /** 必须导入 ng-zorro 才能导入此项 */
+        SharedModule.forRoot(),
     ],
     declarations: [
         RootComponent

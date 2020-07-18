@@ -64,7 +64,7 @@ namespace U_StudyingCommunity_Dream.Web.Host.Startup
             }
 
             var qsAuthToken = context.HttpContext.Request.Query["enc_auth_token"].FirstOrDefault();
-            if (qsAuthToken == null)
+            if (qsAuthToken == null || qsAuthToken == "null")
             {
                 // Cookie value does not matches to querystring value
                 return Task.CompletedTask;

@@ -1,0 +1,25 @@
+<nz-card style="margin:auto;" [nzBordered]="false">
+    <form nz-form (ngSubmit)="refreshData()" [nzLayout]="'inline'">
+        <div nz-row [nzGutter]="18">
+            <div nz-col [nzSpan]="8" class="mb-md right" [class.text-right]="'true'" style="float: right;">
+                <nz-form-item class="d-flex" style="margin-right: 0px;margin-bottom: 0px;">
+                    <nz-form-control class="flex-1">
+                        <button nz-button type="button" (click)="refreshData()" nzType="primary"
+                            [nzLoading]="isTableLoading">刷新</button>
+                        <button nz-button type="button" (click)="createRootNode()" class="mx-sm">添加根节点</button>
+                        <button nz-button type="button" (click)="createChild()" class="mx-sm">添加子节点</button>
+                        <button nz-button type="button" (click)="edit()" class="mx-sm">编辑节点</button>
+                        <button nz-button type="button" (click)="delete()" class="mx-sm">删除节点</button>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+    </form>
+    <div>
+        <nz-tree [nzData]="bookCategoryNodes" nzShowLine (nzClick)="nzEvent($event)" (nzDblClick)="editNode($event)">
+        </nz-tree>
+    </div>
+</nz-card>
+
+<app-create-category-model #createCategoryModal (modalSave)="refreshData()"></app-create-category-model>
+<app-book-category-detail-modal #bookCategoryDetailModal (modalSave)="refreshData()"></app-book-category-detail-modal>

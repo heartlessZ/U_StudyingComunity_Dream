@@ -164,23 +164,30 @@ namespace U_StudyingCommunity_Dream.Users
             identityResult.CheckErrors(LocalizationManager);
         }
 
+        [AbpAllowAnonymous]
         public async Task<bool> ChangePassword(ChangePasswordDto input)
         {
             if (_abpSession.UserId == null)
             {
-                throw new UserFriendlyException("Please log in before attemping to change password.");
+                //throw new UserFriendlyException("Please log in before attemping to change password.");
+                throw new UserFriendlyException("请先登录.");
             }
             long userId = _abpSession.UserId.Value;
             var user = await _userManager.GetUserByIdAsync(userId);
             var loginAsync = await _logInManager.LoginAsync(user.UserName, input.CurrentPassword, shouldLockout: false);
             if (loginAsync.Result != AbpLoginResultType.Success)
             {
-                throw new UserFriendlyException("Your 'Existing Password' did not match the one on record.  Please try again or contact an administrator for assistance in resetting your password.");
+                //throw new UserFriendlyException("Your 'Existing Password' did not match the one on record.  Please try again or contact an administrator for assistance in resetting your password.");
+                throw new UserFriendlyException("原密码不正确.");
             }
-            if (!new Regex(AccountAppService.PasswordRegex).IsMatch(input.NewPassword))
+            if (input.NewPassword.Length < 6)
             {
-                throw new UserFriendlyException("Passwords must be at least 8 characters, contain a lowercase, uppercase, and number.");
+                throw new UserFriendlyException("密码不能小于6位.");
             }
+            //if (!new Regex(AccountAppService.PasswordRegex).IsMatch(input.NewPassword))
+            //{
+            //    throw new UserFriendlyException("Passwords must be at least 8 characters, contain a lowercase, uppercase, and number.");
+            //}
             user.Password = _passwordHasher.HashPassword(user, input.NewPassword);
             CurrentUnitOfWork.SaveChanges();
             return true;

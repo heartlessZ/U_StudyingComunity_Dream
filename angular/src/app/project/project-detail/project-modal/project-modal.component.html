@@ -1,0 +1,34 @@
+<form nz-form *ngIf="emodalVisible" [formGroup]="validateForm" (ngSubmit)="handleOk()">
+  <nz-modal [(nzVisible)]="emodalVisible" [nzTitle]="title" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+    [nzOkLoading]="isOkLoading" [nzFooter]="modalFooter">
+
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>计划名称</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="计划名称不能为空">
+        <input nz-input type="text" formControlName="name" placeholder="请输入计划名称" [(ngModel)]="project.name" maxlength="30"/>
+        <ng-template #passwordErrorTp let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            计划名称不能为空
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7">备注</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="长度不能超过150">
+        <textarea rows="4" formControlName="remark" nz-input [(ngModel)]="project.remark" maxlength="150"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7">过期时间</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-date-picker formControlName="expirationTime" [(ngModel)]="project.expirationTime" nzFormat="yyyy/MM/dd"
+          (ngModelChange)="onChange($event)"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <ng-template #modalFooter>
+      <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">保存</button>
+      <button nz-button nzType="default" (click)="handleCancel()">取消</button>
+    </ng-template>
+  </nz-modal>
+</form>

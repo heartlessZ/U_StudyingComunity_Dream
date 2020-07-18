@@ -1,0 +1,99 @@
+<nz-card class="simpleInfo" [nzBordered]="false">
+  <nz-card-meta [nzTitle]="article.headline"
+    [nzDescription]="article.userName + '&nbsp;&nbsp;&nbsp;&nbsp;' + '发布于：'+(article.creationTime | date: 'yyyy-MM-dd HH:mm:ss') + '&nbsp;&nbsp;&nbsp;&nbsp;'+'访问量：'+article.visitVolume"
+    [nzAvatar]="avatarTemplate"></nz-card-meta>
+  <ng-template #avatarTemplate>
+    <nz-avatar (click)="goUserDetail(article.userDetailId)" [nzSrc]="baseUrl+article.headPortraitUrl"></nz-avatar>
+  </ng-template>
+  <blockquote class="card-bodyquote" [innerHTML]="article.content"></blockquote>
+  <div *ngIf="currentUser.isAdmin">
+    <button nz-button nzType="primary" [nzLoading]="auditBtnLoading" (click)="audit(2)"
+      [disabled]="article.releaseStatus==2">
+      审核通过
+    </button>
+    <button nz-button nzType="danger"  [nzLoading]="auditBtnLoading" (click)="audit(3)" [disabled]="article.releaseStatus==3">
+      拒绝
+    </button>
+  </div>
+  <div style="width: 20%; margin: auto; text-align: center;" *ngIf="!isCurrentUser && isLogin">
+    <a (click)="createPraise()">
+      <img src="../../../assets/images/zan.jpg" alt="好文要顶" width="200" height="200">
+    </a>
+  </div>
+</nz-card>
+<nz-card class="simpleInfo" [nzTitle]="'评论区'" [nzBordered]="false">
+  <div *ngFor="let data of comments">
+    <ng-template #commentTemplateRef let-comment="comment">
+      <nz-comment [nzAuthor]="comment.author" [nzDatetime]="comment.creationTime | date: 'yyyy-MM-dd HH:mm:ss'">
+        <nz-avatar nz-comment-avatar nzIcon="user" (click)="goUserDetail(comment.userDetailId)"
+          [nzSrc]="comment.avatar"></nz-avatar>
+        <nz-comment-content>
+          <p>{{ comment.content }}</p>
+        </nz-comment-content>
+        <nz-comment-action>
+          <!-- <button *ngIf="isLogin" nz-button (click)="reply(comment)" nzType="link">回复</button>
+          <button *ngIf="isLogin&&currentUser.isAdmin" nz-button (click)="delete(comment.id)" nzType="link">删除</button> -->
+          <a *ngIf="isLogin" (click)="reply(comment)">
+              <i nz-icon nzType="message" style="margin-right: 8px;"></i>
+          </a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a *ngIf="isLogin&&currentUser.isAdmin" (click)="delete(comment.id)">
+              <i style="color: red;" nz-icon nzType="delete" nzTheme="outline"></i>
+          </a>
+        </nz-comment-action>
+        <ng-container *ngIf="comment.children && comment.children.length">
+          <ng-template ngFor let-child [ngForOf]="comment.children">
+            <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: child }">
+            </ng-template>
+          </ng-template>
+        </ng-container>
+      </nz-comment>
+    </ng-template>
+    <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: data }"> </ng-template>
+  </div>
+  <div class="loadmore">
+    <a *ngIf="isMoreComment" (click)="loadMoreComments()">加载更多评论...</a>
+</div>
+  <!-- <div *ngFor="let data of comments">
+    <ng-template #commentTemplateRef let-comment="comment">
+      <nz-comment [nzAuthor]="comment.author">
+        <nz-avatar nz-comment-avatar nzIcon="user" (click)="goUserDetail(comment.userDetailId)"
+          [nzSrc]="comment.avatar"></nz-avatar>
+          <button *ngIf="isLogin" nz-button (click)="reply(comment)" nzType="link">回复</button>
+      <button *ngIf="isLogin&&currentUser.isAdmin" nz-button (click)="delete(comment.id)" nzType="link">删除</button>
+          
+        <nz-comment-content>
+          <p>{{ comment.content }}</p>
+        </nz-comment-content>
+        <ng-container *ngIf="comment.children && comment.children.length">
+          <ng-template ngFor let-child [ngForOf]="comment.children">
+            <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: child }">
+            </ng-template>
+          </ng-template>
+        </ng-container>
+      </nz-comment>
+    </ng-template>
+    <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: data }"> </ng-template>
+  </div> -->
+
+  <nz-comment *ngIf="isLogin">
+    <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="headurl"></nz-avatar>
+    <nz-comment-content>
+      <nz-form-item>
+        <textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>
+      </nz-form-item>
+      <nz-form-item>
+        <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit(0)">
+          提交评论
+        </button>
+      </nz-form-item>
+    </nz-comment-content>
+  </nz-comment>
+  <p *ngIf="!isLogin">请先<a (click)="toLogin()">登录</a></p>
+</nz-card>
+<nz-back-top ></nz-back-top>
+<!-- <nz-back-top [nzTemplate]="tpl" [nzVisibilityHeight]="100" (nzOnClick)="Anotify()">
+  <ng-template #tpl>
+    <div class="ant-back-top-inner">Top</div>
+  </ng-template>
+</nz-back-top> -->
+<app-reply-modal #replyModal (modalSave)="getCommentsByArticleId()"></app-reply-modal>

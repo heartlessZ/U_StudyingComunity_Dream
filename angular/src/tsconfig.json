@@ -4,6 +4,7 @@
     "downlevelIteration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "allowJs":true,
     "lib": [ "es6", "dom" ],
     "mapRoot": "./",
     "module": "esnext",

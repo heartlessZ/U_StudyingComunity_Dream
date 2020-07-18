@@ -25,9 +25,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\U_StudyingCommunity_Dream.Utility\U_StudyingCommunity_Dream.Utility.csproj" />
     <ProjectReference Include="..\U_StudyingCommunity_Dream.Web.Core\U_StudyingCommunity_Dream.Web.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>

@@ -25,6 +25,7 @@
     "@angular/platform-browser-dynamic": "^8.2.4",
     "@angular/router": "^8.2.4",
     "@aspnet/signalr": "^1.1.4",
+    "@notadd/ngx-neditor": "^1.0.2",
     "@types/bootstrap": "^3.3.33",
     "@types/jquery": "^3.3.31",
     "@types/jquery.blockui": "0.0.28",
@@ -55,6 +56,7 @@
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "morris.js": "^0.5.0",
+    "ng-zorro-antd": "^8.4.0",
     "ngx-bootstrap": "^5.1.1",
     "ngx-pagination": "^4.1.0",
     "node-waves": "^0.7.5",
@@ -91,5 +93,6 @@
     "tslint": "^5.19.0",
     "typescript": "3.4.5",
     "webpack-bundle-analyzer": "^3.0.3"
-  }
+  },
+  "main": "index.js"
 }

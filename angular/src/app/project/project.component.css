@@ -1,0 +1,35 @@
+.project-left {
+    width: 17%;
+    float: left;
+    margin-right: 20px;
+    min-height: 720px;
+    margin-bottom: 10px;
+}
+
+.project-right {
+    width: 17%;
+    float: left;
+    margin-left: 20px;
+    min-height: 720px;
+}
+
+.ant-progress {
+    margin-right: 8px;
+    margin-bottom: 8px;
+    display: inline-block;
+}
+
+.paoject-left-ul li:hover {
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+.paoject-left-ul {
+    margin-bottom: 20px;
+}
+
+.project-mid {
+    float: left;
+    width: 63%;
+    min-height: 720px;
+}

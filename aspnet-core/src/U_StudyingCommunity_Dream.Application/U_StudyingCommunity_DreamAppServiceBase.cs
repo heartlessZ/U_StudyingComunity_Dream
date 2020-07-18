@@ -23,12 +23,13 @@ namespace U_StudyingCommunity_Dream
             LocalizationSourceName = U_StudyingCommunity_DreamConsts.LocalizationSourceName;
         }
 
-        protected virtual async Task<User> GetCurrentUserAsync()
+        
+        public virtual async Task<User> GetCurrentUserAsync()
         {
             var user = await UserManager.FindByIdAsync(AbpSession.GetUserId().ToString());
             if (user == null)
             {
-                throw new Exception("There is no current user!");
+                throw new Exception("请先登录!");
             }
 
             return user;

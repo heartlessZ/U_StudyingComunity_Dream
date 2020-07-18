@@ -1,0 +1,67 @@
+<nz-card style="width:90%;margin:auto;" [nzBordered]="false">
+  <form nz-form (ngSubmit)="refreshData()" [nzLayout]="'inline'">
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="6" class="mb-md">
+        <nz-form-item class="d-flex" style="margin-bottom: 0px;">
+          <nz-form-label nzFor="name">书籍查询</nz-form-label>
+          <nz-form-control class="flex-1">
+            <input nz-input name="name"  [(ngModel)]="search.name" [placeholder]="'请输入书名或作者'">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="6" class="mb-md">
+        <nz-form-item class="d-flex" style="margin-bottom: 0px;">
+          <nz-form-label nzFor="status">资源状态</nz-form-label>
+          <nz-form-control class="flex-1">
+            <nz-select [(ngModel)]="search.status" name="status" [nzSize]="'default'">
+              <nz-option *ngFor="let item of bookStatus" [nzLabel]="item.lable" [nzValue]="item.status"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="4" class="mb-md right" [class.text-right]="'true'" style="float: right;">
+        <nz-form-item class="d-flex" style="margin-right: 0px;margin-bottom: 0px;">
+          <nz-form-control class="flex-1">
+            <button nz-button type="button" (click)="refreshData()" nzType="primary"
+              [nzLoading]="isTableLoading">查询</button>
+            <button nz-button type="button" (click)="reset()" class="mx-sm">重置</button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <ng-template #totalTemplate let-total>共 {{totalItems}} 条</ng-template>
+  <nz-table #nzTable [nzFrontPagination]="false" [nzShowTotal]="totalTemplate" [nzTotal]="totalItems" [nzData]="dataList"
+    [(nzPageIndex)]="pageNumber" [(nzPageSize)]="pageSize" [nzLoading]="isTableLoading" [nzShowSizeChanger]="true"
+    (nzPageIndexChange)="refresh()" (nzPageSizeChange)="refresh()">
+    <thead>
+        <tr>
+            <th>书籍名称</th>
+            <th>资源名称</th>
+            <th>资源地址</th>
+            <th>上传人</th>
+            <th>审核人</th>
+            <th>创建时间</th>
+            <!-- <th>状态</th> -->
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of nzTable.data">
+            <td>{{item.bookName}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.url}}</td>
+            <td>{{item.uploaderName}}</td>
+            <td>{{item.auditorName}}</td>
+            <td>{{item.creationTime | date: "yyyy-MM-dd HH:mm:ss"}}</td>
+            <!-- <td>{{item.status}}</td> -->
+            <td>
+                <button *ngIf="item.status==1||item.status==3" (click)="audit(item,2)" nz-button nzType="primary" [nzSize]="size">通过</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <button *ngIf="item.status==1||item.status==2" (click)="audit(item,3)" nz-button nzType="danger" [nzSize]="size">拒绝</button>
+            </td>
+        </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<app-book-detail-modal #bookDetailModal (modalSave)="refreshData()"></app-book-detail-modal>

@@ -11,6 +11,8 @@ using Abp.Runtime.Session;
 using Abp.UI;
 using U_StudyingCommunity_Dream.Authorization.Roles;
 using U_StudyingCommunity_Dream.MultiTenancy;
+using U_StudyingCommunity_Dream.UserDetails;
+using Abp.Domain.Repositories;
 
 namespace U_StudyingCommunity_Dream.Authorization.Users
 {
@@ -39,34 +41,35 @@ namespace U_StudyingCommunity_Dream.Authorization.Users
 
         public async Task<User> RegisterAsync(string name, string surname, string emailAddress, string userName, string plainPassword, bool isEmailConfirmed)
         {
-            CheckForTenant();
+            //CheckForTenant();
 
             var tenant = await GetActiveTenantAsync();
 
+            var guid = Guid.NewGuid();
             var user = new User
             {
-                TenantId = tenant.Id,
+                TenantId = tenant?.Id,
                 Name = name,
                 Surname = surname,
                 EmailAddress = emailAddress,
                 IsActive = true,
                 UserName = userName,
                 IsEmailConfirmed = isEmailConfirmed,
-                Roles = new List<UserRole>()
+                Roles = new List<UserRole>(),
+                UserDetailId = guid
             };
 
             user.SetNormalizedNames();
            
-            foreach (var defaultRole in await _roleManager.Roles.Where(r => r.IsDefault).ToListAsync())
+            foreach (var defaultRole in await _roleManager.Roles.Where(r => !r.IsDefault).ToListAsync())
             {
-                user.Roles.Add(new UserRole(tenant.Id, user.Id, defaultRole.Id));
+                user.Roles.Add(new UserRole(tenant?.Id, user.Id, defaultRole.Id));
             }
 
-            await _userManager.InitializeOptionsAsync(tenant.Id);
+            await _userManager.InitializeOptionsAsync(tenant?.Id);
 
             CheckErrors(await _userManager.CreateAsync(user, plainPassword));
             await CurrentUnitOfWork.SaveChangesAsync();
-
             return user;
         }
 

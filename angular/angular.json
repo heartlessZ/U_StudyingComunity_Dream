@@ -28,9 +28,15 @@
                 "glob": "abp.signalr-client.js",
                 "input": "node_modules/abp-web-resources/Abp/Framework/scripts/libs",
                 "output": "/assets/abp"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
               }
             ],
             "styles": [
+              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/assets/fonts/roboto/roboto.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -79,7 +85,9 @@
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.moment.js",
               "src/bsb-theme/js/admin.js",
               "src/bsb-theme/js/demo.js",
-              "src/bsb-theme/js/jquery.validate.js"
+              "src/bsb-theme/js/jquery.validate.js",
+              "src/assets/node_modules/@notadd/neditor/neditor.config.js",
+              "src/assets/node_modules/@notadd/neditor/neditor.all.js"
             ]
           },
           "configurations": {
@@ -171,9 +179,12 @@
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.moment.js",
               "src/bsb-theme/js/admin.js",
               "src/bsb-theme/js/demo.js",
-              "src/bsb-theme/js/jquery.validate.js"
+              "src/bsb-theme/js/jquery.validate.js",
+              "src/assets/node_modules/@notadd/neditor/neditor.config.js",
+              "src/assets/node_modules/@notadd/neditor/neditor.all.js"
             ],
             "styles": [
+              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "src/assets/fonts/roboto/roboto.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/simple-line-icons/css/simple-line-icons.css",

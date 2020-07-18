@@ -1,0 +1,56 @@
+<form nz-form (ngSubmit)="refreshData()" [nzLayout]="'inline'">
+  <div nz-row [nzGutter]="18">
+      <div nz-col [nzSpan]="8" class="mb-md">
+          <nz-form-item class="d-flex" style="margin-bottom: 0px;">
+              <nz-form-label nzFor="name">姓名</nz-form-label>
+              <nz-form-control class="flex-1">
+                  <input nz-input name="name" [(ngModel)]="search.name" [placeholder]="'请输入姓名'">
+              </nz-form-control>
+          </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8" class="mb-md right" [class.text-right]="'true'" style="float: right;">
+          <nz-form-item class="d-flex" style="margin-right: 0px;margin-bottom: 0px;">
+              <nz-form-control class="flex-1">
+                  <button nz-button type="button" (click)="refreshData()" nzType="primary"
+                      [nzLoading]="isTableLoading">查询</button>
+                  <button nz-button type="button" (click)="reset()" class="mx-sm">重置</button>
+              </nz-form-control>
+          </nz-form-item>
+      </div>
+  </div>
+</form>
+<ng-template #totalTemplate let-total>共 {{totalItems}} 条</ng-template>
+<nz-table #nzTable [nzFrontPagination]="false" [nzShowTotal]="totalTemplate" [nzTotal]="totalItems" [nzData]="dataList"
+  [(nzPageIndex)]="pageNumber" [(nzPageSize)]="pageSize" [nzLoading]="isTableLoading" [nzShowSizeChanger]="true"
+  (nzPageIndexChange)="refresh()" (nzPageSizeChange)="refresh()">
+  <thead>
+      <tr>
+          <th>用户名</th>
+          <th>昵称</th>
+          <th>性别</th>
+          <th>邮箱</th>
+          <th>注册时间</th>
+          <th>登录许可</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let item of nzTable.data">
+          <td>{{item.name}}</td>
+          <td>{{item.surname}}</td>
+          <td>{{item.gender==1?'女':'男'}}</td>
+          <td>{{item.email}}</td>
+          <td>{{item.creationTime | date: "yyyy-MM-dd HH:mm:ss"}}</td>
+          <td>
+            <nz-switch
+            [ngModel]="item.enable"
+            [nzLoading]="switchLoading"
+            (ngModelChange)="switchChange($event,item.id)"
+            [nzCheckedChildren]="checkedTemplate"
+            [nzUnCheckedChildren]="unCheckedTemplate"
+          ></nz-switch>
+          <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
+          <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
+          </td>
+      </tr>
+  </tbody>
+</nz-table>

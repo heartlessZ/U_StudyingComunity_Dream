@@ -10,6 +10,8 @@ namespace U_StudyingCommunity_Dream.Authorization
         {
             context.CreatePermission(PermissionNames.Pages_Users, L("Users"));
             context.CreatePermission(PermissionNames.Pages_Roles, L("Roles"));
+            context.CreatePermission(PermissionNames.Pages_Login, L("Login"));
+            context.CreatePermission(PermissionNames.Pages_Admin, L("Admin"));
             context.CreatePermission(PermissionNames.Pages_Tenants, L("Tenants"), multiTenancySides: MultiTenancySides.Host);
         }
 

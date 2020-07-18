@@ -1,0 +1,64 @@
+﻿<nz-layout>
+  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+    <div style="line-height: 32px;margin: 10px;margin-bottom: 30px;"><h4 style="color: gray;">优学社区后台管理系统</h4></div>
+    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+      <!-- <li nz-menu-item nzIcon="user">
+        <a routerLink="home">仪表板</a>
+      </li> -->
+      <li nz-menu-item>
+        <a routerLink="user">
+          <i nz-icon nzIcon="user" nzType="user"></i>
+          <span>用户管理</span>
+        </a>
+      </li>
+      <li nz-menu-item>
+        <a routerLink="library">
+          <i nz-icon nzType="book" nzTheme="outline"></i>
+          <span>图书管理</span>
+        </a>
+      </li>
+      <li nz-menu-item>
+        <a routerLink="book-category">
+          <i nz-icon nzType="file-done" nzTheme="outline"></i>
+          <span>书籍类别管理</span>
+        </a>
+      </li>
+      <li nz-menu-item>
+        <a routerLink="library/book-resource">
+          <i nz-icon nzType="file" nzTheme="outline"></i>
+          <span>图书资源管理</span>
+        </a>
+      </li>
+      <li nz-menu-item>
+        <a routerLink="community">
+          <i nz-icon nzType="container" nzTheme="outline"></i>
+          <span>文章管理</span>
+        </a>
+      </li>
+      <li nz-menu-item>
+        <a (click)="login()">
+          <i nz-icon nzType="logout" nzTheme="outline"></i>
+          <span>退出登录</span>
+        </a>
+      </li>
+      <!-- <li nz-menu-item>
+        <a (click)="goHome()">
+          <i nz-icon nzType="home" nzTheme="outline"></i>
+          <span>返回首页</span>
+        </a>
+      </li> -->
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+        (click)="isCollapsed = !isCollapsed"></i>
+    </nz-header>
+    <nz-content>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+    <nz-footer>优学社区 ©2019 Implement By 拯救问题儿童</nz-footer>
+  </nz-layout>
+</nz-layout>

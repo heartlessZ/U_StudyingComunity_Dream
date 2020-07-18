@@ -1,0 +1,48 @@
+.context-area {
+    background: rgb(190, 200, 200);
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.context-intro {
+    color: #000;
+    font-size: 14px;
+}
+
+.project-middle {
+    width: 100%;
+    /*margin-left: 15%;
+    position: absolute;
+    min-height: 720px;
+    margin-bottom: 10px;*/
+    min-height: 720px;
+}
+
+.icon-wrapper {
+    position: relative;
+    padding: 0px 30px;
+}
+
+
+/* 
+[nz-icon] {
+  position: absolute;
+  top: -2px;
+  width: 16px;
+  height: 16px;
+  line-height: 1;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.25);
+}
+
+[nz-icon]:first-child {
+  left: 0;
+}
+
+[nz-icon]:last-child {
+  right: 0;
+} */
+
+.icon-highlight {
+    color: rgba(0, 0, 0, 0.45);
+}

@@ -48,14 +48,14 @@ namespace U_StudyingCommunity_Dream.Authorization.Accounts
 
         public async Task<RegisterOutput> Register(RegisterInput input)
         {
-            if (await ExistEmailValid(input.EmailAddress))
+            if (!await ExistEmailValid(input.EmailAddress))
                 return new RegisterOutput()
                 {
                     Code = 999,
                     CanLogin = false,
                     Msg = "该邮箱已经被注册."
                 };
-            if (await ExistUserNameValid(input.Name))
+            if (!await ExistUserNameValid(input.Name))
                 return new RegisterOutput()
                 {
                     Code =666,
@@ -94,12 +94,14 @@ namespace U_StudyingCommunity_Dream.Authorization.Accounts
 
         private async Task<bool> ExistEmailValid(string email)
         {
-            return await _userRepository.FirstOrDefaultAsync(u => u.EmailAddress != email) == null;
+            var user = await _userRepository.FirstOrDefaultAsync(u => u.EmailAddress == email);
+            return user == null;
         }
 
         private async Task<bool> ExistUserNameValid(string name)
         {
-            return await _userRepository.FirstOrDefaultAsync(u => u.Name != name) == null;
+            var user = await _userRepository.FirstOrDefaultAsync(u => u.Name == name);
+            return user == null;
         }
     }
 }

@@ -81,7 +81,7 @@ namespace U_StudyingCommunity_Dream.Articles
                 .WhereIf(input.CategoryId.HasValue, a=>articleIds.Contains(a.Id));
             
 			// TODO:根据传入的参数添加过滤条件
-			var count = await query.CountAsync();
+			 var count = await query.CountAsync();
 
 			var entityList = await query
 					.OrderByDescending(i=>i.CreationTime).AsNoTracking()

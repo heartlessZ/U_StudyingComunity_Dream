@@ -41,23 +41,24 @@ import { ProjectUserModalComponent } from './project/project-detail/project-user
    declarations: [
       AppComponent,
       HomeComponent,
-      // ProjectComponent,
-      // ProjectDetailComponent,
-      // ProjectModalComponent,
-      // ProjectUserModalComponent,
 
-      // PersonalCenterComponent,
-      // ChangePasswordComponent,
-      // UserDetailEditComponent,
-      // ArticleAndProjectComponent,
+      ProjectComponent,
+      ProjectDetailComponent,
+      ProjectModalComponent,
+      ProjectUserModalComponent,
 
-      // LibraryComponent,
-      // BookDetailComponent,
+      PersonalCenterComponent,
+      ChangePasswordComponent,
+      UserDetailEditComponent,
+      ArticleAndProjectComponent,
 
-      // CommunityComponent,
-      // CreateArticleComponent,
-      // ArticleDetailComponent,
-      // ReplyModalComponent,
+      LibraryComponent,
+      BookDetailComponent,
+
+      CommunityComponent,
+      CreateArticleComponent,
+      ArticleDetailComponent,
+      ReplyModalComponent,
    ],
    imports: [
       CommonModule,

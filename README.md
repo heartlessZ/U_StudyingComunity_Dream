@@ -17,20 +17,32 @@ Create & download your project from https://aspnetboilerplate.com/Templates
 
 # Screenshots
 
-#### Sample Dashboard Page
-![](_screenshots/module-zero-core-template-ui-home.png)
+#### 登录界面
 
-#### User Creation Modal
-![](_screenshots/module-zero-core-template-ui-user-create-modal.png)
+![image](_screenshots/登录界面.jpg)
 
-#### Login Page
+#### 首页
+![image](_screenshots/首页.jpg)
 
-![](_screenshots/module-zero-core-template-ui-login.png)
+#### 图书资源
 
-# Documentation
+![image](_screenshots/图书资源.jpg)
 
-* [ASP.NET Core MVC & jQuery version.](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Core)
-* [ASP.NET Core & Angular  version.](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Angular)
+#### 学习计划
+
+![image](_screenshots/学习计划.jpg)
+
+#### 社区
+
+![image](_screenshots/社区.jpg)
+
+#### 个人信息
+
+![image](_screenshots/个人信息.jpg)
+
+#### 管理系统界面
+
+![image](_screenshots/管理系统界面.jpg)
 
 # License
 
